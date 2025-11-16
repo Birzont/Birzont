@@ -1030,6 +1030,11 @@ function handleNavHover(item, index) {
   const headerRect = header.getBoundingClientRect();
   const cardWidth = 480;
   
+  // Get start button position
+  const startBtn = document.getElementById('desktop-start-btn');
+  const startBtnRect = startBtn ? startBtn.getBoundingClientRect() : null;
+  const startBtnRight = startBtnRect ? startBtnRect.right + window.scrollX : window.innerWidth;
+  
   const navItem = document.querySelector(`[data-item="${item}"]`);
   if (!navItem) return;
   
@@ -1037,9 +1042,17 @@ function handleNavHover(item, index) {
   let left = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
   
   if (item === "BiAI") {
-    left = headerRect.right - cardWidth - 16;
+    // BiAI: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
+    left = startBtnRight - cardWidth - 16;
   } else if (item === "Career") {
-    left = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
+    // Career: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
+    const calculatedLeft = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
+    const cardRight = calculatedLeft + cardWidth;
+    if (cardRight > startBtnRight - 16) {
+      left = startBtnRight - cardWidth - 16;
+    } else {
+      left = calculatedLeft;
+    }
   }
   
   left = Math.max(16, Math.min(left, window.innerWidth - cardWidth - 16));
