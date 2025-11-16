@@ -1144,24 +1144,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pixel blinking
   setInterval(blinkRandomPixels, 1000);
   
-  // Update canvas height
-  const updateContentHeight = () => {
-    const imageCanvas = document.getElementById('image-canvas');
-    const leftContent = document.getElementById('left-content');
-    
-    if (imageCanvas && leftContent) {
-      const canvasHeight = imageCanvas.clientHeight;
-      document.documentElement.style.setProperty('--canvas-height', `${canvasHeight}px`);
-      leftContent.style.height = `${canvasHeight}px`;
-      leftContent.style.maxHeight = `${canvasHeight}px`;
-    }
-  };
-  
-  updateContentHeight();
-  window.addEventListener('resize', () => {
-    setTimeout(updateContentHeight, 100);
-  });
-  
-  setTimeout(updateContentHeight, 500);
+  // Canvas height update is no longer needed for the new centered layout
 });
 

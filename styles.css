@@ -173,6 +173,18 @@ body {
 .gradient-overlay {
   background: #3a82cf;
   background: linear-gradient(180deg, rgba(58, 130, 207, 1) 0%, rgba(75, 144, 220, 1) 16%, rgba(106, 172, 240, 1) 35%, rgba(162, 207, 247, 1) 57%, rgba(188, 219, 245, 0.64) 78%, rgba(83, 175, 237, 0) 96%);
+}
 
+/* Glass Button Style */
+.glass-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 

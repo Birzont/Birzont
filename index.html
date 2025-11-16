@@ -75,32 +75,24 @@
     </div>
 
     <!-- Main Hero Section -->
-    <section class="h-screen w-full pt-[100px] relative bg-white">
+    <section class="w-full pt-[180px] pb-20 relative bg-white">
       <!-- Gradient Overlay -->
       <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
       
-      <div class="flex flex-col md:flex-row items-center justify-between w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10 h-full">
-        <div id="left-content" class="w-1/2 max-w-full md:max-w-[50%] flex flex-col items-start justify-center mb-8 md:mb-0" style="gap: clamp(0.5rem, 2vw, 1rem); overflow: hidden; padding: 0;">
-          <div class="relative w-auto">
-            <img alt="Birzont Logo" width="60" height="60" class="object-contain mb-2 md:mb-5 logo-image" src="https://avatars.githubusercontent.com/u/144044857?s=200&v=4">
-            <small class="font-mono block mb-2 md:mb-4 text-base logo-text text-black" style="max-width: 60px; font-size: clamp(12px, 1.5vw, 16px)">Birzont</small>
-          </div>
-          <h1 class="font-sans font-bold tracking-tight text-left text-black" style="font-size: clamp(1.2rem, 2.5vw, 2.25rem); line-height: 1.2">
-            AGI, we beliebe<br>
-            that we are sowing the<br>
-            seeds of change.
-          </h1>
-          <div class="leading-relaxed text-black text-left font-['Apple_SD_Gothic_Neo',sans-serif]" style="font-size: clamp(0.75rem, 1.2vw, 1.125rem); line-height: 1.4; margin-top: 0; opacity: 0.8">
-            더 밝은내일을 위해서는<br>
-            지속가능한 행성이 필요하며,<br>
-            우리는 변화의 씨앗을 뿌리고 있음을 믿는다.
-          </div>
-          <button class="bg-black text-white font-bold border-2 border-transparent rounded-lg cursor-pointer whitespace-nowrap transition-all duration-300 hover:bg-transparent hover:text-black hover:border-black" style="font-size: clamp(0.7rem, 1vw, 1rem); padding: clamp(0.4rem, 0.8vw, 0.75rem) clamp(0.8rem, 1.5vw, 1.5rem); margin-top: 0">
-            지금 시작하기
-          </button>
-        </div>
-
-        <div id="image-canvas" class="w-1/2 relative overflow-hidden transition-all duration-400 rounded-3xl" style="aspect-ratio: 16/9; max-height: 80vh; min-height: 500px; background-image: url('https://birzont.github.io/BirzontArchive/res/Nature.png'); background-size: cover; background-position: center; position: relative;">
+      <div class="flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto relative z-10 px-4">
+        <h1 class="text-center text-white font-bold mb-6" style="font-size: clamp(2rem, 5vw, 4.5rem); line-height: 1.1;">
+          Where the world<br>
+          builds prompts
+        </h1>
+        <p class="text-center text-white mb-8 max-w-2xl mx-auto" style="font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; opacity: 0.9;">
+          Takes perfect notes, answers questions in real-time, and<br>
+          makes you the most prepared person on every call.
+        </p>
+        <button class="glass-button text-black font-bold border border-white/20 rounded-lg cursor-pointer whitespace-nowrap transition-all duration-300 px-4 py-2 text-[1rem] mb-12">
+          지금 시작하기
+        </button>
+        
+        <div id="image-canvas" class="w-full max-w-[1200px] relative overflow-hidden transition-all duration-400 rounded-3xl" style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative;">
           <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
         </div>
       </div>
