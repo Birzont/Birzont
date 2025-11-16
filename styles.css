@@ -164,3 +164,15 @@ body {
   transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
 }
 
+/* Gradient Overlay for Hero Section */
+/* 
+ * 히어로 섹션 상단 그라데이션 오버레이
+ * 그라데이션 값 변경 시 아래 background 속성만 수정하면 됩니다.
+ * 현재 값: #4B90DC → 투명 (0% → 41% → 68% → 88% → 100%)
+ */
+.gradient-overlay {
+  background: #3a82cf;
+  background: linear-gradient(180deg, rgba(58, 130, 207, 1) 0%, rgba(75, 144, 220, 1) 16%, rgba(106, 172, 240, 1) 35%, rgba(162, 207, 247, 1) 57%, rgba(188, 219, 245, 0.64) 78%, rgba(83, 175, 237, 0) 96%);
+
+}
+
