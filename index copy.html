@@ -135,106 +135,6 @@
       </div>
     </div>
 
-    <!-- Product Introduction Section -->
-    <div class="w-full bg-white">
-      <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto" aria-label="맞춤 에이전트">
-        <!-- Large Card Container -->
-        <div class="product-card-large bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-          <div class="flex flex-col md:flex-row gap-0 items-stretch">
-            <!-- Left Content - Tab List -->
-            <div class="w-full md:w-1/3 flex-shrink-0 p-8 md:p-12 flex flex-col">
-              <header class="mb-16 md:mb-20">
-                <a href="#" class="group">
-                  <h3 class="flex items-center gap-2 mb-4">
-                    <span class="text-base font-medium text-gray-600">맞춤 에이전트</span>
-                    <span class="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">New</span>
-                  </h3>
-                  <p class="text-xl md:text-2xl font-bold text-black">
-                    작업을 배정하면, 에이전트가 작업을 수행합니다.
-                  </p>
-                </a>
-              </header>
-              
-              <div role="tablist" aria-label="맞춤 에이전트" class="product-tablist mt-auto">
-                <button type="button" role="tab" value="0" tabindex="0" aria-selected="true" class="product-tab product-tab-active">
-                  <p class="product-tab-summary">단순·반복 업무 자동화</p>
-                  <p class="product-tab-content product-tab-content-visible">며칠씩 걸리던 작업을 단 몇 분 만에. 목표만 알려주면 놀라운 결과를 눈으로 확인할 수 있습니다.</p>
-                </button>
-                <hr class="divider border-gray-200 my-0" role="presentation">
-                <button type="button" role="tab" value="1" tabindex="0" aria-selected="false" class="product-tab">
-                  <p class="product-tab-summary">팀원들과 함께하는 AI</p>
-                  <p class="product-tab-content">우리 팀을 전담하는 든든한 전문가가 생긴 셈이죠.</p>
-                </button>
-                <hr class="divider border-gray-200 my-0" role="presentation">
-                <button type="button" role="tab" value="2" tabindex="0" aria-selected="false" class="product-tab">
-                  <p class="product-tab-summary">내가 아는 정보를 공유합니다</p>
-                  <p class="product-tab-content">페이지와 메시지, 파일, 웹을 모두 검색해 정확한 답을 바로 찾아줍니다.</p>
-                </button>
-                <hr class="divider border-gray-200 my-0" role="presentation">
-                <button type="button" role="tab" value="3" tabindex="0" aria-selected="false" class="product-tab">
-                  <p class="product-tab-summary">사용자 맞춤형</p>
-                  <p class="product-tab-content">나의 업무 스타일을 학습하는 에이전트. 행동부터 디자인까지 사용자가 직접 설정할 수 있습니다.</p>
-                </button>
-              </div>
-              
-              <!-- Slide Indicators -->
-              <div role="tablist" aria-label="Current slide indicator" class="flex gap-2 mt-6">
-                <button type="button" role="tab" value="0" tabindex="-1" aria-selected="true" class="product-indicator product-indicator-active" aria-label="Go to slide 1"></button>
-                <button type="button" role="tab" value="1" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 2"></button>
-                <button type="button" role="tab" value="2" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 3"></button>
-                <button type="button" role="tab" value="3" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 4"></button>
-              </div>
-            </div>
-            
-            <!-- Right Content - Carousel -->
-            <div class="w-full md:flex-1 relative">
-              <div id="product-carousel" class="absolute inset-0 overflow-hidden bg-gray-100">
-                <div id="product-carousel-slides" class="absolute inset-0" aria-live="polite">
-                  <!-- Slide 0 -->
-                  <div value="0" role="group" aria-hidden="false" aria-roledescription="슬라이드" aria-label="1/4" class="product-slide product-slide-active">
-                    <img src="https://i.pinimg.com/originals/67/0b/c0/670bc0f15088200dc7bd31ff37daa245.gif" alt="단순·반복 업무 자동화" class="product-slide-img">
-                  </div>
-                  
-                  <!-- Slide 1 -->
-                  <div value="1" role="group" aria-hidden="true" aria-roledescription="슬라이드" aria-label="2/4" class="product-slide" hidden>
-                    <img src="https://i.pinimg.com/originals/df/0a/3e/df0a3e2ec30abb1c92d145ef165b714f.gif" alt="팀원들과 함께하는 AI" class="product-slide-img">
-                  </div>
-                  
-                  <!-- Slide 2 -->
-                  <div value="2" role="group" aria-hidden="true" aria-roledescription="슬라이드" aria-label="3/4" class="product-slide" hidden>
-                    <img src="https://i.pinimg.com/originals/b9/ca/52/b9ca52d76a50a55ea5b4305198c6f59b.gif" alt="내가 아는 정보를 공유합니다" class="product-slide-img">
-                  </div>
-                  
-                  <!-- Slide 3 -->
-                  <div value="3" role="group" aria-hidden="true" aria-roledescription="슬라이드" aria-label="4/4" class="product-slide" hidden>
-                    <img src="https://i.pinimg.com/originals/8b/85/62/8b8562f42f0402989b66dcd5f66c5121.gif" alt="사용자 맞춤형" class="product-slide-img">
-                  </div>
-                </div>
-                
-                <!-- Carousel Controls -->
-                <div id="product-carousel-controls" class="absolute inset-0 flex items-center justify-between pointer-events-none">
-                  <button type="button" id="product-carousel-prev" class="carousel-btn carousel-btn-prev pointer-events-auto" aria-label="이전" style="display: none;">
-                    <span class="carousel-btn-indicator">
-                      <svg viewBox="0 0 9 15" style="width:16px;height:16px;display:block;fill:currentColor;flex-shrink:0">
-                        <path d="M.521 7.507c0 .29.108.54.34.755l6.458 6.325a.946.946 0 00.69.283.98.98 0 00.987-.988c0-.274-.116-.515-.299-.706l-5.819-5.67 5.82-5.669c.182-.19.298-.44.298-.705a.98.98 0 00-.988-.988c-.274 0-.506.1-.689.282L.861 6.743c-.232.224-.34.473-.34.764z"></path>
-                      </svg>
-                    </span>
-                  </button>
-                  <button type="button" id="product-carousel-next" class="carousel-btn carousel-btn-next pointer-events-auto" aria-label="다음">
-                    <span class="carousel-btn-indicator">
-                      <svg viewBox="0 0 9 15" style="width:16px;height:16px;display:block;fill:currentColor;flex-shrink:0">
-                        <path d="M8.696 7.507a1.08 1.08 0 00-.34-.764L1.896.426a.96.96 0 00-.689-.282.975.975 0 00-.987.988c0 .265.108.514.299.705l5.81 5.67-5.81 5.67a.979.979 0 00-.3.705c0 .556.432.988.988.988.266 0 .499-.1.69-.283l6.457-6.325a.988.988 0 00.34-.755z"></path>
-                      </svg>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
     <!-- Feature Grid Section -->
     <div class="w-full bg-white">
       <section class="flex flex-col items-center py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto">
@@ -257,6 +157,15 @@
 
         <div class="grid grid-cols-3 gap-x-6 w-full py-4" id="products-grid">
           <!-- Products will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Logo Slider Section -->
+    <div class="w-full bg-white">
+      <section class="w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div id="logo-slider-container" class="w-full overflow-hidden py-16">
+          <!-- Logo slider will be inserted by JavaScript -->
         </div>
       </section>
     </div>

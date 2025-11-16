@@ -1092,6 +1092,110 @@ function updateNavCard() {
   }
 }
 
+// Product Carousel State
+const productCarouselState = {
+  currentSlide: 0,
+  totalSlides: 4
+};
+
+function initProductCarousel() {
+  const tabs = document.querySelectorAll('.product-tablist .product-tab');
+  const indicators = document.querySelectorAll('.product-indicator');
+  const slides = document.querySelectorAll('.product-slide');
+  const prevBtn = document.getElementById('product-carousel-prev');
+  const nextBtn = document.getElementById('product-carousel-next');
+  
+  function goToSlide(index) {
+    if (index < 0 || index >= productCarouselState.totalSlides) return;
+    
+    productCarouselState.currentSlide = index;
+    
+    // Update tabs
+    tabs.forEach((tab, i) => {
+      const content = tab.querySelector('.product-tab-content');
+      if (i === index) {
+        tab.classList.add('product-tab-active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        // Show content for active tab
+        if (content) {
+          content.classList.add('product-tab-content-visible');
+        }
+      } else {
+        tab.classList.remove('product-tab-active');
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+        // Hide content for inactive tabs
+        if (content) {
+          content.classList.remove('product-tab-content-visible');
+        }
+      }
+    });
+    
+    // Update indicators
+    indicators.forEach((indicator, i) => {
+      if (i === index) {
+        indicator.classList.add('product-indicator-active');
+        indicator.setAttribute('aria-selected', 'true');
+      } else {
+        indicator.classList.remove('product-indicator-active');
+        indicator.setAttribute('aria-selected', 'false');
+      }
+    });
+    
+    // Update slides
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.add('product-slide-active');
+        slide.removeAttribute('hidden');
+        slide.setAttribute('aria-hidden', 'false');
+      } else {
+        slide.classList.remove('product-slide-active');
+        slide.setAttribute('hidden', '');
+        slide.setAttribute('aria-hidden', 'true');
+      }
+    });
+    
+    // Update control buttons
+    if (prevBtn) {
+      prevBtn.style.display = index === 0 ? 'none' : 'flex';
+    }
+    if (nextBtn) {
+      nextBtn.style.display = index === productCarouselState.totalSlides - 1 ? 'none' : 'flex';
+    }
+  }
+  
+  // Tab click handlers
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      goToSlide(index);
+    });
+  });
+  
+  // Indicator click handlers
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      goToSlide(index);
+    });
+  });
+  
+  // Previous/Next button handlers
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      goToSlide(productCarouselState.currentSlide - 1);
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      goToSlide(productCarouselState.currentSlide + 1);
+    });
+  }
+  
+  // Initialize first slide
+  goToSlide(0);
+}
+
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   // Mobile menu toggle
@@ -1125,7 +1229,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     updateMobileState();
     updateHeader();
-    renderLogoSlider();
   });
   
   // Video play button
@@ -1163,12 +1266,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize
   createPixels();
   renderProducts();
-  renderLogoSlider();
   renderTimeline();
   renderBlog();
   renderCareers();
   updateMobileState();
   updateHeader();
+  initProductCarousel();
   
   // Pixel blinking
   setInterval(blinkRandomPixels, 1000);
