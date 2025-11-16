@@ -765,13 +765,8 @@ function renderTimeline() {
   const headerLeft = document.createElement('div');
   headerLeft.className = 'w-full md:w-1/2 mb-8 md:mb-0';
   
-  const label = document.createElement('p');
-  label.className = 'text-gray-600 font-medium mb-2';
-  label.textContent = 'OUR JOURNEY';
-  headerLeft.appendChild(label);
-  
   const title = document.createElement('h2');
-  title.className = 'text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333]';
+  title.className = 'text-4xl font-bold mb-4 text-[#333]';
   title.textContent = 'Company Timeline';
   headerLeft.appendChild(title);
   

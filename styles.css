@@ -233,7 +233,7 @@ body {
   right: 0;
   bottom: 0;
   transform: scale(1.2);
-  opacity: 0.6;
+  opacity: 1;
 }
 
 /* Glass Button Style */
