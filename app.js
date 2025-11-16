@@ -517,8 +517,9 @@ function toggleCardDescription(cardContent, product) {
     titleSection.appendChild(plusBtn);
     cardContent.appendChild(titleSection);
   } else {
-    // Show description
+    // Show description - 먼저 기존 콘텐츠를 완전히 제거
     cardContent.dataset.showDescription = 'true';
+    cardContent.innerHTML = ''; // 기존 로고, 텍스트, +버튼 제거
     cardContent.className = 'flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl';
     
     const header = document.createElement('div');
@@ -688,6 +689,205 @@ function renderProducts() {
   container.innerHTML = '';
   products.forEach(product => {
     const card = createAppCard(product);
+    container.appendChild(card);
+  });
+}
+
+function createProductFeatureCard(product) {
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'w-full app-card-container';
+  
+  const card = document.createElement('div');
+  card.className = 'relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow-2xl';
+  card.style.backgroundImage = `url(${product.bgColor})`;
+  card.style.backgroundSize = 'cover';
+  card.style.backgroundPosition = 'center';
+  
+  // 아이콘 이미지 영역 - 위, 왼쪽, 오른쪽을 꽉 채움
+  const logoArea = document.createElement('div');
+  logoArea.className = 'absolute top-0 left-0 right-0';
+  logoArea.style.height = 'calc(100% - 120px)'; // 텍스트 영역을 위한 공간 확보
+  logoArea.style.padding = '1rem';
+  logoArea.style.display = 'flex';
+  logoArea.style.alignItems = 'flex-start';
+  logoArea.style.justifyContent = 'center';
+  
+  const logoImg = document.createElement('img');
+  logoImg.src = product.defaultLogoSrc;
+  logoImg.alt = product.title;
+  logoImg.className = 'transition-all duration-500 group-hover:brightness-0 group-hover:invert';
+  logoImg.style.width = '100%';
+  logoImg.style.height = '100%';
+  logoImg.style.objectFit = 'contain';
+  logoImg.style.display = 'block';
+  
+  logoArea.appendChild(logoImg);
+  card.appendChild(logoArea);
+  
+  // 텍스트 영역 - 하단에 흰색 배경
+  const textArea = document.createElement('div');
+  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white p-4 sm:p-6 md:p-8 flex justify-between items-center';
+  textArea.style.height = '120px';
+  
+  const title = document.createElement('h2');
+  title.className = 'font-bold text-black transition-colors duration-500';
+  title.style.fontSize = '1.2rem';
+  title.textContent = product.title;
+  
+  const plusBtn = document.createElement('button');
+  plusBtn.className = 'bg-black text-white rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-500 group-hover:bg-white group-hover:text-black';
+  plusBtn.style.width = 'clamp(2rem, 3vw, 2.5rem)';
+  plusBtn.style.height = 'clamp(2rem, 3vw, 2.5rem)';
+  plusBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: clamp(0.875rem, 1.5vw, 1.25rem); height: clamp(0.875rem, 1.5vw, 1.25rem)">
+      <path d="M5 12h14"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+  
+  textArea.appendChild(title);
+  textArea.appendChild(plusBtn);
+  card.appendChild(textArea);
+  
+  // 클릭 시 설명 표시를 위한 컨텐츠 영역 (숨김)
+  const cardContent = document.createElement('div');
+  cardContent.className = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl opacity-0 pointer-events-none transition-opacity duration-500';
+  cardContent.dataset.showDescription = 'false';
+  card.appendChild(cardContent);
+  
+  // overlay 제거 - 마우스 오버 시 배경이 어두워지지 않도록
+  
+  card.addEventListener('click', (e) => {
+    if (state.isMobile) {
+      showMobileModal(product);
+    } else {
+      toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product);
+    }
+  });
+  
+  const mobileTitle = document.createElement('h2');
+  mobileTitle.className = 'md:hidden text-black mt-3 font-bold';
+  mobileTitle.style.fontSize = 'clamp(1rem, 5vw, 1.25rem)';
+  mobileTitle.textContent = product.title;
+  
+  cardContainer.appendChild(card);
+  cardContainer.appendChild(mobileTitle);
+  
+  return cardContainer;
+}
+
+function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product) {
+  const showDescription = cardContent.dataset.showDescription === 'true';
+  
+  if (showDescription) {
+    // Hide description
+    cardContent.dataset.showDescription = 'false';
+    cardContent.style.opacity = '0';
+    cardContent.style.pointerEvents = 'none';
+    logoArea.style.opacity = '1';
+    textArea.style.opacity = '1';
+  } else {
+    // Show description
+    cardContent.dataset.showDescription = 'true';
+    cardContent.innerHTML = '';
+    cardContent.className = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl opacity-100 pointer-events-auto transition-opacity duration-500';
+    
+    const header = document.createElement('div');
+    header.className = 'flex items-center gap-3 mb-4';
+    
+    const iconWrapper = document.createElement('div');
+    iconWrapper.className = 'bg-white p-2 rounded-md flex items-center justify-center';
+    
+    const iconImg = document.createElement('img');
+    iconImg.src = product.defaultLogoSrc;
+    iconImg.alt = `${product.title} 아이콘`;
+    iconImg.width = 36;
+    iconImg.height = 36;
+    iconImg.className = 'object-contain';
+    
+    iconWrapper.appendChild(iconImg);
+    header.appendChild(iconWrapper);
+    
+    const title = document.createElement('h2');
+    title.className = 'font-bold transition-colors duration-500';
+    title.style.fontSize = 'clamp(1.5rem, 3vw, 1.875rem)';
+    title.textContent = product.title;
+    header.appendChild(title);
+    
+    cardContent.appendChild(header);
+    
+    const content = document.createElement('div');
+    content.className = 'flex flex-col';
+    
+    const description = document.createElement('p');
+    description.className = 'transition-colors duration-500 mb-2';
+    description.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    description.textContent = product.description;
+    content.appendChild(description);
+    
+    const link = document.createElement('a');
+    link.href = product.link;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2';
+    link.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    link.innerHTML = '바로가기 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    link.addEventListener('click', (e) => e.stopPropagation());
+    content.appendChild(link);
+    
+    cardContent.appendChild(content);
+    
+    const spacer = document.createElement('div');
+    spacer.className = 'flex-grow';
+    cardContent.appendChild(spacer);
+    
+    logoArea.style.opacity = '0';
+    textArea.style.opacity = '0';
+  }
+}
+
+function renderProductFeatures() {
+  const container = document.getElementById('product-features-grid');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  // 3개의 프로덕트 기능 카드 데이터
+  const productFeatures = [
+    {
+      title: "Prompist",
+      description: "Supported by OpenAI, Claude, Grok and Gemini",
+      logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+      link: "#",
+      index: 0,
+      modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png"
+    },
+    {
+      title: "Bloxer",
+      description: "이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.",
+      logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+      link: "#",
+      index: 1,
+      modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png"
+    },
+    {
+      title: "Jibung",
+      description: "Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.",
+      logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+      link: "#",
+      index: 2,
+      modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png"
+    }
+  ];
+  
+  productFeatures.forEach(feature => {
+    const card = createProductFeatureCard(feature);
     container.appendChild(card);
   });
 }
@@ -1291,6 +1491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTimeline();
   renderBlog();
   renderCareers();
+  renderProductFeatures();
   updateMobileState();
   updateHeader();
   initProductCarousel();
