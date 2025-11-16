@@ -31,6 +31,15 @@ body {
   }
 }
 
+@keyframes logoSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -428,5 +437,42 @@ body {
 .product-card-large:hover {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
+}
+
+/* Logo Slider Styles */
+.logo-slider-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.logo-slider-track {
+  display: flex;
+  gap: 3rem;
+  animation: logoSlide 40s linear infinite;
+  width: fit-content;
+  will-change: transform;
+}
+
+.logo-slider-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.logo-slider-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.logo-slider-item:hover .logo-slider-img {
+  opacity: 1;
+  filter: grayscale(0%);
 }
 
