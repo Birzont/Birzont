@@ -216,6 +216,9 @@ function updateMobileState() {
 function updateHeader() {
   const header = document.getElementById('navbar');
   const logoImg = document.getElementById('logo-img');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
   
   if (!header || !logoImg) return;
   
@@ -225,13 +228,25 @@ function updateHeader() {
     header.classList.remove('bg-transparent');
     if (state.isMobile) {
       header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
-      header.classList.remove('rounded-xl', 'px-12');
-      header.classList.add('rounded-none', 'px-4');
       logoImg.src = state.mobileMenuOpen || state.scrolled ? 
         "https://birzont.github.io/BirzontArchive/res/birzont_bicon.png" : 
         "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      
+      // 햄버거 버튼 색상 변경
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('text-white');
+        mobileMenuBtn.classList.add('text-black');
+      }
+      if (menuIcon) {
+        menuIcon.classList.remove('text-white');
+        menuIcon.classList.add('text-black');
+      }
+      if (closeIcon) {
+        closeIcon.classList.remove('text-white');
+        closeIcon.classList.add('text-black');
+      }
     } else {
-      header.classList.add('border-2', 'border-black', 'backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
+      header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
       logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_black.png";
     }
     
@@ -249,6 +264,20 @@ function updateHeader() {
       header.classList.remove('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
       header.classList.add('bg-transparent');
       logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      
+      // 햄버거 버튼 색상 원래대로
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('text-black');
+        mobileMenuBtn.classList.add('text-white');
+      }
+      if (menuIcon) {
+        menuIcon.classList.remove('text-black');
+        menuIcon.classList.add('text-white');
+      }
+      if (closeIcon) {
+        closeIcon.classList.remove('text-black');
+        closeIcon.classList.add('text-white');
+      }
     } else {
       header.classList.remove('border-2', 'border-black', 'backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
       header.classList.add('bg-transparent');

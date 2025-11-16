@@ -20,48 +20,50 @@
 <body class="font-['Inter',sans-serif]">
   <div id="app" class="min-h-screen bg-black text-white overflow-x-hidden">
     <!-- Header -->
-    <header id="navbar" class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(95%+16px)] max-w-[1616px] rounded-xl px-12 flex justify-between items-center py-4 z-50 transition-all duration-300 bg-transparent">
-      <div class="flex items-center">
-        <img id="logo-img" alt="Birzont Logo" width="120" height="36" class="object-contain" src="https://birzont.github.io/BirzontArchive/res/birzont_white.png">
+    <header id="navbar" class="fixed top-0 left-0 w-full px-4 md:px-0 flex justify-center py-4 z-50 transition-all duration-300 bg-transparent">
+      <div class="w-full md:w-[calc(95%-110px)] md:max-w-[1506px] flex justify-between items-center">
+        <div class="flex items-center">
+          <img id="logo-img" alt="Birzont Logo" width="120" height="36" class="object-contain" src="https://birzont.github.io/BirzontArchive/res/birzont_white.png">
+        </div>
+
+        <nav id="desktop-nav" class="flex gap-4 justify-end flex-1 mr-6">
+          <div class="relative nav-item" data-item="Company">
+            <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Company</a>
+          </div>
+          <div class="relative nav-item" data-item="Product">
+            <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Product</a>
+          </div>
+          <div class="relative nav-item" data-item="Blog">
+            <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Blog</a>
+          </div>
+          <div class="relative nav-item" data-item="Career">
+            <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Career</a>
+          </div>
+          <div class="relative nav-item" data-item="BiAI">
+            <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">BiAI</a>
+          </div>
+        </nav>
+
+        <button id="mobile-menu-btn" class="hidden px-4 py-2 text-white">
+          <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <button id="desktop-start-btn" class="px-4 py-2 font-bold rounded-xl transition-all duration-300 whitespace-nowrap text-[1rem] bg-black text-white border-2 border-transparent hover:bg-transparent hover:text-white hover:border-white">
+          시작하기
+        </button>
       </div>
-
-      <nav id="desktop-nav" class="flex gap-6 justify-end flex-1 mr-10">
-        <div class="relative nav-item" data-item="Company">
-          <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Company</a>
-        </div>
-        <div class="relative nav-item" data-item="Product">
-          <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Product</a>
-        </div>
-        <div class="relative nav-item" data-item="Blog">
-          <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Blog</a>
-        </div>
-        <div class="relative nav-item" data-item="Career">
-          <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Career</a>
-        </div>
-        <div class="relative nav-item" data-item="BiAI">
-          <a href="#" class="font-medium text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">BiAI</a>
-        </div>
-      </nav>
-
-      <button id="mobile-menu-btn" class="hidden px-4 py-2 text-white">
-        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="12" x2="20" y2="12"></line>
-          <line x1="4" y1="6" x2="20" y2="6"></line>
-          <line x1="4" y1="18" x2="20" y2="18"></line>
-        </svg>
-        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
-      <button id="desktop-start-btn" class="px-4 py-2 font-bold rounded-xl transition-all duration-300 whitespace-nowrap text-[1rem] bg-black text-white border-2 border-transparent hover:bg-transparent hover:text-white hover:border-white">
-        시작하기
-      </button>
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed top-[60px] left-0 w-full bg-white text-black z-40 shadow-lg transform transition-all duration-300 ease-in-out -translate-y-full opacity-0">
+    <div id="mobile-menu" class="fixed top-[48px] left-0 w-full bg-white text-black z-40 shadow-lg transform transition-all duration-300 ease-in-out -translate-y-full opacity-0">
       <div class="py-4 px-6">
         <a href="#" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Company</a>
         <a href="#" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Product</a>
@@ -79,7 +81,7 @@
       <!-- Gradient Overlay -->
       <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
       
-      <div class="flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto relative z-10 px-4">
+      <div class="flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto relative z-10 px-4 md:px-8 lg:px-4">
         <h1 class="text-center text-white font-bold mb-6" style="font-size: clamp(2rem, 5vw, 4.5rem); line-height: 1.1;">
           Where the world<br>
           builds prompts
@@ -92,8 +94,10 @@
           지금 시작하기
         </button>
         
-        <div id="image-canvas" class="w-full max-w-[1200px] relative overflow-hidden transition-all duration-400 rounded-3xl" style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative;">
-          <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
+        <div class="w-full px-4 md:px-8 lg:px-4">
+          <div id="image-canvas" class="w-full max-w-[1200px] mx-auto relative overflow-hidden transition-all duration-400 rounded-3xl" style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative;">
+            <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
+          </div>
         </div>
       </div>
     </section>

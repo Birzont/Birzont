@@ -111,9 +111,35 @@ body {
   #navbar {
     top: 0;
     width: 100%;
-    border-radius: 0;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  #navbar img {
+    width: 32px;
+    height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+    object-fit: contain;
+  }
+
+  #mobile-menu-btn {
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #mobile-menu-btn svg {
+    width: 20px;
+    height: 20px;
   }
 
   #desktop-nav {
@@ -131,6 +157,11 @@ body {
   .mobile-start-btn {
     display: block !important;
   }
+
+  /* 모바일에서 이미지가 topnav 크기에 맞춰지도록 */
+  #image-canvas {
+    max-width: calc(100vw - 2rem) !important;
+  }
 }
 
 @media (min-width: 901px) {
@@ -145,6 +176,7 @@ body {
   #desktop-start-btn {
     display: block;
   }
+
 }
 
 /* Utility classes */
@@ -173,6 +205,7 @@ body {
 .gradient-overlay {
   background: #3a82cf;
   background: linear-gradient(180deg, rgba(58, 130, 207, 1) 0%, rgba(75, 144, 220, 1) 16%, rgba(106, 172, 240, 1) 35%, rgba(162, 207, 247, 1) 57%, rgba(188, 219, 245, 0.64) 78%, rgba(83, 175, 237, 0) 96%);
+
 }
 
 /* Glass Button Style */
