@@ -248,6 +248,13 @@ function updateHeader() {
     } else {
       header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
       logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_black.png";
+      
+      // Update start button when scrolled
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-transparent', 'text-white', 'border-white', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+        startBtn.classList.add('bg-black', 'text-white', 'border-transparent', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+      }
     }
     
     // Update nav links
@@ -282,6 +289,13 @@ function updateHeader() {
       header.classList.remove('border-2', 'border-black', 'backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
       header.classList.add('bg-transparent');
       logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_white.png";
+      
+      // Update start button when at top
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-black', 'text-white', 'border-transparent', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+        startBtn.classList.add('bg-transparent', 'text-white', 'border-white', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+      }
     }
     
     // Update nav links

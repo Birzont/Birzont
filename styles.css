@@ -165,6 +165,11 @@ body {
 }
 
 @media (min-width: 901px) {
+  #navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
   #mobile-menu-btn {
     display: none;
   }
@@ -342,6 +347,7 @@ body {
   object-fit: cover;
   object-position: center;
   display: block;
+  min-height: 100%;
 }
 
 .carousel-btn {
@@ -383,7 +389,17 @@ body {
 .product-card-large {
   transition: all 0.3s ease;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  min-height: 600px;
+  height: 650px;
+}
+
+.product-card-large > div {
+  height: 100%;
+  overflow: hidden;
+}
+
+.product-card-large > div > div:first-child {
+  height: 100%;
+  overflow: hidden;
 }
 
 .product-card-large:hover {
