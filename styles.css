@@ -500,7 +500,7 @@ body {
 .demo-header-actions button {
   border: 1px solid rgba(15, 23, 42, 0.15);
   background: white;
-  padding: 0.4rem 1rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 12px;
   font-size: 0.9rem;
   color: #0f172a;
@@ -523,8 +523,6 @@ body {
 .demo-like-count,
 .demo-share-count {
   font-weight: 600;
-  min-width: 1.5rem;
-  text-align: left;
 }
 
 .demo-like.liked {
@@ -559,17 +557,28 @@ body {
   gap: 0.4rem;
   background: white;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  padding: 0.35rem 0.9rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 12px;
   font-weight: 600;
   font-size: 0.85rem;
   color: #0f172a;
 }
 
-.demo-badge img {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
+.demo-badge-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -0.4rem;
+}
+
+.demo-badge-icon img {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   object-fit: cover;
 }
 
@@ -765,9 +774,12 @@ body {
     gap: 3rem;
   }
 
-  .language-demo,
+  .language-demo {
+    flex: 1.1;
+  }
+
   .language-content {
-    flex: 1;
+    flex: 0.9;
   }
 
   .language-content {
