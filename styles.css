@@ -520,6 +520,31 @@ body {
   stroke-linejoin: round;
 }
 
+.demo-like-count,
+.demo-share-count {
+  font-weight: 600;
+  min-width: 1.5rem;
+  text-align: left;
+}
+
+.demo-like.liked {
+  color: #ef4444;
+}
+
+.demo-like.liked svg path {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
+.demo-bookmark.bookmarked {
+  color: #2563eb;
+}
+
+.demo-bookmark.bookmarked svg path {
+  fill: #2563eb;
+  stroke: #2563eb;
+}
+
 .demo-badge-row {
   display: flex;
   justify-content: space-between;
@@ -563,12 +588,12 @@ body {
 }
 
 .demo-card-toolbar {
-  padding: 1.25rem 1.75rem;
+  padding: 0.85rem 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   color: white;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
@@ -590,10 +615,20 @@ body {
   cursor: pointer;
 }
 
+.demo-toolbar-actions button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  stroke: none;
+}
+
 .demo-toolbar-actions button.primary {
   background: white;
   color: #0f172a;
   border-color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .demo-card-body {
@@ -633,10 +668,10 @@ body {
 .demo-input-grid input {
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
   color: white;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 .demo-input-grid input::placeholder {

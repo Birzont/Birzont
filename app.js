@@ -915,6 +915,39 @@ function renderProductFeatures() {
   });
 }
 
+function initDemoSocialCounts() {
+  const likeBtn = document.querySelector('.demo-like');
+  const shareBtn = document.querySelector('.demo-share');
+  const bookmarkBtn = document.querySelector('.demo-bookmark');
+  const likeCountEl = document.querySelector('.demo-like-count');
+  const shareCountEl = document.querySelector('.demo-share-count');
+  
+  if (!likeBtn || !shareBtn || !bookmarkBtn || !likeCountEl || !shareCountEl) return;
+  
+  const randomCount = () => Math.floor(Math.random() * 31);
+  
+  let likeCount = randomCount();
+  const shareCount = randomCount();
+  
+  likeCountEl.textContent = String(likeCount);
+  shareCountEl.textContent = String(shareCount);
+  
+  let liked = false;
+  likeBtn.addEventListener('click', () => {
+    if (liked) return;
+    liked = true;
+    likeCount += 1;
+    likeCountEl.textContent = String(likeCount);
+    likeBtn.classList.add('liked');
+  });
+  
+  let bookmarked = false;
+  bookmarkBtn.addEventListener('click', () => {
+    bookmarked = !bookmarked;
+    bookmarkBtn.classList.toggle('bookmarked', bookmarked);
+  });
+}
+
 function renderLogoSlider() {
   const container = document.getElementById('logo-slider-container');
   if (!container) return;
@@ -1515,6 +1548,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBlog();
   renderCareers();
   renderProductFeatures();
+  initDemoSocialCounts();
   updateMobileState();
   updateHeader();
   initProductCarousel();

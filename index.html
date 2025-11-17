@@ -292,11 +292,11 @@
                 <div class="demo-header-actions">
                   <button type="button" class="demo-like" aria-label="좋아요">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    <span>Like</span>
+                    <span class="demo-like-count">0</span>
                   </button>
                   <button type="button" class="demo-share" aria-label="공유">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7m-5-4l-4-4m0 0L7 8m4-4v12"/></svg>
-                    <span>Share</span>
+                    <span class="demo-share-count">0</span>
                   </button>
                   <button type="button" class="demo-bookmark" aria-label="북마크">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
@@ -309,14 +309,17 @@
                 특히 초기 스타트업이 필수적으로 관리해야 할 재무 항목들을 명확히 파악할 수 있습니다.
               </p>
 
-              <div class="demo-card">
-                <div class="demo-card-toolbar">
-                  <span>Prompt</span>
-                  <div class="demo-toolbar-actions">
-                    <button type="button">Copy</button>
-                    <button type="button" class="primary">Run on chatgpt</button>
+                <div class="demo-card">
+                  <div class="demo-card-toolbar">
+                    <span>Prompt</span>
+                    <div class="demo-toolbar-actions">
+                      <button type="button">Copy</button>
+                      <button type="button" class="primary">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="9 6 18 12 9 18 9 6"></polygon></svg>
+                        Run on ChatGPT
+                      </button>
+                    </div>
                   </div>
-                </div>
                 <div class="demo-card-body">
                   <p>당신은 스타트업 전문 회계 컨설턴트입니다. 다음 정보를 바탕으로 스타트업 회계 관리 체계를 구축해주세요:</p>
                   <div class="demo-input-grid">
