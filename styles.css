@@ -439,6 +439,16 @@ body {
   transform: translateY(-2px);
 }
 
+/* Product Feature Cards */
+.product-feature-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.product-feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 35px 70px rgba(15, 23, 42, 0.18);
+}
+
 /* Logo Slider Styles */
 .logo-slider-container {
   width: 100%;

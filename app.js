@@ -393,8 +393,10 @@ function createAppCard(product) {
   card.style.backgroundPosition = 'center';
   
   const cardContent = document.createElement('div');
-  cardContent.className = 'flex flex-col h-full animate-fadeIn p-4 sm:p-6 md:p-8 relative z-10';
+  const appCardBaseClasses = 'flex flex-col h-full animate-fadeIn p-4 sm:p-6 md:p-8 relative z-10';
+  cardContent.className = appCardBaseClasses;
   cardContent.dataset.showDescription = 'false';
+  cardContent.dataset.baseClass = appCardBaseClasses;
   
   const logoContainer = document.createElement('div');
   logoContainer.className = 'flex-grow flex items-center justify-center';
@@ -405,8 +407,9 @@ function createAppCard(product) {
   logoWrapper.style.height = state.isMobile ? '100%' : 'clamp(120px, 80%, 240px)';
   logoWrapper.style.maxWidth = '100%';
   
+  const displayImageSrc = product.featureImage || product.defaultLogoSrc;
   const logoImg = document.createElement('img');
-  logoImg.src = product.defaultLogoSrc;
+  logoImg.src = displayImageSrc;
   logoImg.alt = product.title;
   logoImg.className = 'object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert w-full h-auto';
   logoImg.style.maxWidth = 'clamp(100px, 100%, 230px)';
@@ -467,11 +470,14 @@ function createAppCard(product) {
 
 function toggleCardDescription(cardContent, product) {
   const showDescription = cardContent.dataset.showDescription === 'true';
+  const baseClasses = cardContent.dataset.baseClass || 'flex flex-col h-full animate-fadeIn p-4 sm:p-6 md:p-8 relative z-10';
+  const activeClasses = 'flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl';
   
   if (showDescription) {
     // Hide description
     cardContent.dataset.showDescription = 'false';
     cardContent.innerHTML = '';
+    cardContent.className = baseClasses;
     
     // Recreate original content
     const logoContainer = document.createElement('div');
@@ -520,7 +526,7 @@ function toggleCardDescription(cardContent, product) {
     // Show description - 먼저 기존 콘텐츠를 완전히 제거
     cardContent.dataset.showDescription = 'true';
     cardContent.innerHTML = ''; // 기존 로고, 텍스트, +버튼 제거
-    cardContent.className = 'flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl';
+    cardContent.className = activeClasses;
     
     const header = document.createElement('div');
     header.className = 'flex items-center gap-3 mb-4';
@@ -698,27 +704,28 @@ function createProductFeatureCard(product) {
   cardContainer.className = 'w-full app-card-container';
   
   const card = document.createElement('div');
-  card.className = 'relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow-2xl';
+  card.className = 'product-feature-card relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow-2xl';
   card.style.backgroundImage = `url(${product.bgColor})`;
   card.style.backgroundSize = 'cover';
   card.style.backgroundPosition = 'center';
   
   // 아이콘 이미지 영역 - 위, 왼쪽, 오른쪽을 꽉 채움
   const logoArea = document.createElement('div');
-  logoArea.className = 'absolute top-0 left-0 right-0';
-  logoArea.style.height = 'calc(100% - 120px)'; // 텍스트 영역을 위한 공간 확보
-  logoArea.style.padding = '1rem';
+  logoArea.className = 'absolute top-0 left-0 right-0 overflow-hidden';
+  logoArea.style.height = 'calc(100% - 80px)'; // 텍스트 영역을 위한 공간 확보
+  logoArea.style.padding = '0';
   logoArea.style.display = 'flex';
-  logoArea.style.alignItems = 'flex-start';
+  logoArea.style.alignItems = 'center';
   logoArea.style.justifyContent = 'center';
   
+  const displayImageSrc = product.featureImage || product.defaultLogoSrc;
   const logoImg = document.createElement('img');
-  logoImg.src = product.defaultLogoSrc;
+  logoImg.src = displayImageSrc;
   logoImg.alt = product.title;
-  logoImg.className = 'transition-all duration-500 group-hover:brightness-0 group-hover:invert';
+  logoImg.className = 'transition-all duration-500';
   logoImg.style.width = '100%';
   logoImg.style.height = '100%';
-  logoImg.style.objectFit = 'contain';
+  logoImg.style.objectFit = 'cover';
   logoImg.style.display = 'block';
   
   logoArea.appendChild(logoImg);
@@ -726,27 +733,35 @@ function createProductFeatureCard(product) {
   
   // 텍스트 영역 - 하단에 흰색 배경
   const textArea = document.createElement('div');
-  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white p-4 sm:p-6 md:p-8 flex justify-between items-center';
-  textArea.style.height = '120px';
+  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white px-4 sm:px-6 md:px-8 py-3 flex justify-between items-center';
+  textArea.style.height = '80px';
   
   const title = document.createElement('h2');
   title.className = 'font-bold text-black transition-colors duration-500';
   title.style.fontSize = '1.2rem';
   title.textContent = product.title;
   
-  const plusBtn = document.createElement('button');
-  plusBtn.className = 'bg-black text-white rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-500 group-hover:bg-white group-hover:text-black';
-  plusBtn.style.width = 'clamp(2rem, 3vw, 2.5rem)';
-  plusBtn.style.height = 'clamp(2rem, 3vw, 2.5rem)';
-  plusBtn.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: clamp(0.875rem, 1.5vw, 1.25rem); height: clamp(0.875rem, 1.5vw, 1.25rem)">
-      <path d="M5 12h14"></path>
-      <path d="M12 5v14"></path>
+  const arrowBtn = document.createElement('button');
+  arrowBtn.className = 'rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-300';
+  arrowBtn.style.width = 'clamp(2.25rem, 3vw, 2.75rem)';
+  arrowBtn.style.height = 'clamp(2.25rem, 3vw, 2.75rem)';
+  arrowBtn.style.backgroundColor = '#000';
+  arrowBtn.style.color = '#fff';
+  arrowBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
     </svg>
   `;
+  arrowBtn.addEventListener('mouseenter', () => {
+    arrowBtn.style.backgroundColor = '#111';
+  });
+  arrowBtn.addEventListener('mouseleave', () => {
+    arrowBtn.style.backgroundColor = '#000';
+  });
   
   textArea.appendChild(title);
-  textArea.appendChild(plusBtn);
+  textArea.appendChild(arrowBtn);
   card.appendChild(textArea);
   
   // 클릭 시 설명 표시를 위한 컨텐츠 영역 (숨김)
@@ -778,19 +793,24 @@ function createProductFeatureCard(product) {
 
 function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product) {
   const showDescription = cardContent.dataset.showDescription === 'true';
+  const baseClasses = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl transition-opacity duration-500';
   
   if (showDescription) {
     // Hide description
     cardContent.dataset.showDescription = 'false';
+    cardContent.className = `${baseClasses} opacity-0 pointer-events-none`;
     cardContent.style.opacity = '0';
     cardContent.style.pointerEvents = 'none';
+    cardContent.innerHTML = '';
     logoArea.style.opacity = '1';
     textArea.style.opacity = '1';
   } else {
     // Show description
     cardContent.dataset.showDescription = 'true';
     cardContent.innerHTML = '';
-    cardContent.className = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl opacity-100 pointer-events-auto transition-opacity duration-500';
+    cardContent.className = baseClasses;
+    cardContent.style.opacity = '1';
+    cardContent.style.pointerEvents = 'auto';
     
     const header = document.createElement('div');
     header.className = 'flex items-center gap-3 mb-4';
@@ -855,34 +875,37 @@ function renderProductFeatures() {
   // 3개의 프로덕트 기능 카드 데이터
   const productFeatures = [
     {
-      title: "Prompist",
+      title: "강력한 성능",
       description: "Supported by OpenAI, Claude, Grok and Gemini",
       logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
       bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
       link: "#",
       index: 0,
       modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png"
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+      featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
     },
     {
-      title: "Bloxer",
+      title: "강력한 기능",
       description: "이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.",
       logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
       bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
       link: "#",
       index: 1,
       modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png"
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+      featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
     },
     {
-      title: "Jibung",
+      title: "공유 호환성",
       description: "Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.",
       logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
       bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
       link: "#",
       index: 2,
       modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png"
+      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+      featureImage: "https://i.pinimg.com/736x/23/1d/71/231d71195172650c2c4488435b1ca7e6.jpg"
     }
   ];
   
