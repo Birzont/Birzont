@@ -1574,6 +1574,121 @@ document.addEventListener('DOMContentLoaded', () => {
     navCard.addEventListener('mouseleave', handleCardLeave);
   }
   
+  const initBlurFadeOnce = () => {
+    const targets = document.querySelectorAll('.blur-fade-once');
+    if (!targets.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(target => target.classList.add('blur-fade-once-visible'));
+      return;
+    }
+
+    // Hero 섹션 요소들을 순차적으로 나타나게 하는 함수
+    const initHeroSequence = () => {
+      const heroTitle = document.querySelector('.hero-title');
+      if (!heroTitle) return;
+      
+      const heroSection = heroTitle.closest('section');
+      if (!heroSection) return;
+      
+      // Hero 섹션의 순서가 있는 요소들
+      const heroElements = [
+        heroTitle,
+        heroSection.querySelector('p.blur-fade-once[data-hero-order="2"]'),
+        heroSection.querySelector('button.blur-fade-once[data-hero-order="3"]')
+      ].filter(Boolean);
+      
+      const heroImage = document.getElementById('image-canvas');
+      
+      // 첫 번째 요소가 나타나면 다음 요소들을 순차적으로 트리거
+      const triggerNextElement = (index) => {
+        if (index >= heroElements.length) {
+          // 모든 텍스트 요소가 나타났으므로 이미지 트리거
+          if (heroImage && heroImage.classList.contains('hero-image-slide-up') && 
+              !heroImage.classList.contains('hero-image-slide-up-visible')) {
+            setTimeout(() => {
+              heroImage.classList.add('hero-image-slide-up-visible');
+            }, 150);
+          }
+          return;
+        }
+        
+        const currentElement = heroElements[index];
+        if (currentElement && !currentElement.classList.contains('blur-fade-once-visible')) {
+          currentElement.classList.add('blur-fade-once-visible');
+          
+          // 다음 요소를 0.5초 후에 트리거
+          setTimeout(() => {
+            triggerNextElement(index + 1);
+          }, 500);
+        }
+      };
+      
+      // 첫 번째 요소가 화면에 보이면 시작
+      const checkHeroStart = () => {
+        const rect = heroSection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible && heroElements.length > 0) {
+          // 첫 번째 요소가 아직 나타나지 않았다면 나타나게 함
+          if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
+            heroElements[0].classList.add('blur-fade-once-visible');
+            setTimeout(() => {
+              triggerNextElement(1);
+            }, 500);
+          }
+        }
+      };
+      
+      // 초기 체크
+      setTimeout(checkHeroStart, 100);
+      
+      // 첫 번째 요소를 관찰하여 시작
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target === heroElements[0]) {
+            if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
+              heroElements[0].classList.add('blur-fade-once-visible');
+              setTimeout(() => {
+                triggerNextElement(1);
+              }, 500);
+            }
+            heroObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      if (heroElements[0]) {
+        heroObserver.observe(heroElements[0]);
+      }
+    };
+
+    // Hero 섹션이 아닌 일반 요소들을 위한 observer
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        // Hero 섹션의 순서가 있는 요소들은 제외
+        if (entry.target.hasAttribute('data-hero-order')) {
+          return;
+        }
+        
+        if (entry.isIntersecting) {
+          entry.target.classList.add('blur-fade-once-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // Hero 섹션이 아닌 요소들만 observer에 추가
+    targets.forEach(target => {
+      if (!target.hasAttribute('data-hero-order')) {
+        observer.observe(target);
+      }
+    });
+    
+    // Hero 섹션 초기화
+    initHeroSequence();
+  };
+
   // Initialize
   createPixels();
   renderProducts();
@@ -1586,6 +1701,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateMobileState();
   updateHeader();
   initProductCarousel();
+  initBlurFadeOnce();
   
   // Pixel blinking
   setInterval(blinkRandomPixels, 1000);

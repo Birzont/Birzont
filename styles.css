@@ -21,6 +21,30 @@ body {
   font-family: 'Garamond', 'EB Garamond', 'Times New Roman', serif;
 }
 
+.blur-fade-once {
+  opacity: 0;
+  filter: blur(18px);
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+}
+
+.blur-fade-once-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+.hero-image-slide-up {
+  opacity: 0;
+  transform: translateY(80px);
+  transition: opacity 1s ease-out 0.2s, transform 1s ease-out 0.2s;
+}
+
+.hero-image-slide-up-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
