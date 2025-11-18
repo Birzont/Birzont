@@ -861,6 +861,7 @@ body {
   opacity: 1;
   filter: grayscale(0%);
 }
+
 /* User Prompts Section */
 .user-prompts-grid {
   display: grid;
@@ -901,7 +902,7 @@ body {
   padding: 0.35rem 0.75rem;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   color: #0f172a;
 }
 
@@ -1047,5 +1048,4 @@ body {
     gap: 1rem;
   }
 }
-
 
