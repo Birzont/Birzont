@@ -184,17 +184,7 @@ const navCardContent = {
     ],
     image: "https://birzont.github.io/BirzontArchive/res/TreeBuilding.png"
   },
-  BiAI: {
-    title: "BiAI 플랫폼",
-    items: [
-      { text: "기능 소개", href: "#" },
-      { text: "사용 사례", href: "#" },
-      { text: "가격 정책", href: "#" },
-      { text: "개발자 문서", href: "#" },
-      { text: "API 레퍼런스", href: "#" }
-    ],
-    image: "https://birzont.github.io/BirzontArchive/res/CobbleMac.png"
-  }
+  
 };
 
 // Utility functions
@@ -1325,10 +1315,7 @@ function handleNavHover(item, index) {
   const rect = navItem.getBoundingClientRect();
   let left = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
   
-  if (item === "BiAI") {
-    // BiAI: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
-    left = startBtnRight - cardWidth - 16;
-  } else if (item === "Career") {
+  if (item === "Career") {
     // Career: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
     const calculatedLeft = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
     const cardRight = calculatedLeft + cardWidth;
@@ -1343,13 +1330,9 @@ function handleNavHover(item, index) {
   
   navCard.style.top = `${headerRect.bottom + 5}px`;
   navCard.style.left = `${left}px`;
-  navCard.style.display = 'flex';
-  navCard.classList.add('show');
   
-  setTimeout(() => {
-    state.activeCard = item;
-    updateNavCard();
-  }, 10);
+  state.activeCard = item;
+  updateNavCard();
 }
 
 function handleNavLeave() {
@@ -1396,10 +1379,8 @@ function updateNavCard() {
     `;
     
     navCard.classList.add('show');
-    navCard.style.display = 'flex';
   } else {
     navCard.classList.remove('show');
-    navCard.style.display = 'none';
   }
 }
 

@@ -112,15 +112,35 @@ body {
 
 /* Nav Card Styles */
 #nav-card {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  transform: translateY(10px);
+  position: fixed;
+  transition: opacity 0.28s ease, transform 0.28s ease, filter 0.28s ease;
+  transform: translateY(12px) scale(0.97);
   opacity: 0;
+  pointer-events: none;
+  filter: blur(12px);
 }
 
 #nav-card.show {
   opacity: 1;
   pointer-events: auto;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+#nav-card-content,
+#nav-card-image {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+}
+
+#nav-card.show #nav-card-content,
+#nav-card.show #nav-card-image {
+  opacity: 1;
+  filter: blur(0);
   transform: translateY(0);
+  transition-delay: 0.05s;
 }
 
 /* App Card Modal Styles */
