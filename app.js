@@ -1694,22 +1694,29 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (promptGrid && promptPrevBtn && promptNextBtn) {
     let currentPromptIndex = 0;
-    const totalPromptCards = promptGrid.querySelectorAll('.user-prompt-card').length;
+    const promptCards = promptGrid.querySelectorAll('.user-prompt-card');
+    const totalPromptCards = promptCards.length;
     
     function scrollToPromptCard(index) {
-      const card = promptGrid.querySelectorAll('.user-prompt-card')[index];
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
+      const cardWidth = promptCards[0].offsetWidth;
+      const gap = 16; // 1rem gap
+      const scrollPosition = index * (cardWidth + gap);
+      promptGrid.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     }
     
     promptPrevBtn.addEventListener('click', () => {
-      currentPromptIndex = Math.max(0, currentPromptIndex - 1);
+      currentPromptIndex = currentPromptIndex - 1;
+      if (currentPromptIndex < 0) {
+        currentPromptIndex = totalPromptCards - 1; // Loop to last
+      }
       scrollToPromptCard(currentPromptIndex);
     });
     
     promptNextBtn.addEventListener('click', () => {
-      currentPromptIndex = Math.min(totalPromptCards - 1, currentPromptIndex + 1);
+      currentPromptIndex = currentPromptIndex + 1;
+      if (currentPromptIndex >= totalPromptCards) {
+        currentPromptIndex = 0; // Loop to first
+      }
       scrollToPromptCard(currentPromptIndex);
     });
   }

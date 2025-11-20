@@ -909,16 +909,19 @@ body {
 /* User Prompts Section */
 .user-prompts-container {
   position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 35px;
 }
 
 .user-prompts-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  display: flex;
+  gap: 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 .user-prompts-grid::-webkit-scrollbar {
@@ -935,10 +938,11 @@ body {
   gap: 0.85rem;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-  height: 280px;
-  scroll-snap-align: center;
+  height: 210px;
+  scroll-snap-align: start;
   flex-shrink: 0;
   width: 100%;
+  min-width: 100%;
 }
 
 .user-prompt-card:hover {
@@ -962,7 +966,7 @@ body {
   padding: 0.25rem 0.6rem;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #0f172a;
 }
 
@@ -1051,7 +1055,7 @@ body {
 }
 
 .user-prompt-title {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: #0f172a;
   margin: 0;
@@ -1064,7 +1068,7 @@ body {
 }
 
 .user-prompt-description {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: #4c5465;
   line-height: 1.65;
   margin: 0;
@@ -1147,7 +1151,12 @@ body {
 }
 
 @media (min-width: 768px) {
+  .user-prompts-container {
+    padding: 0;
+  }
+
   .user-prompts-grid {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     overflow-x: visible;
@@ -1159,6 +1168,7 @@ body {
     gap: 1rem;
     height: 320px;
     width: auto;
+    min-width: auto;
     flex-shrink: 1;
   }
 
