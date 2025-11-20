@@ -1687,6 +1687,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pixel blinking
   setInterval(blinkRandomPixels, 1000);
   
+  // Prompt carousel for mobile
+  const promptGrid = document.querySelector('.user-prompts-grid');
+  const promptPrevBtn = document.getElementById('prompt-prev-btn');
+  const promptNextBtn = document.getElementById('prompt-next-btn');
+  
+  if (promptGrid && promptPrevBtn && promptNextBtn) {
+    let currentPromptIndex = 0;
+    const totalPromptCards = promptGrid.querySelectorAll('.user-prompt-card').length;
+    
+    function scrollToPromptCard(index) {
+      const card = promptGrid.querySelectorAll('.user-prompt-card')[index];
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+    
+    promptPrevBtn.addEventListener('click', () => {
+      currentPromptIndex = Math.max(0, currentPromptIndex - 1);
+      scrollToPromptCard(currentPromptIndex);
+    });
+    
+    promptNextBtn.addEventListener('click', () => {
+      currentPromptIndex = Math.min(totalPromptCards - 1, currentPromptIndex + 1);
+      scrollToPromptCard(currentPromptIndex);
+    });
+  }
+  
   // Canvas height update is no longer needed for the new centered layout
 });
 

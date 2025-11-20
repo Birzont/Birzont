@@ -907,10 +907,22 @@ body {
 }
 
 /* User Prompts Section */
+.user-prompts-container {
+  position: relative;
+}
+
 .user-prompts-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.user-prompts-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .user-prompt-card {
@@ -923,7 +935,10 @@ body {
   gap: 0.85rem;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-  height: 320px;
+  height: 280px;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .user-prompt-card:hover {
@@ -1092,16 +1107,63 @@ body {
   stroke: none;
 }
 
+/* Carousel Navigation Buttons */
+.prompt-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.prompt-carousel-btn:hover {
+  background: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.prompt-carousel-btn-prev {
+  left: -20px;
+}
+
+.prompt-carousel-btn-next {
+  right: -20px;
+}
+
+.prompt-carousel-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #0f172a;
+  fill: none;
+}
+
 @media (min-width: 768px) {
   .user-prompts-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    overflow-x: visible;
+    scroll-snap-type: none;
   }
 
   .user-prompt-card {
     padding: 1.5rem;
     gap: 1rem;
-    height: auto;
+    height: 320px;
+    width: auto;
+    flex-shrink: 1;
+  }
+
+  .prompt-carousel-btn {
+    display: none;
   }
 }
 
