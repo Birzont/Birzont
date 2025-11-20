@@ -175,15 +175,15 @@ const navCardContent = {
     ],
     image: "https://birzont.github.io/BirzontArchive/res/CoffeeBook.png"
   },
-  Career: {
-    title: "채용 정보",
-    items: [
-      { text: "Careers", href: "#" },
-      { text: "Talent pool", href: "#" },
-      { text: "Culture Fits", href: "#" }
-    ],
-    image: "https://birzont.github.io/BirzontArchive/res/TreeBuilding.png"
-  },
+  // Career: {
+  //   title: "채용 정보",
+  //   items: [
+  //     { text: "Careers", href: "#" },
+  //     { text: "Talent pool", href: "#" }
+  //     // { text: "Culture Fits", href: "#" }
+  //   ],
+  //   image: "https://birzont.github.io/BirzontArchive/res/TreeBuilding.png"
+  // },
   
 };
 

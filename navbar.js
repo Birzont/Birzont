@@ -21,9 +21,6 @@
           <div class="relative nav-item" data-item="Career">
             <a href="index.html#career" class="font-normal text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Career</a>
           </div>
-          <div class="relative nav-item">
-            <a href="index.html#pricing" class="font-normal text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Pricing</a>
-          </div>
         </nav>
 
         <button id="mobile-menu-btn" class="hidden px-4 py-2 text-white">
@@ -49,7 +46,6 @@
         <a href="index.html#product" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Product</a>
         <a href="index.html#blog" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Blog</a>
         <a href="index.html#career" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Career</a>
-        <a href="index.html#pricing" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Pricing</a>
         <div class="mt-4 pt-2">
           <button class="w-full px-5 py-3 font-bold rounded-xl bg-black text-white transition-all duration-300">시작하기</button>
         </div>
