@@ -227,10 +227,10 @@
       <section class="pt-10 md:pt-12 pb-16 md:pb-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12" aria-label="맞춤 에이전트">
         <!-- Large Card Container -->
         <div class="product-card-large bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 blur-fade-once">
-          <div class="flex flex-col md:flex-row gap-0 items-stretch">
+          <div class="flex flex-col md:flex-row gap-0 items-stretch agent-card-container">
             <!-- Left Content - Tab List -->
-            <div class="w-full md:w-1/3 flex-shrink-0 p-8 md:p-12 flex flex-col">
-              <header class="mb-16 md:mb-20">
+            <div class="w-full md:w-1/3 flex-shrink-0 p-8 md:p-12 flex flex-col agent-card-left">
+              <header class="mb-8 md:mb-20">
                 <a href="#" class="group">
                   <h3 class="flex items-center gap-2 mb-4">
                     <span class="text-base font-medium text-gray-600">맞춤 에이전트</span>
@@ -241,6 +241,18 @@
                   </p>
                 </a>
               </header>
+              
+              <!-- Mobile Image Carousel -->
+              <div class="mobile-carousel-wrapper md:hidden mb-8">
+                <div class="mobile-carousel-container">
+                  <div class="mobile-carousel-slides">
+                    <img src="https://i.pinimg.com/originals/67/0b/c0/670bc0f15088200dc7bd31ff37daa245.gif" alt="단순·반복 업무 자동화" class="mobile-carousel-img mobile-carousel-img-active">
+                    <img src="https://i.pinimg.com/originals/df/0a/3e/df0a3e2ec30abb1c92d145ef165b714f.gif" alt="팀원들과 함께하는 AI" class="mobile-carousel-img">
+                    <img src="https://i.pinimg.com/originals/b9/ca/52/b9ca52d76a50a55ea5b4305198c6f59b.gif" alt="내가 아는 정보를 공유합니다" class="mobile-carousel-img">
+                    <img src="https://i.pinimg.com/originals/8b/85/62/8b8562f42f0402989b66dcd5f66c5121.gif" alt="사용자 맞춤형" class="mobile-carousel-img">
+                  </div>
+                </div>
+              </div>
               
               <div role="tablist" aria-label="맞춤 에이전트" class="product-tablist mt-auto">
                 <button type="button" role="tab" value="0" tabindex="0" aria-selected="true" class="product-tab product-tab-active">
@@ -274,7 +286,7 @@
             </div>
             
             <!-- Right Content - Carousel -->
-            <div class="w-full md:flex-1 relative">
+            <div class="w-full md:flex-1 relative agent-card-right">
               <div id="product-carousel" class="absolute inset-0 overflow-hidden bg-gray-100">
                 <div id="product-carousel-slides" class="absolute inset-0" aria-live="polite">
                   <!-- Slide 0 -->
@@ -431,24 +443,24 @@
 
     <!-- Pricing Section -->
     <div class="w-full bg-white">
-      <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4">
+      <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
         <h2 class="text-3xl md:text-4xl font-bold text-center text-black mb-12 md:mb-16">요금제</h2>
         
         <!-- Pricing Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
           <!-- Free Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2" style="border-radius: 24px;">
+          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
             <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black">Free</h3>
+              <h3 class="text-xl font-semibold text-black pricing-card-title">Free</h3>
             </div>
             <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black">Free</span>
+              <span class="text-3xl font-bold text-black pricing-card-price">Free</span>
             </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600" style="min-height: 3rem;">핵심 기능을 무료로 체험해 보세요.</p>
+            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">핵심 기능을 무료로 체험해 보세요.</p>
             <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10" style="border-radius: 12px;">시작하기</button>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">시작하기</button>
             </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700">
+            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
               <li class="flex items-start gap-2">
                 <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                 <span>월 크레딧 5 Token</span>
@@ -473,19 +485,19 @@
           </div>
 
           <!-- Pro Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2" style="border-radius: 24px;">
+          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
             <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black">Pro</h3>
+              <h3 class="text-xl font-semibold text-black pricing-card-title">Pro</h3>
             </div>
             <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black">$9</span>
-              <span class="text-sm text-gray-500">/ month</span>
+              <span class="text-3xl font-bold text-black pricing-card-price">$9</span>
+              <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
             </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600" style="min-height: 3rem;">개인 사용자에게 필요한 모든 고급 기능을 제공합니다.</p>
+            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">개인 사용자에게 필요한 모든 고급 기능을 제공합니다.</p>
             <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10" style="border-radius: 12px;">시작하기</button>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">시작하기</button>
             </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700">
+            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
               <li class="flex items-start gap-2">
                 <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                 <span>월 크레딧 50 Token</span>
@@ -518,19 +530,19 @@
           </div>
 
           <!-- Team Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2" style="border-radius: 24px;">
+          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] shadow-2xl transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
             <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black">Team</h3>
+              <h3 class="text-xl font-semibold text-black pricing-card-title">Team</h3>
             </div>
             <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black">$29</span>
-              <span class="text-sm text-gray-500">/ month</span>
+              <span class="text-3xl font-bold text-black pricing-card-price">$29</span>
+              <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
             </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600" style="min-height: 3rem;">팀 협업과 관리에 최적화된 기능을 제공합니다.</p>
+            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">팀 협업과 관리에 최적화된 기능을 제공합니다.</p>
             <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10" style="border-radius: 12px;">시작하기</button>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">시작하기</button>
             </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700">
+            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
               <li class="flex items-start gap-2">
                 <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                 <span>월 크레딧 250 Token</span>
@@ -648,19 +660,16 @@
 
     <!-- Start Prompt Section -->
     <div class="w-full bg-gray-100 relative overflow-hidden" style="background-image: url('https://designcompass.org/wp-content/uploads/2024/06/sequoia-wp-15-1024x568.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-      <section class="text-center py-40 md:py-64 px-4 w-full max-w-[1600px] mx-auto relative z-10 blur-fade-once">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-black">
+      <section class="text-center py-40 md:py-64 px-4 w-full max-w-[1600px] mx-auto relative z-10 blur-fade-once try-free-section">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-black try-free-title">
           Try for free.
         </h2>
-        <p class="text-lg md:text-xl max-w-[800px] mx-auto leading-relaxed text-gray-700 mb-10">
+        <p class="text-lg md:text-xl max-w-[800px] mx-auto leading-relaxed text-gray-700 mb-10 try-free-description">
           다양한 AI 모델과 함께 창의적인 프롬프트를 만들고, 공유하고, 협업하세요. 당신의 아이디어를 현실로 만들어보세요.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button type="button" class="glass-button px-6 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300">
+          <button type="button" class="glass-button px-6 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300 try-free-button">
             시작하기
-          </button>
-          <button type="button" class="glass-button px-6 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300">
-            요금제
           </button>
         </div>
       </section>

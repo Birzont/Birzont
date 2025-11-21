@@ -439,6 +439,44 @@ body {
   min-height: 100%;
 }
 
+/* Mobile Carousel between header and tablist */
+.mobile-carousel-wrapper {
+  width: calc(100% + 4rem);
+  margin: 0 -2rem;
+}
+
+.mobile-carousel-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.mobile-carousel-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-carousel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.mobile-carousel-img-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
 .carousel-btn {
   background: rgba(255, 255, 255, 0.9);
   border: none;
@@ -506,6 +544,48 @@ body {
   box-shadow: 0 35px 70px rgba(15, 23, 42, 0.18);
 }
 
+/* Product Card Text Area and Title */
+.product-card-logo-area {
+  height: calc(100% - 80px);
+}
+
+.product-card-text-area {
+  height: 80px;
+  padding: 0.75rem 2rem;
+}
+
+.product-card-title {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 767px) {
+  .product-card-logo-area {
+    height: calc(100% - 60px);
+  }
+  
+  .product-card-text-area {
+    height: 60px;
+    padding: 0.5rem 1.5rem;
+  }
+  
+  .product-card-title {
+    font-size: 1.5rem;
+    padding-left: 0.5rem;
+  }
+  
+  .product-card-overlay-title {
+    font-size: 1.75rem !important;
+  }
+  
+  .product-card-overlay-description {
+    font-size: 1.1rem !important;
+  }
+  
+  .product-card-overlay-link {
+    font-size: 1rem !important;
+  }
+}
+
 /* Product Language Section */
 .product-language-grid {
   display: flex;
@@ -527,6 +607,115 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .language-demo {
+    border-radius: 16px;
+  }
+  
+  .demo-surface {
+    padding: 1.25rem;
+  }
+  
+  .demo-header-actions button {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.9rem;
+    min-height: 34px;
+  }
+  
+  /* Pricing section mobile optimization */
+  .pricing-section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100% !important;
+  }
+  
+  .pricing-cards-grid {
+    gap: 1.5rem !important;
+  }
+  
+  .pricing-card {
+    padding: 2rem !important;
+    min-height: auto !important;
+  }
+  
+  .pricing-card > div:first-child {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .pricing-card-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .pricing-card > div:nth-child(2) {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .pricing-card-price {
+    font-size: 2.5rem !important;
+  }
+  
+  .pricing-card-period {
+    font-size: 1rem !important;
+  }
+  
+  .pricing-card-description {
+    font-size: 1rem !important;
+    min-height: auto !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .pricing-card-button {
+    font-size: 1rem !important;
+    height: 3rem !important;
+    margin-top: 0.75rem !important;
+  }
+  
+  .pricing-card-features {
+    font-size: 1.1rem !important;
+    gap: 1rem !important;
+    margin-top: 1.5rem !important;
+  }
+  
+  .pricing-card-features li {
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .pricing-card-features li span {
+    font-size: 1.1rem !important;
+  }
+  
+  /* Try for free section mobile optimization */
+  .try-free-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .try-free-description {
+    font-size: 1.25rem !important;
+  }
+  
+  .try-free-button {
+    font-size: 1.25rem !important;
+    padding: 1rem 2rem !important;
+    height: auto !important;
+  }
+}
+
+/* Try for free button styling */
+.try-free-button {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.try-free-button:hover {
+  background: rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .demo-header {
@@ -884,6 +1073,12 @@ body {
   will-change: transform;
 }
 
+@media (max-width: 767px) {
+  .logo-slider-track {
+    gap: 2rem;
+  }
+}
+
 .logo-slider-item {
   flex-shrink: 0;
   display: flex;
@@ -901,6 +1096,12 @@ body {
   filter: grayscale(100%);
 }
 
+@media (max-width: 767px) {
+  .logo-slider-img {
+    height: 30px;
+  }
+}
+
 .logo-slider-item:hover .logo-slider-img {
   opacity: 1;
   filter: grayscale(0%);
@@ -911,7 +1112,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 0 35px;
+  padding: 0 1rem;
 }
 
 .user-prompts-grid {
@@ -966,7 +1167,7 @@ body {
   padding: 0.25rem 0.6rem;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #0f172a;
 }
 
@@ -1113,41 +1314,7 @@ body {
 
 /* Carousel Navigation Buttons */
 .prompt-carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
-  z-index: 10;
-  transition: all 0.2s ease;
-}
-
-.prompt-carousel-btn:hover {
-  background: #f8f9fa;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-}
-
-.prompt-carousel-btn-prev {
-  left: -20px;
-}
-
-.prompt-carousel-btn-next {
-  right: -20px;
-}
-
-.prompt-carousel-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: #0f172a;
-  fill: none;
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -1166,10 +1333,18 @@ body {
   .user-prompt-card {
     padding: 1.5rem;
     gap: 1rem;
-    height: 320px;
+    height: 280px;
     width: auto;
     min-width: auto;
     flex-shrink: 1;
+  }
+
+  .user-prompt-title {
+    font-size: 1.15rem;
+  }
+
+  .user-prompt-description {
+    font-size: 0.9rem;
   }
 
   .prompt-carousel-btn {

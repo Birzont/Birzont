@@ -701,8 +701,7 @@ function createProductFeatureCard(product) {
   
   // 아이콘 이미지 영역 - 위, 왼쪽, 오른쪽을 꽉 채움
   const logoArea = document.createElement('div');
-  logoArea.className = 'absolute top-0 left-0 right-0 overflow-hidden';
-  logoArea.style.height = 'calc(100% - 80px)'; // 텍스트 영역을 위한 공간 확보
+  logoArea.className = 'absolute top-0 left-0 right-0 overflow-hidden product-card-logo-area';
   logoArea.style.padding = '0';
   logoArea.style.display = 'flex';
   logoArea.style.alignItems = 'center';
@@ -723,12 +722,10 @@ function createProductFeatureCard(product) {
   
   // 텍스트 영역 - 하단에 흰색 배경
   const textArea = document.createElement('div');
-  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white px-4 sm:px-6 md:px-8 py-3 flex justify-between items-center';
-  textArea.style.height = '80px';
+  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white flex justify-between items-center product-card-text-area';
   
   const title = document.createElement('h2');
-  title.className = 'font-bold text-black transition-colors duration-500';
-  title.style.fontSize = '1.2rem';
+  title.className = 'font-bold text-black transition-colors duration-500 product-card-title';
   title.textContent = product.title;
   
   const arrowBtn = document.createElement('button');
@@ -763,20 +760,10 @@ function createProductFeatureCard(product) {
   // overlay 제거 - 마우스 오버 시 배경이 어두워지지 않도록
   
   card.addEventListener('click', (e) => {
-    if (state.isMobile) {
-      showMobileModal(product);
-    } else {
-      toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product);
-    }
+    toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product);
   });
   
-  const mobileTitle = document.createElement('h2');
-  mobileTitle.className = 'md:hidden text-black mt-3 font-bold';
-  mobileTitle.style.fontSize = 'clamp(1rem, 5vw, 1.25rem)';
-  mobileTitle.textContent = product.title;
-  
   cardContainer.appendChild(card);
-  cardContainer.appendChild(mobileTitle);
   
   return cardContainer;
 }
@@ -819,8 +806,7 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, pr
     header.appendChild(iconWrapper);
     
     const title = document.createElement('h2');
-    title.className = 'font-bold transition-colors duration-500';
-    title.style.fontSize = 'clamp(1.5rem, 3vw, 1.875rem)';
+    title.className = 'font-bold transition-colors duration-500 product-card-overlay-title';
     title.textContent = product.title;
     header.appendChild(title);
     
@@ -830,8 +816,7 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, pr
     content.className = 'flex flex-col';
     
     const description = document.createElement('p');
-    description.className = 'transition-colors duration-500 mb-2';
-    description.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    description.className = 'transition-colors duration-500 mb-2 product-card-overlay-description';
     description.textContent = product.description;
     content.appendChild(description);
     
@@ -839,8 +824,7 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, pr
     link.href = product.link;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2';
-    link.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2 product-card-overlay-link';
     link.innerHTML = '바로가기 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
     link.addEventListener('click', (e) => e.stopPropagation());
     content.appendChild(link);
@@ -1394,6 +1378,7 @@ function initProductCarousel() {
   const tabs = document.querySelectorAll('.product-tablist .product-tab');
   const indicators = document.querySelectorAll('.product-indicator');
   const slides = document.querySelectorAll('.product-slide');
+  const mobileCarouselImgs = document.querySelectorAll('.mobile-carousel-img');
   const prevBtn = document.getElementById('product-carousel-prev');
   const nextBtn = document.getElementById('product-carousel-next');
   
@@ -1435,7 +1420,7 @@ function initProductCarousel() {
       }
     });
     
-    // Update slides
+    // Update slides (desktop)
     slides.forEach((slide, i) => {
       if (i === index) {
         slide.classList.add('product-slide-active');
@@ -1445,6 +1430,15 @@ function initProductCarousel() {
         slide.classList.remove('product-slide-active');
         slide.setAttribute('hidden', '');
         slide.setAttribute('aria-hidden', 'true');
+      }
+    });
+    
+    // Update mobile carousel images
+    mobileCarouselImgs.forEach((img, i) => {
+      if (i === index) {
+        img.classList.add('mobile-carousel-img-active');
+      } else {
+        img.classList.remove('mobile-carousel-img-active');
       }
     });
     
@@ -1692,10 +1686,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const promptPrevBtn = document.getElementById('prompt-prev-btn');
   const promptNextBtn = document.getElementById('prompt-next-btn');
   
-  if (promptGrid && promptPrevBtn && promptNextBtn) {
+  if (promptGrid) {
     let currentPromptIndex = 0;
     const promptCards = promptGrid.querySelectorAll('.user-prompt-card');
     const totalPromptCards = promptCards.length;
+    let autoSlideInterval = null;
     
     function scrollToPromptCard(index) {
       const cardWidth = promptCards[0].offsetWidth;
@@ -1704,21 +1699,85 @@ document.addEventListener('DOMContentLoaded', () => {
       promptGrid.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     }
     
-    promptPrevBtn.addEventListener('click', () => {
-      currentPromptIndex = currentPromptIndex - 1;
-      if (currentPromptIndex < 0) {
-        currentPromptIndex = totalPromptCards - 1; // Loop to last
-      }
-      scrollToPromptCard(currentPromptIndex);
-    });
-    
-    promptNextBtn.addEventListener('click', () => {
+    function nextSlide() {
       currentPromptIndex = currentPromptIndex + 1;
       if (currentPromptIndex >= totalPromptCards) {
         currentPromptIndex = 0; // Loop to first
       }
       scrollToPromptCard(currentPromptIndex);
+    }
+    
+    function prevSlide() {
+      currentPromptIndex = currentPromptIndex - 1;
+      if (currentPromptIndex < 0) {
+        currentPromptIndex = totalPromptCards - 1; // Loop to last
+      }
+      scrollToPromptCard(currentPromptIndex);
+    }
+    
+    function startAutoSlide() {
+      if (state.isMobile && !autoSlideInterval) {
+        autoSlideInterval = setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+      }
+    }
+    
+    function stopAutoSlide() {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+      }
+    }
+    
+    function resetAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+    
+    // Button event listeners
+    if (promptPrevBtn) {
+      promptPrevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetAutoSlide();
+      });
+    }
+    
+    if (promptNextBtn) {
+      promptNextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetAutoSlide();
+      });
+    }
+    
+    // Manual scroll detection to sync currentPromptIndex
+    let scrollTimeout;
+    promptGrid.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const cardWidth = promptCards[0].offsetWidth;
+        const gap = 16;
+        const scrollLeft = promptGrid.scrollLeft;
+        const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+        if (newIndex !== currentPromptIndex) {
+          currentPromptIndex = newIndex;
+          resetAutoSlide();
+        }
+      }, 100);
     });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const wasMobile = state.isMobile;
+      state.isMobile = window.innerWidth <= 900;
+      
+      if (state.isMobile && !wasMobile) {
+        startAutoSlide();
+      } else if (!state.isMobile && wasMobile) {
+        stopAutoSlide();
+      }
+    });
+    
+    // Start auto-slide on mobile
+    startAutoSlide();
   }
   
   // Canvas height update is no longer needed for the new centered layout
