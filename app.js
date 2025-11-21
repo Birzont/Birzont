@@ -1227,7 +1227,7 @@ function renderCareers() {
   if (!container) return;
   
   const wrapper = document.createElement('div');
-  wrapper.className = 'rounded-3xl py-24 px-8 md:px-12 text-center relative overflow-hidden';
+  wrapper.className = 'rounded-3xl py-24 px-8 md:px-12 text-center relative overflow-hidden careers-section';
   wrapper.style.backgroundImage = 'url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?cs=srgb&dl=pexels-eberhardgross-1421903.jpg&fm=jpg)';
   wrapper.style.backgroundSize = 'cover';
   wrapper.style.backgroundPosition = 'center';
@@ -1236,18 +1236,18 @@ function renderCareers() {
   overlay.className = 'absolute inset-0 bg-black opacity-35';
   
   const content = document.createElement('div');
-  content.className = 'relative z-10 flex flex-col items-center justify-center min-h-[200px]';
+  content.className = 'relative z-10 flex flex-col items-center justify-center min-h-[200px] careers-content';
   
   const title = document.createElement('h2');
-  title.className = 'text-4xl font-bold mb-6 text-white';
+  title.className = 'text-4xl font-bold mb-6 text-white careers-title';
   title.textContent = '합류할 곳을 찾고 있나요?';
   
   const text1 = document.createElement('p');
-  text1.className = 'text-white/80 mb-2';
+  text1.className = 'text-white/80 mb-2 careers-text';
   text1.textContent = '버전트에서 아이디어를 실현하세요.';
   
   const text2 = document.createElement('p');
-  text2.className = 'text-white/80 mb-10';
+  text2.className = 'text-white/80 mb-10 careers-text';
   text2.textContent = '우리는 인재 여러분들을 기다리고 있습니다.';
   
   const linkContainer = document.createElement('div');
@@ -1255,7 +1255,7 @@ function renderCareers() {
   
   const link = document.createElement('a');
   link.href = 'mailto:contact@birzont.com';
-  link.className = 'inline-block border border-white/70 text-white hover:bg-white hover:text-black transition-all duration-300 rounded-lg py-3 px-8 font-medium';
+  link.className = 'inline-block border border-white/70 text-white hover:bg-white hover:text-black transition-all duration-300 rounded-lg py-3 px-8 font-medium careers-button';
   link.textContent = '채용공고 보기';
   
   linkContainer.appendChild(link);
