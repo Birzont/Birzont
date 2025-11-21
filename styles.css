@@ -1107,6 +1107,7 @@ body {
 @media (max-width: 767px) {
   .logo-slider-track {
     gap: 2rem;
+    animation: logoSlide 30s linear infinite;
   }
 }
 
