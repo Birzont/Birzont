@@ -90,7 +90,7 @@
             <ul class="space-y-3">
               <li><a href="about.html" class="text-gray-600 hover:text-black transition-colors">About us</a></li>
               <li><a href="index.html#career" class="text-gray-600 hover:text-black transition-colors">Career</a></li>
-              <li><a href="index.html#blog" class="text-gray-600 hover:text-black transition-colors">Blog</a></li>
+              <li><a href="blog.html" class="text-gray-600 hover:text-black transition-colors">Blog</a></li>
               <li><a href="#" class="text-gray-600 hover:text-black transition-colors">Brand</a></li>
             </ul>
           </div>

@@ -1540,13 +1540,83 @@ body {
 
 /* Section Image Styles */
 .section-image {
-  max-height: 400px;
+  max-height: 500px;
   object-fit: cover;
 }
 
 @media (max-width: 767px) {
   .section-image {
-    max-height: 250px;
+    max-height: 200px;
+  }
+}
+
+/* About Page Product Cards */
+.about-product-card {
+  transition: transform 0.3s ease;
+}
+
+.about-product-card:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 767px) {
+  .about-product-card {
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+  
+  .about-product-card h3 {
+    font-size: 1.25rem;
+  }
+  
+  .about-product-card img {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  
+  .about-product-card .w-8 {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+}
+
+/* About Page Timeline Styles */
+.timeline-year-tab {
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .timeline-year-tab {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .timeline-year-tab-container {
+    padding: 0.25rem;
+  }
+  
+  /* Timeline events mobile - centered layout */
+  #timeline-container .relative > div[style*="width: 45%"] {
+    width: 45% !important;
+  }
+  
+  #timeline-container .text-right {
+    text-align: right !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  #timeline-container .text-left {
+    text-align: left !important;
+    padding-left: 0.5rem !important;
+  }
+  
+  #timeline-container .absolute.w-3.h-3.rounded-full {
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
   }
 }
 

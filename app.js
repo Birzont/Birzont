@@ -18,10 +18,10 @@ const state = {
 // Data
 const products = [
   {
-    title: "Prompist",
+    title: "Birzont",
     description: "Supported by OpenAI, Claude, Grok and Gemini ",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-    bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+    bgColor: "https://i.pinimg.com/736x/37/5f/ff/375fff127fbc42ea2c95ad3118c779ba.jpg",
     link: "https://google.com",
     index: 0,
     modalImage: "https://birzont.github.io/BirzontArchive/res/Prompistbg.png"
@@ -30,16 +30,16 @@ const products = [
     title: "Bloxer",
     description: "이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-    bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+    bgColor: "https://i.redd.it/vgr7nzhng0a51.jpg",
     link: "https://google.com",
     index: 1,
     modalImage: "https://play.ht/blog/wp-content/uploads/2024/04/what-is-perplexity-ai.webp"
   },
   {
-    title: "Jibung",
+    title: "Prompist",
     description: "Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-    bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
+    bgColor: "https://i.pinimg.com/736x/72/08/4e/72084e6ead0494777077769b16d172cb.jpg",
     link: "https://google.com",
     index: 2,
     modalImage: "https://images.indianexpress.com/2025/04/perplexity.jpg"
@@ -76,6 +76,27 @@ const timelineEvents = [
     title: "Innovation begins",
     subtitle: "첫 프로토타입 런칭",
     description: "첫 프로토타입을 런칭하였습니다.",
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "User Growth Milestone",
+    subtitle: "사용자 10만 명 돌파",
+    description: "서비스 출시 후 빠른 성장을 이루며 사용자 10만 명을 돌파했습니다.",
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "Partnership Announcement",
+    subtitle: "주요 기업과 파트너십 체결",
+    description: "글로벌 기술 기업과의 전략적 파트너십을 통해 서비스 확장을 가속화했습니다.",
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "Product Launch",
+    subtitle: "새로운 AI 기능 출시",
+    description: "혁신적인 AI 기능을 추가하여 사용자 경험을 크게 개선했습니다.",
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
@@ -683,10 +704,86 @@ function renderProducts() {
   if (!container) return;
   
   container.innerHTML = '';
-  products.forEach(product => {
-    const card = createAppCard(product);
-    container.appendChild(card);
+  
+  // Check if we're on about.html page - check if container has flex-col class (about.html uses flex-col, index.html uses grid)
+  const isAboutPage = container.classList.contains('flex') && container.classList.contains('flex-col');
+  
+  if (isAboutPage) {
+    // About page: Long horizontal cards with background images
+    products.forEach(product => {
+      const card = createAboutProductCard(product);
+      container.appendChild(card);
+    });
+  } else {
+    // Index page: Original square cards
+    products.forEach(product => {
+      const card = createAppCard(product);
+      container.appendChild(card);
+    });
+  }
+}
+
+function createAboutProductCard(product) {
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'w-full about-product-card-container';
+  
+  const card = document.createElement('div');
+  card.className = 'relative rounded-2xl cursor-pointer overflow-hidden transition-all duration-500 group about-product-card';
+  card.style.backgroundImage = `url(${product.bgColor})`;
+  card.style.backgroundSize = 'cover';
+  card.style.backgroundPosition = 'center';
+  card.style.height = '140px';
+  card.style.minHeight = '140px';
+  card.style.maxWidth = '1200px';
+  card.style.margin = '0 auto';
+  
+  // Dark overlay that appears on hover
+  const overlay = document.createElement('div');
+  overlay.className = 'absolute inset-0 bg-black opacity-20 transition-opacity duration-500 group-hover:opacity-60';
+  
+  // Content container
+  const content = document.createElement('div');
+  content.className = 'relative z-10 h-full flex items-center justify-between px-8 py-6';
+  
+  // Left side: Logo/Title
+  const leftContent = document.createElement('div');
+  leftContent.className = 'flex items-center gap-4';
+  
+  const logoImg = document.createElement('img');
+  logoImg.src = product.defaultLogoSrc;
+  logoImg.alt = product.title;
+  logoImg.className = 'w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert';
+  
+  const title = document.createElement('h3');
+  title.className = 'text-white text-2xl md:text-3xl font-medium';
+  title.textContent = product.title;
+  
+  leftContent.appendChild(logoImg);
+  leftContent.appendChild(title);
+  
+  // Right side: Plus icon
+  const plusIcon = document.createElement('div');
+  plusIcon.className = 'w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-500 group-hover:bg-white/30';
+  plusIcon.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+  
+  content.appendChild(leftContent);
+  content.appendChild(plusIcon);
+  
+  card.appendChild(overlay);
+  card.appendChild(content);
+  
+  // Click handler - show modal (keep existing modal functionality)
+  card.addEventListener('click', (e) => {
+    showMobileModal(product);
   });
+  
+  cardContainer.appendChild(card);
+  return cardContainer;
 }
 
 function createProductFeatureCard(product) {
@@ -1019,6 +1116,134 @@ function renderTimeline() {
   
   container.innerHTML = '';
   
+  // Check if we're on about.html page
+  const isAboutPage = window.location.pathname.includes('about.html') || 
+                      window.location.href.includes('about.html') ||
+                      document.querySelector('title')?.textContent.includes('About');
+  
+  if (isAboutPage) {
+    // About page: Vertical timeline with year tabs
+    renderAboutTimeline(container);
+  } else {
+    // Index page: Original timeline with image card
+    renderIndexTimeline(container);
+  }
+}
+
+function renderAboutTimeline(container) {
+  // Year tabs container (light rounded bar)
+  const yearTabsContainer = document.createElement('div');
+  yearTabsContainer.className = 'flex justify-center mb-12';
+  
+  const yearTabs = document.createElement('div');
+  yearTabs.className = 'inline-flex gap-0 rounded-2xl bg-gray-100 p-1';
+  
+  const uniqueYears = [...new Set(timelineEvents.map(e => e.year))].sort((a, b) => b - a);
+  
+  uniqueYears.forEach(year => {
+    const tab = document.createElement('button');
+    tab.className = `px-6 py-2 font-medium transition-all duration-300 timeline-year-tab rounded-xl ${
+      state.activeYear === year 
+        ? 'bg-white text-black shadow-sm' 
+        : 'text-gray-600 hover:text-gray-800'
+    }`;
+    tab.textContent = year;
+    
+    tab.addEventListener('click', () => {
+      state.activeYear = year;
+      renderTimeline();
+    });
+    yearTabs.appendChild(tab);
+  });
+  
+  yearTabsContainer.appendChild(yearTabs);
+  container.appendChild(yearTabsContainer);
+  
+  // Timeline wrapper
+  const timelineWrapper = document.createElement('div');
+  timelineWrapper.className = 'relative max-w-5xl mx-auto';
+  
+  // Timeline line (centered on all devices)
+  const timelineLine = document.createElement('div');
+  timelineLine.className = 'absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-300 -translate-x-1/2';
+  timelineLine.style.zIndex = '1';
+  
+  // Events for active year - sort by index (most recent first)
+  const activeYearEvents = timelineEvents.filter(e => e.year === state.activeYear).reverse();
+  
+  const eventsContainer = document.createElement('div');
+  eventsContainer.className = 'relative';
+  
+  activeYearEvents.forEach((event, index) => {
+    const isLeft = index % 2 === 0; // Alternate left and right
+    
+    const eventItem = document.createElement('div');
+    eventItem.className = 'relative pb-12 last:pb-0';
+    if (state.isMobile) {
+      eventItem.style.width = '45%';
+    } else {
+      eventItem.style.width = '48%';
+    }
+    eventItem.style[isLeft ? 'marginRight' : 'marginLeft'] = 'auto';
+    eventItem.style.position = 'relative';
+    eventItem.style.zIndex = '2';
+    
+    // Content
+    const content = document.createElement('div');
+    if (state.isMobile) {
+      content.className = isLeft ? 'text-right pr-2' : 'text-left pl-2';
+    } else {
+      content.className = isLeft ? 'text-right pr-4' : 'text-left pl-4';
+    }
+    
+    // Date (most recent first, so reverse the date number)
+    const date = document.createElement('div');
+    date.className = 'text-xl md:text-xl font-bold text-black mb-1';
+    const totalEvents = activeYearEvents.length;
+    const dateNumber = totalEvents - index;
+    date.textContent = `${event.year}.${String(dateNumber).padStart(2, '0')}`;
+    
+    // Description
+    const description = document.createElement('div');
+    description.className = 'text-gray-600 text-base md:text-base';
+    description.textContent = event.subtitle || event.description;
+    
+    content.appendChild(date);
+    content.appendChild(description);
+    
+    eventItem.appendChild(content);
+    eventsContainer.appendChild(eventItem);
+    
+    // Dot (positioned exactly on the timeline line at center)
+    const dot = document.createElement('div');
+    dot.className = 'absolute w-3 h-3 rounded-full bg-gray-600';
+    dot.style.left = '50%';
+    dot.style.transform = 'translateX(-50%)';
+    dot.style.top = `${index * 12}rem`; // Approximate position based on index
+    dot.style.zIndex = '3';
+    eventsContainer.appendChild(dot);
+  });
+  
+  // Update dot positions after rendering
+  setTimeout(() => {
+    const dots = eventsContainer.querySelectorAll('.absolute.w-3.h-3.rounded-full');
+    const items = eventsContainer.querySelectorAll('.relative.pb-12');
+    dots.forEach((dot, index) => {
+      if (items[index]) {
+        const itemTop = items[index].offsetTop;
+        // Position dot slightly below the top (align with date text middle)
+        dot.style.top = `${itemTop + 16}px`;
+        dot.style.transform = 'translate(-50%, -50%)';
+      }
+    });
+  }, 10);
+  
+  timelineWrapper.appendChild(timelineLine);
+  timelineWrapper.appendChild(eventsContainer);
+  container.appendChild(timelineWrapper);
+}
+
+function renderIndexTimeline(container) {
   const wrapper = document.createElement('div');
   wrapper.className = 'w-full py-12';
   
@@ -1247,6 +1472,94 @@ function renderBlog() {
   });
   
   container.appendChild(header);
+  container.appendChild(listContainer);
+  container.appendChild(grid);
+}
+
+function renderBlogPage() {
+  const container = document.getElementById('blog-container');
+  if (!container) return;
+  
+  // Clear container
+  container.innerHTML = '';
+  
+  // Mobile: List view, Desktop: Grid view
+  const listContainer = document.createElement('div');
+  listContainer.className = 'blog-list-container md:hidden';
+  
+  const grid = document.createElement('div');
+  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 blog-grid';
+  
+  blogPosts.forEach((post, index) => {
+    // Mobile: List item
+    const listItem = document.createElement('a');
+    listItem.href = post.url;
+    listItem.target = '_blank';
+    listItem.rel = 'noopener noreferrer';
+    listItem.className = 'block blog-list-item';
+    
+    const listContent = document.createElement('div');
+    listContent.className = 'py-4 border-b border-gray-200';
+    
+    const listTitle = document.createElement('h3');
+    listTitle.className = 'text-lg font-medium text-black mb-2';
+    listTitle.textContent = post.title;
+    
+    const listDate = document.createElement('p');
+    listDate.className = 'text-gray-500 text-sm';
+    listDate.textContent = post.date;
+    
+    listContent.appendChild(listTitle);
+    listContent.appendChild(listDate);
+    listItem.appendChild(listContent);
+    listContainer.appendChild(listItem);
+    
+    // Desktop: Card with image
+    const postLink = document.createElement('a');
+    postLink.href = post.url;
+    postLink.target = '_blank';
+    postLink.rel = 'noopener noreferrer';
+    postLink.className = 'group';
+    
+    const card = document.createElement('div');
+    card.className = 'transition-all duration-300 transform hover:-translate-y-2';
+    
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'relative aspect-video w-full overflow-hidden rounded-xl';
+    
+    const image = document.createElement('img');
+    image.src = post.imageSrc;
+    image.alt = post.title;
+    image.className = 'object-cover transition-transform duration-500 group-hover:scale-105';
+    image.style.width = '100%';
+    image.style.height = '100%';
+    image.style.position = 'absolute';
+    image.style.top = '0';
+    image.style.left = '0';
+    image.style.objectFit = 'cover';
+    
+    imageContainer.appendChild(image);
+    
+    const content = document.createElement('div');
+    content.className = 'mt-6 px-2';
+    
+    const postTitle = document.createElement('h3');
+    postTitle.className = 'text-xl font-medium mb-3 line-clamp-2 text-black group-hover:text-[#664938] transition-colors duration-300';
+    postTitle.textContent = post.title;
+    
+    const postDate = document.createElement('p');
+    postDate.className = 'text-gray-500 text-sm';
+    postDate.textContent = post.date;
+    
+    content.appendChild(postTitle);
+    content.appendChild(postDate);
+    
+    card.appendChild(imageContainer);
+    card.appendChild(content);
+    postLink.appendChild(card);
+    grid.appendChild(postLink);
+  });
+  
   container.appendChild(listContainer);
   container.appendChild(grid);
 }
