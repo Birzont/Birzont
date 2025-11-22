@@ -4,9 +4,8 @@
       <footer class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto py-16 text-gray-900">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <img alt="Birzont Logo" width="42" height="42" class="object-contain" src="https://avatars.githubusercontent.com/u/144044857?s=200&v=4">
-              <span class="text-xl font-bold text-black">Birzont</span>
+            <div class="flex items-center">
+              <img alt="Birzont Logo" width="120" height="36" class="object-contain" src="https://birzont.github.io/BirzontArchive/res/birzont_black.png">
             </div>
             <p class="text-gray-600 text-sm">
               Building AI to serve humanity's future.<br>© 2025 Birzont. All rights reserved.
@@ -53,14 +52,46 @@
                 </svg>
               </a>
             </div>
+            <div class="mt-6">
+              <div class="relative inline-block language-selector-wrapper">
+                <button type="button" class="language-selector-btn flex items-center gap-2 px-4 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-gray-700 text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 min-w-[160px] justify-between">
+                  <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span class="language-selector-text">🇺🇸 English</span>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500 language-selector-arrow transition-transform duration-200">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="language-selector-dropdown absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 z-50 overflow-hidden min-w-[160px]">
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="en" data-text="🇺🇸 English">
+                    <span>🇺🇸</span>
+                    <span>English</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="ko" data-text="🇰🇷 한국어">
+                    <span>🇰🇷</span>
+                    <span>한국어</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="zh-CN" data-text="🇨🇳 中文(简体)">
+                    <span>🇨🇳</span>
+                    <span>中文(简体)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div>
             <h3 class="text-lg font-medium mb-4 text-black">Company</h3>
             <ul class="space-y-3">
-              <li><a href="about.html" class="text-gray-600 hover:text-black transition-colors">About</a></li>
+              <li><a href="about.html" class="text-gray-600 hover:text-black transition-colors">About us</a></li>
               <li><a href="index.html#career" class="text-gray-600 hover:text-black transition-colors">Career</a></li>
               <li><a href="index.html#blog" class="text-gray-600 hover:text-black transition-colors">Blog</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-black transition-colors">Brand</a></li>
             </ul>
           </div>
 
@@ -68,6 +99,7 @@
             <h3 class="text-lg font-medium mb-4 text-black">Product</h3>
             <ul class="space-y-3">
               <li><a href="index.html#product" class="text-gray-600 hover:text-black transition-colors">Birzont</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-black transition-colors">Bloxer</a></li>
             </ul>
           </div>
 
@@ -94,6 +126,73 @@
     </div>
   `;
 
+  function initLanguageSelector() {
+    const wrappers = document.querySelectorAll('.language-selector-wrapper');
+    
+    wrappers.forEach(wrapper => {
+      const btn = wrapper.querySelector('.language-selector-btn');
+      const dropdown = wrapper.querySelector('.language-selector-dropdown');
+      const arrow = wrapper.querySelector('.language-selector-arrow');
+      const options = wrapper.querySelectorAll('.language-option');
+      const textSpan = wrapper.querySelector('.language-selector-text');
+
+      // Toggle dropdown
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('opacity-100');
+        
+        // Close all other dropdowns
+        document.querySelectorAll('.language-selector-dropdown').forEach(dd => {
+          if (dd !== dropdown) {
+            dd.classList.remove('opacity-100', 'visible');
+            dd.classList.add('opacity-0', 'invisible');
+          }
+        });
+        document.querySelectorAll('.language-selector-arrow').forEach(arr => {
+          if (arr !== arrow) {
+            arr.classList.remove('rotate-180');
+          }
+        });
+
+        if (isOpen) {
+          dropdown.classList.remove('opacity-100', 'visible');
+          dropdown.classList.add('opacity-0', 'invisible');
+          arrow.classList.remove('rotate-180');
+        } else {
+          dropdown.classList.remove('opacity-0', 'invisible');
+          dropdown.classList.add('opacity-100', 'visible');
+          arrow.classList.add('rotate-180');
+        }
+      });
+
+      // Select option
+      options.forEach(option => {
+        option.addEventListener('click', () => {
+          const value = option.getAttribute('data-value');
+          const text = option.getAttribute('data-text');
+          textSpan.textContent = text;
+          
+          dropdown.classList.remove('opacity-100', 'visible');
+          dropdown.classList.add('opacity-0', 'invisible');
+          arrow.classList.remove('rotate-180');
+          
+          // Update active state
+          options.forEach(opt => opt.classList.remove('bg-gray-100', 'font-medium'));
+          option.classList.add('bg-gray-100', 'font-medium');
+        });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+          dropdown.classList.remove('opacity-100', 'visible');
+          dropdown.classList.add('opacity-0', 'invisible');
+          arrow.classList.remove('rotate-180');
+        }
+      });
+    });
+  }
+
   function injectFooter() {
     const app = document.getElementById('app');
     if (!app || document.getElementById('footer-injected')) return;
@@ -109,6 +208,9 @@
     if (footerDiv) {
       footerDiv.id = 'footer-injected';
     }
+
+    // Initialize language selector
+    initLanguageSelector();
   }
 
   if (document.readyState === 'loading') {

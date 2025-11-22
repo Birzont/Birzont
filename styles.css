@@ -1385,3 +1385,168 @@ body {
   }
 }
 
+/* Language Selector Styles */
+.language-selector-wrapper {
+  position: relative;
+}
+
+.language-selector-dropdown {
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.language-selector-dropdown.opacity-100 {
+  max-height: 300px;
+  transform: translateY(0);
+}
+
+.language-selector-option-active {
+  background-color: #f3f4f6;
+  font-weight: 500;
+}
+
+/* Team Section Styles */
+.team-member-card {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.team-member-card:hover {
+  transform: translateY(-4px);
+}
+
+.team-member-card img {
+  transition: transform 0.3s ease;
+}
+
+.team-member-card:hover img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 767px) {
+  .team-member-card h3 {
+    font-size: 1rem;
+  }
+  
+  .team-member-card p {
+    font-size: 0.875rem;
+  }
+  
+  .team-member-image-container {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .team-member-name {
+    margin-bottom: 0 !important;
+  }
+  
+  .team-title-container {
+    margin-bottom: 1rem !important;
+  }
+  
+  .products-title-container {
+    margin-bottom: 1rem !important;
+  }
+  
+  .products-title-wrapper {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .team-linkedin-badge {
+    padding: 0.375rem !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+  }
+  
+  .team-linkedin-icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  
+  .team-linkedin-icon[width] {
+    width: 14px !important;
+  }
+  
+  .team-linkedin-icon[height] {
+    height: 14px !important;
+  }
+}
+
+/* Team Member Modal Styles */
+#team-member-modal {
+  transition: opacity 0.3s ease;
+}
+
+#team-member-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#team-member-modal:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.team-modal-content {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .team-modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  #team-member-modal .p-8 {
+    padding: 1.5rem;
+  }
+  
+  /* Blog Section Mobile Styles */
+  .blog-header {
+    margin-bottom: 1rem !important;
+  }
+  
+  .blog-list-item:last-child .border-b {
+    border-bottom: none !important;
+  }
+  
+  .blog-list-item {
+    transition: background-color 0.2s ease;
+  }
+  
+  .blog-list-item:hover {
+    background-color: #f9fafb;
+  }
+  
+  /* What we do & Our Vision Mobile Styles */
+  .what-we-do-section h2,
+  .our-vision-section h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .what-we-do-section p,
+  .our-vision-section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .what-we-do-section .text-xs,
+  .our-vision-section .text-xs {
+    font-size: 0.7rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* Section Image Styles */
+.section-image {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .section-image {
+    max-height: 250px;
+  }
+}
+

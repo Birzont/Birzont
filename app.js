@@ -1155,7 +1155,7 @@ function renderBlog() {
   if (!container) return;
   
   const header = document.createElement('div');
-  header.className = 'flex justify-between items-center mb-16';
+  header.className = 'flex justify-between items-center mb-16 md:mb-16 blog-header';
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold text-black';
@@ -1163,16 +1163,44 @@ function renderBlog() {
   
   const moreLink = document.createElement('a');
   moreLink.href = '#';
-  moreLink.className = 'px-5 py-2 border border-black rounded-lg text-black hover:bg-black hover:text-white transition-colors duration-300 font-medium';
+  moreLink.className = 'px-5 py-2 border border-black rounded-lg text-black hover:bg-black hover:text-white transition-colors duration-300 font-medium md:block hidden';
   moreLink.textContent = '더 알아보기';
   
   header.appendChild(title);
   header.appendChild(moreLink);
   
-  const grid = document.createElement('div');
-  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10';
+  // Mobile: List view, Desktop: Grid view
+  const listContainer = document.createElement('div');
+  listContainer.className = 'blog-list-container md:hidden';
   
-  blogPosts.forEach(post => {
+  const grid = document.createElement('div');
+  grid.className = 'hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 blog-grid';
+  
+  blogPosts.forEach((post, index) => {
+    // Mobile: List item
+    const listItem = document.createElement('a');
+    listItem.href = post.url;
+    listItem.target = '_blank';
+    listItem.rel = 'noopener noreferrer';
+    listItem.className = 'block blog-list-item';
+    
+    const listContent = document.createElement('div');
+    listContent.className = 'py-4 border-b border-gray-200';
+    
+    const listTitle = document.createElement('h3');
+    listTitle.className = 'text-lg font-medium text-black mb-2';
+    listTitle.textContent = post.title;
+    
+    const listDate = document.createElement('p');
+    listDate.className = 'text-gray-500 text-sm';
+    listDate.textContent = post.date;
+    
+    listContent.appendChild(listTitle);
+    listContent.appendChild(listDate);
+    listItem.appendChild(listContent);
+    listContainer.appendChild(listItem);
+    
+    // Desktop: Card with image
     const postLink = document.createElement('a');
     postLink.href = post.url;
     postLink.target = '_blank';
@@ -1219,6 +1247,7 @@ function renderBlog() {
   });
   
   container.appendChild(header);
+  container.appendChild(listContainer);
   container.appendChild(grid);
 }
 
@@ -1781,5 +1810,109 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Canvas height update is no longer needed for the new centered layout
+  
+  // Team Member Modal
+  initTeamMemberModal();
 });
+
+// Team Member Modal Functions
+function initTeamMemberModal() {
+  const modal = document.getElementById('team-member-modal');
+  const closeBtn = document.getElementById('team-modal-close');
+  const memberCards = document.querySelectorAll('.team-member-card[data-member]');
+
+  if (!modal || !closeBtn) return;
+
+  // Open modal
+  memberCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const memberData = JSON.parse(card.getAttribute('data-member'));
+      openTeamModal(memberData);
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener('click', closeTeamModal);
+  
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeTeamModal();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeTeamModal();
+    }
+  });
+}
+
+function openTeamModal(memberData) {
+  const modal = document.getElementById('team-member-modal');
+  const nameEl = document.getElementById('modal-member-name');
+  const roleEl = document.getElementById('modal-member-role');
+  const imageEl = document.getElementById('modal-member-image');
+  const descriptionEl = document.getElementById('modal-member-description');
+  const linkedinEl = document.getElementById('modal-member-linkedin');
+
+  if (!modal) return;
+
+  // Update modal content
+  if (nameEl) nameEl.textContent = memberData.name;
+  if (roleEl) roleEl.textContent = memberData.role;
+  if (imageEl) {
+    imageEl.src = memberData.image;
+    imageEl.alt = memberData.name;
+  }
+  if (descriptionEl) descriptionEl.textContent = memberData.description;
+  if (linkedinEl) {
+    linkedinEl.href = memberData.linkedin || '#';
+    if (memberData.linkedin === '#') {
+      linkedinEl.style.pointerEvents = 'none';
+      linkedinEl.style.opacity = '0.5';
+    } else {
+      linkedinEl.style.pointerEvents = 'auto';
+      linkedinEl.style.opacity = '1';
+    }
+  }
+
+  // Show modal
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+
+  // Trigger animation
+  setTimeout(() => {
+    const modalContent = modal.querySelector('.team-modal-content');
+    if (modalContent) {
+      modalContent.style.opacity = '0';
+      modalContent.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        modalContent.style.opacity = '1';
+        modalContent.style.transform = 'scale(1)';
+      }, 10);
+    }
+  }, 10);
+}
+
+function closeTeamModal() {
+  const modal = document.getElementById('team-member-modal');
+  if (!modal) return;
+
+  const modalContent = modal.querySelector('.team-modal-content');
+  if (modalContent) {
+    modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    modalContent.style.opacity = '0';
+    modalContent.style.transform = 'scale(0.95)';
+  }
+
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }, 300);
+}
 
