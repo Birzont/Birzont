@@ -660,103 +660,17 @@
 
     <!-- Start Prompt Section -->
     <div class="w-full bg-gray-100 relative overflow-hidden" style="background-image: url('https://designcompass.org/wp-content/uploads/2024/06/sequoia-wp-15-1024x568.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-      <section class="text-center py-40 md:py-64 px-4 w-full max-w-[1600px] mx-auto relative z-10 blur-fade-once try-free-section">
+      <section class="text-left py-40 md:py-64 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10 blur-fade-once try-free-section" dir="ltr">
         <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-black try-free-title">
           Try for free.
         </h2>
-        <p class="text-lg md:text-xl max-w-[800px] mx-auto leading-relaxed text-gray-700 mb-10 try-free-description">
+        <p class="text-lg md:text-xl max-w-[800px] leading-relaxed text-gray-700 mb-10 try-free-description">
           다양한 AI 모델과 함께 창의적인 프롬프트를 만들고, 공유하고, 협업하세요. 당신의 아이디어를 현실로 만들어보세요.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button type="button" class="glass-button px-6 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300 try-free-button">
+        <div class="flex flex-col sm:flex-row gap-4 justify-start items-center">
+          <button type="button" class="glass-button px-8 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300 try-free-button">
             시작하기
           </button>
-        </div>
-      </section>
-    </div>
-
-    <!-- Hero Message Section -->
-    <div class="w-full bg-white">
-      <section id="fade-in-section" class="text-center pt-20 pb-10 md:pt-[200px] md:pb-[80px] w-[calc(98%-80px)] max-w-[1600px] mx-auto transition-all duration-[1.2s] opacity-0 translate-y-[30px]">
-        <img alt="Birzont Logo" width="130" height="130" class="object-contain mb-8 mx-auto" src="https://avatars.githubusercontent.com/u/144044857?s=200&v=4">
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-black">
-          Birzont. we build AI<br>
-          to serve humanity's future.
-        </h1>
-        <p class="text-lg md:text-xl max-w-[1100px] mx-auto leading-[1.8] text-[#999]">
-          While no one can foresee every outcome AI will have on society, we do know that designing powerful
-          technologies requires both bold steps forward and intentional pauses to consider the effects. That's why we
-          focus on building tools with human benefit at their foundation.
-        </p>
-      </section>
-    </div>
-
-    <!-- Video Section -->
-    <div class="w-full bg-white">
-      <div class="mt-0 py-0 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-[60px]">
-        <div class="relative max-w-[900px] w-full mx-auto rounded-[20px] overflow-hidden shadow-2xl aspect-video">
-          <img id="video-thumbnail" alt="video thumbnail" width="1920" height="1080" class="w-full block" src="https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg">
-          <div id="video-player-container" style="display: none;" class="absolute inset-0 w-full h-full">
-            <iframe class="w-full h-full" src="" id="video-iframe" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <button id="play-video-btn" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-5 border-black text-black rounded-full w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-4xl font-bold flex items-center justify-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 md:w-6 md:h-6 lg:w-8 ml-1">
-              <polygon points="6 3 20 12 6 21 6 3"></polygon>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature Grid Section -->
-    <div class="w-full bg-white">
-      <section class="flex flex-col items-center py-16 md:py-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
-        <div class="w-full border-t border-gray-200 mb-12 md:mb-16"></div>
-
-        <div class="flex flex-col md:flex-row w-full mb-16 md:mb-20">
-          <div class="w-full md:w-1/2 mb-8 md:mb-0">
-            <h2 class="text-4xl font-bold text-black leading-tight">
-              Our<br>
-              Products
-            </h2>
-          </div>
-          <div class="w-full md:w-1/2 flex items-center">
-            <p class="text-black text-lg md:text-xl leading-relaxed">
-              Discover our innovative solutions designed to enhance your daily life and productivity. Each product is
-              crafted with attention to detail and user experience.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-3 gap-x-6 w-full py-4" id="products-grid">
-          <!-- Products will be inserted by JavaScript -->
-        </div>
-      </section>
-    </div>
-
-    <!-- Timeline Section -->
-    <div class="w-full bg-white">
-      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
-        <div id="timeline-container" class="w-full overflow-hidden py-16 bg-white">
-          <!-- Timeline will be inserted by JavaScript -->
-        </div>
-      </section>
-    </div>
-
-    <!-- Blog Section -->
-    <div class="w-full bg-white border-t border-gray-200">
-      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
-        <div id="blog-container" class="w-full overflow-hidden py-16">
-          <!-- Blog posts will be inserted by JavaScript -->
-        </div>
-      </section>
-    </div>
-
-    <!-- Careers Section -->
-    <div class="w-full bg-white">
-      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
-        <div id="careers-container" class="w-full overflow-hidden py-16">
-          <!-- Careers section will be inserted by JavaScript -->
         </div>
       </section>
     </div>

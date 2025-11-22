@@ -251,7 +251,7 @@ function updateHeader() {
     const navLinks = header.querySelectorAll('#desktop-nav a');
     navLinks.forEach(link => {
       link.classList.remove('text-white');
-      link.classList.add('text-black');
+      link.classList.add('text-gray-900');
     });
     
     state.scrolled = true;
@@ -292,7 +292,7 @@ function updateHeader() {
     const navLinks = header.querySelectorAll('#desktop-nav a');
     navLinks.forEach(link => {
       link.classList.add('text-white');
-      link.classList.remove('text-black');
+      link.classList.remove('text-gray-900');
     });
     
     state.scrolled = false;
