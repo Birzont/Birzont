@@ -1589,7 +1589,7 @@ const careerJobs = [
     workType: 'On-site',
     salary: '$250k-$350k',
     equity: '0.25%-0.5%',
-    applyUrl: '#'
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
   },
   {
     id: 2,
@@ -1600,7 +1600,7 @@ const careerJobs = [
     workType: 'Hybrid',
     salary: '$220k-$320k',
     equity: '0.2%-0.4%',
-    applyUrl: '#'
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
   }
 ];
 
