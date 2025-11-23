@@ -1589,6 +1589,7 @@ const careerJobs = [
     workType: 'On-site',
     salary: '$250k-$350k',
     equity: '0.25%-0.5%',
+    flagEmoji: '🇺🇸',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
   },
   {
@@ -1596,10 +1597,11 @@ const careerJobs = [
     category: 'ENGINEERING',
     title: 'Senior AI Engineer',
     type: 'Full time',
-    location: 'San Francisco, CA',
+    location: 'San Francisco, KO',
     workType: 'Hybrid',
     salary: '$220k-$320k',
     equity: '0.2%-0.4%',
+    flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
   }
 ];
@@ -1683,10 +1685,10 @@ function renderCareerListings() {
       const locationContainer = document.createElement('div');
       locationContainer.className = 'flex items-center gap-2';
       
-      // Flag icon (US)
+      // Flag icon
       const flagIcon = document.createElement('span');
       flagIcon.className = 'text-base';
-      flagIcon.innerHTML = '🇺🇸';
+      flagIcon.innerHTML = job.flagEmoji || '🇺🇸';
       
       const location = document.createElement('span');
       location.textContent = job.location;
