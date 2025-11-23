@@ -1583,9 +1583,9 @@ const careerJobs = [
   {
     id: 1,
     category: 'ENGINEERING',
-    title: 'Founding Engineer (Fullstack Typescript)',
+    title: '[Talent Pool Registration] Founding Engineer',
     type: 'Full time',
-    location: 'San Francisco, CA',
+    location: 'Flushing, NY',
     workType: 'On-site',
     salary: '$250k-$350k',
     equity: '0.25%-0.5%',
@@ -1595,12 +1595,24 @@ const careerJobs = [
   {
     id: 2,
     category: 'ENGINEERING',
-    title: 'Senior AI Engineer',
+    title: '[인재풀 등록] Product Manager',
     type: 'Full time',
-    location: 'San Francisco, KO',
+    location: '경희대학교 스타트업 캠퍼스, 서울',
     workType: 'Hybrid',
-    salary: '$220k-$320k',
-    equity: '0.2%-0.4%',
+    salary: '₩10만-12만',
+    equity: '0.2%',
+    flagEmoji: '🇰🇷',
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
+  },
+  {
+    id: 3,
+    category: 'ENGINEERING',
+    title: '[인재풀 등록] Marketing Lead',
+    type: 'Full time',
+    location: '경희대학교 스타트업 캠퍼스, 서울',
+    workType: 'Hybrid',
+    salary: '₩10만-12만',
+    equity: '0.2%',
     flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
   }
