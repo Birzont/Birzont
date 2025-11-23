@@ -125,7 +125,7 @@ const timelineEvents = [
 const blogPosts = [
   {
     id: 1,
-    title: "[콘텐츠 AI] AI가 대세라는데 우리 회사에 어떻게 활용할 수 있을까?",
+    title: "[ㅋㅋㅋ AI] AI가 대세라는데 우리 회사에 어떻게 활용할 수 있을까?",
     date: "2025.08.17",
     imageSrc: "https://i.pinimg.com/736x/14/b7/05/14b705fa261b1ab5dbbee32a601a253a.jpg",
     url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%BD%98%ED%85%90%EC%B8%A0-ai-ai%EA%B0%80-%EB%8C%80%EC%84%B8%EB%9D%BC%EB%8A%94%EB%8D%B0-%EC%9A%B0%EB%A6%AC-%ED%9A%8C%EC%82%AC%EC%97%90-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%99%9C%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C-986706f87df",
