@@ -35,9 +35,9 @@
           </svg>
         </button>
 
-        <button id="desktop-start-btn" class="px-4 py-2 font-bold rounded-xl transition-all duration-300 whitespace-nowrap text-[1rem] bg-transparent text-white border border-white hover:bg-white hover:text-black hover:border-black">
+        <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" id="desktop-start-btn" class="px-4 py-2 font-bold rounded-xl transition-all duration-300 whitespace-nowrap text-[1rem] bg-transparent text-white border border-white hover:bg-white hover:text-black hover:border-black inline-block text-center">
           시작하기
-        </button>
+        </a>
       </div>
     </header>
     <div id="mobile-menu" class="fixed top-[48px] left-0 w-full bg-white text-black z-40 shadow-lg transform transition-all duration-300 ease-in-out -translate-y-full opacity-0">
@@ -47,7 +47,7 @@
         <a href="blog.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Blog</a>
         <a href="career.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Career</a>
         <div class="mt-4 pt-2">
-          <button class="w-full px-5 py-3 font-bold rounded-xl bg-black text-white transition-all duration-300">시작하기</button>
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" class="w-full px-5 py-3 font-bold rounded-xl bg-black text-white transition-all duration-300 inline-block text-center">시작하기</a>
         </div>
       </div>
     </div>

@@ -171,9 +171,10 @@ const navCardContent = {
   Company: {
     title: "회사 소개",
     items: [
-      { text: "About Company", href: "#" },
-      { text: "Brand identity", href: "#" },
-      { text: "Our Team", href: "#" }
+      { text: "About Company", href: "about.html#about" },
+      { text: "What we do", href: "about.html#what-we-do" },
+      { text: "Our Team", href: "about.html#team" },
+      { text: "Timeline", href: "about.html#timeline" }
     ],
     image: "https://birzont.github.io/BirzontArchive/res/CompassPen.png"
   },
@@ -594,21 +595,65 @@ function showMobileModal(product) {
   // Remove existing modal if any
   const existingModal = document.getElementById('app-card-modal');
   if (existingModal) {
-    existingModal.remove();
+    const existingContent = existingModal.querySelector('.modal-content');
+    if (existingContent) {
+      existingContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      existingContent.style.opacity = '0';
+      existingContent.style.transform = 'scale(0.95)';
+    }
+    setTimeout(() => {
+      existingModal.remove();
+      document.body.style.overflow = '';
+    }, 300);
   }
   
   const modal = document.createElement('div');
   modal.id = 'app-card-modal';
-  modal.className = 'modal-overlay';
+  modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm';
+  modal.style.opacity = '0';
+  modal.style.transition = 'opacity 0.3s ease';
+  
+  const modalContent = document.createElement('div');
+  modalContent.className = 'modal-content team-modal-content relative';
+  modalContent.style.opacity = '0';
+  modalContent.style.transform = 'scale(0.95)';
+  modalContent.addEventListener('click', (e) => e.stopPropagation());
+  
+  // Close on Escape key handler
+  let escapeHandler = null;
+  
+  // Close function - define before using it
+  const closeProductModal = () => {
+    const content = modal.querySelector('.modal-content');
+    if (content) {
+      content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      content.style.opacity = '0';
+      content.style.transform = 'scale(0.95)';
+    }
+    modal.style.opacity = '0';
+    if (escapeHandler) {
+      document.removeEventListener('keydown', escapeHandler);
+      escapeHandler = null;
+    }
+    setTimeout(() => {
+      modal.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+  
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-      modal.remove();
+      closeProductModal();
     }
   });
   
-  const modalContent = document.createElement('div');
-  modalContent.className = 'modal-content';
-  modalContent.addEventListener('click', (e) => e.stopPropagation());
+  // Close on Escape key
+  escapeHandler = (e) => {
+    if (e.key === 'Escape' && document.getElementById('app-card-modal')) {
+      closeProductModal();
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
   
   const header = document.createElement('div');
   header.className = 'flex justify-between items-center mb-4';
@@ -631,19 +676,20 @@ function showMobileModal(product) {
   headerLeft.appendChild(iconImg);
   headerLeft.appendChild(title);
   
+  header.appendChild(headerLeft);
+  
   const closeBtn = document.createElement('button');
-  closeBtn.className = 'bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center';
+  closeBtn.className = 'absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors';
   closeBtn.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-700">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
   `;
-  closeBtn.addEventListener('click', () => modal.remove());
+  closeBtn.addEventListener('click', closeProductModal);
   
-  header.appendChild(headerLeft);
-  header.appendChild(closeBtn);
   modalContent.appendChild(header);
+  modalContent.appendChild(closeBtn);
   
   const imageContainer = document.createElement('div');
   imageContainer.className = 'relative w-full aspect-video mb-6 overflow-hidden rounded-xl';
@@ -697,6 +743,17 @@ function showMobileModal(product) {
   
   modal.appendChild(modalContent);
   document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+  
+  // Trigger animation
+  setTimeout(() => {
+    modal.style.opacity = '1';
+    setTimeout(() => {
+      modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      modalContent.style.opacity = '1';
+      modalContent.style.transform = 'scale(1)';
+    }, 10);
+  }, 10);
 }
 
 function renderProducts() {
