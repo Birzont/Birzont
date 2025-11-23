@@ -1483,38 +1483,12 @@ function renderBlogPage() {
   // Clear container
   container.innerHTML = '';
   
-  // Mobile: List view, Desktop: Grid view
-  const listContainer = document.createElement('div');
-  listContainer.className = 'blog-list-container md:hidden';
-  
+  // Grid view for all devices
   const grid = document.createElement('div');
-  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 blog-grid';
+  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 blog-grid';
   
   blogPosts.forEach((post, index) => {
-    // Mobile: List item
-    const listItem = document.createElement('a');
-    listItem.href = post.url;
-    listItem.target = '_blank';
-    listItem.rel = 'noopener noreferrer';
-    listItem.className = 'block blog-list-item';
-    
-    const listContent = document.createElement('div');
-    listContent.className = 'py-4 border-b border-gray-200';
-    
-    const listTitle = document.createElement('h3');
-    listTitle.className = 'text-lg font-medium text-black mb-2';
-    listTitle.textContent = post.title;
-    
-    const listDate = document.createElement('p');
-    listDate.className = 'text-gray-500 text-sm';
-    listDate.textContent = post.date;
-    
-    listContent.appendChild(listTitle);
-    listContent.appendChild(listDate);
-    listItem.appendChild(listContent);
-    listContainer.appendChild(listItem);
-    
-    // Desktop: Card with image
+    // Card with image
     const postLink = document.createElement('a');
     postLink.href = post.url;
     postLink.target = '_blank';
@@ -1530,25 +1504,19 @@ function renderBlogPage() {
     const image = document.createElement('img');
     image.src = post.imageSrc;
     image.alt = post.title;
-    image.className = 'object-cover transition-transform duration-500 group-hover:scale-105';
-    image.style.width = '100%';
-    image.style.height = '100%';
-    image.style.position = 'absolute';
-    image.style.top = '0';
-    image.style.left = '0';
-    image.style.objectFit = 'cover';
+    image.className = 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105';
     
     imageContainer.appendChild(image);
     
     const content = document.createElement('div');
-    content.className = 'mt-6 px-2';
+    content.className = 'mt-4 md:mt-6 px-1 md:px-2';
     
     const postTitle = document.createElement('h3');
-    postTitle.className = 'text-xl font-medium mb-3 line-clamp-2 text-black group-hover:text-[#664938] transition-colors duration-300';
+    postTitle.className = 'text-2xl md:text-xl font-medium mb-2 md:mb-3 line-clamp-2 text-black group-hover:text-[#664938] transition-colors duration-300';
     postTitle.textContent = post.title;
     
     const postDate = document.createElement('p');
-    postDate.className = 'text-gray-500 text-sm';
+    postDate.className = 'text-gray-500 text-lg md:text-sm';
     postDate.textContent = post.date;
     
     content.appendChild(postTitle);
@@ -1560,7 +1528,6 @@ function renderBlogPage() {
     grid.appendChild(postLink);
   });
   
-  container.appendChild(listContainer);
   container.appendChild(grid);
 }
 
@@ -1610,6 +1577,170 @@ function renderCareers() {
   wrapper.appendChild(overlay);
   wrapper.appendChild(content);
   container.appendChild(wrapper);
+}
+
+const careerJobs = [
+  {
+    id: 1,
+    category: 'ENGINEERING',
+    title: 'Founding Engineer (Fullstack Typescript)',
+    type: 'Full time',
+    location: 'San Francisco, CA',
+    workType: 'On-site',
+    salary: '$250k-$350k',
+    equity: '0.25%-0.5%',
+    applyUrl: '#'
+  },
+  {
+    id: 2,
+    category: 'ENGINEERING',
+    title: 'Senior AI Engineer',
+    type: 'Full time',
+    location: 'San Francisco, CA',
+    workType: 'Hybrid',
+    salary: '$220k-$320k',
+    equity: '0.2%-0.4%',
+    applyUrl: '#'
+  }
+];
+
+function renderCareerListings() {
+  const container = document.getElementById('career-listings-container');
+  if (!container) return;
+  
+  // Clear container
+  container.innerHTML = '';
+  
+  // Group jobs by category
+  const jobsByCategory = {};
+  careerJobs.forEach(job => {
+    if (!jobsByCategory[job.category]) {
+      jobsByCategory[job.category] = [];
+    }
+    jobsByCategory[job.category].push(job);
+  });
+  
+  // Render each category
+  Object.keys(jobsByCategory).forEach((category, categoryIndex) => {
+    // Divider before category (except first)
+    if (categoryIndex > 0) {
+      const divider = document.createElement('hr');
+      divider.className = 'border-gray-200 my-8 md:my-12';
+      container.appendChild(divider);
+    }
+    
+    // Category header
+    const categoryHeader = document.createElement('div');
+    categoryHeader.className = 'mb-6 md:mb-8';
+    const categoryText = document.createElement('p');
+    categoryText.className = 'text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider';
+    categoryText.textContent = category;
+    categoryHeader.appendChild(categoryText);
+    container.appendChild(categoryHeader);
+    
+    // Divider after category header
+    const divider = document.createElement('hr');
+    divider.className = 'border-gray-200 mb-6 md:mb-8';
+    container.appendChild(divider);
+    
+    // Jobs in this category
+    jobsByCategory[category].forEach(job => {
+      const jobCard = document.createElement('div');
+      jobCard.className = 'border-b border-gray-200 pb-6 md:pb-8 mb-6 md:mb-8';
+      
+      // Job header (title with type tag on the right)
+      const jobHeader = document.createElement('div');
+      jobHeader.className = 'flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2';
+      
+      const titleContainer = document.createElement('div');
+      titleContainer.className = 'flex items-center gap-3 flex-wrap';
+      
+      const title = document.createElement('h3');
+      title.className = 'text-xl md:text-2xl font-bold text-black';
+      title.textContent = job.title;
+      
+      const typeTag = document.createElement('span');
+      typeTag.className = 'inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium';
+      typeTag.textContent = job.type;
+      
+      titleContainer.appendChild(title);
+      titleContainer.appendChild(typeTag);
+      
+      jobHeader.appendChild(titleContainer);
+      
+      // Details section with location, compensation, and apply button
+      const detailsSection = document.createElement('div');
+      detailsSection.className = 'flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2';
+      
+      // Left side: location and compensation
+      const leftDetails = document.createElement('div');
+      leftDetails.className = 'flex flex-col gap-2';
+      
+      // Job details (location and work type)
+      const jobDetails = document.createElement('div');
+      jobDetails.className = 'flex flex-wrap items-center gap-2 text-gray-600 text-base md:text-lg';
+      
+      const locationContainer = document.createElement('div');
+      locationContainer.className = 'flex items-center gap-2';
+      
+      // Flag icon (US)
+      const flagIcon = document.createElement('span');
+      flagIcon.className = 'text-base';
+      flagIcon.innerHTML = '🇺🇸';
+      
+      const location = document.createElement('span');
+      location.textContent = job.location;
+      
+      locationContainer.appendChild(flagIcon);
+      locationContainer.appendChild(location);
+      
+      const dot1 = document.createElement('span');
+      dot1.className = 'text-gray-400';
+      dot1.textContent = '•';
+      
+      const workType = document.createElement('span');
+      workType.textContent = job.workType;
+      
+      jobDetails.appendChild(locationContainer);
+      jobDetails.appendChild(dot1);
+      jobDetails.appendChild(workType);
+      
+      // Compensation
+      const compensation = document.createElement('div');
+      compensation.className = 'flex items-center gap-2 text-gray-600 text-base md:text-lg';
+      
+      const salary = document.createElement('span');
+      salary.textContent = job.salary;
+      
+      const dot2 = document.createElement('span');
+      dot2.className = 'text-gray-400';
+      dot2.textContent = '•';
+      
+      const equity = document.createElement('span');
+      equity.textContent = job.equity;
+      
+      compensation.appendChild(salary);
+      compensation.appendChild(dot2);
+      compensation.appendChild(equity);
+      
+      leftDetails.appendChild(jobDetails);
+      leftDetails.appendChild(compensation);
+      
+      // Apply button (right aligned, vertically centered with location info)
+      const applyButton = document.createElement('a');
+      applyButton.href = job.applyUrl;
+      applyButton.className = 'inline-flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-300 text-sm md:text-base md:-mt-2';
+      applyButton.textContent = 'Apply now';
+      
+      detailsSection.appendChild(leftDetails);
+      detailsSection.appendChild(applyButton);
+      
+      jobCard.appendChild(jobHeader);
+      jobCard.appendChild(detailsSection);
+      
+      container.appendChild(jobCard);
+    });
+  });
 }
 
 function handleNavHover(item, index) {

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Blog - Birzont</title>
-  <meta name="description" content="Birzont Blog - 버전트의 다양한 이야기">
+  <title>Careers - Birzont</title>
+  <meta name="description" content="Birzont Careers - Join our team">
   
   <!-- Tailwind CSS CDN   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
  -->
@@ -20,26 +20,27 @@
 </head>
 <body class="font-['Inter',sans-serif]">
   <div id="app" class="min-h-screen bg-white text-black overflow-x-hidden">
-    <!-- Blog Hero Section -->
+    <!-- Career Hero Section -->
     <section class="w-full pt-[180px] pb-16 md:pb-24 px-4 md:px-0 relative bg-white">
       <!-- Gradient Overlay -->
       <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
       
       <div class="w-full max-w-[1200px] mx-auto relative z-10">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-black text-center mb-4">
-          버전트의 다양한 이야기
+        <h2 class="text-blue-400 text-sm md:text-base font-medium mb-6 md:mb-8 uppercase tracking-wider">
+          Open roles
+        </h2>
+        <h1 class="text-2xl md:text-4xl lg:text-5xl font-normal text-black mb-8 md:mb-12 leading-tight">
+          Build the future of AI with us.<br>
+          Your journey starts here.
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 text-center max-w-2xl mx-auto">
-          AI와 기술에 대한 최신 인사이트와 이야기를 공유합니다.
-        </p>
       </div>
     </section>
 
-    <!-- Blog Posts Section -->
+    <!-- Career Listings Section -->
     <section class="w-full px-4 md:px-0 pb-24 md:pb-32 bg-white">
       <div class="w-full max-w-[1200px] mx-auto">
-        <div id="blog-container" class="w-full">
-          <!-- Blog posts will be rendered here by JavaScript -->
+        <div id="career-listings-container" class="w-full">
+          <!-- Career listings will be rendered here by JavaScript -->
         </div>
       </div>
     </section>
@@ -51,17 +52,12 @@
   <script src="app.js"></script>
   
   <script>
-    // Initialize blog page
+    // Initialize career page
     document.addEventListener('DOMContentLoaded', () => {
-      // Navbar stays with white text for gradient background (default style)
-      // No need to change navbar style as it matches the gradient background
-
-      // Render blog posts
+      // Render career listings
       setTimeout(() => {
-        if (typeof renderBlogPage === 'function') {
-          renderBlogPage();
-        } else if (typeof renderBlog === 'function') {
-          renderBlog();
+        if (typeof renderCareerListings === 'function') {
+          renderCareerListings();
         }
       }, 100);
     });

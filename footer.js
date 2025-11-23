@@ -89,7 +89,7 @@
             <h3 class="text-lg font-medium mb-4 text-black">Company</h3>
             <ul class="space-y-3">
               <li><a href="about.html" class="text-gray-600 hover:text-black transition-colors">About us</a></li>
-              <li><a href="index.html#career" class="text-gray-600 hover:text-black transition-colors">Career</a></li>
+              <li><a href="career.html" class="text-gray-600 hover:text-black transition-colors">Career</a></li>
               <li><a href="blog.html" class="text-gray-600 hover:text-black transition-colors">Blog</a></li>
               <li><a href="#" class="text-gray-600 hover:text-black transition-colors">Brand</a></li>
             </ul>
