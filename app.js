@@ -999,43 +999,45 @@ function renderProductFeatures() {
   if (!container) return;
   
   container.innerHTML = '';
-  
-  // 3개의 프로덕트 기능 카드 데이터
-  const productFeatures = [
-    {
-      title: "강력한 성능",
-      description: "Supported by OpenAI, Claude, Grok and Gemini",
-      logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
-      link: "#",
-      index: 0,
-      modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-      featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
-    },
-    {
-      title: "강력한 기능",
-      description: "이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.",
-      logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
-      link: "#",
-      index: 1,
-      modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-      featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
-    },
-    {
-      title: "공유 호환성",
-      description: "Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.",
-      logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-      bgColor: "https://img.freepik.com/premium-photo/old-paper-texture-empty-vintage-background-text_84485-2503.jpg",
-      link: "#",
-      index: 2,
-      modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-      defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-      featureImage: "https://i.pinimg.com/736x/23/1d/71/231d71195172650c2c4488435b1ca7e6.jpg"
-    }
-  ];
+  /**
+ * Birzont Product Feature Data
+ * 사업계획서의 기술적 경쟁력을 사용자 언어로 치환하여 구성
+ */
+const productFeatures = [
+  {
+    title: "독자적 AI 모델의 경제성",
+    description: "Deepseek 기반으로 자체 튜닝된 Hearim & Tobaki 모델을 사용하여, 기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다. [cite: 67, 68]",
+    logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    link: "https://birzont.ai/pricing",
+    index: 0,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
+  },
+  {
+    title: "실시간 학습형 추천 시스템",
+    description: "사용자의 피드백과 사용 패턴을 Supabase 기반 데이터베이스로 분석하여, 쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요. [cite: 46, 48]",
+    logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
+    link: "https://birzont.ai/features",
+    index: 1,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
+  },
+  {
+    title: "글로벌 프롬프트 마켓",
+    description: "전 세계 크리에이터들이 검증한 5,000개 이상의 프롬프트 자산을 자유롭게 거래하고, 한국어·영어·중국어를 포함한 11개 언어로 즉시 활용할 수 있습니다. [cite: 26, 122]",
+    logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
+    link: "https://birzont.ai/marketplace",
+    index: 2,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    featureImage: "https://i.pinimg.com/736x/23/1d/71/231d71195172650c2c4488435b1ca7e6.jpg"
+  }
+];
   
   productFeatures.forEach(feature => {
     const card = createProductFeatureCard(feature);
