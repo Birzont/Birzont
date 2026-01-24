@@ -524,6 +524,43 @@ body {
   min-height: 400px;
 }
 
+/* Agent Card Right - 모바일에서 이미지가 보이도록 */
+.agent-card-right {
+  min-height: 300px;
+}
+
+@media (max-width: 767px) {
+  .agent-card-right {
+    min-height: 300px;
+    height: 300px;
+  }
+  
+  #product-carousel {
+    min-height: 300px;
+    height: 100%;
+  }
+  
+  .product-card-large {
+    height: auto;
+  }
+  
+  .product-card-large > div {
+    height: auto;
+  }
+  
+  .agent-card-container {
+    flex-direction: column;
+  }
+  
+  .agent-card-left {
+    order: 1;
+  }
+  
+  .agent-card-right {
+    order: 2;
+  }
+}
+
 /* Product Card Large */
 .product-card-large {
   transition: all 0.3s ease;
