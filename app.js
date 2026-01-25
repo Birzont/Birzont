@@ -2448,7 +2448,10 @@ function openTeamModal(memberData) {
     imageEl.src = memberData.image;
     imageEl.alt = memberData.name;
   }
-  if (descriptionEl) descriptionEl.textContent = memberData.description;
+  if (descriptionEl) {
+    // <br> 태그를 줄바꿈으로 처리
+    descriptionEl.innerHTML = memberData.description.replace(/\<br\>/gi, '<br>');
+  }
   if (linkedinEl) {
     linkedinEl.href = memberData.linkedin || '#';
     if (memberData.linkedin === '#') {
