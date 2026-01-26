@@ -841,7 +841,7 @@ function createProductFeatureCard(product) {
   cardContainer.className = 'w-full app-card-container';
   
   const card = document.createElement('div');
-  card.className = 'product-feature-card relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow-lg';
+  card.className = 'product-feature-card relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow';
   card.style.backgroundImage = `url(${product.bgColor})`;
   card.style.backgroundSize = 'cover';
   card.style.backgroundPosition = 'center';
