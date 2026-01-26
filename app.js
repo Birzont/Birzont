@@ -113,19 +113,12 @@ const timelineEvents = [
     description: "주요 벤처 캐피탈로부터 시리즈 A 투자를 유치하여 기술 개발 및 팀 확장을 가속화했습니다. 핵심 AI 알고리즘 개발을 완료했습니다.",
     imageSrc: "https://m.motemote.kr/file_data/motemote20160302/2022/10/12/61ef6bdb2d66b82aa4f992b11be460e6.jpg",
   },
-  {
-    year: 2023,
-    title: "Research Breakthrough",
-    subtitle: "연구 성과 달성",
-    description: "AI 분야에서 중요한 연구 성과를 달성하여 주요 학술 저널에 게재되었습니다. 초기 팀을 구성하고 비전을 확립했습니다.",
-    imageSrc: "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8NGslMjBtb3VudGFpbnxlbnwwfHwwfHx8MA%3D%3D",
-  },
 ];
 
 const blogPosts = [
   {
     id: 1,
-    title: "[ㅋㅋㅋ AI] AI가 대세라는데 우리 회사에 어떻게 활용할 수 있을까?",
+    title: "[AI] AI가 대세라는데 우리 회사에 어떻게 활용할 수 있을까?",
     date: "2025.08.17",
     imageSrc: "https://i.pinimg.com/736x/14/b7/05/14b705fa261b1ab5dbbee32a601a253a.jpg",
     url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%BD%98%ED%85%90%EC%B8%A0-ai-ai%EA%B0%80-%EB%8C%80%EC%84%B8%EB%9D%BC%EB%8A%94%EB%8D%B0-%EC%9A%B0%EB%A6%AC-%ED%9A%8C%EC%82%AC%EC%97%90-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%99%9C%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C-986706f87df",
