@@ -10,7 +10,7 @@ const state = {
   mobileMenuOpen: false,
   baseNumPixels: 150,
   pixelElements: [],
-  activeYear: 2025,
+  activeYear: 2026,
   hideTimeout: null,
   activeAppCard: null
 };
@@ -72,6 +72,13 @@ const topRowLogos = [
 
 const timelineEvents = [
   {
+    year: 2026,
+    title: "Innovation begins",
+    subtitle: "첫 프로토타입 런칭",
+    description: "첫 프로토타입을 런칭하였습니다.",
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
     year: 2025,
     title: "Innovation begins",
     subtitle: "첫 프로토타입 런칭",
@@ -112,13 +119,6 @@ const timelineEvents = [
     subtitle: "연구 성과 달성",
     description: "AI 분야에서 중요한 연구 성과를 달성하여 주요 학술 저널에 게재되었습니다. 초기 팀을 구성하고 비전을 확립했습니다.",
     imageSrc: "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8NGslMjBtb3VudGFpbnxlbnwwfHwwfHx8MA%3D%3D",
-  },
-  {
-    year: 2022,
-    title: "Company Founded",
-    subtitle: "회사 설립",
-    description: "Birzont의 창립자들이 모여 회사를 설립했습니다. AI를 통해 인류와 가까운 친구들의 미래에 기여한다는 비전을 가지고 시작했습니다.",
-    imageSrc: "https://i.namu.wiki/i/giX9o1762e3S2xNnyvmLXnE_wSMvJcWZB5EUnFw3TBo2KDxHVSDS9Vav9R7vlSldjbHc7fQi2t2oc1qrXr-TKA.webp",
   },
 ];
 
@@ -1643,10 +1643,10 @@ const careerJobs = [
     id: 1,
     category: 'ENGINEERING',
     title: '[Talent Pool Registration] Founding Engineer',
-    type: 'Full time',
+    type: 'Remote',
     location: 'Flushing, NY',
     workType: 'On-site',
-    salary: '$250k-$350k',
+    salary: '$250k-$350k (after seed)',
     equity: '0.25%-0.5%',
     flagEmoji: '🇺🇸',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
@@ -1658,7 +1658,7 @@ const careerJobs = [
     type: 'Full time',
     location: '경희대학교 스타트업 캠퍼스, 서울',
     workType: 'Hybrid',
-    salary: '₩10만-12만',
+    salary: '₩5만-10만',
     equity: '0.2%',
     flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
@@ -1670,7 +1670,7 @@ const careerJobs = [
     type: 'Full time',
     location: '경희대학교 스타트업 캠퍼스, 서울',
     workType: 'Hybrid',
-    salary: '₩10만-12만',
+    salary: '₩5만-10만',
     equity: '0.2%',
     flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'

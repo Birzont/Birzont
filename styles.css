@@ -640,7 +640,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 .language-demo {
@@ -652,10 +652,10 @@ body {
 }
 
 .demo-surface {
-  padding: 2.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 @media (max-width: 767px) {
@@ -664,7 +664,7 @@ body {
   }
   
   .demo-surface {
-    padding: 1.25rem;
+    padding: 1rem;
   }
   
   .demo-header-actions button {
@@ -1118,24 +1118,21 @@ body {
 @media (min-width: 768px) {
   .product-language-grid {
     flex-direction: row;
-    align-items: stretch;
+    align-items: start;
     gap: 3rem;
   }
 
   .language-demo {
-    flex: 1.02;
+    flex: 1.12;
+    padding: 1.25rem;
   }
 
   .language-content {
-    flex: 0.9;
+    flex: 0.82;
   }
 
   .language-content {
     padding: 3.5rem;
-  }
-
-  .language-demo {
-    padding: 2.5rem;
   }
 }
 
@@ -1148,7 +1145,7 @@ body {
 
 .logo-slider-track {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   animation: logoSlide 40s linear infinite;
   width: fit-content;
   will-change: transform;
@@ -1156,7 +1153,7 @@ body {
 
 @media (max-width: 767px) {
   .logo-slider-track {
-    gap: 2rem;
+    gap: 1.75rem;
     animation: logoSlide 30s linear infinite;
   }
 }
@@ -1166,11 +1163,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 
 .logo-slider-img {
-  height: 40px;
+  height: 34px;
   width: auto;
   object-fit: contain;
   opacity: 0.6;
@@ -1180,7 +1177,7 @@ body {
 
 @media (max-width: 767px) {
   .logo-slider-img {
-    height: 30px;
+    height: 26px;
   }
 }
 
