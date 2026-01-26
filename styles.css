@@ -580,7 +580,7 @@ body {
 /* Product Card Large */
 .product-card-large {
   transition: all 0.3s ease;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
   height: 650px;
 }
 
@@ -595,7 +595,7 @@ body {
 }
 
 .product-card-large:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
@@ -606,7 +606,7 @@ body {
 
 .product-feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 35px 70px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 35px 70px rgba(15, 23, 42, 0.1);
 }
 
 /* Product Card Text Area and Title */
