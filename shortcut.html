@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>웹페이지 바로가기</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #e8e8e8 center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 700px;
+      width: 100%;
+    }
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+      min-height: 48px;
+    }
+    .logo-area img {
+      max-height: 48px;
+      max-width: 280px;
+      width: auto;
+      object-fit: contain;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px 20px;
+      justify-items: center;
+    }
+    .shortcut-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .shortcut-item:hover {
+      transform: scale(1.05);
+    }
+    .shortcut-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: grab;
+    }
+    .shortcut-wrap:active { cursor: grabbing; }
+    .shortcut-wrap.dragging .shortcut-item { opacity: 0.5; }
+    .shortcut-wrap.drag-over .shortcut-item { outline: 2px dashed #4a90d9; outline-offset: 4px; border-radius: 20px; }
+    .shortcut-wrap .edit-pencil {
+      display: none;
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      transition: opacity 0.2s;
+    }
+    .shortcut-wrap:hover .edit-pencil { display: flex; }
+    .shortcut-wrap .edit-pencil:hover { background: #4a90d9; border-color: #4a90d9; }
+    .shortcut-wrap .edit-pencil:hover svg { stroke: white; }
+    .shortcut-wrap .edit-pencil svg { width: 13px; height: 13px; stroke: #555; }
+    .shortcut-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      margin-bottom: 8px;
+      overflow: hidden;
+      padding: 10px;
+    }
+    .shortcut-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .shortcut-icon .letter {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shortcut-label {
+      font-size: 11px;
+      color: #555;
+      text-align: center;
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .add-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: #f5f5f5;
+      border: 2px dashed #bbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 8px;
+    }
+    .add-btn:hover {
+      background: #eee;
+      border-color: #999;
+    }
+    .add-btn span {
+      font-size: 28px;
+      color: #666;
+      line-height: 1;
+    }
+    .add-label {
+      font-size: 11px;
+      color: #777;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 32px;
+    }
+    .pagination-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pagination-dot.active {
+      background: #666;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: white;
+      padding: 28px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .modal h2 {
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .modal-header h2 { margin-bottom: 0; }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #4a90d9;
+    }
+    .color-preview {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      margin-top: 8px;
+      border: 2px solid #eee;
+      cursor: pointer;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .modal-actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cancel {
+      background: #eee;
+      color: #555;
+    }
+    .btn-cancel:hover {
+      background: #e0e0e0;
+    }
+    .btn-save {
+      background: #4a90d9;
+      color: white;
+    }
+    .btn-save:hover {
+      background: #3a7bc8;
+    }
+    .delete-btn {
+      padding: 6px 14px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    .delete-btn:hover {
+      opacity: 1;
+    }
+
+    .settings-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      z-index: 100;
+    }
+    .settings-btn:hover {
+      background: white;
+      transform: scale(1.05);
+    }
+    .settings-btn svg {
+      width: 22px;
+      height: 22px;
+      opacity: 0.7;
+    }
+    .modal textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 12px;
+      font-family: monospace;
+      min-height: 120px;
+      resize: vertical;
+    }
+    .modal textarea:focus {
+      outline: none;
+      border-color: #4a90d9;
+    }
+    .settings-modal .modal {
+      max-width: 500px;
+    }
+    .config-hint {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+    .btn-copy-export {
+      padding: 6px 12px;
+      font-size: 12px;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #555;
+      transition: all 0.2s;
+    }
+    .btn-copy-export:hover {
+      background: #e5e5e5;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px 16px;
+      }
+      .shortcut-icon, .add-btn {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="logo-area" id="logoArea">
+        <!-- 로고 이미지가 여기에 표시됩니다 -->
+      </div>
+      <div class="grid" id="shortcutsGrid"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">바로가기 추가</h2>
+        <button type="button" class="delete-btn" id="deleteBtn" style="display: none;">삭제</button>
+      </div>
+      <form id="shortcutForm">
+        <input type="hidden" id="editIndex" value="-1">
+        <div class="form-group">
+          <label for="shortcutName">이름</label>
+          <input type="text" id="shortcutName" placeholder="예: ChatGPT" required>
+        </div>
+        <div class="form-group">
+          <label for="shortcutUrl">URL</label>
+          <input type="url" id="shortcutUrl" placeholder="https://example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="shortcutImg">아이콘 이미지 URL</label>
+          <input type="url" id="shortcutImg" placeholder="https://example.com/icon.png">
+        </div>
+        <div class="form-group">
+          <label>아이콘 색상</label>
+          <input type="color" id="shortcutColor" value="#4a90d9" style="width: 60px; height: 40px; padding: 2px; cursor: pointer;">
+          <div class="color-preview" id="colorPreview" style="background: #4a90d9;"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
+          <button type="submit" class="btn-save">저장</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <button class="settings-btn" id="settingsBtn" title="설정">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  </button>
+
+  <div class="modal-overlay settings-modal" id="settingsOverlay">
+    <div class="modal">
+      <h2>설정</h2>
+      <div class="form-group">
+        <label for="bgUrl">배경화면 URL</label>
+        <input type="url" id="bgUrl" placeholder="https://example.com/background.jpg">
+      </div>
+      <div class="form-group">
+        <label for="logoUrl">로고 이미지 URL</label>
+        <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+      </div>
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label for="bulkConfig" style="margin-bottom: 0;">일괄 설정 (코드 붙여넣기)</label>
+          <button type="button" class="btn-copy-export" id="copyExportBtn">일괄 추출 복사</button>
+        </div>
+        <textarea id="bulkConfig" placeholder="background = [ {url: 'https://...', logo: 'https://...'} ]&#10;items = [ {name: 'ChatGPT', url: 'https://...', img: 'https://...', color: '#10a37f'}, ... ]"></textarea>
+        <div class="config-hint">background = [ {url, logo} ] / items = [ {name, url, img, color}, ... ] 형식</div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="settingsCancelBtn">취소</button>
+        <button type="button" class="btn-save" id="settingsApplyBtn">적용</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ITEMS_PER_PAGE = 18;
+    const DEFAULT_SHORTCUTS = [
+      { name: 'Google', url: 'https://google.com', img: '', color: '#4285f4' }
+    ];
+
+    let shortcuts = [];
+    let currentPage = 0;
+    let bgUrl = '';
+    let logoUrl = '';
+    let dragSrcIndex = null;
+
+    function loadShortcuts() {
+      const saved = localStorage.getItem('shortcuts');
+      shortcuts = saved ? JSON.parse(saved) : [...DEFAULT_SHORTCUTS];
+    }
+
+    function loadTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        const theme = JSON.parse(saved);
+        bgUrl = theme.bgUrl || '';
+        logoUrl = theme.logoUrl || '';
+      }
+      applyTheme();
+    }
+
+    function saveTheme() {
+      localStorage.setItem('theme', JSON.stringify({ bgUrl, logoUrl }));
+      applyTheme();
+    }
+
+    function applyTheme() {
+      document.body.style.background = bgUrl
+        ? `url(${bgUrl}) center/cover no-repeat`
+        : '#e8e8e8';
+      const logoArea = document.getElementById('logoArea');
+      if (logoUrl) {
+        logoArea.innerHTML = `<img src="${logoUrl}" alt="로고" onerror="this.style.display='none'">`;
+      } else {
+        logoArea.innerHTML = '';
+      }
+    }
+
+    function saveShortcuts() {
+      localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+      render();
+    }
+
+    function getInitialLetter(name) {
+      const match = name.match(/[\u3131-\uD79D\uac00-\ud7a3a-zA-Z0-9]/);
+      return match ? match[0].toUpperCase() : '?';
+    }
+
+    function renderIcon(item) {
+      const bg = item.color || '#4a90d9';
+      if (item.img) {
+        return `<img src="${item.img}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'letter\\'>${getInitialLetter(item.name)}</span>'">`;
+      }
+      return `<span class="letter">${getInitialLetter(item.name)}</span>`;
+    }
+
+    function render() {
+      const grid = document.getElementById('shortcutsGrid');
+      const pagination = document.getElementById('pagination');
+      grid.innerHTML = '';
+
+      const start = currentPage * ITEMS_PER_PAGE;
+      const pageItems = shortcuts.slice(start, start + ITEMS_PER_PAGE);
+      const totalPages = Math.ceil((shortcuts.length + 1) / ITEMS_PER_PAGE) || 1;
+
+      pageItems.forEach((item, idx) => {
+        const realIndex = start + idx;
+        const wrap = document.createElement('div');
+        wrap.className = 'shortcut-wrap';
+        wrap.draggable = true;
+        wrap.dataset.index = realIndex;
+        wrap.innerHTML = `
+          <a class="shortcut-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
+            <div class="shortcut-icon" style="background: ${item.color || '#4a90d9'}">${renderIcon(item)}</div>
+            <span class="shortcut-label">${item.name}</span>
+          </a>
+          <div class="edit-pencil" title="편집">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+        `;
+        wrap.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          openEditModal(realIndex);
+        });
+        wrap.querySelector('.edit-pencil').addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openEditModal(realIndex);
+        });
+        wrap.addEventListener('dragstart', (e) => {
+          if (e.target.closest('.edit-pencil')) { e.preventDefault(); return; }
+          dragSrcIndex = realIndex;
+          wrap.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', realIndex);
+          e.dataTransfer.setDragImage(wrap, 40, 40);
+        });
+        wrap.addEventListener('dragend', () => {
+          wrap.classList.remove('dragging');
+          document.querySelectorAll('.shortcut-wrap').forEach(w => w.classList.remove('drag-over'));
+          dragSrcIndex = null;
+        });
+        wrap.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (dragSrcIndex === null) return;
+          wrap.classList.add('drag-over');
+        });
+        wrap.addEventListener('dragleave', () => wrap.classList.remove('drag-over'));
+        wrap.addEventListener('drop', (e) => {
+          e.preventDefault();
+          wrap.classList.remove('drag-over');
+          if (dragSrcIndex === null || dragSrcIndex === realIndex) return;
+          const arr = [...shortcuts];
+          const [removed] = arr.splice(dragSrcIndex, 1);
+          const insertIdx = dragSrcIndex < realIndex ? realIndex - 1 : realIndex;
+          arr.splice(insertIdx, 0, removed);
+          shortcuts = arr;
+          saveShortcuts();
+        });
+        grid.appendChild(wrap);
+      });
+
+      const addEl = document.createElement('div');
+      addEl.className = 'shortcut-item';
+      addEl.innerHTML = `
+        <div class="add-btn"><span>+</span></div>
+        <span class="add-label">추가</span>
+      `;
+      addEl.addEventListener('click', () => openAddModal());
+      grid.appendChild(addEl);
+
+      pagination.innerHTML = '';
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'pagination-dot' + (i === currentPage ? ' active' : '');
+        dot.addEventListener('click', () => { currentPage = i; render(); });
+        pagination.appendChild(dot);
+      }
+    }
+
+    const modal = document.getElementById('modalOverlay');
+    const form = document.getElementById('shortcutForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const editIndexInput = document.getElementById('editIndex');
+    const nameInput = document.getElementById('shortcutName');
+    const urlInput = document.getElementById('shortcutUrl');
+    const imgInput = document.getElementById('shortcutImg');
+    const colorInput = document.getElementById('shortcutColor');
+    const colorPreview = document.getElementById('colorPreview');
+    const deleteBtn = document.getElementById('deleteBtn');
+
+    function openAddModal() {
+      editIndexInput.value = '-1';
+      modalTitle.textContent = '바로가기 추가';
+      form.reset();
+      imgInput.value = '';
+      colorInput.value = '#4a90d9';
+      colorPreview.style.background = '#4a90d9';
+      deleteBtn.style.display = 'none';
+      modal.classList.add('open');
+      nameInput.focus();
+    }
+
+    function openEditModal(index) {
+      const item = shortcuts[index];
+      editIndexInput.value = index;
+      modalTitle.textContent = '바로가기 수정';
+      nameInput.value = item.name;
+      urlInput.value = item.url;
+      imgInput.value = item.img || '';
+      colorInput.value = item.color || '#4a90d9';
+      colorPreview.style.background = item.color || '#4a90d9';
+      deleteBtn.style.display = 'inline-block';
+      deleteBtn.onclick = () => {
+        shortcuts.splice(index, 1);
+        saveShortcuts();
+        closeModal();
+      };
+      modal.classList.add('open');
+      nameInput.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+    }
+
+    colorInput.addEventListener('input', () => {
+      colorPreview.style.background = colorInput.value;
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idx = parseInt(editIndexInput.value, 10);
+      const data = {
+        name: nameInput.value.trim(),
+        url: urlInput.value.trim(),
+        img: imgInput.value.trim() || '',
+        color: colorInput.value
+      };
+      if (idx >= 0) {
+        shortcuts[idx] = data;
+      } else {
+        shortcuts.push(data);
+      }
+      saveShortcuts();
+      closeModal();
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // 설정 모달
+    const settingsOverlay = document.getElementById('settingsOverlay');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const bgUrlInput = document.getElementById('bgUrl');
+    const logoUrlInput = document.getElementById('logoUrl');
+    const bulkConfigInput = document.getElementById('bulkConfig');
+
+    function openSettingsModal() {
+      bgUrlInput.value = bgUrl;
+      logoUrlInput.value = logoUrl;
+      bulkConfigInput.value = exportBulkConfig();
+      settingsOverlay.classList.add('open');
+    }
+
+    function closeSettingsModal() {
+      settingsOverlay.classList.remove('open');
+    }
+
+    function exportBulkConfig() {
+      const bgStr = `background = [ {url: '${bgUrl || ''}', logo: '${logoUrl || ''}'} ]`;
+      const itemsStr = 'items = [\n  ' + shortcuts.map(s =>
+        `{name: '${(s.name || '').replace(/'/g, "\\'")}', url: '${(s.url || '').replace(/'/g, "\\'")}', img: '${(s.img || '').replace(/'/g, "\\'")}', color: '${s.color || '#4a90d9'}'}`
+      ).join(',\n  ') + '\n]';
+      return bgStr + '\n' + itemsStr;
+    }
+
+    document.getElementById('copyExportBtn').addEventListener('click', async () => {
+      const config = exportBulkConfig();
+      try {
+        await navigator.clipboard.writeText(config);
+        const btn = document.getElementById('copyExportBtn');
+        btn.textContent = '복사됨!';
+        setTimeout(() => { btn.textContent = '일괄 추출 복사'; }, 1500);
+      } catch (e) {
+        bulkConfigInput.value = config;
+        bulkConfigInput.select();
+      }
+    });
+
+    function parseBulkConfig(text) {
+      const result = { background: null, items: null };
+      const lines = text.split('\n').map(l => l.trim()).join(' ');
+      if (!lines) return result;
+
+      const bgMatch = lines.match(/background\s*=\s*\[\s*\{[^}]*\}\s*\]/);
+      if (bgMatch) {
+        const urlM = bgMatch[0].match(/url\s*:\s*['"]([^'"]*)['"]/);
+        const logoM = bgMatch[0].match(/logo\s*:\s*['"]([^'"]*)['"]/);
+        result.background = {
+          url: urlM ? urlM[1] : '',
+          logo: logoM ? logoM[1] : ''
+        };
+      }
+      const objMatch = lines.match(/background\s*=\s*\{\s*[^}]*\}/);
+      if (objMatch && !result.background) {
+        const urlM = objMatch[0].match(/url\s*:\s*['"]([^'"]*)['"]/);
+        const logoM = objMatch[0].match(/logo\s*:\s*['"]([^'"]*)['"]/);
+        result.background = {
+          url: urlM ? urlM[1] : '',
+          logo: logoM ? logoM[1] : ''
+        };
+      }
+
+      const itemsMatch = lines.match(/items\s*=\s*\[([\s\S]*?)\]/);
+      if (itemsMatch) {
+        const inner = itemsMatch[1];
+        const objs = [];
+        const parts = inner.split(/\}\s*,\s*\{/);
+        parts.forEach((p) => {
+          const content = p.replace(/^\{\s*|\s*\}$/g, '');
+          const nameM = content.match(/name\s*:\s*['"]([^'"]*)['"]/);
+          const urlM = content.match(/url\s*:\s*['"]([^'"]*)['"]/);
+          const imgM = content.match(/img\s*:\s*['"]([^'"]*)['"]/);
+          const colorM = content.match(/color\s*:\s*['"]([^'"]*)['"]/);
+          if (nameM && urlM) {
+            objs.push({
+              name: nameM[1],
+              url: urlM[1],
+              img: imgM ? imgM[1] : '',
+              color: colorM ? colorM[1] : '#4a90d9'
+            });
+          }
+        });
+        if (objs.length > 0) result.items = objs;
+      }
+      return result;
+    }
+
+    document.getElementById('settingsApplyBtn').addEventListener('click', () => {
+      const bulkText = bulkConfigInput.value.trim();
+      if (bulkText) {
+        const parsed = parseBulkConfig(bulkText);
+        if (parsed.background) {
+          if (parsed.background.url) bgUrl = parsed.background.url;
+          if (parsed.background.logo) logoUrl = parsed.background.logo;
+        }
+        if (parsed.items && parsed.items.length > 0) {
+          shortcuts = parsed.items;
+        }
+      }
+      if (bgUrlInput.value) bgUrl = bgUrlInput.value.trim();
+      if (logoUrlInput.value) logoUrl = logoUrlInput.value.trim();
+      saveTheme();
+      saveShortcuts();
+      closeSettingsModal();
+    });
+
+    document.getElementById('settingsCancelBtn').addEventListener('click', closeSettingsModal);
+    settingsBtn.addEventListener('click', openSettingsModal);
+    settingsOverlay.addEventListener('click', (e) => {
+      if (e.target === settingsOverlay) closeSettingsModal();
+    });
+
+    loadShortcuts();
+    loadTheme();
+    render();
+  </script>
+</body>
+</html>
