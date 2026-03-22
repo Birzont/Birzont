@@ -2283,6 +2283,83 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Logo Blur Grid (3x2): plogo1-6 ↔ plogo7-12 alternating
+  function initLogoBlurGrid() {
+    const grid = document.getElementById('logo-blur-grid');
+    if (!grid) return;
+
+    const base = 'resources/partnerlogos/';
+    const LOGOS_SET_A = [1, 2, 3, 4, 5, 6].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const LOGOS_SET_B = [7, 8, 9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const LOGOS = [LOGOS_SET_A, LOGOS_SET_B];
+
+    const CELL_COUNT = 6;
+    const STAGGER_MS = 180;
+    const CYCLE_INTERVAL_MS = 4500;
+    let currentSet = 0;
+
+    const cells = grid.querySelectorAll('.logo-blur-cell');
+    const useA = new Array(CELL_COUNT).fill(true);
+
+    cells.forEach((cell, i) => {
+      const imgA = document.createElement('img');
+      const imgB = document.createElement('img');
+      imgA.className = imgB.className = 'logo-blur-img';
+      imgA.alt = imgB.alt = LOGOS[0][i].alt;
+      imgA.src = LOGOS[0][i].src;
+      imgB.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
+      imgB.alt = LOGOS[0][i].alt;
+      cell.appendChild(imgA);
+      cell.appendChild(imgB);
+    });
+
+    function transitionCell(cellIndex, nextSet) {
+      const cell = cells[cellIndex];
+      const imgs = cell.querySelectorAll('.logo-blur-img');
+      const imgA = imgs[0];
+      const imgB = imgs[1];
+      const outImg = useA[cellIndex] ? imgA : imgB;
+      const inImg = useA[cellIndex] ? imgB : imgA;
+      useA[cellIndex] = !useA[cellIndex];
+
+      const nextLogo = LOGOS[nextSet][cellIndex];
+
+      inImg.src = nextLogo.src;
+      inImg.alt = nextLogo.alt;
+      inImg.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
+      inImg.classList.remove('blur-in');
+
+      outImg.classList.add('blur-out');
+
+      outImg.addEventListener('transitionend', function onOut() {
+        outImg.removeEventListener('transitionend', onOut);
+        outImg.style.opacity = '0';
+        outImg.classList.remove('blur-out');
+
+        inImg.classList.add('blur-in');
+        inImg.style.filter = '';
+        inImg.style.opacity = '';
+        inImg.style.pointerEvents = '';
+
+        inImg.addEventListener('transitionend', function onIn() {
+          inImg.removeEventListener('transitionend', onIn);
+          inImg.classList.remove('blur-in');
+        }, { once: true });
+      }, { once: true });
+    }
+
+    function runCycle() {
+      const nextSet = 1 - currentSet;
+      for (let i = 0; i < CELL_COUNT; i++) {
+        setTimeout(() => transitionCell(i, nextSet), i * STAGGER_MS);
+      }
+      currentSet = nextSet;
+    }
+
+    runCycle();
+    setInterval(runCycle, CYCLE_INTERVAL_MS);
+  }
+
   // Initialize
   createPixels();
   renderProducts();
@@ -2296,6 +2373,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHeader();
   initImageCanvasTilt();
   initUserPromptCardsTilt();
+  initLogoBlurGrid();
   initProductCarousel();
   initBlurFadeOnce();
   

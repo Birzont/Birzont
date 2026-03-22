@@ -1199,54 +1199,51 @@ body {
   }
 }
 
-/* Logo Slider Styles */
-.logo-slider-container {
+/* Logo Blur Grid Styles (3x2) */
+.logo-blur-grid {
   width: 100%;
-  overflow: hidden;
+}
+
+.logo-blur-grid-inner {
+  place-items: center;
+}
+
+.logo-blur-cell {
   position: relative;
-}
-
-.logo-slider-track {
-  display: flex;
-  gap: 2.5rem;
-  animation: logoSlide 40s linear infinite;
-  width: fit-content;
-  will-change: transform;
-}
-
-@media (max-width: 767px) {
-  .logo-slider-track {
-    gap: 1.75rem;
-    animation: logoSlide 30s linear infinite;
-  }
-}
-
-.logo-slider-item {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.5rem;
+  width: 100%;
+  min-height: 36px;
+  aspect-ratio: 4 / 1;
+  overflow: hidden;
 }
 
-.logo-slider-img {
-  height: 34px;
+.logo-blur-cell .logo-blur-img {
+  position: absolute;
   width: auto;
+  max-width: 85%;
+  height: 32px;
   object-fit: contain;
   opacity: 0.6;
-  transition: opacity 0.3s ease;
   filter: grayscale(100%);
+  transition: filter 0.6s ease, opacity 0.6s ease;
 }
 
-@media (max-width: 767px) {
-  .logo-slider-img {
-    height: 26px;
+.logo-blur-cell .logo-blur-img.blur-out {
+  filter: grayscale(100%) blur(12px);
+  opacity: 0;
+}
+
+.logo-blur-cell .logo-blur-img.blur-in {
+  filter: grayscale(100%) blur(0);
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .logo-blur-cell .logo-blur-img {
+    height: 54px;
   }
-}
-
-.logo-slider-item:hover .logo-slider-img {
-  opacity: 1;
-  filter: grayscale(0%);
 }
 
 /* User Prompts Section */
