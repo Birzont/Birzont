@@ -2227,6 +2227,62 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroSequence();
   };
 
+  // Image canvas subtle perspective tilt on mouse move
+  function initImageCanvasTilt() {
+    const canvas = document.getElementById('image-canvas');
+    const wrap = document.getElementById('image-canvas-wrap');
+    if (!canvas || !wrap || window.innerWidth <= 900) return;
+
+    const maxTilt = 4;
+
+    wrap.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateY = ((x - centerX) / centerX) * maxTilt;
+      const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+      canvas.style.transform = `perspective(1200px) translateY(0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+      canvas.style.transform = 'perspective(1200px) translateY(0) rotateX(0deg) rotateY(0deg)';
+    });
+  }
+
+  // User prompt cards subtle perspective tilt on mouse move
+  function initUserPromptCardsTilt() {
+    if (window.innerWidth <= 900) return;
+
+    const cards = document.querySelectorAll('.user-prompt-card');
+    const maxTilt = 4;
+
+    cards.forEach((card) => {
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.25s ease-out, box-shadow 0.3s ease';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * maxTilt;
+        const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
   // Initialize
   createPixels();
   renderProducts();
@@ -2238,6 +2294,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initUserPromptCards();
   updateMobileState();
   updateHeader();
+  initImageCanvasTilt();
+  initUserPromptCardsTilt();
   initProductCarousel();
   initBlurFadeOnce();
   
