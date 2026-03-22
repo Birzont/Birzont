@@ -2234,6 +2234,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Product feature cards perspective tilt on mouse move
+  function initProductFeatureCardsTilt() {
+    if (window.innerWidth <= 900) return;
+
+    const cards = document.querySelectorAll('.product-feature-card');
+    const maxTilt = 4;
+
+    cards.forEach((card) => {
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.25s ease-out, box-shadow 0.35s ease';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * maxTilt;
+        const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
   // Logo Blur Grid (3x2): plogo1-6 ↔ plogo7-12 alternating
   function initLogoBlurGrid() {
     const grid = document.getElementById('logo-blur-grid');
@@ -2324,6 +2354,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHeader();
   initImageCanvasTilt();
   initUserPromptCardsTilt();
+  initProductFeatureCardsTilt();
   initLogoBlurGrid();
   initProductCarousel();
   initBlurFadeOnce();
