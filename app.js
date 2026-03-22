@@ -225,7 +225,7 @@ function updateHeader() {
   const menuIcon = document.getElementById('menu-icon');
   const closeIcon = document.getElementById('close-icon');
   
-  if (!header || !logoImg) return;
+  if (!header) return;
   
   const shouldBeScrolled = window.scrollY > 0 || (state.isMobile && state.mobileMenuOpen);
   
@@ -233,9 +233,11 @@ function updateHeader() {
     header.classList.remove('bg-transparent');
     if (state.isMobile) {
       header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
-      logoImg.src = state.mobileMenuOpen || state.scrolled ? 
-        "https://birzont.github.io/BirzontArchive/res/birzont_bicon.png" : 
-        "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      if (logoImg) {
+        logoImg.src = state.mobileMenuOpen || state.scrolled ? 
+          "https://birzont.github.io/BirzontArchive/res/birzont_bicon.png" : 
+          "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      }
       
       // 햄버거 버튼 색상 변경
       if (mobileMenuBtn) {
@@ -250,9 +252,15 @@ function updateHeader() {
         closeIcon.classList.remove('text-white');
         closeIcon.classList.add('text-black');
       }
+      // Log in 버튼 색상 변경 (모바일)
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-transparent', 'text-white', 'border-white');
+        startBtn.classList.add('bg-black', 'text-white', 'border-transparent');
+      }
     } else {
       header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
-      logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_black.png";
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_black.png";
       
       // Update start button when scrolled
       const startBtn = document.getElementById('desktop-start-btn');
@@ -262,12 +270,17 @@ function updateHeader() {
       }
     }
     
-    // Update nav links
+    // Update nav links and lang button
     const navLinks = header.querySelectorAll('#desktop-nav a');
     navLinks.forEach(link => {
       link.classList.remove('text-white');
       link.classList.add('text-gray-900');
     });
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+      langBtn.classList.remove('text-white');
+      langBtn.classList.add('text-gray-900');
+    }
     
     state.scrolled = true;
     state.blinking = false;
@@ -275,7 +288,7 @@ function updateHeader() {
     if (state.isMobile) {
       header.classList.remove('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
       header.classList.add('bg-transparent');
-      logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
       
       // 햄버거 버튼 색상 원래대로
       if (mobileMenuBtn) {
@@ -290,10 +303,16 @@ function updateHeader() {
         closeIcon.classList.remove('text-black');
         closeIcon.classList.add('text-white');
       }
+      // Log in 버튼 색상 원래대로 (모바일, 스크롤 안함)
+      const startBtnMobile = document.getElementById('desktop-start-btn');
+      if (startBtnMobile) {
+        startBtnMobile.classList.remove('bg-black', 'border-transparent');
+        startBtnMobile.classList.add('bg-transparent', 'text-white', 'border-white');
+      }
     } else {
       header.classList.remove('border-2', 'border-black', 'backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
       header.classList.add('bg-transparent');
-      logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_white.png";
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_white.png";
       
       // Update start button when at top
       const startBtn = document.getElementById('desktop-start-btn');
@@ -303,12 +322,17 @@ function updateHeader() {
       }
     }
     
-    // Update nav links
+    // Update nav links and lang button
     const navLinks = header.querySelectorAll('#desktop-nav a');
     navLinks.forEach(link => {
       link.classList.add('text-white');
       link.classList.remove('text-gray-900');
     });
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+      langBtn.classList.add('text-white');
+      langBtn.classList.remove('text-gray-900');
+    }
     
     state.scrolled = false;
     state.blinking = true;
@@ -1838,7 +1862,7 @@ function handleNavHover(item, index) {
   const rect = navItem.getBoundingClientRect();
   let left = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
   
-  if (item === "Career") {
+  if (item === "Careers") {
     // Career: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
     const calculatedLeft = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
     const cardRight = calculatedLeft + cardWidth;
