@@ -692,11 +692,16 @@ body {
 }
 
 .product-card-tagline {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.45;
-  color: #000;
+  color: #374151;
   text-align: center;
   max-width: 100%;
+}
+
+.product-card-overlay-description {
+  font-size: 1.15rem;
+  line-height: 1.55;
 }
 
 @media (max-width: 767px) {
@@ -713,7 +718,7 @@ body {
   }
   
   .product-card-tagline {
-    font-size: 0.875rem;
+    font-size: 0.95rem;
   }
   
   .product-card-overlay-title {
@@ -721,7 +726,7 @@ body {
   }
   
   .product-card-overlay-description {
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
   }
   
   .product-card-overlay-link {
