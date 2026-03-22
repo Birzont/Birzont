@@ -8,6 +8,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Instrument Serif Italic';
+  src: url('fonts/InstrumentSerif-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -651,6 +659,7 @@ body {
 .product-feature-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.03), 0 8px 20px rgba(0, 0, 0, 0.04);
+  border: 4px solid white;
 }
 
 .product-feature-card:hover {
@@ -658,33 +667,53 @@ body {
   box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.05), 0 16px 48px rgba(15, 23, 42, 0.06);
 }
 
-/* Product Card Text Area and Title */
+/* Product Card - 이미지 영역 전체, 상단 제목 오버레이 */
 .product-card-logo-area {
-  height: calc(100% - 80px);
+  height: 100%;
 }
 
-.product-card-text-area {
-  height: 80px;
-  padding: 0.75rem 2rem;
+.product-card-title-overlay {
+  padding: 2.5rem 1.5rem 1rem;
+  background: transparent;
+  pointer-events: none;
 }
 
-.product-card-title {
-  font-size: 1.2rem;
+.product-card-title-overlay .product-card-title {
+  font-family: 'Instrument Serif Italic', Georgia, 'Times New Roman', serif;
+  font-size: 2.25rem;
+  text-align: center;
+  color: #000;
+}
+
+/* 카드 하단 태그라인 */
+.product-card-tagline-overlay {
+  padding: 1rem 1.5rem 1.25rem;
+  pointer-events: none;
+}
+
+.product-card-tagline {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #000;
+  text-align: center;
+  max-width: 100%;
 }
 
 @media (max-width: 767px) {
-  .product-card-logo-area {
-    height: calc(100% - 60px);
+  .product-card-title-overlay {
+    padding: 2rem 1rem 0.75rem;
   }
   
-  .product-card-text-area {
-    height: 60px;
-    padding: 0.5rem 1.5rem;
+  .product-card-title-overlay .product-card-title {
+    font-size: 1.9rem;
   }
   
-  .product-card-title {
-    font-size: 1.5rem;
-    padding-left: 0.5rem;
+  .product-card-tagline-overlay {
+    padding: 0.75rem 1rem 1rem;
+  }
+  
+  .product-card-tagline {
+    font-size: 0.875rem;
   }
   
   .product-card-overlay-title {

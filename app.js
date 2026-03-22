@@ -870,13 +870,11 @@ function createProductFeatureCard(product) {
   card.style.backgroundSize = 'cover';
   card.style.backgroundPosition = 'center';
   
-  // 아이콘 이미지 영역 - 위, 왼쪽, 오른쪽을 꽉 채움
+  // 이미지 영역 - 전체 카드, 상단에 제목 오버레이
   const logoArea = document.createElement('div');
-  logoArea.className = 'absolute top-0 left-0 right-0 overflow-hidden product-card-logo-area';
-  logoArea.style.padding = '0';
+  logoArea.className = 'absolute inset-0 overflow-hidden product-card-logo-area';
   logoArea.style.display = 'flex';
-  logoArea.style.alignItems = 'center';
-  logoArea.style.justifyContent = 'center';
+  logoArea.style.flexDirection = 'column';
   
   const displayImageSrc = product.featureImage || product.defaultLogoSrc;
   const logoImg = document.createElement('img');
@@ -887,40 +885,31 @@ function createProductFeatureCard(product) {
   logoImg.style.height = '100%';
   logoImg.style.objectFit = 'cover';
   logoImg.style.display = 'block';
+  logoImg.style.flexGrow = '1';
   
-  logoArea.appendChild(logoImg);
-  card.appendChild(logoArea);
-  
-  // 텍스트 영역 - 하단에 흰색 배경
-  const textArea = document.createElement('div');
-  textArea.className = 'absolute bottom-0 left-0 right-0 bg-white flex justify-between items-center product-card-text-area';
+  const titleOverlay = document.createElement('div');
+  titleOverlay.className = 'absolute top-0 left-0 right-0 flex justify-center items-center product-card-title-overlay';
   
   const title = document.createElement('h2');
   title.className = 'font-bold text-black transition-colors duration-500 product-card-title';
   title.textContent = product.title;
   
-  const arrowBtn = document.createElement('button');
-  arrowBtn.className = 'rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-300';
-  arrowBtn.style.width = 'clamp(2.25rem, 3vw, 2.75rem)';
-  arrowBtn.style.height = 'clamp(2.25rem, 3vw, 2.75rem)';
-  arrowBtn.style.backgroundColor = '#000';
-  arrowBtn.style.color = '#fff';
-  arrowBtn.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block">
-      <line x1="5" y1="12" x2="19" y2="12"></line>
-      <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
-  `;
-  arrowBtn.addEventListener('mouseenter', () => {
-    arrowBtn.style.backgroundColor = '#111';
-  });
-  arrowBtn.addEventListener('mouseleave', () => {
-    arrowBtn.style.backgroundColor = '#000';
-  });
+  titleOverlay.appendChild(title);
+  logoArea.appendChild(logoImg);
+  logoArea.appendChild(titleOverlay);
+  card.appendChild(logoArea);
   
-  textArea.appendChild(title);
-  textArea.appendChild(arrowBtn);
-  card.appendChild(textArea);
+  // 하단 한두줄 문장 (기본 표시)
+  let taglineOverlay = null;
+  if (product.tagline) {
+    taglineOverlay = document.createElement('div');
+    taglineOverlay.className = 'absolute bottom-0 left-0 right-0 flex justify-center items-center product-card-tagline-overlay';
+    const tagline = document.createElement('p');
+    tagline.className = 'product-card-tagline';
+    tagline.textContent = product.tagline;
+    taglineOverlay.appendChild(tagline);
+    card.appendChild(taglineOverlay);
+  }
   
   // 클릭 시 설명 표시를 위한 컨텐츠 영역 (숨김)
   const cardContent = document.createElement('div');
@@ -928,10 +917,8 @@ function createProductFeatureCard(product) {
   cardContent.dataset.showDescription = 'false';
   card.appendChild(cardContent);
   
-  // overlay 제거 - 마우스 오버 시 배경이 어두워지지 않도록
-  
   card.addEventListener('click', (e) => {
-    toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product);
+    toggleProductFeatureCardDescription(cardContent, logoArea, null, taglineOverlay, product);
   });
   
   cardContainer.appendChild(card);
@@ -939,7 +926,7 @@ function createProductFeatureCard(product) {
   return cardContainer;
 }
 
-function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, product) {
+function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, taglineOverlay, product) {
   const showDescription = cardContent.dataset.showDescription === 'true';
   const baseClasses = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl transition-opacity duration-500';
   
@@ -951,63 +938,24 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, pr
     cardContent.style.pointerEvents = 'none';
     cardContent.innerHTML = '';
     logoArea.style.opacity = '1';
-    textArea.style.opacity = '1';
+    if (textArea) textArea.style.opacity = '1';
+    if (taglineOverlay) taglineOverlay.style.opacity = '1';
   } else {
-    // Show description
+    // Show description only
     cardContent.dataset.showDescription = 'true';
     cardContent.innerHTML = '';
     cardContent.className = baseClasses;
     cardContent.style.opacity = '1';
     cardContent.style.pointerEvents = 'auto';
     
-    const header = document.createElement('div');
-    header.className = 'flex items-center gap-3 mb-4';
-    
-    const iconWrapper = document.createElement('div');
-    iconWrapper.className = 'bg-white p-2 rounded-md flex items-center justify-center';
-    
-    const iconImg = document.createElement('img');
-    iconImg.src = product.defaultLogoSrc;
-    iconImg.alt = `${product.title} 아이콘`;
-    iconImg.width = 36;
-    iconImg.height = 36;
-    iconImg.className = 'object-contain';
-    
-    iconWrapper.appendChild(iconImg);
-    header.appendChild(iconWrapper);
-    
-    const title = document.createElement('h2');
-    title.className = 'font-bold transition-colors duration-500 product-card-overlay-title';
-    title.textContent = product.title;
-    header.appendChild(title);
-    
-    cardContent.appendChild(header);
-    
-    const content = document.createElement('div');
-    content.className = 'flex flex-col';
-    
     const description = document.createElement('p');
-    description.className = 'transition-colors duration-500 mb-2 product-card-overlay-description';
+    description.className = 'transition-colors duration-500 product-card-overlay-description';
     description.textContent = product.description;
-    content.appendChild(description);
-    
-    const link = document.createElement('a');
-    link.href = product.link;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2 product-card-overlay-link';
-    link.innerHTML = '바로가기 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-    link.addEventListener('click', (e) => e.stopPropagation());
-    content.appendChild(link);
-    
-    cardContent.appendChild(content);
-    
-    const spacer = document.createElement('div');
-    spacer.className = 'flex-grow';
-    cardContent.appendChild(spacer);
+    cardContent.appendChild(description);
     
     logoArea.style.opacity = '0';
-    textArea.style.opacity = '0';
+    if (textArea) textArea.style.opacity = '0';
+    if (taglineOverlay) taglineOverlay.style.opacity = '0';
   }
 }
 
@@ -1022,8 +970,9 @@ function renderProductFeatures() {
  */
 const productFeatures = [
   {
-    title: "독자적 AI 모델의 경제성",
-    description: "Deepseek 기반으로 자체 튜닝된 Hearim & Tobaki 모델을 사용하여, 기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다. [cite: 67, 68]",
+    title: "Home of Prompts",
+    tagline: "기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.",
+    description: "Deepseek 기반으로 자체 튜닝된 Hearim & Tobaki 모델을 사용하여, 기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.",
     logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
     bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
     link: "https://birzont.ai/pricing",
@@ -1033,8 +982,9 @@ const productFeatures = [
     featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
   },
   {
-    title: "실시간 학습형 추천 시스템",
-    description: "사용자의 피드백과 사용 패턴을 Supabase 기반 데이터베이스로 분석하여, 쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요. [cite: 46, 48]",
+    title: "We build Automations",
+    tagline: "쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요.",
+    description: "사용자의 피드백과 사용 패턴을 Supabase 기반 데이터베이스로 분석하여, 쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요.",
     logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
     link: "https://birzont.ai/features",
@@ -1044,8 +994,9 @@ const productFeatures = [
     featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
   },
   {
-    title: "글로벌 프롬프트 마켓",
-    description: "전 세계 크리에이터들이 검증한 5,000개 이상의 프롬프트 자산을 자유롭게 거래하고, 한국어·영어·중국어를 포함한 11개 언어로 즉시 활용할 수 있습니다. [cite: 26, 122]",
+    title: "Launch and grow",
+    tagline: "5,000개 이상의 검증된 프롬프트, 11개 언어로 즉시 활용할 수 있습니다.",
+    description: "전 세계 크리에이터들이 검증한 5,000개 이상의 프롬프트 자산을 자유롭게 거래하고, 한국어·영어·중국어를 포함한 11개 언어로 즉시 활용할 수 있습니다. ",
     logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
     link: "https://birzont.ai/marketplace",
