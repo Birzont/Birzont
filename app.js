@@ -2264,6 +2264,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // City CTA banner: random background from resources/city/
+  function initCityCtaCard() {
+    const bg = document.getElementById('city-cta-bg');
+    if (!bg) return;
+    const images = [
+      'resources/city/nyc.png',
+      'resources/city/sanfr.png',
+      'resources/city/golden.png',
+      'resources/city/central.png'
+    ];
+    const pick = images[Math.floor(Math.random() * images.length)];
+    bg.style.backgroundImage = `url('${pick}')`;
+  }
+
   // Logo Blur Grid (3x2): plogo1-6 ↔ plogo7-12 alternating
   function initLogoBlurGrid() {
     const grid = document.getElementById('logo-blur-grid');
@@ -2357,6 +2371,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductFeatureCardsTilt();
   initLogoBlurGrid();
   initProductCarousel();
+  initCityCtaCard();
   initBlurFadeOnce();
   
   // Pixel blinking

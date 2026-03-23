@@ -1290,6 +1290,43 @@ body {
   }
 }
 
+/* City CTA banner (랜덤 city 배경) */
+.city-cta-card {
+  min-height: 340px;
+}
+
+@media (min-width: 768px) {
+  .city-cta-card {
+    min-height: 440px;
+  }
+}
+
+.city-cta-bg {
+  transform: scale(1.02);
+}
+
+.city-cta-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.58) 0%,
+    rgba(0, 0, 0, 0.42) 42%,
+    rgba(0, 0, 0, 0.22) 100%
+  );
+}
+
+.city-cta-headline {
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
+.city-cta-em {
+  font-family: 'Instrument Serif Italic', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  display: inline;
+  white-space: normal;
+  max-width: none;
+}
+
 /* User Prompts Section */
 .user-prompts-container {
   position: relative;
