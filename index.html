@@ -76,7 +76,7 @@
     <!-- Product Introduction & Features Section -->
     <div class="w-full bg-[#fafafa] pt-8 md:pt-12">
       <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12" aria-label="버존트 핵심 기능">
-        <div class="mt-6 md:mt-10">
+        <div class="mt-2 md:mt-6">
           <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading">Explore the Birzont</h3>
           <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">당신의 작업을 더 스마트하게 만드는 AI 플랫폼</p>
         </div>
@@ -159,7 +159,7 @@
 
     <!-- Product Features Section (독립 영역) -->
     <div class="w-full bg-[#fafafa] pt-8 md:pt-12">
-      <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto" aria-label="버존트 핵심 가치">
+      <section class="pt-10 md:pt-16 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto" aria-label="버존트 핵심 가치">
         <div class="mt-6 md:mt-10">
           <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading">How it works</h3>
           <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">당신의 작업을 더 스마트하게 만드는 AI 플랫폼</p>
@@ -268,13 +268,16 @@
     -->
 
     <!-- Pricing Section -->
+    <template>
     <div class="w-full bg-[#fafafa]">
       <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
         <h2 class="text-[2.625rem] md:text-[3.125rem] font-bold text-center text-black mb-3 md:mb-4 font-instrument-heading">Plans</h2>
         <p class="text-lg md:text-xl text-gray-600 text-center mb-6 md:mb-8">나에게 맞는 플랜을 선택하세요</p>
+        <!--
         <div class="flex justify-center mb-20 md:mb-24">
           <a href="https://birzont.ai/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">더 알아보기</a>
         </div>
+        -->
         
         <!-- Pricing Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
@@ -488,25 +491,125 @@
         </section>
         -->
       </section>
+    </div></template>
+
+    <!-- Built for any business (Floating chips) -->
+    <div class="w-full bg-white py-14 md:py-18">
+      <section class="max-w-[1506px] mx-auto px-4 md:px-0" aria-label="Built for any business">
+        <div class="biz-float-wrap blur-fade-once">
+          <h2 class="biz-float-title">
+            Built for any <span class="biz-float-title-script">Business</span>
+          </h2>
+
+          <div class="biz-float-chips" aria-hidden="true">
+            <div class="biz-float-chip biz-chip-digital">
+              <span class="biz-float-chip-dot biz-dot-digital">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 10l8-6 8 6-8 6-8-6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M4 14l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              Digital products
+            </div>
+
+            <div class="biz-float-chip biz-chip-agencies">
+              <span class="biz-float-chip-dot biz-dot-agencies">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M22 21v-2a3 3 0 0 0-2-2.82" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              Agencies
+            </div>
+
+            <div class="biz-float-chip biz-chip-ecommerce">
+              <span class="biz-float-chip-dot biz-dot-ecommerce">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M6 6h15l-1.5 9h-12L6 6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M6 6 4 3H1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="9" cy="20" r="1" fill="currentColor"/>
+                  <circle cx="18" cy="20" r="1" fill="currentColor"/>
+                </svg>
+              </span>
+              E-commerce
+            </div>
+
+            <div class="biz-float-chip biz-chip-saas">
+              <span class="biz-float-chip-dot biz-dot-saas">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 4h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              SaaS
+            </div>
+
+            <div class="biz-float-chip biz-chip-mobile">
+              <span class="biz-float-chip-dot biz-dot-mobile">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <rect x="7" y="2" width="10" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              Mobile apps
+            </div>
+
+            <div class="biz-float-chip biz-chip-services">
+              <span class="biz-float-chip-dot biz-dot-services">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M12 2l1.5 5H19l-4 3 1.5 5-4.5-3-4.5 3L9 10 5 7h5.5L12 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M2 22h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              Services
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- User Prompts Section (독립 영역) -->
-    <div class="w-full bg-white relative overflow-hidden">
+    <!-- City CTA banner (랜덤 city 배경 + 연한 검정 오버레이) — Home of Prompts 위 -->
+    <div class="w-full bg-white">
+      <section class="pt-12 md:pt-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-20 md:pb-24 blur-fade-once" aria-label="버존트 소개 배너">
+        <div id="city-cta-card" class="city-cta-card relative rounded-3xl overflow-hidden border border-gray-200 shadow-lg">
+          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true"></div>
+          <div class="city-cta-overlay absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+          <div class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
+            <h2 class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
+              Bridge, Build, <em class="city-cta-em">Automation.</em> With Birzont.
+            </h2>
+            <p class="city-cta-sub text-white/95 text-[1.06rem] md:text-[1.18rem] font-medium mb-4 md:mb-5">
+              AI와 함께하는 창작·협업의 중심
+            </p>
+            <p class="city-cta-body text-white/90 text-sm md:text-base leading-relaxed max-w-xl">
+              여러 도구를 오가며 랜딩·카피·에이전트를 따로 만들 필요 없습니다. 버존트는 브랜드를 이해하고, 프롬프트를 설계하며, 팀과 공유할 수 있는 하나의 플랫폼입니다. 대화만으로 워크플로우를 만들고, 검증된 템플릿으로 바로 시작하세요.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- User Prompts + Try for free (통합 영역) -->
+    <div class="w-full bg-gray-100 relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1707209856575-a80b9dff5524?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjBncmFkaWVudHxlbnwwfHwwfHx8MA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;">
       <section class="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-20">
         <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading">Birzont, Home of Prompts</h3>
         <p class="text-lg md:text-xl text-gray-600 text-center mb-14 md:mb-16 blur-fade-once">커뮤니티가 만든 다양한 프롬프트를 탐색해보세요</p>
-        <div class="user-prompts-container blur-fade-once">
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" id="prompt-prev-btn" aria-label="이전">
+        <div class="user-prompts-container flex flex-col gap-5 md:gap-8">
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="1">
+          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="이전">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" id="prompt-next-btn" aria-label="다음">
+          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="다음">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
-          <div class="user-prompts-grid">
+          <div class="user-prompts-grid user-prompts-grid-fade">
           <div class="user-prompt-card">
             <div class="user-prompt-header">
               <div class="user-prompt-ai-badge">
@@ -595,43 +698,112 @@
             </div>
           </div>
         </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- City CTA banner (랜덤 city 배경 + 연한 검정 오버레이) -->
-    <div class="w-full bg-white">
-      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-12 md:pb-16 blur-fade-once" aria-label="버존트 소개 배너">
-        <div id="city-cta-card" class="city-cta-card relative rounded-3xl overflow-hidden border border-gray-200 shadow-lg">
-          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true"></div>
-          <div class="city-cta-overlay absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-          <div class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
-            <h2 class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
-              Bridge, Build, <em class="city-cta-em">Automation.</em> With Birzont.
-            </h2>
-            <p class="city-cta-sub text-white/95 text-[1.06rem] md:text-[1.18rem] font-medium mb-4 md:mb-5">
-              AI와 함께하는 창작·협업의 중심
-            </p>
-            <p class="city-cta-body text-white/90 text-sm md:text-base leading-relaxed max-w-xl">
-              여러 도구를 오가며 랜딩·카피·에이전트를 따로 만들 필요 없습니다. 버존트는 브랜드를 이해하고, 프롬프트를 설계하며, 팀과 공유할 수 있는 하나의 플랫폼입니다. 대화만으로 워크플로우를 만들고, 검증된 템플릿으로 바로 시작하세요.
-            </p>
+          </div>
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="2">
+          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="이전">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="다음">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <div class="user-prompts-grid user-prompts-grid-fade">
+          <div class="user-prompt-card">
+            <div class="user-prompt-header">
+              <div class="user-prompt-ai-badge">
+                <span class="user-prompt-ai-icon">
+                  <img src="https://img.icons8.com/color/512/chatgpt.png" alt="ChatGPT icon">
+                </span>
+                <span>ChatGPT</span>
+              </div>
+              <div class="user-prompt-actions">
+                <button type="button" class="user-prompt-like" aria-label="좋아요">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span class="user-prompt-like-count">5</span>
+                </button>
+                <button type="button" class="user-prompt-bookmark" aria-label="북마크">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+                  <span class="user-prompt-bookmark-count">3</span>
+                </button>
+              </div>
+            </div>
+            <h4 class="user-prompt-title">SNS·광고용 마케팅 카피 생성</h4>
+            <p class="user-prompt-description">브랜드 톤과 타깃을 입력하면 채널별로 짧고 임팩트 있는 카피를 여러 버전 제안하는 프롬프트입니다.</p>
+            <div class="user-prompt-footer">
+              <span class="user-prompt-author">@birzont</span>
+              <div class="user-prompt-free">
+                <span>Free</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="user-prompt-card">
+            <div class="user-prompt-header">
+              <div class="user-prompt-ai-badge">
+                <span class="user-prompt-ai-icon claude-icon">
+                  <img src="https://img.icons8.com/color/512/google-gemini.png" alt="Gemini icon">
+                </span>
+                <span>Gemini</span>
+              </div>
+              <div class="user-prompt-actions">
+                <button type="button" class="user-prompt-like" aria-label="좋아요">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span class="user-prompt-like-count">4</span>
+                </button>
+                <button type="button" class="user-prompt-bookmark" aria-label="북마크">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+                  <span class="user-prompt-bookmark-count">2</span>
+                </button>
+              </div>
+            </div>
+            <h4 class="user-prompt-title">긴 문서·회의록 핵심 요약</h4>
+            <p class="user-prompt-description">PDF나 텍스트를 붙여넣으면 결론·액션 아이템·타임라인으로 구조화해 한눈에 보기 쉽게 정리합니다.</p>
+            <div class="user-prompt-footer">
+              <span class="user-prompt-author">@birzont</span>
+              <div class="user-prompt-free">
+                <span>Free</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="user-prompt-card">
+            <div class="user-prompt-header">
+              <div class="user-prompt-ai-badge">
+                <span class="user-prompt-ai-icon deepseek-icon">
+                  <img src="https://img.icons8.com/color/512/perplexity-ai.png" alt="Perplexity icon">
+                </span>
+                <span>Perplexity</span>
+              </div>
+              <div class="user-prompt-actions">
+                <button type="button" class="user-prompt-like" aria-label="좋아요">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span class="user-prompt-like-count">3</span>
+                </button>
+                <button type="button" class="user-prompt-bookmark" aria-label="북마크">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+                  <span class="user-prompt-bookmark-count">1</span>
+                </button>
+              </div>
+            </div>
+            <h4 class="user-prompt-title">리서치 질문 설계 &amp; 출처 정리</h4>
+            <p class="user-prompt-description">주제를 입력하면 검색에 적합한 하위 질문을 나열하고, 답변 시 인용할 출처 형식까지 맞춰 주는 프롬프트입니다.</p>
+            <div class="user-prompt-footer">
+              <span class="user-prompt-author">@birzont</span>
+              <div class="user-prompt-free">
+                <span>Free</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
-
-    <!-- Try for free (배경 그라데이션 영역) -->
-    <div class="w-full bg-gray-100 relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1707209856575-a80b9dff5524?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjBncmFkaWVudHxlbnwwfHwwfHx8MA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-      <section class="text-left py-24 md:py-40 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10 blur-fade-once try-free-section" dir="ltr">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-black try-free-title">
-          Try for free.
-        </h2>
-        <p class="text-lg md:text-xl max-w-[800px] leading-relaxed text-gray-700 mb-10 try-free-description">
-          다양한 AI 모델과 함께 창의적인 프롬프트를 만들고, 공유하고, 협업하세요. 당신의 아이디어를 현실로 만들어보세요.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-start items-center">
-          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" class="glass-button px-8 py-3 rounded-xl text-black font-medium text-base md:text-lg transition-all duration-300 try-free-button inline-block text-center">
-            Get Started
+          </div>
+        </div>
+        <div class="text-center mt-8 md:mt-10 blur-fade-once">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" class="text-black font-semibold text-base md:text-lg hover:underline inline-block">
+            Explore Prompts
           </a>
         </div>
       </section>

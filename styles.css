@@ -1284,6 +1284,16 @@ body {
   opacity: 0.6;
 }
 
+@media (min-width: 1300px) {
+  .logo-blur-grid-inner {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(1, minmax(0, 1fr)) !important;
+    gap: 0.8rem !important;
+    column-gap: 4rem !important;
+    row-gap: 0 !important;
+  }
+}
+
 @media (min-width: 768px) {
   .logo-blur-cell .logo-blur-img {
     height: 54px;
@@ -1335,6 +1345,11 @@ body {
   padding: 0 1rem;
 }
 
+.user-prompts-row {
+  position: relative;
+  width: 100%;
+}
+
 .user-prompts-grid {
   display: flex;
   gap: 1rem;
@@ -1343,6 +1358,29 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-behavior: smooth;
+}
+
+/* 좌우 가장자리 그라데이션 페이드 */
+.user-prompts-grid-fade {
+  position: relative;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
 }
 
 .user-prompts-grid::-webkit-scrollbar {
@@ -1368,6 +1406,165 @@ body {
 
 .user-prompt-card:hover {
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+/* 번들 카드 (참고 UI: 상단 아이콘 묶음 + 하트, 중앙 타이틀, 하단 @ + 토큰 + 외부링크) */
+.user-prompt-bundle {
+  position: relative;
+  border: none;
+  box-shadow: 0 8px 28px rgba(37, 150, 190, 0.35);
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* 랜덤: 단색 #2596be (동일 톤) */
+.user-prompt-bundle--g0 {
+  background: #2596be;
+  background: linear-gradient(135deg, #2596be 0%, #2596be 100%);
+}
+
+/* 랜덤: #2596be 앵커의 은은한 대각 그라데이션 */
+.user-prompt-bundle--g1 {
+  background: linear-gradient(
+    145deg,
+    #1e7fa0 0%,
+    #2596be 42%,
+    #2596be 58%,
+    #4fc0e0 100%
+  );
+}
+
+.user-prompt-bundle:hover {
+  box-shadow: 0 12px 36px rgba(37, 150, 190, 0.45);
+}
+
+.user-prompt-bundle-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.user-prompt-bundle-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.user-prompt-bundle-icon-tile {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-prompt-bundle-icon-tile--dark {
+  background: #1a1a1a;
+}
+
+.user-prompt-bundle-icon-tile img {
+  display: block;
+  object-fit: contain;
+}
+
+.user-prompt-bundle-like-pill.user-prompt-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+}
+
+.user-prompt-bundle-like-pill.user-prompt-like svg {
+  width: 16px;
+  height: 16px;
+  stroke: none;
+}
+
+.user-prompt-bundle-heart-svg path {
+  fill: #fff;
+  stroke: none;
+}
+
+.user-prompt-bundle-like-pill.user-prompt-like.liked .user-prompt-bundle-heart-svg path {
+  fill: #ef4444;
+}
+
+.user-prompt-bundle-like-pill.user-prompt-like.liked,
+.user-prompt-bundle-like-pill.user-prompt-like.liked .user-prompt-like-count {
+  color: #fff;
+}
+
+.user-prompt-bundle-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0.35rem;
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.user-prompt-bundle-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.user-prompt-bundle-author {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.user-prompt-bundle-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.user-prompt-bundle-token {
+  display: inline-flex;
+  color: #b8e8ff;
+}
+
+.user-prompt-bundle-token-count {
+  margin-right: 0;
 }
 
 .user-prompt-header {
@@ -1557,6 +1754,14 @@ body {
     width: auto;
     min-width: auto;
     flex-shrink: 1;
+  }
+
+  .user-prompt-bundle {
+    padding: 0.85rem 1rem;
+  }
+
+  .user-prompt-bundle-title {
+    font-size: 1.35rem;
   }
 
   .user-prompt-title {
@@ -1804,6 +2009,130 @@ body {
   #timeline-container .absolute.w-3.h-3.rounded-full {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Built for any business - Floating chips */
+.biz-float-wrap {
+  position: relative;
+  min-height: 460px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.biz-float-title {
+  font-family: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  line-height: 1.05;
+  font-size: clamp(2.4rem, 4.8vw, 4.3rem);
+  margin: 0;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 3;
+}
+
+.biz-float-title-script {
+  font-family: 'Instrument Serif Italic', 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.biz-float-chips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.biz-float-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.10);
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.biz-float-chip-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 12px;
+  background: rgba(17, 24, 39, 0.03);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+  flex-shrink: 0;
+}
+
+.biz-chip-digital {
+  top: 16%;
+  left: 11%;
+  transform: rotate(-7deg);
+}
+.biz-chip-agencies {
+  top: 16%;
+  right: 9%;
+  transform: rotate(6deg);
+}
+.biz-chip-ecommerce {
+  top: 38%;
+  left: 7%;
+  transform: rotate(3deg);
+}
+.biz-chip-saas {
+  top: 66%;
+  left: 14%;
+  transform: rotate(-4deg);
+}
+.biz-chip-mobile {
+  top: 61%;
+  right: 14%;
+  left: auto;
+  transform: rotate(-3deg);
+}
+.biz-chip-services {
+  top: 38%;
+  right: 14%;
+  transform: rotate(7deg);
+}
+
+@media (max-width: 768px) {
+  .biz-float-wrap {
+    min-height: auto;
+    padding: 24px 0 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .biz-float-chips {
+    display: none;
+  }
+
+  .biz-float-chip {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+
+  .biz-float-title {
+    font-size: clamp(2.1rem, 7vw, 3.1rem);
+    margin-bottom: 0;
   }
 }
 

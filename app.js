@@ -1046,6 +1046,67 @@ function initDemoSocialCounts() {
   });
 }
 
+/** 6개 중 1개를 랜덤 번들 카드로 교체 (#2596be 계열 그라데이션 랜덤) */
+function initRandomUserPromptBundle() {
+  const container = document.querySelector('.user-prompts-container');
+  if (!container) return;
+
+  const cards = container.querySelectorAll('.user-prompt-card');
+  if (!cards.length) return;
+
+  const idx = Math.floor(Math.random() * cards.length);
+  const card = cards[idx];
+
+  const gradientClass =
+    Math.random() < 0.5 ? 'user-prompt-bundle--g0' : 'user-prompt-bundle--g1';
+
+  const bundleTitles = [
+    '주식투자 스타터 팩 🪴',
+    'AI 라이팅 번들 ✍️',
+    '스타트업 피칭 풀패키지 🚀',
+    '데이터 분석 입문 세트 📊',
+    '콘텐츠 크리에이터 팩 🎬',
+    '코드 리뷰 & 리팩터 번들 💻',
+  ];
+  const title = bundleTitles[Math.floor(Math.random() * bundleTitles.length)];
+  const tokens = 60 + Math.floor(Math.random() * 55);
+
+  card.className = `user-prompt-card user-prompt-bundle ${gradientClass}`;
+  card.setAttribute('data-prompt-type', 'bundle');
+
+  card.innerHTML = `
+    <div class="user-prompt-bundle-top">
+      <div class="user-prompt-bundle-icons" aria-hidden="true">
+        <span class="user-prompt-bundle-icon-tile">
+          <img src="https://img.icons8.com/color/48/google-gemini.png" alt="" width="20" height="20">
+        </span>
+        <span class="user-prompt-bundle-icon-tile user-prompt-bundle-icon-tile--dark">
+          <img src="https://img.icons8.com/ios11/48/FFFFFF/claude-ai.png" alt="" width="18" height="18">
+        </span>
+        <span class="user-prompt-bundle-icon-tile">
+          <img src="https://img.icons8.com/color/48/chatgpt.png" alt="" width="20" height="20">
+        </span>
+      </div>
+      <button type="button" class="user-prompt-bundle-like-pill user-prompt-like" aria-label="좋아요">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="user-prompt-bundle-heart-svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="user-prompt-like-count">0</span>
+      </button>
+    </div>
+    <h4 class="user-prompt-bundle-title">${title}</h4>
+    <div class="user-prompt-bundle-bottom">
+      <span class="user-prompt-bundle-author">@birzont</span>
+      <div class="user-prompt-bundle-meta">
+        <span class="user-prompt-bundle-token" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <polygon points="12,3 20.2,7.5 20.2,16.5 12,21 3.8,16.5 3.8,7.5" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="user-prompt-bundle-token-count">${tokens}</span>
+      </div>
+    </div>
+  `;
+}
+
 function initUserPromptCards() {
   const promptCards = document.querySelectorAll('.user-prompt-card');
   
@@ -1054,7 +1115,7 @@ function initUserPromptCards() {
     const bookmarkBtn = card.querySelector('.user-prompt-bookmark');
     const likeCountEl = card.querySelector('.user-prompt-like-count');
     
-    if (!likeBtn || !bookmarkBtn || !likeCountEl) return;
+    if (!likeBtn || !likeCountEl) return;
     
     let liked = false;
     let likeCount = parseInt(likeCountEl.textContent) || 0;
@@ -1071,11 +1132,13 @@ function initUserPromptCards() {
       likeCountEl.textContent = String(likeCount);
     });
     
-    let bookmarked = false;
-    bookmarkBtn.addEventListener('click', () => {
-      bookmarked = !bookmarked;
-      bookmarkBtn.classList.toggle('bookmarked', bookmarked);
-    });
+    if (bookmarkBtn) {
+      let bookmarked = false;
+      bookmarkBtn.addEventListener('click', () => {
+        bookmarked = !bookmarked;
+        bookmarkBtn.classList.toggle('bookmarked', bookmarked);
+      });
+    }
   });
 }
 
@@ -1998,6 +2061,9 @@ function initProductCarousel() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
+  /** @type {{ startAutoSlide: () => void, stopAutoSlide: () => void }[]} */
+  const promptCarouselControls = [];
+
   // Mobile menu toggle
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   if (mobileMenuBtn) {
@@ -2027,8 +2093,16 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Resize handler
   window.addEventListener('resize', () => {
+    const wasMobile = state.isMobile;
     updateMobileState();
     updateHeader();
+    promptCarouselControls.forEach(({ startAutoSlide, stopAutoSlide }) => {
+      if (state.isMobile && !wasMobile) {
+        startAutoSlide();
+      } else if (!state.isMobile && wasMobile) {
+        stopAutoSlide();
+      }
+    });
   });
   
   // Video play button
@@ -2161,7 +2235,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (entry.isIntersecting) {
-          entry.target.classList.add('blur-fade-once-visible');
+          // 모바일에서 User Prompts는 1행 -> 2행 순서로 강제 분리 노출
+          if (window.innerWidth <= 900 && entry.target.classList.contains('user-prompts-row')) {
+            const rowOrder = Number(entry.target.dataset.promptRow || 1);
+            const firstRow = document.querySelector('.user-prompts-row[data-prompt-row="1"]');
+            const secondRow = document.querySelector('.user-prompts-row[data-prompt-row="2"]');
+
+            if (rowOrder === 1) {
+              entry.target.classList.add('blur-fade-once-visible');
+              if (secondRow && !secondRow.classList.contains('blur-fade-once-visible')) {
+                setTimeout(() => {
+                  secondRow.classList.add('blur-fade-once-visible');
+                }, 700);
+              }
+            } else {
+              // 1행이 아직 안 보였으면 2행은 대기
+              if (firstRow && !firstRow.classList.contains('blur-fade-once-visible')) {
+                return;
+              }
+              entry.target.classList.add('blur-fade-once-visible');
+            }
+          } else {
+            entry.target.classList.add('blur-fade-once-visible');
+          }
           obs.unobserve(entry.target);
         }
       });
@@ -2212,6 +2308,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxTilt = 4;
 
     cards.forEach((card) => {
+      if (card.classList.contains('user-prompt-bundle')) return;
+
       card.style.transformStyle = 'preserve-3d';
       card.style.transition = 'transform 0.25s ease-out, box-shadow 0.3s ease';
 
@@ -2278,46 +2376,56 @@ document.addEventListener('DOMContentLoaded', () => {
     bg.style.backgroundImage = `url('${pick}')`;
   }
 
-  // Logo Blur Grid (3x2): plogo1-6 ↔ plogo7-12 alternating
+  // Logo Blur Grid
+  // - Default: 3x2 (6 logos), set A(1-6) <-> set B(7-12)
+  // - >=1300px: 1x4 (4 logos), 1-4 -> 5-8 -> 9-12
   function initLogoBlurGrid() {
     const grid = document.getElementById('logo-blur-grid');
     if (!grid) return;
 
     const base = 'resources/partnerlogos/';
-    const LOGOS_SET_A = [1, 2, 3, 4, 5, 6].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
-    const LOGOS_SET_B = [7, 8, 9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
-    const LOGOS = [LOGOS_SET_A, LOGOS_SET_B];
-
-    const CELL_COUNT = 6;
     const STAGGER_MS = 180;
     const CYCLE_INTERVAL_MS = 4500;
+    const gridInner = grid.querySelector('.logo-blur-grid-inner');
+    if (!gridInner) return;
+
+    const logoSetDefaultA = [1, 2, 3, 4, 5, 6].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetDefaultB = [7, 8, 9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideA = [1, 2, 3, 4].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideB = [5, 6, 7, 8].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideC = [9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+
+    let cells = [];
+    let useA = [];
+    let logoSets = [];
+    let cellCount = 0;
     let currentSet = 0;
+    let cycleInterval = null;
+    let cycleTimeouts = [];
+    let isWideMode = null;
 
-    const cells = grid.querySelectorAll('.logo-blur-cell');
-    const useA = new Array(CELL_COUNT).fill(true);
-
-    cells.forEach((cell, i) => {
-      const imgA = document.createElement('img');
-      const imgB = document.createElement('img');
-      imgA.className = imgB.className = 'logo-blur-img';
-      imgA.alt = imgB.alt = LOGOS[0][i].alt;
-      imgA.src = LOGOS[0][i].src;
-      imgB.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
-      imgB.alt = LOGOS[0][i].alt;
-      cell.appendChild(imgA);
-      cell.appendChild(imgB);
-    });
+    function clearCycleTimers() {
+      cycleTimeouts.forEach((id) => clearTimeout(id));
+      cycleTimeouts = [];
+      if (cycleInterval) {
+        clearInterval(cycleInterval);
+        cycleInterval = null;
+      }
+    }
 
     function transitionCell(cellIndex, nextSet) {
       const cell = cells[cellIndex];
+      if (!cell) return;
       const imgs = cell.querySelectorAll('.logo-blur-img');
+      if (imgs.length < 2) return;
       const imgA = imgs[0];
       const imgB = imgs[1];
       const outImg = useA[cellIndex] ? imgA : imgB;
       const inImg = useA[cellIndex] ? imgB : imgA;
       useA[cellIndex] = !useA[cellIndex];
 
-      const nextLogo = LOGOS[nextSet][cellIndex];
+      const nextLogo = logoSets[nextSet][cellIndex];
+      if (!nextLogo) return;
 
       inImg.src = nextLogo.src;
       inImg.alt = nextLogo.alt;
@@ -2344,15 +2452,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function runCycle() {
-      const nextSet = 1 - currentSet;
-      for (let i = 0; i < CELL_COUNT; i++) {
-        setTimeout(() => transitionCell(i, nextSet), i * STAGGER_MS);
+      const nextSet = (currentSet + 1) % logoSets.length;
+      for (let i = 0; i < cellCount; i++) {
+        const timeoutId = setTimeout(() => transitionCell(i, nextSet), i * STAGGER_MS);
+        cycleTimeouts.push(timeoutId);
       }
       currentSet = nextSet;
     }
 
-    runCycle();
-    setInterval(runCycle, CYCLE_INTERVAL_MS);
+    function renderMode(wideMode) {
+      clearCycleTimers();
+      isWideMode = wideMode;
+      currentSet = 0;
+
+      logoSets = wideMode
+        ? [logoSetWideA, logoSetWideB, logoSetWideC]
+        : [logoSetDefaultA, logoSetDefaultB];
+      cellCount = logoSets[0].length;
+
+      gridInner.innerHTML = '';
+      for (let i = 0; i < cellCount; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'logo-blur-cell';
+
+        const imgA = document.createElement('img');
+        const imgB = document.createElement('img');
+        imgA.className = imgB.className = 'logo-blur-img';
+        imgA.alt = imgB.alt = logoSets[0][i].alt;
+        imgA.src = logoSets[0][i].src;
+        imgB.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
+        imgB.alt = logoSets[0][i].alt;
+
+        cell.appendChild(imgA);
+        cell.appendChild(imgB);
+        gridInner.appendChild(cell);
+      }
+
+      cells = Array.from(gridInner.querySelectorAll('.logo-blur-cell'));
+      useA = new Array(cellCount).fill(true);
+
+      runCycle();
+      cycleInterval = setInterval(() => {
+        cycleTimeouts = [];
+        runCycle();
+      }, CYCLE_INTERVAL_MS);
+    }
+
+    function updateModeIfNeeded() {
+      const nextWideMode = window.innerWidth >= 1300;
+      if (isWideMode === null || nextWideMode !== isWideMode) {
+        renderMode(nextWideMode);
+      }
+    }
+
+    updateModeIfNeeded();
+    window.addEventListener('resize', updateModeIfNeeded);
   }
 
   // Initialize
@@ -2363,6 +2517,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCareers();
   renderProductFeatures();
   initDemoSocialCounts();
+  initRandomUserPromptBundle();
   initUserPromptCards();
   updateMobileState();
   updateHeader();
@@ -2377,74 +2532,89 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pixel blinking
   setInterval(blinkRandomPixels, 1000);
   
-  // Prompt carousel for mobile
-  const promptGrid = document.querySelector('.user-prompts-grid');
-  const promptPrevBtn = document.getElementById('prompt-prev-btn');
-  const promptNextBtn = document.getElementById('prompt-next-btn');
-  
-  if (promptGrid) {
+  // Prompt carousel for mobile (각 .user-prompts-row마다 독립 캐러셀)
+  const promptRows = document.querySelectorAll('.user-prompts-row');
+
+  promptRows.forEach((row, rowIndex) => {
+    const promptGrid = row.querySelector('.user-prompts-grid');
+    const promptPrevBtn = row.querySelector('.prompt-carousel-btn-prev');
+    const promptNextBtn = row.querySelector('.prompt-carousel-btn-next');
+
+    if (!promptGrid) return;
+
     let currentPromptIndex = 0;
     const promptCards = promptGrid.querySelectorAll('.user-prompt-card');
     const totalPromptCards = promptCards.length;
+    if (!totalPromptCards) return;
+
     let autoSlideInterval = null;
-    
+    let autoSlideStartTimeout = null;
+
     function scrollToPromptCard(index) {
       const cardWidth = promptCards[0].offsetWidth;
       const gap = 16; // 1rem gap
       const scrollPosition = index * (cardWidth + gap);
       promptGrid.scrollTo({ left: scrollPosition, behavior: 'smooth' });
     }
-    
+
     function nextSlide() {
       currentPromptIndex = currentPromptIndex + 1;
       if (currentPromptIndex >= totalPromptCards) {
-        currentPromptIndex = 0; // Loop to first
+        currentPromptIndex = 0;
       }
       scrollToPromptCard(currentPromptIndex);
     }
-    
+
     function prevSlide() {
       currentPromptIndex = currentPromptIndex - 1;
       if (currentPromptIndex < 0) {
-        currentPromptIndex = totalPromptCards - 1; // Loop to last
+        currentPromptIndex = totalPromptCards - 1;
       }
       scrollToPromptCard(currentPromptIndex);
     }
-    
+
     function startAutoSlide() {
-      if (state.isMobile && !autoSlideInterval) {
-        autoSlideInterval = setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+      if (state.isMobile && !autoSlideInterval && !autoSlideStartTimeout) {
+        // 모바일에서 각 행의 슬라이드 타이밍을 어긋나게 시작
+        const startDelay = rowIndex === 0 ? 0 : 1800;
+        autoSlideStartTimeout = setTimeout(() => {
+          autoSlideStartTimeout = null;
+          if (!state.isMobile || autoSlideInterval) return;
+          autoSlideInterval = setInterval(nextSlide, 5000);
+        }, startDelay);
       }
     }
-    
+
     function stopAutoSlide() {
+      if (autoSlideStartTimeout) {
+        clearTimeout(autoSlideStartTimeout);
+        autoSlideStartTimeout = null;
+      }
       if (autoSlideInterval) {
         clearInterval(autoSlideInterval);
         autoSlideInterval = null;
       }
     }
-    
+
     function resetAutoSlide() {
       stopAutoSlide();
       startAutoSlide();
     }
-    
-    // Button event listeners
+
     if (promptPrevBtn) {
       promptPrevBtn.addEventListener('click', () => {
         prevSlide();
         resetAutoSlide();
       });
     }
-    
+
     if (promptNextBtn) {
       promptNextBtn.addEventListener('click', () => {
         nextSlide();
         resetAutoSlide();
       });
     }
-    
-    // Manual scroll detection to sync currentPromptIndex
+
     let scrollTimeout;
     promptGrid.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
@@ -2459,22 +2629,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 100);
     });
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const wasMobile = state.isMobile;
-      state.isMobile = window.innerWidth <= 900;
-      
-      if (state.isMobile && !wasMobile) {
-        startAutoSlide();
-      } else if (!state.isMobile && wasMobile) {
-        stopAutoSlide();
-      }
-    });
-    
-    // Start auto-slide on mobile
+
+    promptCarouselControls.push({ startAutoSlide, stopAutoSlide });
     startAutoSlide();
-  }
+  });
   
   // Canvas height update is no longer needed for the new centered layout
   
