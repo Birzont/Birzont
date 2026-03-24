@@ -115,50 +115,11 @@ const timelineEvents = [
   },
 ];
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "[AI] AI가 대세라는데 우리 회사에 어떻게 활용할 수 있을까?",
-    date: "2025.08.17",
-    imageSrc: "https://i.pinimg.com/736x/14/b7/05/14b705fa261b1ab5dbbee32a601a253a.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%BD%98%ED%85%90%EC%B8%A0-ai-ai%EA%B0%80-%EB%8C%80%EC%84%B8%EB%9D%BC%EB%8A%94%EB%8D%B0-%EC%9A%B0%EB%A6%AC-%ED%9A%8C%EC%82%AC%EC%97%90-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%99%9C%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C-986706f87df",
-  },
-  {
-    id: 2,
-    title: "요즘 이슈인 초거대 AI를 데이터 보안 문제 없이 사용할 수 있을까?",
-    date: "2025.08.03",
-    imageSrc: "https://i.pinimg.com/736x/28/e3/c6/28e3c68e36eb1b330bb7b35e159337ce.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%9A%94%EC%A6%98-%EC%9D%B4%EC%8A%88%EC%9D%B8-%EC%B4%88%EA%B1%B0%EB%8C%80-ai%EB%A5%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%B4%EC%95%88-%EB%AC%B8%EC%A0%9C-%EC%97%86%EC%9D%B4-%EC%82%AC%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C-9f4ea5abf88",
-  },
-  {
-    id: 3,
-    title: "자연어에 이어 이미지도 이제 초거대 AI의 득점 시작?",
-    date: "2025.08.03",
-    imageSrc: "https://i.pinimg.com/736x/81/2f/20/812f2077e9815b35ce4789d24a49b981.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%9E%90%EC%97%B0%EC%96%B4%EC%97%90-%EC%9D%B4%EC%96%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%8F%84-%EC%9D%B4%EC%A0%9C-%EC%B4%88%EA%B1%B0%EB%8C%80-ai%EC%9D%98-%EB%8F%85%EC%A0%90-%EC%8B%9C%EC%9E%91-fbd6dbaafacb",
-  },
-  {
-    id: 4,
-    title: "스탠포드 연구소와 벤처가 바라본 AI 동향: AI Index Report 2023",
-    date: "2025.08.03",
-    imageSrc: "https://i.pinimg.com/736x/f9/c3/db/f9c3db06ef9dee6428f38332c6fbd3bb.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/%EC%8A%A4%ED%83%A0%ED%8F%AC%EB%93%9C-%EC%97%B0%EA%B5%AC%EC%86%8C%EC%99%80-%EB%A0%9B%EC%84%9C%EA%B0%80-%EB%B0%94%EB%9D%BC%EB%B3%B8-ai-%EB%8F%99%ED%96%A5-ai-index-report-2023-5ce69a86a3de",
-  },
-  {
-    id: 5,
-    title: "OpenAI의 상표권 문제, 너희 이제 진짜 CloseAI!?",
-    date: "2025.08.03",
-    imageSrc: "https://i.pinimg.com/736x/37/5f/ff/375fff127fbc42ea2c95ad3118c779ba.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/openai%EC%9D%98-%EC%83%81%ED%91%9C%EA%B6%8C-%EB%AC%B8%EC%A0%9C-%EB%84%88%ED%9D%AC-%EC%9D%B4%EC%A0%9C-%EC%A7%84%EC%A7%A0-closeai%EB%8B%88-b76de3827540",
-  },
-  {
-    id: 6,
-    title: "AI에서 '멀티모달'이 무엇이고 왜 중요할까?",
-    date: "2025.08.03",
-    imageSrc: "https://i.pinimg.com/736x/72/08/4e/72084e6ead0494777077769b16d172cb.jpg",
-    url: "https://medium.com/%EB%A0%9B%EC%84%9C-%ED%8C%80-%EB%B8%94%EB%A1%9C%EA%B7%B8/ai%EC%97%90%EC%84%9C-%EB%A9%80%ED%8B%B0%EB%AA%A8%EB%8B%AC%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B4%EA%B3%A0-%EC%99%9C-%EC%A4%91%EC%9A%94%ED%95%A0%EA%B9%8C-83b1733414f0",
-  },
-];
+function getBlogPosts() {
+  return (window.BirzontBlogs && window.BirzontI18n)
+    ? window.BirzontBlogs.getBlogPosts(window.BirzontI18n.getLang())
+    : [];
+}
 
 const navCardContent = {
   Company: {
@@ -1470,13 +1431,14 @@ function renderIndexTimeline(container) {
 function renderBlog() {
   const container = document.getElementById('blog-container');
   if (!container) return;
-  
+  container.innerHTML = '';
+
   const header = document.createElement('div');
   header.className = 'flex justify-between items-center mb-16 md:mb-16 blog-header';
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold text-black';
-  title.textContent = 'Birzont\'s Diverse Stories';
+  title.textContent = (window.BirzontI18n ? window.BirzontI18n.t(window.BirzontI18n.getLang(), 'blog.title') : null) || 'Birzont\'s Diverse Stories';
   
   const moreLink = document.createElement('a');
   moreLink.href = '#';
@@ -1493,7 +1455,7 @@ function renderBlog() {
   const grid = document.createElement('div');
   grid.className = 'hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 blog-grid';
   
-  blogPosts.forEach((post, index) => {
+  getBlogPosts().forEach((post, index) => {
     // Mobile: List item
     const listItem = document.createElement('a');
     listItem.href = post.url;
@@ -1579,7 +1541,7 @@ function renderBlogPage() {
   const grid = document.createElement('div');
   grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 blog-grid';
   
-  blogPosts.forEach((post, index) => {
+  getBlogPosts().forEach((post, index) => {
     // Card with image
     const postLink = document.createElement('a');
     postLink.href = post.url;
@@ -2119,7 +2081,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoThumbnail.style.display = 'none';
       playVideoBtn.style.display = 'none';
       videoPlayerContainer.style.display = 'block';
-      videoIframe.src = 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1';
+      videoIframe.src = (window.BirzontI18n ? window.BirzontI18n.getVideo(window.BirzontI18n.getLang(), 'aboutUrl') : 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1') || 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1';
     });
   }
   
@@ -2510,6 +2472,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updateModeIfNeeded();
     window.addEventListener('resize', updateModeIfNeeded);
   }
+
+  // Initialize i18n (images, blog hero, video, Instrument Serif)
+  if (window.BirzontI18n) window.BirzontI18n.applyAll();
+
+  // Re-render blog when language changes
+  window.addEventListener('birzont-lang-change', () => {
+    const container = document.getElementById('blog-container');
+    if (!container) return;
+    if (document.querySelector('[data-i18n="blog.title"]')) renderBlogPage();
+    else renderBlog();
+  });
 
   // Initialize
   createPixels();
