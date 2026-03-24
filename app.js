@@ -1623,7 +1623,7 @@ function renderCareers() {
   linkContainer.className = 'flex justify-center';
   
   const link = document.createElement('a');
-  link.href = 'mailto:contact@birzont.com';
+  link.href = 'career.html';
   link.className = 'inline-block border border-white/70 text-white hover:bg-white hover:text-black transition-all duration-300 rounded-lg py-3 px-8 font-medium careers-button';
   link.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersCta') : null) || 'View job openings';
   
@@ -1819,6 +1819,9 @@ function renderCareerListings() {
 
 function handleNavHover(item, index) {
   if (state.isMobile) return;
+  // Blog 메뉴는 hover 카드 비활성화 요청으로 표시하지 않음.
+  // if (item === 'Blog') return;
+  if (item === 'Blog') return;
   
   clearTimeout(state.hideTimeout);
   

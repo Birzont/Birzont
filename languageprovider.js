@@ -30,6 +30,12 @@
         navCompanyTitle: 'Company',
         navProductTitle: 'Product Lineup',
         navBlogTitle: 'Blogs',
+        navAboutCompany: 'About Company',
+        navWhatWeDo: 'What we do',
+        navOurTeam: 'Our Team',
+        navTimeline: 'Timeline',
+        navNewsroom: 'Newsroom',
+        navEverything: 'Everything',
         navHome: 'Home',
         navPricing: 'Pricing',
         navCareers: 'Careers',
@@ -46,6 +52,7 @@
         footerContact: 'Contact Us',
         footerPrivacy: 'Privacy Policy',
         footerTerms: 'Terms of Service',
+        footerCookie: 'Cookie Policy',
         productDesc2: 'This app offers innovative services with an easy interface and practical features.',
         productDesc3: 'Official app with the latest promotions and event updates.',
         timeline1: 'Launched our first prototype.',
@@ -179,6 +186,12 @@
         navCompanyTitle: '회사 소개',
         navProductTitle: '제품 라인업',
         navBlogTitle: '블로그',
+        navAboutCompany: '회사 소개',
+        navWhatWeDo: '우리가 하는 일',
+        navOurTeam: '우리 팀',
+        navTimeline: '연혁',
+        navNewsroom: '뉴스룸',
+        navEverything: '전체',
         navHome: '홈',
         navPricing: '요금제',
         navCareers: '채용',
@@ -195,6 +208,7 @@
         footerContact: '문의하기',
         footerPrivacy: '개인정보처리방침',
         footerTerms: '이용약관',
+        footerCookie: '쿠키 정책',
         productDesc2: '이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.',
         productDesc3: 'Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.',
         timeline1: '첫 프로토타입을 런칭하였습니다.',
@@ -612,6 +626,11 @@
     if (footerLinks[7]) footerLinks[7].textContent = ui(lang, 'footerContact', 'Contact Us');
     if (footerLinks[8]) footerLinks[8].textContent = ui(lang, 'footerPrivacy', 'Privacy Policy');
     if (footerLinks[9]) footerLinks[9].textContent = ui(lang, 'footerTerms', 'Terms of Service');
+
+    const footerBottomLinks = document.querySelectorAll('#footer-injected .border-t a');
+    if (footerBottomLinks[0]) footerBottomLinks[0].textContent = ui(lang, 'footerPrivacy', 'Privacy Policy');
+    if (footerBottomLinks[1]) footerBottomLinks[1].textContent = ui(lang, 'footerTerms', 'Terms of Service');
+    if (footerBottomLinks[2]) footerBottomLinks[2].textContent = ui(lang, 'footerCookie', 'Cookie Policy');
   }
 
   window.addEventListener('birzont-lang-change', (e) => applyAll((e.detail && e.detail.lang) || getLang()));
