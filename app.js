@@ -2498,6 +2498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('timeline-container')) renderTimeline();
     if (document.getElementById('careers-container')) renderCareers();
     if (document.getElementById('product-features-grid')) renderProductFeatures();
+    if (document.getElementById('team-members-grid')) renderTeamMembers();
   });
 
   // Initialize
