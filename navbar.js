@@ -234,7 +234,7 @@
       try { localStorage.setItem('birzont-lang', lang); } catch (_) {}
 
       if (!skipDispatch) {
-        window.dispatchEvent(new CustomEvent('birzont-lang-change', { detail: { lang } }));
+        window.location.reload();
       }
     }
 

@@ -34,7 +34,6 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-.hero-title,
 .font-instrument-heading,
 .try-free-title {
   font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
@@ -2089,6 +2088,14 @@ body {
 
 .biz-float-title-script {
   font-family: 'Instrument Serif Italic', 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+html[data-latin-lang="false"] .hero-title,
+html[data-latin-lang="false"] .city-cta-headline,
+html[data-latin-lang="false"] .biz-float-title,
+html[data-latin-lang="false"] .biz-float-title-script,
+html[data-latin-lang="false"] .product-card-title {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
+}
   font-style: italic;
   font-weight: 400;
 }

@@ -15,6 +15,12 @@ const state = {
   activeAppCard: null
 };
 
+function tr(key, fallback) {
+  if (!window.LanguageProvider) return fallback;
+  const lang = window.LanguageProvider.getLang();
+  return window.LanguageProvider.t(lang, key) || fallback;
+}
+
 // Data
 const products = [
   {
@@ -28,7 +34,7 @@ const products = [
   },
   {
     title: "Bloxer",
-    description: "이 앱은 사용자에게 혁신적인 서비스를 제공합니다. 간편한 인터페이스와 다양한 기능으로 일상 생활을 더욱 편리하게 만들어 드립니다.",
+    description: tr('ui.productDesc2', 'This app offers innovative services with an easy interface and practical features.'),
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     bgColor: "https://i.redd.it/vgr7nzhng0a51.jpg",
     link: "https://google.com",
@@ -37,7 +43,7 @@ const products = [
   },
   {
     title: "Prompist",
-    description: "Pepsi의 공식 앱으로, 최신 프로모션과 이벤트 정보를 확인할 수 있습니다. 다양한 음료 제품에 대한 정보와 특별 할인 혜택을 제공합니다.",
+    description: tr('ui.productDesc3', 'Official app with the latest promotions and event updates.'),
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     bgColor: "https://i.pinimg.com/736x/72/08/4e/72084e6ead0494777077769b16d172cb.jpg",
     link: "https://google.com",
@@ -75,65 +81,65 @@ const timelineEvents = [
     year: 2026,
     title: "-",
     subtitle: "-",
-    description: "첫 프로토타입을 런칭하였습니다.",
+    description: tr('ui.timeline1', 'Launched our first prototype.'),
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
     year: 2025,
     title: "-",
     subtitle: "-",
-    description: "첫 프로토타입을 런칭하였습니다.",
+    description: tr('ui.timeline2', 'Launched our first prototype.'),
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
     year: 2025,
     title: "-",
     subtitle: "-",
-    description: "서비스 출시 후 빠른 성장을 이루며 사용자 10만 명을 돌파했습니다.",
+    description: tr('ui.timeline3', 'Reached 100,000 users after launch with fast growth.'),
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
     year: 2025,
     title: "-",
     subtitle: "-",
-    description: "글로벌 기술 기업과의 전략적 파트너십을 통해 서비스 확장을 가속화했습니다.",
+    description: tr('ui.timeline4', 'Accelerated expansion through strategic partnerships.'),
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
     year: 2025,
     title: "-",
     subtitle: "-",
-    description: "혁신적인 AI 기능을 추가하여 사용자 경험을 크게 개선했습니다.",
+    description: tr('ui.timeline5', 'Improved UX with innovative AI features.'),
     imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
   },
   {
     year: 2024,
     title: "-",
     subtitle: "-",
-    description: "주요 벤처 캐피탈로부터 시리즈 A 투자를 유치하여 기술 개발 및 팀 확장을 가속화했습니다. 핵심 AI 알고리즘 개발을 완료했습니다.",
+    description: tr('ui.timeline6', 'Secured Series A and completed core AI algorithms.'),
     imageSrc: "https://m.motemote.kr/file_data/motemote20160302/2022/10/12/61ef6bdb2d66b82aa4f992b11be460e6.jpg",
   },
 ];
 
 function getBlogPosts() {
-  return (window.BirzontBlogs && window.BirzontI18n)
-    ? window.BirzontBlogs.getBlogPosts(window.BirzontI18n.getLang())
+  return window.LanguageProvider
+    ? window.LanguageProvider.getBlogPosts(window.LanguageProvider.getLang())
     : [];
 }
 
 const navCardContent = {
   Company: {
-    title: "회사 소개",
+    title: tr('ui.navCompanyTitle', 'Company'),
     items: [
-      { text: "About Company", href: "about.html#about" },
-      { text: "What we do", href: "about.html#what-we-do" },
-      { text: "Our Team", href: "about.html#team" },
-      { text: "Timeline", href: "about.html#timeline" }
+      { text: tr('ui.navAboutCompany', 'About Company'), href: "about.html#about" },
+      { text: tr('ui.navWhatWeDo', 'What we do'), href: "about.html#what-we-do" },
+      { text: tr('ui.navOurTeam', 'Our Team'), href: "about.html#team" },
+      { text: tr('ui.navTimeline', 'Timeline'), href: "about.html#timeline" }
     ],
     image: "https://birzont.github.io/BirzontArchive/res/CompassPen.png"
   },
   Product: {
-    title: "제품 라인업",
+    title: tr('ui.navProductTitle', 'Product Lineup'),
     items: [
       { text: "Prompist", href: "#" },
       { text: "Bloxer", href: "#" },
@@ -142,11 +148,11 @@ const navCardContent = {
     image: "https://birzont.github.io/BirzontArchive/res/GatLamp.png"
   },
   Blog: {
-    title: "블로그 카테고리",
+    title: tr('ui.navBlogTitle', 'Blog Categories'),
     items: [
-      { text: "Newsroom", href: "#" },
+      { text: tr('ui.navNewsroom', 'Newsroom'), href: "#" },
       { text: "AGI", href: "#" },
-      { text: "Everything", href: "#" },
+      { text: tr('ui.navEverything', 'Everything'), href: "#" },
       { text: "Research", href: "#" }
     ],
     image: "https://birzont.github.io/BirzontArchive/res/CoffeeBook.png"
@@ -557,7 +563,7 @@ function toggleCardDescription(cardContent, product) {
     link.rel = 'noopener noreferrer';
     link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2';
     link.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
-    link.innerHTML = '바로가기 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    link.innerHTML = `${tr('ui.quickLink', 'Go now')} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
     link.addEventListener('click', (e) => e.stopPropagation());
     content.appendChild(link);
     
@@ -685,7 +691,7 @@ function showMobileModal(product) {
   
   const descTitle = document.createElement('h3');
   descTitle.className = 'text-lg font-medium mb-2 text-black';
-  descTitle.textContent = '앱 설명';
+  descTitle.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionTitle') : null) || 'App description';
   descriptionSection.appendChild(descTitle);
   
   const descText = document.createElement('p');
@@ -695,12 +701,12 @@ function showMobileModal(product) {
   
   const extraText1 = document.createElement('p');
   extraText1.className = 'text-gray-700 mb-4';
-  extraText1.textContent = '이 앱은 사용자 경험을 최우선으로 설계되었으며, 직관적인 인터페이스와 강력한 기능을 제공합니다. 최신 기술을 활용하여 개발된 이 앱은 사용자의 일상 생활과 업무 효율성을 크게 향상시킵니다.';
+  extraText1.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionBody1') : null) || 'This app is designed around user experience with an intuitive interface and powerful features.';
   descriptionSection.appendChild(extraText1);
   
   const extraText2 = document.createElement('p');
   extraText2.className = 'text-gray-700';
-  extraText2.textContent = '다양한 기능과 맞춤형 설정으로 각 사용자의 필요에 맞게 조정할 수 있으며, 지속적인 업데이트를 통해 새로운 기능과 개선 사항이 추가됩니다.';
+  extraText2.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionBody2') : null) || 'Customize it to your workflow, and keep improving with continuous updates.';
   descriptionSection.appendChild(extraText2);
   
   modalContent.appendChild(descriptionSection);
@@ -713,7 +719,7 @@ function showMobileModal(product) {
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
   link.className = 'w-full bg-black text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-medium';
-  link.innerHTML = '앱 바로가기 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+  link.innerHTML = `${(window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appOpenLink') : null) || 'Open app'} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
   link.addEventListener('click', (e) => e.stopPropagation());
   
   linkContainer.appendChild(link);
@@ -933,9 +939,9 @@ function renderProductFeatures() {
  */
 const productFeatures = [
   {
-    title: "Home of Prompts",
-    tagline: "90% lower cost than existing APIs for high-quality prompts.",
-    description: "Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.",
+    title: tr('ui.featureTitle1', 'Home of Prompts'),
+    tagline: tr('ui.featureTagline1', '90% lower cost than existing APIs for high-quality prompts.'),
+    description: tr('ui.featureDesc1', 'Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
     bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
     link: "https://birzont.ai/pricing",
@@ -945,9 +951,9 @@ const productFeatures = [
     featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
   },
   {
-    title: "We build Automations",
-    tagline: "Adaptive AI that gets better the more you use it.",
-    description: "We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.",
+    title: tr('ui.featureTitle2', 'We build Automations'),
+    tagline: tr('ui.featureTagline2', 'Adaptive AI that gets better the more you use it.'),
+    description: tr('ui.featureDesc2', 'We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
     link: "https://birzont.ai/features",
@@ -957,9 +963,9 @@ const productFeatures = [
     featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
   },
   {
-    title: "Launch and grow",
-    tagline: "5,000+ verified prompts in 11 languages. Use them instantly.",
-    description: "Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.",
+    title: tr('ui.featureTitle3', 'Launch and grow'),
+    tagline: tr('ui.featureTagline3', '5,000+ verified prompts in 11 languages. Use them instantly.'),
+    description: tr('ui.featureDesc3', 'Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
     link: "https://birzont.ai/marketplace",
@@ -1024,12 +1030,12 @@ function initRandomUserPromptBundle() {
     Math.random() < 0.5 ? 'user-prompt-bundle--g0' : 'user-prompt-bundle--g1';
 
   const bundleTitles = [
-    'Stock investing starter pack 🪴',
-    'AI writing bundle ✍️',
-    'Startup pitch full package 🚀',
-    'Data analysis intro set 📊',
-    'Content creator pack 🎬',
-    'Code review & refactor bundle 💻',
+    tr('ui.bundleCardTitle1', 'Stock investing starter pack 🪴'),
+    tr('ui.bundleCardTitle2', 'AI writing bundle ✍️'),
+    tr('ui.bundleCardTitle3', 'Startup pitch full package 🚀'),
+    tr('ui.bundleCardTitle4', 'Data analysis intro set 📊'),
+    tr('ui.bundleCardTitle5', 'Content creator pack 🎬'),
+    tr('ui.bundleCardTitle6', 'Code review & refactor bundle 💻'),
   ];
   const title = bundleTitles[Math.floor(Math.random() * bundleTitles.length)];
   const tokens = 60 + Math.floor(Math.random() * 55);
@@ -1117,17 +1123,17 @@ function renderLogoSlider() {
   
   const label = document.createElement('p');
   label.className = 'text-gray-600 font-medium mb-2';
-  label.textContent = 'INTEGRATIONS';
+  label.textContent = tr('ui.integrationsLabel', 'INTEGRATIONS');
   header.appendChild(label);
   
   const title = document.createElement('h2');
   title.className = 'text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333]';
-  title.textContent = 'Meet Our Partners';
+  title.textContent = tr('ui.partnersTitle', 'Meet Our Partners');
   header.appendChild(title);
   
   const description = document.createElement('p');
   description.className = 'text-gray-600 max-w-2xl mx-auto text-center mb-12';
-  description.textContent = '우리는 세계적인 기업들과 협력하여 혁신적인 AI 솔루션을 개발하고 있습니다. 함께 미래를 만들어가는 파트너들을 소개합니다.';
+  description.textContent = tr('ui.partnersDescription', 'We partner with global companies to build innovative AI solutions for the future.');
   header.appendChild(description);
   
   wrapper.appendChild(header);
@@ -1308,7 +1314,7 @@ function renderIndexTimeline(container) {
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold mb-4 text-[#333]';
-  title.textContent = 'Company Timeline';
+  title.textContent = tr('ui.companyTimelineTitle', 'Company Timeline');
   headerLeft.appendChild(title);
   
   const headerRight = document.createElement('div');
@@ -1316,7 +1322,7 @@ function renderIndexTimeline(container) {
   
   const description = document.createElement('p');
   description.className = 'text-gray-600 text-lg md:text-xl leading-relaxed';
-  description.textContent = 'Birzont의 성장 과정과 주요 이정표를 확인하세요. 우리는 지속적인 혁신과 발전을 통해 AI 기술의 미래를 만들어가고 있습니다.';
+  description.textContent = tr('ui.timelineDescription', "Explore Birzont's milestones and growth journey.");
   headerRight.appendChild(description);
   
   header.appendChild(headerLeft);
@@ -1438,12 +1444,12 @@ function renderBlog() {
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold text-black';
-  title.textContent = (window.BirzontI18n ? window.BirzontI18n.t(window.BirzontI18n.getLang(), 'blog.title') : null) || 'Birzont\'s Diverse Stories';
+  title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'blog.title') : null) || 'Birzont\'s Diverse Stories';
   
   const moreLink = document.createElement('a');
   moreLink.href = '#';
   moreLink.className = 'px-5 py-2 border border-black rounded-lg text-black hover:bg-black hover:text-white transition-colors duration-300 font-medium md:block hidden';
-  moreLink.textContent = 'See more';
+  moreLink.textContent = tr('ui.seeMore', 'See more');
   
   header.appendChild(title);
   header.appendChild(moreLink);
@@ -1603,15 +1609,15 @@ function renderCareers() {
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold mb-6 text-white careers-title';
-  title.textContent = '합류할 곳을 찾고 있나요?';
+  title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersTitle') : null) || 'Looking for where to join?';
   
   const text1 = document.createElement('p');
   text1.className = 'text-white/80 mb-2 careers-text';
-  text1.textContent = '버전트에서 아이디어를 실현하세요.';
+  text1.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersText1') : null) || 'Build your ideas at Birzont.';
   
   const text2 = document.createElement('p');
   text2.className = 'text-white/80 mb-10 careers-text';
-  text2.textContent = '우리는 인재 여러분들을 기다리고 있습니다.';
+  text2.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersText2') : null) || 'We are waiting for great talents like you.';
   
   const linkContainer = document.createElement('div');
   linkContainer.className = 'flex justify-center';
@@ -1619,7 +1625,7 @@ function renderCareers() {
   const link = document.createElement('a');
   link.href = 'mailto:contact@birzont.com';
   link.className = 'inline-block border border-white/70 text-white hover:bg-white hover:text-black transition-all duration-300 rounded-lg py-3 px-8 font-medium careers-button';
-  link.textContent = '채용공고 보기';
+  link.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersCta') : null) || 'View job openings';
   
   linkContainer.appendChild(link);
   
@@ -1649,11 +1655,11 @@ const careerJobs = [
   {
     id: 2,
     category: 'ENGINEERING',
-    title: '[인재풀 등록] Product Manager',
+    title: tr('ui.job2Title', '[Talent Pool Registration] Product Manager'),
     type: 'Full time',
-    location: '경희대학교 스타트업 캠퍼스, 서울',
+    location: tr('ui.job2Location', 'Kyung Hee Startup Campus, Seoul'),
     workType: 'Hybrid',
-    salary: '₩5만-10만',
+    salary: tr('ui.job2Salary', 'KRW 50k-100k'),
     equity: '0.2%',
     flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
@@ -1661,11 +1667,11 @@ const careerJobs = [
   {
     id: 3,
     category: 'ENGINEERING',
-    title: '[인재풀 등록] Marketing Lead',
+    title: tr('ui.job3Title', '[Talent Pool Registration] Marketing Lead'),
     type: 'Full time',
-    location: '경희대학교 스타트업 캠퍼스, 서울',
+    location: tr('ui.job3Location', 'Kyung Hee Startup Campus, Seoul'),
     workType: 'Hybrid',
-    salary: '₩5만-10만',
+    salary: tr('ui.job3Salary', 'KRW 50k-100k'),
     equity: '0.2%',
     flagEmoji: '🇰🇷',
     applyUrl: 'https://www.linkedin.com/company/birzont/'
@@ -2081,7 +2087,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoThumbnail.style.display = 'none';
       playVideoBtn.style.display = 'none';
       videoPlayerContainer.style.display = 'block';
-      videoIframe.src = (window.BirzontI18n ? window.BirzontI18n.getVideo(window.BirzontI18n.getLang(), 'aboutUrl') : 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1') || 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1';
+      videoIframe.src = (window.LanguageProvider ? window.LanguageProvider.getVideo(window.LanguageProvider.getLang(), 'aboutUrl') : 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1') || 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1';
     });
   }
   
@@ -2474,14 +2480,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize i18n (images, blog hero, video, Instrument Serif)
-  if (window.BirzontI18n) window.BirzontI18n.applyAll();
+  if (window.LanguageProvider) window.LanguageProvider.applyAll();
 
-  // Re-render blog when language changes
+  // Re-render language-dependent sections when language changes
   window.addEventListener('birzont-lang-change', () => {
     const container = document.getElementById('blog-container');
-    if (!container) return;
-    if (document.querySelector('[data-i18n="blog.title"]')) renderBlogPage();
-    else renderBlog();
+    if (container) {
+      if (document.querySelector('[data-i18n="blog.title"]')) renderBlogPage();
+      else renderBlog();
+    }
+
+    // Rebuild sections that read text from LanguageProvider at render-time.
+    if (document.getElementById('products-grid')) renderProducts();
+    if (document.getElementById('timeline-container')) renderTimeline();
+    if (document.getElementById('careers-container')) renderCareers();
+    if (document.getElementById('product-features-grid')) renderProductFeatures();
   });
 
   // Initialize

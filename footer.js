@@ -228,7 +228,7 @@
           option.classList.add('bg-gray-100', 'font-medium');
 
           try { localStorage.setItem('birzont-lang', value); } catch (_) {}
-          window.dispatchEvent(new CustomEvent('birzont-lang-change', { detail: { lang: value } }));
+          window.location.reload();
         });
       });
 
