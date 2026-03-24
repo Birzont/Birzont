@@ -973,8 +973,8 @@ function renderProductFeatures() {
 const productFeatures = [
   {
     title: "Home of Prompts",
-    tagline: "기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.",
-    description: "Deepseek 기반으로 자체 튜닝된 Hearim & Tobaki 모델을 사용하여, 기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.",
+    tagline: "90% lower cost than existing APIs for high-quality prompts.",
+    description: "Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.",
     logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
     bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
     link: "https://birzont.ai/pricing",
@@ -985,8 +985,8 @@ const productFeatures = [
   },
   {
     title: "We build Automations",
-    tagline: "쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요.",
-    description: "사용자의 피드백과 사용 패턴을 Supabase 기반 데이터베이스로 분석하여, 쓰면 쓸수록 당신의 업무 스타일에 최적화되는 적응형 AI를 경험하세요.",
+    tagline: "Adaptive AI that gets better the more you use it.",
+    description: "We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.",
     logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
     link: "https://birzont.ai/features",
@@ -997,8 +997,8 @@ const productFeatures = [
   },
   {
     title: "Launch and grow",
-    tagline: "5,000개 이상의 검증된 프롬프트, 11개 언어로 즉시 활용할 수 있습니다.",
-    description: "전 세계 크리에이터들이 검증한 5,000개 이상의 프롬프트 자산을 자유롭게 거래하고, 한국어·영어·중국어를 포함한 11개 언어로 즉시 활용할 수 있습니다. ",
+    tagline: "5,000+ verified prompts in 11 languages. Use them instantly.",
+    description: "Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.",
     logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
     link: "https://birzont.ai/marketplace",
@@ -1063,12 +1063,12 @@ function initRandomUserPromptBundle() {
     Math.random() < 0.5 ? 'user-prompt-bundle--g0' : 'user-prompt-bundle--g1';
 
   const bundleTitles = [
-    '주식투자 스타터 팩 🪴',
-    'AI 라이팅 번들 ✍️',
-    '스타트업 피칭 풀패키지 🚀',
-    '데이터 분석 입문 세트 📊',
-    '콘텐츠 크리에이터 팩 🎬',
-    '코드 리뷰 & 리팩터 번들 💻',
+    'Stock investing starter pack 🪴',
+    'AI writing bundle ✍️',
+    'Startup pitch full package 🚀',
+    'Data analysis intro set 📊',
+    'Content creator pack 🎬',
+    'Code review & refactor bundle 💻',
   ];
   const title = bundleTitles[Math.floor(Math.random() * bundleTitles.length)];
   const tokens = 60 + Math.floor(Math.random() * 55);
@@ -1089,7 +1089,7 @@ function initRandomUserPromptBundle() {
           <img src="https://img.icons8.com/color/48/chatgpt.png" alt="" width="20" height="20">
         </span>
       </div>
-      <button type="button" class="user-prompt-bundle-like-pill user-prompt-like" aria-label="좋아요">
+      <button type="button" class="user-prompt-bundle-like-pill user-prompt-like" aria-label="Like">
         <svg viewBox="0 0 24 24" aria-hidden="true" class="user-prompt-bundle-heart-svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         <span class="user-prompt-like-count">0</span>
       </button>
@@ -1476,12 +1476,12 @@ function renderBlog() {
   
   const title = document.createElement('h2');
   title.className = 'text-4xl font-bold text-black';
-  title.textContent = '버전트의 다양한 이야기';
+  title.textContent = 'Birzont\'s Diverse Stories';
   
   const moreLink = document.createElement('a');
   moreLink.href = '#';
   moreLink.className = 'px-5 py-2 border border-black rounded-lg text-black hover:bg-black hover:text-white transition-colors duration-300 font-medium md:block hidden';
-  moreLink.textContent = '더 알아보기';
+  moreLink.textContent = 'See more';
   
   header.appendChild(title);
   header.appendChild(moreLink);

@@ -67,7 +67,7 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
-                <div class="language-selector-dropdown absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 z-50 overflow-hidden min-w-[160px] max-h-[280px] overflow-y-auto">
+                <div class="language-selector-dropdown absolute bottom-full left-0 mb-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 z-50 min-w-[160px] max-h-[280px] overflow-y-auto overflow-x-hidden">
                   <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="en" data-text="🇺🇸 English">
                     <span>🇺🇸</span>
                     <span>English</span>
