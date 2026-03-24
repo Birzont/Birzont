@@ -213,7 +213,7 @@
       }
     }
 
-    function setSelected(option) {
+    function setSelected(option, skipDispatch) {
       const lang = option.dataset.lang;
       const label = option.dataset.label;
 
@@ -232,6 +232,10 @@
       if (mobileLangLabel) mobileLangLabel.textContent = label;
 
       try { localStorage.setItem('birzont-lang', lang); } catch (_) {}
+
+      if (!skipDispatch) {
+        window.dispatchEvent(new CustomEvent('birzont-lang-change', { detail: { lang } }));
+      }
     }
 
     langBtn.addEventListener('click', (e) => {
@@ -289,8 +293,15 @@
     const saved = typeof localStorage !== 'undefined' && localStorage.getItem('birzont-lang');
     if (saved) {
       const opt = dropdown.querySelector(`.lang-option[data-lang="${saved}"]`);
-      if (opt) setSelected(opt);
+      if (opt) setSelected(opt, true);
     }
+
+    window.addEventListener('birzont-lang-change', (e) => {
+      const { lang } = e.detail || {};
+      if (!lang) return;
+      const opt = dropdown?.querySelector(`.lang-option[data-lang="${lang}"]`);
+      if (opt) setSelected(opt, true);
+    });
   }
 
   function injectNavbar() {

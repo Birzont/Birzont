@@ -870,7 +870,7 @@ function createProductFeatureCard(product) {
   card.style.backgroundSize = 'cover';
   card.style.backgroundPosition = 'center';
   
-  // 이미지 영역 - 전체 카드, 상단에 제목 오버레이
+  // 이미지 영역 - 전체 카드
   const logoArea = document.createElement('div');
   logoArea.className = 'absolute inset-0 overflow-hidden product-card-logo-area';
   logoArea.style.display = 'flex';
@@ -887,17 +887,16 @@ function createProductFeatureCard(product) {
   logoImg.style.display = 'block';
   logoImg.style.flexGrow = '1';
   
-  const titleOverlay = document.createElement('div');
-  titleOverlay.className = 'absolute top-0 left-0 right-0 flex justify-center items-center product-card-title-overlay';
+  logoArea.appendChild(logoImg);
+  card.appendChild(logoArea);
   
+  // 상단 제목 오버레이 (데스크톱용) / 모바일에서는 카드 아래로 이동
+  const titleOverlay = document.createElement('div');
+  titleOverlay.className = 'product-card-title-overlay product-card-title-wrap';
   const title = document.createElement('h2');
   title.className = 'font-bold text-black transition-colors duration-500 product-card-title';
   title.textContent = product.title;
-  
   titleOverlay.appendChild(title);
-  logoArea.appendChild(logoImg);
-  logoArea.appendChild(titleOverlay);
-  card.appendChild(logoArea);
   
   // 하단 한두줄 문장 (기본 표시)
   let taglineOverlay = null;
@@ -918,15 +917,16 @@ function createProductFeatureCard(product) {
   card.appendChild(cardContent);
   
   card.addEventListener('click', (e) => {
-    toggleProductFeatureCardDescription(cardContent, logoArea, null, taglineOverlay, product);
+    toggleProductFeatureCardDescription(cardContent, logoArea, null, taglineOverlay, product, titleOverlay);
   });
   
   cardContainer.appendChild(card);
+  cardContainer.appendChild(titleOverlay);
   
   return cardContainer;
 }
 
-function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, taglineOverlay, product) {
+function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, taglineOverlay, product, titleOverlay) {
   const showDescription = cardContent.dataset.showDescription === 'true';
   const baseClasses = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl transition-opacity duration-500';
   
@@ -940,6 +940,7 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, ta
     logoArea.style.opacity = '1';
     if (textArea) textArea.style.opacity = '1';
     if (taglineOverlay) taglineOverlay.style.opacity = '1';
+    if (titleOverlay) titleOverlay.style.opacity = '1';
   } else {
     // Show description only
     cardContent.dataset.showDescription = 'true';
@@ -956,6 +957,7 @@ function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, ta
     logoArea.style.opacity = '0';
     if (textArea) textArea.style.opacity = '0';
     if (taglineOverlay) taglineOverlay.style.opacity = '0';
+    if (titleOverlay) titleOverlay.style.opacity = '0';
   }
 }
 

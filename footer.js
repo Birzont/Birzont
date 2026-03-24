@@ -67,18 +67,50 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
-                <div class="language-selector-dropdown absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 z-50 overflow-hidden min-w-[160px]">
+                <div class="language-selector-dropdown absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-200 z-50 overflow-hidden min-w-[160px] max-h-[280px] overflow-y-auto">
                   <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="en" data-text="🇺🇸 English">
                     <span>🇺🇸</span>
                     <span>English</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="zh-CN" data-text="🇨🇳 简体中文">
+                    <span>🇨🇳</span>
+                    <span>简体中文</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="zh-TW" data-text="🇹🇼 繁體中文">
+                    <span>🇹🇼</span>
+                    <span>繁體中文</span>
                   </button>
                   <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="ko" data-text="🇰🇷 한국어">
                     <span>🇰🇷</span>
                     <span>한국어</span>
                   </button>
-                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="zh-CN" data-text="🇨🇳 中文(简体)">
-                    <span>🇨🇳</span>
-                    <span>中文(简体)</span>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="ja" data-text="🇯🇵 日本語">
+                    <span>🇯🇵</span>
+                    <span>日本語</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="es" data-text="🇪🇸 Español">
+                    <span>🇪🇸</span>
+                    <span>Español</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="de" data-text="🇩🇪 Deutsch">
+                    <span>🇩🇪</span>
+                    <span>Deutsch</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="fr" data-text="🇫🇷 Français">
+                    <span>🇫🇷</span>
+                    <span>Français</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="it" data-text="🇮🇹 Italiano">
+                    <span>🇮🇹</span>
+                    <span>Italiano</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="id" data-text="🇮🇩 Bahasa Indonesia">
+                    <span>🇮🇩</span>
+                    <span>Bahasa Indonesia</span>
+                  </button>
+                  <button type="button" class="language-option w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2" data-value="pt" data-text="🇵🇹 Português">
+                    <span>🇵🇹</span>
+                    <span>Português</span>
                   </button>
                 </div>
               </div>
@@ -165,7 +197,23 @@
         }
       });
 
-      // Select option
+      function applyFooterLang(lang) {
+        const opt = wrapper.querySelector(`.language-option[data-value="${lang}"]`);
+        if (opt) {
+          textSpan.textContent = opt.getAttribute('data-text');
+          options.forEach(o => o.classList.remove('bg-gray-100', 'font-medium'));
+          opt.classList.add('bg-gray-100', 'font-medium');
+        }
+      }
+
+      const saved = typeof localStorage !== 'undefined' && localStorage.getItem('birzont-lang');
+      if (saved) applyFooterLang(saved);
+
+      window.addEventListener('birzont-lang-change', (e) => {
+        const { lang } = e.detail || {};
+        if (lang) applyFooterLang(lang);
+      });
+
       options.forEach(option => {
         option.addEventListener('click', () => {
           const value = option.getAttribute('data-value');
@@ -176,9 +224,11 @@
           dropdown.classList.add('opacity-0', 'invisible');
           arrow.classList.remove('rotate-180');
           
-          // Update active state
           options.forEach(opt => opt.classList.remove('bg-gray-100', 'font-medium'));
           option.classList.add('bg-gray-100', 'font-medium');
+
+          try { localStorage.setItem('birzont-lang', value); } catch (_) {}
+          window.dispatchEvent(new CustomEvent('birzont-lang-change', { detail: { lang: value } }));
         });
       });
 

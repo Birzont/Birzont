@@ -656,6 +656,10 @@ body {
 }
 
 /* Product Feature Cards */
+.app-card-container {
+  position: relative;
+}
+
 .product-feature-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.03), 0 8px 20px rgba(0, 0, 0, 0.04);
@@ -666,15 +670,23 @@ body {
   box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.05), 0 16px 48px rgba(15, 23, 42, 0.06);
 }
 
-/* Product Card - 이미지 영역 전체, 상단 제목 오버레이 */
+/* Product Card - 이미지 영역 전체 */
 .product-card-logo-area {
   height: 100%;
 }
 
-.product-card-title-overlay {
+/* 상단 제목: 데스크톱에서는 카드 위 오버레이 */
+.product-card-title-overlay.product-card-title-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 2.5rem 1.5rem 1rem;
   background: transparent;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-card-title-overlay .product-card-title {
@@ -703,31 +715,67 @@ body {
   line-height: 1.55;
 }
 
+.product-card-overlay-title {
+  font-size: 1.75rem;
+}
+
+.product-card-overlay-link {
+  font-size: 1rem;
+}
+
+/* 모바일: 3열, 태그라인 숨김, 제목 카드 아래 */
 @media (max-width: 767px) {
-  .product-card-title-overlay {
-    padding: 2rem 1rem 0.75rem;
+  #product-features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
-  
-  .product-card-title-overlay .product-card-title {
-    font-size: 1.9rem;
-  }
-  
+
   .product-card-tagline-overlay {
-    padding: 0.75rem 1rem 1rem;
+    display: none !important;
   }
-  
+
+  .product-card-title-overlay.product-card-title-wrap {
+    position: static;
+    padding: 0.5rem 0.35rem 0;
+  }
+
+  .product-card-title-overlay .product-card-title {
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .product-feature-card {
+    aspect-ratio: 1;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-card-title-overlay {
+    padding: 2.5rem 1.5rem 1rem;
+  }
+
+  .product-card-title-overlay .product-card-title {
+    font-size: 2.25rem;
+  }
+
+  .product-card-tagline-overlay {
+    padding: 1rem 1.5rem 1.25rem;
+  }
+
   .product-card-tagline {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
-  
+
   .product-card-overlay-title {
     font-size: 1.75rem !important;
   }
-  
+
   .product-card-overlay-description {
     font-size: 1.2rem !important;
   }
-  
+
   .product-card-overlay-link {
     font-size: 1rem !important;
   }
@@ -2020,6 +2068,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url('resources/blurbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .biz-float-title {
@@ -2109,9 +2161,14 @@ body {
 }
 
 @media (max-width: 768px) {
+  .biz-float-section {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
   .biz-float-wrap {
-    min-height: auto;
-    padding: 24px 0 10px;
+    min-height: 120px;
+    padding: 48px 0 32px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
