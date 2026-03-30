@@ -26,7 +26,7 @@ const products = [
   {
     title: "Birzont",
     description: "Supported by OpenAI, Claude, Grok and Gemini ",
-    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    defaultLogoSrc: "resources/products/birzontsticker.png",
     bgColor: "https://i.pinimg.com/736x/37/5f/ff/375fff127fbc42ea2c95ad3118c779ba.jpg",
     link: "https://google.com",
     index: 0,
