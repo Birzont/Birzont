@@ -155,7 +155,7 @@
         , ourVisionBody: 'The success of AI technology has been made possible by an open ecosystem, diverse participants, and the accumulation of collective experience. Our mission is to remove the technical barriers to infrastructure and make future AI technology more accessible to a wide range of customers.'
       },
       images: {
-        heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
+        heroBackground: "url('https://img.freepik.com/premium-photo/golden-gate-bridge-serene-sunset_944420-99764.jpg?semt=ais_incoming&w=740&q=80')",
         heroForegroundDesktop: "resources/products/mainscreen.png",
         heroForegroundMobile: 'resources/products/mobile.png',
         productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
