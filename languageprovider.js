@@ -136,29 +136,29 @@
         careerTitle2: 'Your journey starts here.',
         timelineHeading1: "Watch Birzont's story",
         timelineHeading2: 'On artificial intelligence'
-        ,featureTitle1: 'Home of Prompts'
-        ,featureTagline1: '90% lower cost than existing APIs for high-quality prompts.'
-        ,featureDesc1: 'Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.'
-        ,featureTitle2: 'We build Automations'
-        ,featureTagline2: 'Adaptive AI that gets better the more you use it.'
-        ,featureDesc2: 'We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.'
-        ,featureTitle3: 'Launch and grow'
-        ,featureTagline3: '5,000+ verified prompts in 11 languages. Use them instantly.'
-        ,featureDesc3: 'Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.'
-        ,integrationsLabel: 'INTEGRATIONS'
-        ,partnersTitle: 'Meet Our Partners'
-        ,companyTimelineTitle: 'Company Timeline'
-        ,seeMore: 'See more'
-        ,whatWeDoTitle: 'Inventing the infrastructure software for hyperscale AI'
-        ,whatWeDoBody: 'With the growing interest in LLMs and generative AI, many people are struggling to build and utilize large-scale AI infrastructure with thousands or more accelerators. The most difficult challenges in AI technology are now infrastructure-level problems such as parallelization, disaggregation, cluster scalability, performance optimization, and failover.'
-        ,ourVisionTitle: 'Breaking down infrastructure barriers to make AI more accessible'
-        ,ourVisionBody: 'The success of AI technology has been made possible by an open ecosystem, diverse participants, and the accumulation of collective experience. Our mission is to remove the technical barriers to infrastructure and make future AI technology more accessible to a wide range of customers.'
+        , featureTitle1: 'Home of Prompts'
+        , featureTagline1: '90% lower cost than existing APIs for high-quality prompts.'
+        , featureDesc1: 'Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.'
+        , featureTitle2: 'We build Automations'
+        , featureTagline2: 'Adaptive AI that gets better the more you use it.'
+        , featureDesc2: 'We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.'
+        , featureTitle3: 'Launch and grow'
+        , featureTagline3: '5,000+ verified prompts in 11 languages. Use them instantly.'
+        , featureDesc3: 'Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.'
+        , integrationsLabel: 'INTEGRATIONS'
+        , partnersTitle: 'Meet Our Partners'
+        , companyTimelineTitle: 'Company Timeline'
+        , seeMore: 'See more'
+        , whatWeDoTitle: 'Inventing the infrastructure software for hyperscale AI'
+        , whatWeDoBody: 'With the growing interest in LLMs and generative AI, many people are struggling to build and utilize large-scale AI infrastructure with thousands or more accelerators. The most difficult challenges in AI technology are now infrastructure-level problems such as parallelization, disaggregation, cluster scalability, performance optimization, and failover.'
+        , ourVisionTitle: 'Breaking down infrastructure barriers to make AI more accessible'
+        , ourVisionBody: 'The success of AI technology has been made possible by an open ecosystem, diverse participants, and the accumulation of collective experience. Our mission is to remove the technical barriers to infrastructure and make future AI technology more accessible to a wide range of customers.'
       },
       images: {
         heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
         heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D",
-        heroForegroundMobile: 'resources/mobile.png',
-        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/onep.png']
+        heroForegroundMobile: 'resources/product/mobile.png',
+        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
       },
       video: {
         aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1',
@@ -292,29 +292,29 @@
         careerTitle2: '당신의 여정이 여기서 시작됩니다.',
         timelineHeading1: 'Birzont의 이야기를',
         timelineHeading2: '인공지능 위에서'
-        ,featureTitle1: '프롬프트의 집'
-        ,featureTagline1: '기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.'
-        ,featureDesc1: '자체 튜닝된 Hearim & Tobaki 모델로 더 낮은 비용에 높은 품질의 프롬프트를 제공합니다.'
-        ,featureTitle2: '자동화를 만듭니다'
-        ,featureTagline2: '사용할수록 더 좋아지는 적응형 AI'
-        ,featureDesc2: '피드백과 사용 패턴을 학습해 업무 흐름에 맞게 최적화됩니다.'
-        ,featureTitle3: '출시하고 성장하세요'
-        ,featureTagline3: '11개 언어, 5,000+ 검증 프롬프트를 즉시 활용'
-        ,featureDesc3: '크리에이터 검증 프롬프트를 글로벌로 거래하고 바로 실행할 수 있습니다.'
-        ,integrationsLabel: '연동'
-        ,partnersTitle: '파트너를 소개합니다'
-        ,companyTimelineTitle: '회사 연혁'
-        ,seeMore: '더 보기'
-        ,whatWeDoTitle: '하이퍼스케일 AI를 위한 인프라 소프트웨어를 만듭니다'
-        ,whatWeDoBody: 'LLM과 생성형 AI 수요가 커지면서 대규모 AI 인프라 구축과 운영이 어려워졌습니다. 병렬화, 분산, 확장성, 성능 최적화, 장애 복구 같은 핵심 문제를 소프트웨어로 해결합니다.'
-        ,ourVisionTitle: '인프라 장벽을 낮춰 AI를 더 많은 사람에게'
-        ,ourVisionBody: 'AI의 성공은 열린 생태계와 다양한 참여자에서 시작됩니다. 우리는 인프라 기술 장벽을 낮춰 더 많은 고객이 AI를 활용하도록 돕습니다.'
+        , featureTitle1: '프롬프트의 집'
+        , featureTagline1: '기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.'
+        , featureDesc1: '자체 튜닝된 Hearim & Tobaki 모델로 더 낮은 비용에 높은 품질의 프롬프트를 제공합니다.'
+        , featureTitle2: '자동화를 만듭니다'
+        , featureTagline2: '사용할수록 더 좋아지는 적응형 AI'
+        , featureDesc2: '피드백과 사용 패턴을 학습해 업무 흐름에 맞게 최적화됩니다.'
+        , featureTitle3: '출시하고 성장하세요'
+        , featureTagline3: '11개 언어, 5,000+ 검증 프롬프트를 즉시 활용'
+        , featureDesc3: '크리에이터 검증 프롬프트를 글로벌로 거래하고 바로 실행할 수 있습니다.'
+        , integrationsLabel: '연동'
+        , partnersTitle: '파트너를 소개합니다'
+        , companyTimelineTitle: '회사 연혁'
+        , seeMore: '더 보기'
+        , whatWeDoTitle: '하이퍼스케일 AI를 위한 인프라 소프트웨어를 만듭니다'
+        , whatWeDoBody: 'LLM과 생성형 AI 수요가 커지면서 대규모 AI 인프라 구축과 운영이 어려워졌습니다. 병렬화, 분산, 확장성, 성능 최적화, 장애 복구 같은 핵심 문제를 소프트웨어로 해결합니다.'
+        , ourVisionTitle: '인프라 장벽을 낮춰 AI를 더 많은 사람에게'
+        , ourVisionBody: 'AI의 성공은 열린 생태계와 다양한 참여자에서 시작됩니다. 우리는 인프라 기술 장벽을 낮춰 더 많은 고객이 AI를 활용하도록 돕습니다.'
       },
       images: {
         heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
         heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D",
-        heroForegroundMobile: 'resources/mobile.png',
-        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/onep.png']
+        heroForegroundMobile: 'resources/product/mobile.png',
+        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
       },
       video: {
         aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1',
@@ -324,19 +324,19 @@
     ja: {
       blog: { title: 'バージョントの多様なストーリー', subtitle: 'AIとテクノロジーに関する最新の洞察とストーリーを共有します。' },
       ui: { appDescriptionTitle: 'アプリ説明', appDescriptionBody1: 'このアプリは使いやすさを重視して設計されています。', appDescriptionBody2: '継続的なアップデートで改善されます。', appOpenLink: 'アプリを開く', careersTitle: '参加先を探していますか？', careersText1: 'Birzontでアイデアを実現しましょう。', careersText2: 'あなたの参加を待っています。', careersCta: '採用情報を見る' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/onep.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     },
     'zh-CN': {
       blog: { title: 'Birzont的多元故事', subtitle: '分享关于AI与技术的最新见解与故事。' },
       ui: { appDescriptionTitle: '应用说明', appDescriptionBody1: '该应用以用户体验为核心设计。', appDescriptionBody2: '通过持续更新不断优化。', appOpenLink: '打开应用', careersTitle: '正在寻找加入的地方吗？', careersText1: '在Birzont实现你的想法。', careersText2: '我们期待你的加入。', careersCta: '查看招聘' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/onep.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     },
     'zh-TW': {
       blog: { title: 'Birzont的多元故事', subtitle: '分享關於AI與技術的最新見解與故事。' },
       ui: { appDescriptionTitle: '應用說明', appDescriptionBody1: '此應用以使用者體驗為核心設計。', appDescriptionBody2: '透過持續更新不斷優化。', appOpenLink: '開啟應用', careersTitle: '正在尋找加入的地方嗎？', careersText1: '在Birzont實現你的想法。', careersText2: '我們期待你的加入。', careersCta: '查看職缺' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/onep.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     }
   };
@@ -368,7 +368,7 @@
     try {
       const saved = localStorage.getItem(LANG_KEY);
       if (saved && LANG[saved]) return saved;
-    } catch (_) {}
+    } catch (_) { }
     return DEFAULT_LANG;
   }
   function normalizeBrowserLang(raw) {
@@ -391,14 +391,14 @@
     try {
       const saved = localStorage.getItem(LANG_KEY);
       if (saved && LANG[saved]) return saved;
-    } catch (_) {}
+    } catch (_) { }
     return normalizeBrowserLang(
       navigator.language || (navigator.languages && navigator.languages[0]) || DEFAULT_LANG
     );
   }
   function applyInitialLang() {
     const initial = getInitialLang();
-    try { localStorage.setItem(LANG_KEY, initial); } catch (_) {}
+    try { localStorage.setItem(LANG_KEY, initial); } catch (_) { }
     return initial;
   }
   function t(lang, key) {
