@@ -156,8 +156,8 @@
       },
       images: {
         heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
-        heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D",
-        heroForegroundMobile: 'resources/product/mobile.png',
+        heroForegroundDesktop: "resources/products/mainscreen.png",
+        heroForegroundMobile: 'resources/products/mobile.png',
         productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
       },
       video: {
@@ -312,9 +312,9 @@
       },
       images: {
         heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
-        heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D",
+        heroForegroundDesktop: "resources/products/mainscreen.png",
         heroForegroundMobile: 'resources/product/mobile.png',
-        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
+        productSlides: ['resources/products/mainscreen.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
       },
       video: {
         aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1',
@@ -324,19 +324,19 @@
     ja: {
       blog: { title: 'バージョントの多様なストーリー', subtitle: 'AIとテクノロジーに関する最新の洞察とストーリーを共有します。' },
       ui: { appDescriptionTitle: 'アプリ説明', appDescriptionBody1: 'このアプリは使いやすさを重視して設計されています。', appDescriptionBody2: '継続的なアップデートで改善されます。', appOpenLink: 'アプリを開く', careersTitle: '参加先を探していますか？', careersText1: 'Birzontでアイデアを実現しましょう。', careersText2: 'あなたの参加を待っています。', careersCta: '採用情報を見る' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "resources/products/mainscreen.png", heroForegroundMobile: 'resources/products/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     },
     'zh-CN': {
       blog: { title: 'Birzont的多元故事', subtitle: '分享关于AI与技术的最新见解与故事。' },
       ui: { appDescriptionTitle: '应用说明', appDescriptionBody1: '该应用以用户体验为核心设计。', appDescriptionBody2: '通过持续更新不断优化。', appOpenLink: '打开应用', careersTitle: '正在寻找加入的地方吗？', careersText1: '在Birzont实现你的想法。', careersText2: '我们期待你的加入。', careersCta: '查看招聘' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "resources/products/mainscreen.png", heroForegroundMobile: 'resources/products/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     },
     'zh-TW': {
       blog: { title: 'Birzont的多元故事', subtitle: '分享關於AI與技術的最新見解與故事。' },
       ui: { appDescriptionTitle: '應用說明', appDescriptionBody1: '此應用以使用者體驗為核心設計。', appDescriptionBody2: '透過持續更新不斷優化。', appOpenLink: '開啟應用', careersTitle: '正在尋找加入的地方嗎？', careersText1: '在Birzont實現你的想法。', careersText2: '我們期待你的加入。', careersCta: '查看職缺' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D", heroForegroundMobile: 'resources/product/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
+      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "resources/products/mainscreen.png", heroForegroundMobile: 'resources/products/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     }
   };
