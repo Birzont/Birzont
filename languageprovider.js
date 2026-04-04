@@ -158,7 +158,7 @@
         heroBackground: "url('https://img.freepik.com/premium-photo/golden-gate-bridge-serene-sunset_944420-99764.jpg?semt=ais_incoming&w=740&q=80')",
         heroForegroundDesktop: "resources/products/mainscreen.png",
         heroForegroundMobile: 'resources/products/mobile.png',
-        productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
+        productSlides: ['resources/products/agent.png', 'resources/products/template.png', 'resources/products/market.png', 'resources/products/custom.png']
       },
       video: {
         aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1',
@@ -314,7 +314,7 @@
         heroBackground: "url('https://www.agoda.com/wp-content/uploads/2019/05/Seoul-itinerary-Seoul-Bukchon-Hanok-Village.jpg')",
         heroForegroundDesktop: "resources/products/mainscreen.png",
         heroForegroundMobile: 'resources/product/mobile.png',
-        productSlides: ['resources/products/mainscreen.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
+        productSlides: ['resources/products/agent.png', 'resources/products/template.png', 'resources/products/market.png', 'resources/products/custom.png']
       },
       video: {
         aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1',
