@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-  
-  
+
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Birzont Technologies Inc.</title>
   <meta name="description" content="Birzont - Building AI to serve humanity's future">
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="BirzontTransparenT.png">
   <link rel="apple-touch-icon" href="BirzontTransparenT.png">
-  
+
   <!-- Tailwind CSS CDN   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
  -->
   <script src="tailwind.css"></script>
-  
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 </head>
+
 <body class="font-['Inter',sans-serif]">
   <div id="app" class="min-h-screen bg-black text-white overflow-x-hidden">
     <!-- Main Hero Section -->
     <section class="w-full pt-[180px] pb-6 md:pb-8 relative bg-white">
       <!-- Gradient Overlay -->
       <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
-      
+
       <!-- Background Forest Image -->
       <div class="hero-bg-forest absolute inset-0 pointer-events-none" style="z-index: 1;"></div>
-      
-      <div class="flex flex-col items-center justify-center w-full px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10">
-        <h1 class="text-center text-white font-bold mb-6 hero-title blur-fade-once" data-hero-order="1" style="font-size: clamp(2.6rem, 5.2vw, 4.6rem); line-height: 1.1;">
+
+      <div
+        class="flex flex-col items-center justify-center w-full px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10">
+        <h1 class="text-center text-white font-bold mb-6 hero-title blur-fade-once" data-hero-order="1"
+          style="font-size: clamp(2.6rem, 5.2vw, 4.6rem); line-height: 1.1;">
           Where the world builds prompts
         </h1>
-        <p class="text-center text-white mb-6 max-w-2xl mx-auto blur-fade-once" data-hero-order="2" style="font-size: clamp(1.0625rem, 2.15vw, 1.35rem); line-height: 1.6; opacity: 0.9;">
+        <p class="text-center text-white mb-6 max-w-2xl mx-auto blur-fade-once" data-hero-order="2"
+          style="font-size: clamp(1.0625rem, 2.15vw, 1.35rem); line-height: 1.6; opacity: 0.9;">
           Discover, share, and build AI prompts and agents.<br>
           A collaboration platform for prompt engineers and creators.
         </p>
         <div class="flex justify-center mb-12">
-          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" class="glass-button px-8 py-3 rounded-xl font-medium text-base md:text-lg transition-all duration-300 try-free-button inline-block text-center" style="background: rgba(0, 0, 0, 0.6) !important; color: white !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 180px;">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="glass-button px-8 py-3 rounded-xl font-medium text-base md:text-lg transition-all duration-300 try-free-button inline-block text-center"
+            style="background: rgba(0, 0, 0, 0.6) !important; color: white !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 180px;">
             Get Started
           </a>
         </div>
-        
+
         <div class="w-full md:max-w-[93%] md:mx-auto" id="image-canvas-wrap" style="perspective: 1200px;">
-          <div id="image-canvas" class="hero-image-slide-up hero-image-slide-up-visible w-full relative overflow-hidden transition-all duration-400 rounded-3xl border-4 border-gray-200 shadow-[0_8px_30px_rgba(255,255,255,0.4)]" style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative; transform-style: preserve-3d; transition: transform 0.25s ease-out;">
-            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0Dta4%2FdJMcag5iELI%2FAAAAAAAAAAAAAAAAAAAAAIbtCJcnkjIlQX1yCLLsXKHXl-qXKL_otOuIVhGv7VD3%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DXXxRBIydW%252B%252FBKnUsAvUWbi8xITI%253D" alt="Birzont hero animation" class="hero-foreground-gif hidden md:block">
-            <img src="resources/mobile.png" alt="Birzont hero" class="hero-foreground-gif hero-foreground-mobile block md:hidden">
+          <div id="image-canvas"
+            class="hero-image-slide-up hero-image-slide-up-visible w-full relative overflow-hidden transition-all duration-400 rounded-3xl border-4 border-gray-200 shadow-[0_8px_30px_rgba(255,255,255,0.4)]"
+            style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative; transform-style: preserve-3d; transition: transform 0.25s ease-out;">
+            <img src="resources/products/mainscreen.png" alt="Birzont hero animation"
+              class="hero-foreground-gif hidden md:block">
+            <img src="resources/mobile.png" alt="Birzont hero"
+              class="hero-foreground-gif hero-foreground-mobile block md:hidden">
             <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
           </div>
         </div>
@@ -75,56 +87,73 @@
 
     <!-- Product Introduction & Features Section -->
     <div class="w-full bg-[#fafafa] pt-8 md:pt-12">
-      <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12" aria-label="Birzont core features">
+      <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12"
+        aria-label="Birzont core features">
         <div class="mt-2 md:mt-6">
-          <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading" data-instrument-font>Explore the Birzont</h3>
-          <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">One platform for prompt generation, extraction, workflow, sharing, and selling.</p>
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading"
+            data-instrument-font>Explore the Birzont</h3>
+          <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">One platform for prompt
+            generation, extraction, workflow, sharing, and selling.</p>
         </div>
-        <div class="product-card-large bg-white rounded-3xl shadow overflow-hidden border border-gray-100 blur-fade-once">
+        <div
+          class="product-card-large bg-white rounded-2xl shadow overflow-hidden border border-gray-200 blur-fade-once">
           <div class="flex flex-col md:flex-row gap-0 items-stretch agent-card-container">
-            <div class="w-full md:w-1/3 flex-shrink-0 p-8 md:p-12 flex flex-col agent-card-left md:border-r md:border-gray-200">
+            <div
+              class="w-full md:w-1/3 flex-shrink-0 p-8 md:p-12 flex flex-col agent-card-left md:border-r md:border-gray-200">
               <header class="mb-8 md:mb-20">
                 <div class="group">
                   <h3 class="flex items-center gap-2 mb-4">
                     <span class="text-base font-medium text-gray-600">Prompt AI Platform</span>
-                    <span class="inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">v1.0 MVP</span>
+                    <span
+                      class="inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">v1.0
+                      MVP</span>
                   </h3>
                   <p class="text-2xl md:text-3xl font-bold text-black leading-tight">
                     Just say your intent.<br>Birzont creates the optimal prompt.
                   </p>
                 </div>
               </header>
-              
+
               <div role="tablist" aria-label="Birzont key features" class="product-tablist mt-auto">
-                <button type="button" role="tab" value="0" tabindex="0" aria-selected="true" class="product-tab product-tab-active">
+                <button type="button" role="tab" value="0" tabindex="0" aria-selected="true"
+                  class="product-tab product-tab-active">
                   <p class="product-tab-summary">Intent-based prompt generation</p>
-                  <p class="product-tab-content product-tab-content-visible">Hearim 3.0 & Tobaki-2 models analyze your natural language and generate optimized prompts.</p>
+                  <p class="product-tab-content product-tab-content-visible">Hearim 3.0 & Tobaki-2 models analyze your
+                    natural language and generate optimized prompts.</p>
                 </button>
                 <hr class="divider border-gray-200 my-0" role="presentation">
                 <button type="button" role="tab" value="1" tabindex="0" aria-selected="false" class="product-tab">
                   <p class="product-tab-summary">Intelligent workflow chains</p>
-                  <p class="product-tab-content">Connect multi-step prompts into a single pipeline from planning to execution. Automate complex projects.</p>
+                  <p class="product-tab-content">Connect multi-step prompts into a single pipeline from planning to
+                    execution. Automate complex projects.</p>
                 </button>
                 <hr class="divider border-gray-200 my-0" role="presentation">
                 <button type="button" role="tab" value="2" tabindex="0" aria-selected="false" class="product-tab">
                   <p class="product-tab-summary">Verified prompt marketplace</p>
-                  <p class="product-tab-content">Explore and share 5,000+ high-quality templates. 11 languages. Instant apply. Extract prompts from anywhere.</p>
+                  <p class="product-tab-content">Explore and share 5,000+ high-quality templates. 11 languages. Instant
+                    apply. Extract prompts from anywhere.</p>
                 </button>
                 <hr class="divider border-gray-200 my-0" role="presentation">
                 <button type="button" role="tab" value="3" tabindex="0" aria-selected="false" class="product-tab">
                   <p class="product-tab-summary">Adaptive personalization</p>
-                  <p class="product-tab-content">Gets smarter with use. RLHF-based learning adapts to your feedback and delivers personalized results in real time.</p>
+                  <p class="product-tab-content">Gets smarter with use. RLHF-based learning adapts to your feedback and
+                    delivers personalized results in real time.</p>
                 </button>
               </div>
-              
+
               <div role="tablist" aria-label="Current slide indicator" class="flex gap-2 mt-6">
-                <button type="button" role="tab" value="0" tabindex="-1" aria-selected="true" class="product-indicator product-indicator-active" aria-label="Go to slide 1"></button>
-                <button type="button" role="tab" value="1" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 2"></button>
-                <button type="button" role="tab" value="2" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 3"></button>
-                <button type="button" role="tab" value="3" tabindex="-1" aria-selected="false" class="product-indicator" aria-label="Go to slide 4"></button>
+                <button type="button" role="tab" value="0" tabindex="-1" aria-selected="true"
+                  class="product-indicator product-indicator-active" aria-label="Go to slide 1"></button>
+                <button type="button" role="tab" value="1" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 2"></button>
+                <button type="button" role="tab" value="2" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 3"></button>
+                <button type="button" role="tab" value="3" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 4"></button>
               </div>
             </div>
-            
+
             <div class="w-full md:flex-1 relative agent-card-right">
               <div id="product-carousel" class="absolute inset-0 overflow-hidden bg-gray-50">
                 <div id="product-carousel-slides" class="absolute inset-0" aria-live="polite">
@@ -141,13 +170,22 @@
                     <img src="resources/onep.png" alt="Learning system" class="product-slide-img">
                   </div>
                 </div>
-                
-                <div id="product-carousel-controls" class="absolute inset-0 flex items-center justify-between pointer-events-none px-4">
-                  <button type="button" id="product-carousel-prev" class="carousel-btn carousel-btn-prev pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2" aria-label="Previous" style="display: none;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+
+                <div id="product-carousel-controls"
+                  class="absolute inset-0 flex items-center justify-between pointer-events-none px-4">
+                  <button type="button" id="product-carousel-prev"
+                    class="carousel-btn carousel-btn-prev pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Previous" style="display: none;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
                   </button>
-                  <button type="button" id="product-carousel-next" class="carousel-btn carousel-btn-next pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2" aria-label="Next">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <button type="button" id="product-carousel-next"
+                    class="carousel-btn carousel-btn-next pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Next">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -159,12 +197,17 @@
 
     <!-- Product Features Section (독립 영역) -->
     <div class="w-full bg-[#fafafa] pt-8 md:pt-12">
-      <section class="pt-10 md:pt-16 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto" aria-label="Birzont key value">
+      <section class="pt-10 md:pt-16 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto"
+        aria-label="Birzont key value">
         <div class="mt-6 md:mt-10">
-          <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading" data-instrument-font>How it works</h3>
-          <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">Generate, extract, connect, share, and sell prompts—all in one place.</p>
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading"
+            data-instrument-font>How it works</h3>
+          <p class="text-lg md:text-xl text-gray-600 text-center mb-0 blur-fade-once">Generate, extract, connect, share,
+            and sell prompts—all in one place.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full blur-fade-once mt-8 md:mt-12" id="product-features-grid">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full blur-fade-once mt-8 md:mt-12"
+          id="product-features-grid">
           <!-- Product feature cards will be inserted by JavaScript -->
         </div>
       </section>
@@ -269,155 +312,172 @@
 
     <!-- Pricing Section -->
     <template>
-    <div class="w-full bg-[#fafafa]">
-      <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
-        <h2 class="text-[2.625rem] md:text-[3.125rem] font-bold text-center text-black mb-3 md:mb-4 font-instrument-heading" data-instrument-font>Plans</h2>
-        <p class="text-lg md:text-xl text-gray-600 text-center mb-6 md:mb-8">Choose the plan that fits you</p>
-        <!--
+      <div class="w-full bg-[#fafafa]">
+        <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
+          <h2
+            class="text-[2.625rem] md:text-[3.125rem] font-bold text-center text-black mb-3 md:mb-4 font-instrument-heading"
+            data-instrument-font>Plans</h2>
+          <p class="text-lg md:text-xl text-gray-600 text-center mb-6 md:mb-8">Choose the plan that fits you</p>
+          <!--
         <div class="flex justify-center mb-20 md:mb-24">
           <a href="https://birzont.ai/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">더 알아보기</a>
         </div>
         -->
-        
-        <!-- Pricing Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
-          <!-- Free Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
-            <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black pricing-card-title">Free</h3>
+
+          <!-- Pricing Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
+            <!-- Free Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Free</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">Free</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">Try
+                core features for free.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>5 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Basic agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>1 agent conversation saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Instant prompt execution</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>All other basic features</span>
+                </li>
+              </ul>
             </div>
-            <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black pricing-card-price">Free</span>
+
+            <!-- Pro Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Pro</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$9</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">All
+                advanced features for individual users.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>50 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Advanced agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Unlimited agent conversations</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>10 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Save agent-generated prompts</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Verified profile badge</span>
+                </li>
+              </ul>
             </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">Try core features for free.</p>
-            <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">Get Started</button>
+
+            <!-- Team Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Team</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$29</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">
+                Optimized for team collaboration and management.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>250 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team workspace</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Bundle template workflow creation</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team-only prompts & bundle sharing</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>30 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Early access to new features</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Slack, Notion integration</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Full profile features access</span>
+                </li>
+              </ul>
             </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>5 Tokens per month</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Basic agents</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>1 agent conversation saved</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Instant prompt execution</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>All other basic features</span>
-              </li>
-            </ul>
           </div>
 
-          <!-- Pro Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
-            <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black pricing-card-title">Pro</h3>
-            </div>
-            <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black pricing-card-price">$9</span>
-              <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
-            </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">All advanced features for individual users.</p>
-            <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">Get Started</button>
-            </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>50 Tokens per month</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Advanced agents</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Unlimited agent conversations</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>10 agent conversations saved</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Save agent-generated prompts</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Ad-free</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Verified profile badge</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Team Plan -->
-          <div class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card" style="border-radius: 24px;">
-            <div class="mb-3">
-              <h3 class="text-xl font-semibold text-black pricing-card-title">Team</h3>
-            </div>
-            <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-black pricing-card-price">$29</span>
-              <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
-            </div>
-            <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">Optimized for team collaboration and management.</p>
-            <div class="mt-3">
-              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button" style="border-radius: 12px;">Get Started</button>
-            </div>
-            <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>250 Tokens per month</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Team workspace</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Bundle template workflow creation</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Team-only prompts & bundle sharing</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>30 agent conversations saved</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Early access to new features</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Slack, Notion integration</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Ad-free</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>Full profile features access</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Comparison Table (주석 처리 - 당분간 미사용) -->
-        <!--
+          <!-- Comparison Table (주석 처리 - 당분간 미사용) -->
+          <!--
         <section class="mx-auto max-w-5xl mt-14 md:mt-16">
           <h3 class="text-2xl md:text-3xl font-semibold tracking-tight text-center text-black mb-4 md:mb-6">요금제와 기능</h3>
           <div class="overflow-x-auto">
@@ -490,8 +550,9 @@
           </div>
         </section>
         -->
-      </section>
-    </div></template>
+        </section>
+      </div>
+    </template>
 
     <!-- Built for any business (Floating chips) -->
     <div class="w-full bg-white py-14 md:py-18 biz-float-section">
@@ -505,8 +566,9 @@
             <div class="biz-float-chip biz-chip-digital">
               <span class="biz-float-chip-dot biz-dot-digital">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path d="M4 10l8-6 8 6-8 6-8-6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M4 14l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M4 10l8-6 8 6-8 6-8-6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M4 14l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
               </span>
               Digital products
@@ -515,10 +577,13 @@
             <div class="biz-float-chip biz-chip-agencies">
               <span class="biz-float-chip-dot biz-dot-agencies">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <path d="M22 21v-2a3 3 0 0 0-2-2.82" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M22 21v-2a3 3 0 0 0-2-2.82" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
                 </svg>
               </span>
               Agencies
@@ -527,10 +592,11 @@
             <div class="biz-float-chip biz-chip-ecommerce">
               <span class="biz-float-chip-dot biz-dot-ecommerce">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path d="M6 6h15l-1.5 9h-12L6 6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M6 6 4 3H1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="9" cy="20" r="1" fill="currentColor"/>
-                  <circle cx="18" cy="20" r="1" fill="currentColor"/>
+                  <path d="M6 6h15l-1.5 9h-12L6 6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M6 6 4 3H1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="9" cy="20" r="1" fill="currentColor" />
+                  <circle cx="18" cy="20" r="1" fill="currentColor" />
                 </svg>
               </span>
               E-commerce
@@ -539,9 +605,9 @@
             <div class="biz-float-chip biz-chip-saas">
               <span class="biz-float-chip-dot biz-dot-saas">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path d="M4 4h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M12 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M4 4h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M12 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
               </span>
               SaaS
@@ -550,8 +616,8 @@
             <div class="biz-float-chip biz-chip-mobile">
               <span class="biz-float-chip-dot biz-dot-mobile">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <rect x="7" y="2" width="10" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <path d="M11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <rect x="7" y="2" width="10" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
               </span>
               Mobile apps
@@ -560,8 +626,9 @@
             <div class="biz-float-chip biz-chip-services">
               <span class="biz-float-chip-dot biz-dot-services">
                 <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path d="M12 2l1.5 5H19l-4 3 1.5 5-4.5-3-4.5 3L9 10 5 7h5.5L12 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M2 22h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 2l1.5 5H19l-4 3 1.5 5-4.5-3-4.5 3L9 10 5 7h5.5L12 2Z" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linejoin="round" />
+                  <path d="M2 22h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
               </span>
               Services
@@ -573,19 +640,27 @@
 
     <!-- City CTA banner (랜덤 city 배경 + 연한 검정 오버레이) — Home of Prompts 위 -->
     <div class="w-full bg-white">
-      <section class="pt-12 md:pt-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-20 md:pb-24 blur-fade-once" aria-label="Birzont intro banner">
-        <div id="city-cta-card" class="city-cta-card relative rounded-3xl overflow-hidden border border-gray-200 shadow-lg">
-          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true"></div>
+      <section
+        class="pt-12 md:pt-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-20 md:pb-24 blur-fade-once"
+        aria-label="Birzont intro banner">
+        <div id="city-cta-card"
+          class="city-cta-card relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true">
+          </div>
           <div class="city-cta-overlay absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-          <div class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
-            <h2 class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
+          <div
+            class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
+            <h2
+              class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
               Bridge, Build, <em class="city-cta-em">Automation.</em> With Birzont.
             </h2>
             <p class="city-cta-sub text-white/95 text-[1.06rem] md:text-[1.18rem] font-medium mb-4 md:mb-5">
               The hub for AI-powered creation and collaboration
             </p>
             <p class="city-cta-body text-white/90 text-sm md:text-base leading-relaxed max-w-xl">
-              No more juggling tools for landing pages, copy, or agents. Birzont understands your brand, designs prompts, and shares with your team—all in one platform. Build workflows through conversation and start instantly with verified templates.
+              No more juggling tools for landing pages, copy, or agents. Birzont understands your brand, designs
+              prompts, and shares with your team—all in one platform. Build workflows through conversation and start
+              instantly with verified templates.
             </p>
           </div>
         </div>
@@ -593,216 +668,271 @@
     </div>
 
     <!-- User Prompts + Try for free (통합 영역) -->
-    <div class="w-full bg-gray-100 relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1707209856575-a80b9dff5524?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjBncmFkaWVudHxlbnwwfHwwfHx8MA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-      <section class="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-20">
-        <h3 class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading" data-instrument-font>Birzont, Home of Prompts</h3>
-        <p class="text-lg md:text-xl text-gray-600 text-center mb-14 md:mb-16 blur-fade-once">Explore diverse prompts created by the community</p>
+    <div class="w-full bg-gray-100 relative overflow-hidden"
+      style="background-image: url('https://images.unsplash.com/photo-1707209856575-a80b9dff5524?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjBncmFkaWVudHxlbnwwfHwwfHx8MA%3D%3D'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <section
+        class="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-20">
+        <h3
+          class="text-[2.625rem] md:text-[3.125rem] font-bold text-black leading-tight mb-3 md:mb-4 text-center blur-fade-once font-instrument-heading"
+          data-instrument-font>Birzont, Home of Prompts</h3>
+        <p class="text-lg md:text-xl text-gray-600 text-center mb-14 md:mb-16 blur-fade-once">Explore diverse prompts
+          created by the community</p>
         <div class="user-prompts-container flex flex-col gap-5 md:gap-8">
           <div class="user-prompts-row blur-fade-once" data-prompt-row="1">
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-          <div class="user-prompts-grid user-prompts-grid-fade">
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon">
-                  <img src="https://img.icons8.com/color/512/cursor-ai.png" alt="Cursor icon">
-                </span>
-                <span>Cursor</span>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/cursor-ai.png" alt="Cursor icon">
+                    </span>
+                    <span>Cursor</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">1</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Efficient task automation script generation</h4>
+                <p class="user-prompt-description">Generates Python scripts to automate repetitive tasks. Based on your
+                  description, it writes and optimizes code for you.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">1</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">1</span>
-                </button>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/ios11/200/FFFFFF/claude-ai.png" alt="Claude icon">
+                    </span>
+                    <span>Claude</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">2</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Creative idea brainstorming prompt</h4>
+                <p class="user-prompt-description">Generates original and innovative ideas around your topic. Expands
+                  and refines ideas from multiple perspectives to maximize creativity.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek.png"
+                        alt="DeepSeek icon">
+                    </span>
+                    <span>DeepSeek</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">0</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Test scenario generation and validation</h4>
+                <p class="user-prompt-description">Generates and validates diverse scenarios for software testing.
+                  Auto-creates test cases from your requirements to boost efficiency.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
-            <h4 class="user-prompt-title">Efficient task automation script generation</h4>
-            <p class="user-prompt-description">Generates Python scripts to automate repetitive tasks. Based on your description, it writes and optimizes code for you.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon claude-icon">
-                  <img src="https://img.icons8.com/ios11/200/FFFFFF/claude-ai.png" alt="Claude icon">
-                </span>
-                <span>Claude</span>
-              </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">2</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">2</span>
-                </button>
-              </div>
-            </div>
-            <h4 class="user-prompt-title">Creative idea brainstorming prompt</h4>
-            <p class="user-prompt-description">Generates original and innovative ideas around your topic. Expands and refines ideas from multiple perspectives to maximize creativity.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon deepseek-icon">
-                  <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek.png" alt="DeepSeek icon">
-                </span>
-                <span>DeepSeek</span>
-              </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">0</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">1</span>
-                </button>
-              </div>
-            </div>
-            <h4 class="user-prompt-title">Test scenario generation and validation</h4>
-            <p class="user-prompt-description">Generates and validates diverse scenarios for software testing. Auto-creates test cases from your requirements to boost efficiency.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-        </div>
           </div>
           <div class="user-prompts-row blur-fade-once" data-prompt-row="2">
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-          <div class="user-prompts-grid user-prompts-grid-fade">
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon">
-                  <img src="https://img.icons8.com/color/512/chatgpt.png" alt="ChatGPT icon">
-                </span>
-                <span>ChatGPT</span>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/chatgpt.png" alt="ChatGPT icon">
+                    </span>
+                    <span>ChatGPT</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">5</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">3</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">SNS & ad marketing copy generation</h4>
+                <p class="user-prompt-description">Input your brand tone and target—get multiple short, impactful copy
+                  versions by channel.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">5</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">3</span>
-                </button>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/color/512/google-gemini.png" alt="Gemini icon">
+                    </span>
+                    <span>Gemini</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">4</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Long document & meeting notes summary</h4>
+                <p class="user-prompt-description">Paste PDF or text—get structured conclusions, action items, and
+                  timeline for easy review.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://img.icons8.com/color/512/perplexity-ai.png" alt="Perplexity icon">
+                    </span>
+                    <span>Perplexity</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">3</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Research question design &amp; citation formatting</h4>
+                <p class="user-prompt-description">Input a topic—get search-friendly sub-questions and proper citation
+                  formats for your answers.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
-            <h4 class="user-prompt-title">SNS & ad marketing copy generation</h4>
-            <p class="user-prompt-description">Input your brand tone and target—get multiple short, impactful copy versions by channel.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon claude-icon">
-                  <img src="https://img.icons8.com/color/512/google-gemini.png" alt="Gemini icon">
-                </span>
-                <span>Gemini</span>
-              </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">4</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">2</span>
-                </button>
-              </div>
-            </div>
-            <h4 class="user-prompt-title">Long document & meeting notes summary</h4>
-            <p class="user-prompt-description">Paste PDF or text—get structured conclusions, action items, and timeline for easy review.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="user-prompt-card">
-            <div class="user-prompt-header">
-              <div class="user-prompt-ai-badge">
-                <span class="user-prompt-ai-icon deepseek-icon">
-                  <img src="https://img.icons8.com/color/512/perplexity-ai.png" alt="Perplexity icon">
-                </span>
-                <span>Perplexity</span>
-              </div>
-              <div class="user-prompt-actions">
-                <button type="button" class="user-prompt-like" aria-label="Like">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span class="user-prompt-like-count">3</span>
-                </button>
-                <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-                  <span class="user-prompt-bookmark-count">1</span>
-                </button>
-              </div>
-            </div>
-            <h4 class="user-prompt-title">Research question design &amp; citation formatting</h4>
-            <p class="user-prompt-description">Input a topic—get search-friendly sub-questions and proper citation formats for your answers.</p>
-            <div class="user-prompt-footer">
-              <span class="user-prompt-author">@birzont</span>
-              <div class="user-prompt-free">
-                <span>Free</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
-              </div>
-            </div>
-          </div>
-        </div>
           </div>
         </div>
         <div class="text-center mt-8 md:mt-10 blur-fade-once">
-          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer" class="text-black font-semibold text-base md:text-lg hover:underline inline-block">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="text-black font-semibold text-base md:text-lg hover:underline inline-block">
             Explore Prompts
           </a>
         </div>
@@ -819,4 +949,5 @@
   <script src="languageprovider.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
