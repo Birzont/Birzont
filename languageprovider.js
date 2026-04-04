@@ -311,7 +311,7 @@
         , ourVisionBody: 'AI의 성공은 열린 생태계와 다양한 참여자에서 시작됩니다. 우리는 인프라 기술 장벽을 낮춰 더 많은 고객이 AI를 활용하도록 돕습니다.'
       },
       images: {
-        heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')",
+        heroBackground: "url('https://www.agoda.com/wp-content/uploads/2019/05/Seoul-itinerary-Seoul-Bukchon-Hanok-Village.jpg')",
         heroForegroundDesktop: "resources/products/mainscreen.png",
         heroForegroundMobile: 'resources/product/mobile.png',
         productSlides: ['resources/products/mainscreen.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png']
@@ -324,7 +324,7 @@
     ja: {
       blog: { title: 'バージョントの多様なストーリー', subtitle: 'AIとテクノロジーに関する最新の洞察とストーリーを共有します。' },
       ui: { appDescriptionTitle: 'アプリ説明', appDescriptionBody1: 'このアプリは使いやすさを重視して設計されています。', appDescriptionBody2: '継続的なアップデートで改善されます。', appOpenLink: 'アプリを開く', careersTitle: '参加先を探していますか？', careersText1: 'Birzontでアイデアを実現しましょう。', careersText2: 'あなたの参加を待っています。', careersCta: '採用情報を見る' },
-      images: { heroBackground: "url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif')", heroForegroundDesktop: "resources/products/mainscreen.png", heroForegroundMobile: 'resources/products/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
+      images: { heroBackground: "url('https://www.artsoullifemagazine.com/wp-content/uploads/2023/09/Image-01-2.jpg')", heroForegroundDesktop: "resources/products/mainscreen.png", heroForegroundMobile: 'resources/products/mobile.png', productSlides: ['resources/mainp.png', 'resources/chainp.png', 'resources/boardp.png', 'resources/products/mainscreen.png'] },
       video: { aboutUrl: 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1', aboutThumbnail: 'https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg' }
     },
     'zh-CN': {
