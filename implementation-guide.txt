@@ -1,0 +1,31 @@
+Birzont Implementation Guide (Quick)
+
+1) Suggested Terms Consent Copy (English)
+- "By creating an account or continuing, you agree to the Birzont Terms of Service and acknowledge the Privacy Policy."
+- "By purchasing, you authorize recurring charges (if applicable), agree that all sales are final except where required by law, and consent to Birzont's refund terms."
+
+2) EU/UK Withdrawal Waiver Copy (English)
+- "If you are in the EU/UK (or another jurisdiction with a statutory cooling-off right), you may have a 14-day withdrawal right. By requesting immediate access and using paid features/credits during that period, you expressly request early performance and acknowledge that your withdrawal right is waived to the extent permitted by law."
+
+3) Recommended DB Fields for Legal Evidence
+- user_id
+- email
+- region_country_code
+- is_eu_or_uk_user (boolean)
+- terms_version
+- privacy_version
+- refund_policy_version
+- agreed_at (timestamp, UTC)
+- agreed_ip
+- agreed_user_agent
+- agreed_locale
+- purchase_id / subscription_id
+- waiver_shown (boolean)
+- waiver_accepted (boolean)
+- waiver_accepted_at (timestamp, UTC)
+- first_paid_use_at (timestamp, UTC)
+- first_credit_use_at (timestamp, UTC)
+- consent_event_hash (immutable audit hash)
+
+Operational note:
+- Store consent logs as append-only records (do not overwrite), and keep historical versions of legal documents that each user agreed to.
