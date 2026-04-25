@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>웹페이지 바로가기</title>
+  <title>웹페이지 z 바로가기</title>
   <style>
     * {
       margin: 0;
@@ -17,8 +17,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px 112px;
+    }
+    .page-main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      min-height: 0;
     }
     .container {
       max-width: 700px;
@@ -43,9 +52,16 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-auto-rows: auto;
       gap: 24px 20px;
       justify-items: center;
+      align-content: start;
+      /* 추가 버튼 포함 최대 2행(6×2). 그 이상은 페이지 전환 */
+      --grid-row-h: 91px;
+      min-height: var(--grid-row-h);
+      max-height: calc(2 * var(--grid-row-h) + 24px);
+      overflow: hidden;
     }
     .shortcut-item {
       display: flex;
@@ -155,6 +171,7 @@
     .pagination {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 8px;
       margin-top: 32px;
     }
@@ -182,6 +199,10 @@
       opacity: 0;
       visibility: hidden;
       transition: all 0.2s ease;
+    }
+    /* 유저/별명 모달은 카드 드롭다운보다 항상 위 */
+    #userModalOverlay {
+      z-index: 100100;
     }
     .modal-overlay.open {
       opacity: 1;
@@ -279,10 +300,248 @@
       opacity: 1;
     }
 
+    /* 하단 유저 독 (맥북 스타일) */
+    .user-dock-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      z-index: 90;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .user-dock-wrap * {
+      pointer-events: auto;
+    }
+    .user-dock {
+      --dock-avatar: 52px;
+      --dock-gap: 10px;
+      --dock-pad-x: 14px;
+      position: relative;
+      z-index: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: var(--dock-gap);
+      padding: 10px var(--dock-pad-x) 12px;
+      border-radius: 22px;
+      /* blur는 ::before에만 — 자손 position:fixed가 뷰포트 기준이 되도록 */
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      /* 기본 최소폭: 유저 1명 분량 */
+      width: max-content;
+      min-width: calc(1 * var(--dock-avatar) + 2 * var(--dock-pad-x));
+      max-width: min(92vw, 720px);
+      overflow: visible;
+    }
+    .user-dock.dock-anim-enter {
+      animation: dockBarExpandIn 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transform-origin: center bottom;
+    }
+    @keyframes dockBarExpandIn {
+      from {
+        opacity: 0.25;
+        transform: scaleX(0.68);
+      }
+      to {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+    }
+    .user-dock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.38);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .user-dock-track {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: var(--dock-gap);
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-y: visible;
+      /* 가로 스크롤 컨테이너가 세로로 잘리지 않도록 여유 (확대 애니메이션) */
+      padding: 14px 4px 14px;
+      margin: -14px -4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .user-dock-track.no-add {
+      justify-content: center;
+    }
+    .user-dock-avatar-wrap {
+      position: relative;
+      z-index: 3;
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .user-dock-avatar-wrap:hover:not(.dragging) {
+      z-index: 40;
+    }
+    .user-dock-avatar-wrap.dragging .user-dock-avatar,
+    .user-dock-avatar-wrap.dragging .user-dock-tooltip {
+      opacity: 0.45;
+    }
+    .user-dock-avatar-wrap.drag-over .user-dock-avatar {
+      outline: 2px dashed #4a90d9;
+      outline-offset: 3px;
+    }
+    .user-dock-tooltip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: auto;
+      margin: 0;
+      transform: translateX(-50%) translateY(4px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: auto;
+      transition: opacity 0.12s ease, transform 0.12s ease, visibility 0.12s;
+      z-index: 99999;
+      max-width: min(200px, calc(100vw - 24px));
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #1a1a1a;
+      background: rgba(255, 255, 255, 0.94);
+      padding: 5px 10px 6px;
+      border-radius: 8px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+      min-height: 26px;
+      box-sizing: border-box;
+    }
+    .user-dock-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border: 5px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.94);
+      filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.04));
+    }
+    .user-dock-avatar-wrap:hover:not(.dragging) .user-dock-tooltip,
+    .user-dock-avatar-wrap:focus-within:not(.dragging) .user-dock-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .user-dock-avatar {
+      position: relative;
+      z-index: 2;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      cursor: grab;
+      transition: box-shadow 0.2s ease, opacity 0.15s ease, transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform-origin: 50% 100%;
+      background: linear-gradient(145deg, #6b8cce, #4a6fa5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .user-dock-avatar-wrap:active .user-dock-avatar {
+      cursor: grabbing;
+    }
+    .user-dock-avatar-wrap:hover:not(.dragging) .user-dock-avatar {
+      transform: scale(1.055) translateY(-2px);
+      box-shadow: 0 7px 16px rgba(0, 0, 0, 0.15);
+    }
+    .user-dock-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .user-dock-avatar .letter {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .user-dock-avatar-wrap .dock-edit {
+      display: none;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #ddd;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 6;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+    .user-dock-avatar-wrap:hover .dock-edit {
+      display: flex;
+    }
+    .user-dock-avatar-wrap .dock-edit svg {
+      width: 11px;
+      height: 11px;
+      stroke: #555;
+    }
+    .user-dock-add {
+      position: relative;
+      z-index: 2;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px dashed rgba(100, 100, 100, 0.45);
+      background: rgba(255, 255, 255, 0.35);
+      color: #555;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      transform-origin: 50% 100%;
+    }
+    .user-dock-add:hover {
+      transform: scale(1.05) translateY(-2px);
+      background: rgba(255, 255, 255, 0.55);
+      border-color: #4a90d9;
+      color: #4a90d9;
+    }
+
     .settings-btn {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      right: max(20px, env(safe-area-inset-right, 0px));
+      bottom: max(20px, env(safe-area-inset-bottom, 0px));
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -294,7 +553,7 @@
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       transition: all 0.2s;
-      z-index: 100;
+      z-index: 200;
     }
     .settings-btn:hover {
       background: white;
@@ -321,11 +580,769 @@
     }
     .settings-modal .modal {
       max-width: 500px;
+      max-height: min(88vh, 820px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #ffffff;
+      color: #191f28;
+      border: 1px solid #e5e8eb;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.3) transparent;
+      padding-right: 16px;
+    }
+    #settingsOverlay .modal h2 {
+      font-size: 22px;
+      line-height: 30px;
+      font-weight: 700;
+      color: #191f28;
+      margin-bottom: 14px;
+    }
+    .settings-modal .modal::-webkit-scrollbar {
+      width: 4px;
+    }
+    .settings-modal .modal::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .settings-modal .modal::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.28);
+      border-radius: 999px;
+    }
+    .settings-modal .modal::-webkit-scrollbar-thumb:hover {
+      background: rgba(0,0,0,0.42);
     }
     .config-hint {
       font-size: 11px;
       color: #888;
       margin-top: 4px;
+    }
+    .settings-section {
+      border: 1px solid #e5e8eb;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #ffffff;
+    }
+    #orgSettingsSection {
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 12px;
+      background: transparent;
+    }
+    #orgSettingsSection .settings-divider {
+      height: 1px;
+      background: #e9e9e9;
+      margin: 12px 0;
+    }
+    #orgSettingsSection .settings-divider {
+      display: none;
+    }
+    .settings-section h3 {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #191f28;
+    }
+    .org-workspace-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      overflow: visible;
+    }
+    #orgSettingsSection .org-workspace-form-wrap {
+      overflow: visible;
+    }
+    .org-card {
+      border: none;
+      border-radius: 14px;
+      background: #fff;
+      min-height: 126px;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow .18s ease, border-color .18s ease;
+      user-select: none;
+      box-shadow: 0 0 0 1px #d8d8d8 inset;
+    }
+    .org-card:hover {
+      box-shadow: 0 0 0 1.5px #111 inset;
+    }
+    .org-card.active {
+      box-shadow: 0 0 0 1.5px #111 inset;
+    }
+    .org-card.org-create-card {
+      background: #f3f3f3;
+    }
+    .org-card.dragging {
+      opacity: 0.5;
+    }
+    .org-card.drag-over {
+      outline: 2px dashed #4a90d9;
+      outline-offset: 2px;
+    }
+    .org-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #f2f4f6;
+      border: 1px solid #e5e8eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #4e5968;
+    }
+    .org-card-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .org-card-name {
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #333;
+      font-weight: 600;
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      min-height: 30px;
+    }
+    .org-card-shell {
+      position: relative;
+      border-radius: 14px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: transparent;
+      min-height: 126px;
+      overflow: visible;
+    }
+    .org-card-shell .org-card-main {
+      width: 100%;
+      min-height: 126px;
+      margin: 0;
+      border: none;
+      border-radius: 14px;
+      background: #fff;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow .18s ease, border-color .18s ease;
+      user-select: none;
+      box-shadow: 0 0 0 1px #d8d8d8 inset;
+      font: inherit;
+      color: inherit;
+    }
+    .org-card-shell:hover .org-card-main {
+      box-shadow: 0 0 0 1.5px #111 inset;
+    }
+    .org-card-shell .org-card-main.active {
+      box-shadow: 0 0 0 1.5px #111 inset;
+    }
+    .org-card-shell .org-card-main.dragging {
+      opacity: 0.5;
+    }
+    .org-card-shell .org-card-main.drag-over {
+      outline: 2px dashed #4a90d9;
+      outline-offset: 2px;
+    }
+    .org-card-menu-wrap {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 4;
+    }
+    .org-card-kebab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #4e5968;
+      cursor: pointer;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity .18s ease, background-color .22s ease;
+    }
+    .org-card-shell:hover .org-card-kebab {
+      opacity: 1;
+    }
+    .org-card-kebab:hover {
+      background: #f2f4f6;
+    }
+    .org-card-kebab svg {
+      width: 18px;
+      height: 18px;
+    }
+    .org-card-dropdown {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 4px);
+      min-width: 188px;
+      padding: 6px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e8eb;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      z-index: 100003;
+    }
+    .org-card-dropdown.org-card-dropdown--fixed {
+      position: fixed;
+    }
+    .org-card-dropdown button.org-card-dropdown-item {
+      display: flex;
+      width: 100%;
+      text-align: left;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      background: transparent;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #191f28;
+      cursor: pointer;
+      transition: background-color .18s ease;
+    }
+    .org-card-dropdown button.org-card-dropdown-item:hover {
+      background: #f2f4f6;
+    }
+    .org-dd-icon {
+      flex-shrink: 0;
+      color: #4e5968;
+    }
+    .org-dd-icon--star-on path {
+      fill: #f5c518;
+      stroke: #d4a017;
+    }
+    #settingsOverlay .modal.settings-modal-panel {
+      display: flex;
+      flex-direction: column;
+    }
+    .settings-modal-back {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      color: #191f28;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 6px 10px 10px 6px;
+      margin-left: -2px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color .22s ease;
+    }
+    .settings-modal-back:hover {
+      background: #f2f4f6;
+    }
+    .settings-back-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .settings-back-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    .space-sub-hero {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .space-sub-hero-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #f2f4f6;
+      border: 1px solid #e5e8eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 28px;
+      font-weight: 700;
+      color: #4e5968;
+      margin-bottom: 10px;
+    }
+    .space-sub-hero-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .space-sub-hero-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #191f28;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-title,
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-account,
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-org,
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-privacy,
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-bulk,
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-invite-email {
+      display: none !important;
+    }
+    #settingsOverlay .modal.settings-view-space-settings .settings-modal-back {
+      display: inline-flex !important;
+    }
+    #settingsOverlay .modal.settings-view-space-settings #spaceSubHero {
+      display: flex !important;
+    }
+    #settingsOverlay .modal.settings-view-space-settings:not(.settings-view-personal-space) #spaceOrgNameGroup {
+      display: flex !important;
+      flex-direction: column;
+    }
+    #settingsOverlay .modal.settings-view-space-settings.settings-view-personal-space #spaceOrgNameGroup {
+      display: none !important;
+    }
+    #settingsOverlay .modal.settings-view-space-settings.settings-view-personal-space #personalSpaceProfileGroup {
+      display: flex !important;
+      flex-direction: column;
+    }
+    #settingsOverlay .modal.settings-view-space-settings:not(.settings-view-personal-space) #personalSpaceProfileGroup {
+      display: none !important;
+    }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-back { order: 1; }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-hero { order: 2; }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-nameedit { order: 3; }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-logo { order: 4; }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-bg { order: 5; }
+    #settingsOverlay .modal.settings-view-space-settings .sm-order-actions { order: 6; }
+    #settingsOverlay .modal.settings-modal-panel:not(.settings-view-space-invite) #orgInviteActionsRow {
+      display: none !important;
+    }
+
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-title,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-account,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-org,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-privacy,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-bulk,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-bg,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-logo,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-nameedit,
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-actions {
+      display: none !important;
+    }
+    #settingsOverlay .modal.settings-view-space-invite .settings-modal-back {
+      display: inline-flex !important;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceSubHero {
+      display: flex !important;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceInviteEmailGroup {
+      display: flex !important;
+      flex-direction: column;
+    }
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-back { order: 1; }
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-hero { order: 2; }
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-invite { order: 3; }
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-invite-email { order: 4; }
+    #settingsOverlay .modal.settings-view-space-invite .sm-order-hero.space-sub-hero {
+      margin-bottom: 28px;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #orgInviteActionsRow {
+      display: flex !important;
+      margin-bottom: 28px;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceInviteEmailGroup .inline-row {
+      align-items: center;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceInviteEmailInput {
+      min-height: 46px;
+      height: 46px;
+      box-sizing: border-box;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceInviteSendBtn {
+      flex: 0 0 auto;
+      width: 46px;
+      min-width: 46px;
+      height: 46px;
+      min-height: 46px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    #settingsOverlay .modal.settings-view-space-invite #spaceInviteSendBtn svg {
+      width: 20px;
+      height: 20px;
+    }
+    .inline-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .muted-text {
+      font-size: 13px;
+      line-height: 20px;
+      color: #8b95a1;
+    }
+    .error-text {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #b42318;
+      background: #fff1f0;
+      border: 1px solid #ffd6d2;
+      border-radius: 8px;
+      padding: 8px 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .btn-mini {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #e5e8eb;
+      background: #f2f4f6;
+      color: #191f28;
+      font-size: 13px;
+      line-height: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color .22s ease, color .22s ease, border-color .22s ease;
+    }
+    .btn-mini:hover {
+      background: #e8f3ff;
+      border-color: #d1d6db;
+    }
+    .profile-card {
+      display: none;
+      gap: 10px;
+      align-items: stretch;
+      padding: 10px;
+      border: 1px solid #ececec;
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 8px;
+    }
+    .profile-card.open {
+      display: flex;
+    }
+    .profile-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #e2e2e2;
+      background: #f2f2f2;
+      flex: 0 0 auto;
+    }
+    .profile-meta {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 46px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .profile-email {
+      font-size: 12px;
+      color: #8b95a1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .profile-name-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .profile-name-text {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #191f28;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .profile-name-input {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 7px 9px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      background: #f2f4f6;
+    }
+    .profile-name-input:disabled {
+      background: #f5f5f5;
+      color: #777;
+      cursor: not-allowed;
+    }
+    .btn-profile-save {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid #e5e8eb;
+      border-radius: 8px;
+      background: #f2f4f6;
+      color: #191f28;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-profile-edit {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 8px;
+      background: #f2f4f6;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-profile-edit svg {
+      width: 14px;
+      height: 14px;
+      stroke: #4e5968;
+    }
+    .profile-name-edit-row {
+      display: none;
+      gap: 8px;
+      margin-top: 6px;
+      align-items: center;
+    }
+    .profile-name-edit-row.open {
+      display: flex;
+    }
+    .fancy-file-input {
+      width: 100%;
+      font-size: 13px;
+      color: #4e5968;
+      padding: 8px;
+      border: 1px dashed #e5e8eb;
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+    .fancy-file-input::file-selector-button {
+      margin-right: 10px;
+      padding: 7px 11px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .fancy-file-input:hover::file-selector-button {
+      background: #2272eb;
+    }
+    .btn-logout-wide {
+      width: 100%;
+      border: none;
+      background: #f04452;
+      color: #fff;
+      border-radius: 10px;
+      min-height: 41px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn-logout-wide:hover {
+      background: #d93a47;
+    }
+    #settingsOverlay .modal input[type="text"],
+    #settingsOverlay .modal input[type="email"],
+    #settingsOverlay .modal input[type="password"],
+    #settingsOverlay .modal input[type="url"],
+    #settingsOverlay .modal textarea {
+      border: none;
+      box-shadow: none;
+      background: #f2f4f6;
+      color: #191f28;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    #settingsOverlay .modal input::placeholder,
+    #settingsOverlay .modal textarea::placeholder {
+      color: #b0b8c1;
+    }
+    #bgUrl,
+    #logoUrl {
+      background: #f2f4f6 !important;
+    }
+    #settingsApplyBtn {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+    }
+    #settingsApplyBtn:hover {
+      background: #2272eb;
+    }
+    /* settings modal 내부 간격 미세 조정 */
+    #settingsOverlay .modal .modal-actions {
+      margin-top: 16px;
+      margin-bottom: 18px;
+    }
+    #settingsOverlay .modal .sm-order-bulk + .sm-order-actions {
+      margin-top: 8px;
+    }
+    /* 조직 가입 코드 블록과 초대 버튼 라인 사이 간격 */
+    #orgSettingsSection > .inline-row.settings-row-split {
+      margin-bottom: 18px;
+    }
+    #orgSettingsSection > .form-group:nth-of-type(2) {
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+    /* accountSettingsSection과 하단 버튼 사이 간격 */
+    #accountSettingsSection {
+      margin-top: 18px;
+    }
+    /* 조직 생성 모달 생성 버튼 */
+    #createOrgBtn {
+      background: #2563eb !important;
+      color: #ffffff !important;
+      border: none !important;
+    }
+    #createOrgBtn:hover {
+      background: #2272eb !important;
+    }
+    #userModalSaveBtn {
+      background: #2563eb !important;
+      color: #ffffff !important;
+      border: none !important;
+    }
+    #userModalSaveBtn:hover {
+      background: #2272eb !important;
+    }
+    .settings-row-split {
+      display: flex;
+      gap: 8px;
+      border: none;
+    }
+    .settings-row-split > button {
+      flex: 1 1 0;
+      min-height: 41px;
+      border: none;
+      border-radius: 10px;
+      transition: background-color .22s ease, color .22s ease;
+    }
+    .settings-row-split > button:hover,
+    #joinOrgBtn:hover,
+    #copyExportBtn:hover {
+      background: #2563eb !important;
+      color: #ffffff !important;
+    }
+    #joinOrgBtn {
+      min-height: 46px;
+      min-width: 52px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: none;
+      background: #f2f4f6;
+    }
+    #joinOrgBtn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+    .privacy-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: #f2f4f6;
+      color: #191f28;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      padding-top: 8px;
+    }
+    .privacy-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      appearance: none;
+      border: none;
+      outline: none;
+      border-radius: 6px;
+      background: #d7dce2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      transition: background-color .18s ease;
+      cursor: pointer;
+      transform: translateY(1px);
+    }
+    .privacy-toggle input[type="checkbox"]:checked {
+      background: #2563eb;
+    }
+    .privacy-toggle input[type="checkbox"]::after {
+      content: '✓';
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      transform: scale(0);
+      transition: transform .16s ease;
+    }
+    .privacy-toggle input[type="checkbox"]:checked::after {
+      transform: scale(1);
+    }
+    .invite-overlay-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      width: min(92vw, 420px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .invite-overlay-card img {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      object-fit: cover;
+      margin-bottom: 10px;
     }
     .btn-copy-export {
       padding: 6px 12px;
@@ -335,16 +1352,25 @@
       border-radius: 8px;
       cursor: pointer;
       color: #555;
-      transition: all 0.2s;
+      transition: background-color .22s ease, color .22s ease, border-color .22s ease;
     }
     .btn-copy-export:hover {
       background: #e5e5e5;
     }
 
     @media (max-width: 600px) {
+      body {
+        padding-bottom: 104px;
+      }
+      .settings-modal .modal {
+        max-height: 86vh;
+        padding-right: 12px;
+      }
       .grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 20px 16px;
+        --grid-row-h: 83px;
+        max-height: calc(2 * var(--grid-row-h) + 20px);
       }
       .shortcut-icon, .add-btn {
         width: 56px;
@@ -354,13 +1380,48 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <div class="logo-area" id="logoArea">
-        <!-- 로고 이미지가 여기에 표시됩니다 -->
+  <div class="page-main">
+    <div class="container">
+      <div class="card">
+        <div class="logo-area" id="logoArea">
+          <!-- 로고 이미지가 여기에 표시됩니다 -->
+        </div>
+        <div class="grid" id="shortcutsGrid"></div>
+        <div class="pagination" id="pagination"></div>
       </div>
-      <div class="grid" id="shortcutsGrid"></div>
-      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+
+  <div class="user-dock-wrap" aria-label="유저 독">
+    <div class="user-dock" id="userDock">
+      <div class="user-dock-track" id="userDockTrack">
+        <div id="userDockItems" style="display:contents;"></div>
+      </div>
+      <button type="button" class="user-dock-add" id="userDockAddBtn" title="유저 추가">+</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="userModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="userModalTitle">유저 추가</h2>
+        <button type="button" class="delete-btn" id="userDeleteBtn" style="display: none;">삭제</button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userEditIndex" value="-1">
+        <div class="form-group">
+          <label for="userName" id="userNameLabel">이름</label>
+          <input type="text" id="userName" placeholder="예: Alex" required>
+        </div>
+        <div class="form-group" id="userImgGroup">
+          <label for="userImg">프로필 이미지 URL</label>
+          <input type="url" id="userImg" placeholder="https://example.com/avatar.jpg">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="userCancelBtn">취소</button>
+          <button type="submit" class="btn-save" id="userModalSaveBtn">저장</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -402,61 +1463,800 @@
   </button>
 
   <div class="modal-overlay settings-modal" id="settingsOverlay">
-    <div class="modal">
-      <h2>설정</h2>
-      <div class="form-group">
+    <div class="modal settings-modal-panel">
+      <h2 class="sm-stack sm-order-title" id="settingsTitle">설정</h2>
+      <button type="button" class="settings-modal-back sm-stack sm-order-back" id="settingsBackBtn" style="display:none">
+        <span class="settings-back-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </span>
+        <span>뒤로</span>
+      </button>
+      <div class="space-sub-hero sm-stack sm-order-hero" id="spaceSubHero" style="display:none" aria-hidden="true">
+        <div class="space-sub-hero-icon" id="spaceSubHeroIcon"></div>
+        <div class="space-sub-hero-title" id="spaceSubHeroTitle"></div>
+      </div>
+      <div class="inline-row settings-row-split sm-stack sm-order-invite" id="orgInviteActionsRow">
+        <button type="button" class="btn-mini" id="generateInviteBtn">초대 코드 생성(1시간)</button>
+        <button type="button" class="btn-mini" id="copyInviteUrlBtn">초대 URL 복사</button>
+      </div>
+      <div class="form-group sm-stack sm-order-nameedit" id="spaceOrgNameGroup" style="display:none">
+        <label for="spaceOrgNameInput">조직 이름</label>
+        <input type="text" id="spaceOrgNameInput" placeholder="조직 이름">
+      </div>
+      <div class="form-group sm-stack sm-order-nameedit" id="personalSpaceProfileGroup" style="display:none">
+        <label for="personalSpaceAvatarUrl">프로필 이미지 URL</label>
+        <input type="url" id="personalSpaceAvatarUrl" placeholder="https://...">
+        <input type="file" id="personalSpaceAvatarFile" class="fancy-file-input" accept="image/*" style="margin-top:8px;">
+        <div class="config-hint">100KB 이하 이미지 권장</div>
+        <label for="personalSpaceDisplayName" style="margin-top:12px;">이름</label>
+        <input type="text" id="personalSpaceDisplayName" placeholder="표시 이름">
+        <div class="muted-text" id="personalSpaceEmailHint" style="margin-top:8px;"></div>
+      </div>
+      <div class="form-group sm-stack sm-order-invite-email" id="spaceInviteEmailGroup" style="display:none">
+        <label for="spaceInviteEmailInput">초대 받을 이메일</label>
+        <div class="inline-row">
+          <input type="email" id="spaceInviteEmailInput" placeholder="friend@example.com" style="flex:1 1 220px;">
+          <button type="button" class="btn-mini" id="spaceInviteSendBtn" title="초대 보내기" aria-label="초대 보내기">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+        <div class="config-hint">기본 메일 앱으로 초대 링크가 담긴 메일 작성 화면이 열립니다.</div>
+      </div>
+      <div class="settings-section sm-stack sm-order-account" id="accountSettingsSection">
+        <h3>계정 / 인증</h3>
+        <div class="profile-card" id="profileCard">
+          <img class="profile-avatar" id="profileAvatar" src="" alt="프로필 이미지">
+          <div class="profile-meta">
+            <div class="profile-name-row">
+              <div class="profile-name-text" id="profileNameText"></div>
+              <button type="button" id="profileNameEditBtn" class="btn-profile-edit" title="이름 편집">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+            <div class="profile-name-edit-row" id="profileNameEditRow">
+              <input type="text" id="profileNameInput" class="profile-name-input" placeholder="이름">
+              <button type="button" id="profileNameSaveBtn" class="btn-profile-save">저장</button>
+            </div>
+            <div class="profile-email" id="profileEmailText"></div>
+          </div>
+        </div>
+        <div class="form-group" id="emailAuthGroup">
+          <label for="loginEmailInput">이메일</label>
+          <div class="inline-row">
+            <input type="email" id="loginEmailInput" placeholder="you@example.com" style="flex:1 1 220px;">
+          </div>
+        </div>
+        <div class="form-group" id="passwordAuthGroup">
+          <label for="loginPasswordInput">비밀번호</label>
+          <div class="inline-row">
+            <input type="password" id="loginPasswordInput" placeholder="비밀번호" style="flex:1 1 220px;">
+            <button type="button" class="btn-mini" id="emailPasswordLoginBtn">로그인</button>
+            <button type="button" class="btn-mini" id="emailSignupBtn">회원가입</button>
+          </div>
+        </div>
+        <div class="inline-row" id="oauthAuthRow">
+          <button type="button" class="btn-mini" id="googleLoginBtn">Google 로그인</button>
+          <button type="button" class="btn-logout-wide" id="logoutBtn">로그아웃</button>
+        </div>
+        <div class="muted-text" id="authStatusText">로그인 안됨 (로컬 저장 모드)</div>
+        <div class="error-text" id="authErrorText" style="display:none;"></div>
+        <pre class="error-text" id="debugStatusText" style="display:none;white-space:pre-wrap;max-height:220px;overflow:auto;margin-top:8px;"></pre>
+      </div>
+
+      <div class="settings-section sm-stack sm-order-org" id="orgSettingsSection">
+        <h3>조직</h3>
+        <div class="form-group org-workspace-form-wrap">
+          <label for="orgWorkspaceGrid">작업 영역 (드래그로 우선순위 변경)</label>
+          <div id="orgWorkspaceGrid" class="org-workspace-grid"></div>
+        </div>
+        <div class="settings-divider"></div>
+        <div class="form-group">
+          <label for="joinCodeInput">조직 가입 코드</label>
+          <div class="inline-row">
+            <input type="text" id="joinCodeInput" placeholder="INVITE-XXXX" style="flex:1 1 220px;">
+            <button type="button" class="btn-mini" id="joinOrgBtn" title="가입">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/><path d="M20 4v16"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="muted-text" id="orgStatusText">조직 모드 아님</div>
+      </div>
+
+      <div class="form-group sm-stack sm-order-bg">
         <label for="bgUrl">배경화면 URL</label>
         <input type="url" id="bgUrl" placeholder="https://example.com/background.jpg">
+        <input type="file" id="bgUploadInput" class="fancy-file-input" accept="image/*" style="margin-top:8px;">
+        <div class="config-hint">이미지 업로드: 100KB 이하</div>
       </div>
-      <div class="form-group">
+      <div class="form-group sm-stack sm-order-logo">
         <label for="logoUrl">로고 이미지 URL</label>
         <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+        <input type="file" id="logoUploadInput" class="fancy-file-input" accept="image/*" style="margin-top:8px;">
+        <div class="config-hint">이미지 업로드: 100KB 이하</div>
       </div>
-      <div class="form-group">
+      <div class="form-group sm-stack sm-order-privacy">
+        <label class="privacy-toggle">
+          <input type="checkbox" id="pagePrivateCheckbox">
+          내 페이지 비공개 (조직 구성원에게 숨김)
+        </label>
+      </div>
+      <div class="form-group sm-stack sm-order-bulk">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <label for="bulkConfig" style="margin-bottom: 0;">일괄 설정 (코드 붙여넣기)</label>
+          <label for="bulkConfig" style="margin-bottom: 0;">현재 페이지 일괄 설정 코드</label>
           <button type="button" class="btn-copy-export" id="copyExportBtn">일괄 추출 복사</button>
         </div>
         <textarea id="bulkConfig" placeholder="background = [ {url: 'https://...', logo: 'https://...'} ]&#10;items = [ {name: 'ChatGPT', url: 'https://...', img: 'https://...', color: '#10a37f'}, ... ]"></textarea>
-        <div class="config-hint">background = [ {url, logo} ] / items = [ {name, url, img, color}, ... ] 형식</div>
+        <div class="config-hint">코드를 붙여넣어 페이지 설정을 한 번에 적용합니다.</div>
       </div>
-      <div class="modal-actions">
+      <div class="modal-actions sm-stack sm-order-actions">
         <button type="button" class="btn-cancel" id="settingsCancelBtn">취소</button>
         <button type="button" class="btn-save" id="settingsApplyBtn">적용</button>
       </div>
     </div>
   </div>
 
+  <div class="modal-overlay" id="inviteAcceptOverlay">
+    <div class="invite-overlay-card">
+      <img id="inviteOrgLogo" src="" alt="조직 로고" style="display:none;">
+      <h2 style="font-size:1.1rem;margin-bottom:8px;">조직 초대</h2>
+      <p id="inviteAcceptText" style="margin-bottom:14px;color:#444;">조직에 가입할까요?</p>
+      <div class="inline-row" style="justify-content:center;">
+        <button type="button" class="btn-cancel" id="inviteDeclineBtn">취소</button>
+        <button type="button" class="btn-save" id="inviteAcceptBtn">수락</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="createOrgOverlay">
+    <div class="modal">
+      <h2>조직 생성</h2>
+      <div class="form-group">
+        <label for="orgNameInput">새 조직 이름</label>
+        <input type="text" id="orgNameInput" placeholder="예: Birzont Team">
+      </div>
+      <div class="form-group">
+        <label for="orgIconUrlInput">조직 아이콘 URL</label>
+        <input type="url" id="orgIconUrlInput" placeholder="조직 아이콘 URL (정사각형 권장)">
+        <input type="file" id="orgIconUploadInput" class="fancy-file-input" accept="image/*" style="margin-top:8px;">
+        <div class="config-hint">조직 아이콘: 정사각형 이미지 권장, 100KB 이하</div>
+      </div>
+      <div class="form-group">
+        <label for="orgBgUrlInput">조직 배경 URL</label>
+        <input type="url" id="orgBgUrlInput" placeholder="예: https://.../background.jpg">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="createOrgCancelBtn">취소</button>
+        <button type="button" class="btn-save" id="createOrgBtn">생성</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const ITEMS_PER_PAGE = 18;
+    // Supabase auth lock 경합은 비치명으로 처리
+    window.addEventListener('unhandledrejection', (e) => {
+      const reasonMsg = e.reason && e.reason.message ? e.reason.message : String(e.reason || '');
+      if (reasonMsg.includes('auth-token') && reasonMsg.toLowerCase().includes('lock')) {
+        console.warn('[shortcut-lock-warning]', reasonMsg);
+        e.preventDefault();
+      }
+    });
+
+    const MAX_SHORTCUT_PAGES = 3;
+    const GRID_ROWS = 2;
+
+    function getGridCols() {
+      return window.innerWidth <= 600 ? 4 : 6;
+    }
+
+    /** 그리드 한 페이지 칸 수 (열×2행). 추가 버튼이 1칸 차지 → 바로가기는 (칸−1)개/페이지 */
+    function getCellsPerPage() {
+      return getGridCols() * GRID_ROWS;
+    }
+
+    function getShortcutsPerPage() {
+      return Math.max(1, getCellsPerPage() - 1);
+    }
+
+    function getShortcutsMaxCount() {
+      return getShortcutsPerPage() * MAX_SHORTCUT_PAGES;
+    }
+
+    function enforceShortcutCapacity() {
+      const cap = getShortcutsMaxCount();
+      if (shortcuts.length > cap) {
+        shortcuts = shortcuts.slice(0, cap);
+        localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+      }
+    }
+
+    function getTotalShortcutPages() {
+      const spp = getShortcutsPerPage();
+      if (shortcuts.length === 0) return 1;
+      const raw = Math.ceil(shortcuts.length / spp);
+      return Math.min(MAX_SHORTCUT_PAGES, Math.max(1, raw));
+    }
+
+    function isLoggedIn() {
+      return Boolean(currentUser && currentUser.id);
+    }
+
+    function isOrgScope() {
+      return activeScope.type === 'organization' && !!activeScope.orgId;
+    }
+
+    function getCurrentWorkspaceKey() {
+      return isOrgScope() ? `org:${activeScope.orgId}` : 'personal';
+    }
+
+    function isLeaderWorkspace() {
+      if (!isLoggedIn()) return true;
+      const leader = (workspaceOrder && workspaceOrder[0]) || 'personal';
+      return getCurrentWorkspaceKey() === leader;
+    }
+
+    function isOrgOwner() {
+      if (!isOrgScope() || !isLoggedIn() || !activeOrg) return false;
+      return activeOrg.owner_id === currentUser.id;
+    }
+
+    function canEditCurrentPage() {
+      if (!isOrgScope()) return true;
+      if (!isLoggedIn()) return false;
+      if (isOrgOwner()) return true;
+      return activeScope.pageOwnerId === currentUser.id;
+    }
+
+    function canEditLogo() {
+      if (!isOrgScope()) return true;
+      return isOrgOwner();
+    }
+
+    /** 로그인 후 일반 설정(메인) 패널에서는 로고 입력을 숨김 — 스페이스 설정 등에서만 표시 */
+    function shouldShowLogoUrlInSettingsPanel() {
+      if (isLoggedIn() && settingsModalMode === 'main') return false;
+      return canEditLogo();
+    }
+
+    function canSeeDock() {
+      return isLoggedIn() && isOrgScope();
+    }
+
+    function canCreateInviteCode() {
+      return isOrgScope() && isOrgOwner();
+    }
+
+    function isOwnerOfOrg(org) {
+      return !!(org && currentUser && org.owner_id === currentUser.id);
+    }
+
+    function canCreateInviteCodeForOrg(org) {
+      return !!(supabaseClient && isOwnerOfOrg(org));
+    }
+
+    function getInviteTargetOrg() {
+      if (settingsModalMode !== 'main' && spaceModalContextOrg) return spaceModalContextOrg;
+      return activeOrg;
+    }
+
+    function getOrgMemberIds(org) {
+      if (!org) return [];
+      const raw = org.member_user_ids;
+      if (Array.isArray(raw)) return raw.filter((v) => typeof v === 'string' && v);
+      if (raw && typeof raw === 'object') {
+        return Object.keys(raw).filter(Boolean);
+      }
+      return [];
+    }
+
+    function getOrgAliasMap(org) {
+      const map = {};
+      if (!org) return map;
+      if (org.member_aliases && typeof org.member_aliases === 'object' && !Array.isArray(org.member_aliases)) {
+        Object.entries(org.member_aliases).forEach(([uid, alias]) => {
+          if (!uid || typeof uid !== 'string') return;
+          if (typeof alias !== 'string') return;
+          const t = alias.trim();
+          if (t) map[uid] = t;
+        });
+      }
+      // Legacy fallback: member_user_ids가 객체 형태로 저장된 경우도 읽어서 별칭으로 해석
+      if (org.member_user_ids && !Array.isArray(org.member_user_ids) && typeof org.member_user_ids === 'object') {
+        Object.entries(org.member_user_ids).forEach(([uid, alias]) => {
+          if (!uid || typeof uid !== 'string') return;
+          if (typeof alias !== 'string') return;
+          const t = alias.trim();
+          if (t && !map[uid]) map[uid] = t;
+        });
+      }
+      return map;
+    }
+
+    function setOrgAliasLocal(orgId, userId, alias) {
+      if (!orgId || !userId) return;
+      const t = typeof alias === 'string' ? alias.trim() : '';
+      const apply = (org) => {
+        if (!org || org.id !== orgId) return;
+        const next = { ...(getOrgAliasMap(org)) };
+        if (t) next[userId] = t;
+        else delete next[userId];
+        org.member_aliases = next;
+      };
+      orgList.forEach(apply);
+      apply(activeOrg);
+      apply(spaceModalContextOrg);
+    }
+
+    function canEditLogoInUpload() {
+      if (isLoggedIn() && settingsModalMode === 'main') return false;
+      if (settingsModalMode === 'personal-settings' && isLoggedIn()) return true;
+      if (settingsModalMode === 'space-settings' && spaceModalContextOrg && isOwnerOfOrg(spaceModalContextOrg)) return true;
+      return canEditLogo();
+    }
+
+    function isOrgLeaderWorkspace(org) {
+      if (!org || !workspaceOrder || !workspaceOrder.length) return false;
+      return workspaceOrder[0] === `org:${org.id}`;
+    }
+
+    function isPersonalLeaderWorkspace() {
+      return !!(workspaceOrder && workspaceOrder.length && workspaceOrder[0] === 'personal');
+    }
+
+    async function setPersonalAsDefaultStartPage() {
+      const key = 'personal';
+      const arr = [...(workspaceOrder || [])];
+      const i = arr.indexOf(key);
+      if (i >= 0) arr.splice(i, 1);
+      arr.unshift(key);
+      workspaceOrder = arr;
+      normalizeWorkspaceOrder();
+      syncOrgListFromWorkspaceOrder();
+      orgRankingMap = {};
+      orgList.forEach((orgItem, orderIdx) => { orgRankingMap[orgItem.id] = orderIdx + 1; });
+      await syncLeaderLocalCacheFromServer();
+      await saveOrganizationRanking();
+      await switchScopeToPersonal();
+      refreshOrgSwitchSelect();
+      notify('시작 페이지로 설정했습니다.');
+    }
+
+    function resetOrgCardDropdownPosition(dropdown) {
+      if (!dropdown) return;
+      dropdown.classList.remove('org-card-dropdown--fixed');
+      dropdown.style.left = '';
+      dropdown.style.top = '';
+      dropdown.style.right = '';
+      dropdown.style.minWidth = '';
+      dropdown.style.width = '';
+      dropdown.style.zIndex = '';
+    }
+
+    function positionOrgCardDropdown(menuWrap, dropdown) {
+      if (!menuWrap || !dropdown) return;
+      dropdown.classList.add('org-card-dropdown--fixed');
+      const rect = menuWrap.getBoundingClientRect();
+      const pad = 8;
+      const minW = Math.max(188, Math.ceil(rect.width));
+      dropdown.style.minWidth = minW + 'px';
+      dropdown.style.display = 'block';
+      const dw = dropdown.getBoundingClientRect().width;
+      let left = rect.right - dw;
+      const vw = window.innerWidth;
+      left = Math.min(vw - pad - dw, Math.max(pad, left));
+      dropdown.style.left = `${left}px`;
+      dropdown.style.top = `${rect.bottom + 4}px`;
+      dropdown.style.right = 'auto';
+      dropdown.style.zIndex = '100003';
+    }
+
+    function repositionOpenOrgCardDropdown() {
+      if (!orgCardOpenDropdown || orgCardOpenDropdown.style.display === 'none') return;
+      const menuWrap = orgCardOpenDropdown.closest('.org-card-menu-wrap');
+      if (menuWrap) positionOrgCardDropdown(menuWrap, orgCardOpenDropdown);
+    }
+
+    function ensureOrgDropdownRepositionListeners() {
+      if (orgDropdownRepositionBound) return;
+      orgDropdownRepositionBound = true;
+      window.addEventListener('scroll', repositionOpenOrgCardDropdown, true);
+      window.addEventListener('resize', repositionOpenOrgCardDropdown);
+      const modal = document.querySelector('#settingsOverlay .modal.settings-modal-panel');
+      if (modal) modal.addEventListener('scroll', repositionOpenOrgCardDropdown, true);
+    }
+
+    async function setOrgAsDefaultStartPage(org) {
+      if (!org || !isOwnerOfOrg(org)) return;
+      const key = `org:${org.id}`;
+      const arr = [...(workspaceOrder || [])];
+      const i = arr.indexOf(key);
+      if (i >= 0) arr.splice(i, 1);
+      arr.unshift(key);
+      workspaceOrder = arr;
+      normalizeWorkspaceOrder();
+      syncOrgListFromWorkspaceOrder();
+      orgRankingMap = {};
+      orgList.forEach((orgItem, orderIdx) => { orgRankingMap[orgItem.id] = orderIdx + 1; });
+      await syncLeaderLocalCacheFromServer();
+      await saveOrganizationRanking();
+      await switchScopeToOrg(org.id);
+      refreshOrgSwitchSelect();
+      notify('시작 페이지로 설정했습니다.');
+    }
+
+    function getSupabaseConfig() {
+      const parsed = safeJsonParse(localStorage.getItem('shortcut_supabase_config'), {});
+      const hardcoded = {
+        url: 'https://fanlqfaphmayjxaavjrh.supabase.co',
+        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhbmxxZmFwaG1heWp4YWF2anJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5NzMzMjgsImV4cCI6MjA2MjU0OTMyOH0.uF25iL8b445XNLRITVhn6Iqf6J8u9KRDI0XTg5djuPE'
+      };
+      return {
+        url: hardcoded.url || parsed.url || '',
+        anonKey: hardcoded.anonKey || parsed.anonKey || ''
+      };
+    }
+
+    function saveSupabaseConfig(url, anonKey) {
+      localStorage.setItem('shortcut_supabase_config', JSON.stringify({ url, anonKey }));
+    }
+
+    function notify(msg) {
+      alert(msg);
+    }
+
+    function showRuntimeError(message, payload) {
+      const box = document.getElementById('authErrorText');
+      if (!box) return;
+      const lines = [`[오류] ${message || 'unknown error'}`];
+      if (payload) {
+        try {
+          lines.push(typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2));
+        } catch (e) {
+          lines.push(String(payload));
+        }
+      }
+      box.textContent = lines.join('\n');
+      box.style.display = 'block';
+    }
+
+    function clearRuntimeError() {
+      const box = document.getElementById('authErrorText');
+      if (!box) return;
+      box.textContent = '';
+      box.style.display = 'none';
+    }
+
+    function isLockError(err) {
+      const msg = err && err.message ? err.message : String(err || '');
+      return msg.includes('auth-token') && msg.toLowerCase().includes('lock');
+    }
+
+    async function withLockRetry(task, maxRetries = 3, delayMs = 120) {
+      let lastErr = null;
+      for (let i = 0; i < maxRetries; i += 1) {
+        try {
+          return await task();
+        } catch (e) {
+          if (!isLockError(e)) throw e;
+          lastErr = e;
+          await new Promise((r) => setTimeout(r, delayMs * (i + 1)));
+        }
+      }
+      throw lastErr || new Error('auth lock retry failed');
+    }
+
+    async function withTimeout(promise, ms, label) {
+      let timer = null;
+      try {
+        return await Promise.race([
+          promise,
+          new Promise((_, reject) => {
+            timer = setTimeout(() => reject(new Error(`${label || 'async-op'} timeout`)), ms);
+          })
+        ]);
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
+    }
+
+    function generateInviteCode() {
+      return 'INVITE-' + Math.random().toString(36).slice(2, 10).toUpperCase();
+    }
+
+    async function inPageAuthLock(...args) {
+      // Supabase auth lock 경합(Web Locks API) 회피용 단일 페이지 락
+      const fn = args[args.length - 1];
+      if (typeof fn !== 'function') return null;
+      const run = authLockQueue.then(() => fn());
+      authLockQueue = run.catch(() => undefined);
+      return run;
+    }
+
+    async function initSupabaseIfPossible() {
+      const cfg = getSupabaseConfig();
+      if (!cfg.url || !cfg.anonKey || !window.supabase || !window.supabase.createClient) {
+        supabaseClient = null;
+        return;
+      }
+      supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+          storage: window.localStorage,
+          multiTab: false
+        }
+      });
+    }
+
+    function getInviteCodeFromUrl() {
+      const q = new URLSearchParams(location.search);
+      return q.get('invite') || '';
+    }
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve(fr.result);
+        fr.onerror = reject;
+        fr.readAsDataURL(file);
+      });
+    }
+
+    function safeJsonParse(raw, fallback) {
+      if (!raw || typeof raw !== 'string') return fallback;
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    /** Supabase 세션이 로컬에 있으면 곧 서버 스코프 테마가 올 것이므로, generic theme 키로 배경을 한 번 깔지 않는다 */
+    function hasSupabaseSessionInStorage() {
+      try {
+        for (let i = 0; i < localStorage.length; i += 1) {
+          const k = localStorage.key(i);
+          if (!k || !k.startsWith('sb-')) continue;
+          if (!k.includes('auth')) continue;
+          const p = safeJsonParse(localStorage.getItem(k), null);
+          if (p?.user?.id || p?.session?.user?.id) return true;
+        }
+      } catch (e) { /* ignore */ }
+      return false;
+    }
+
     const DEFAULT_SHORTCUTS = [
       { name: 'Google', url: 'https://google.com', img: '', color: '#4285f4' }
     ];
 
     let shortcuts = [];
+    let dockUsers = [];
+    let userProfileCache = {};
+    let wasDockVisible = false;
+    let currentUserProfile = { username: '', avatar_url: '' };
+    let isProfileNameEditing = false;
     let currentPage = 0;
     let bgUrl = '';
     let logoUrl = '';
+    let isPagePrivate = false;
+    let supabaseClient = null;
+    let currentUser = null;
+    let activeScope = (function restoreActiveScope() {
+      const s = safeJsonParse(localStorage.getItem('shortcut_active_scope'), null);
+      if (s && (s.type === 'personal' || s.type === 'organization' || s.type === 'local')) {
+        return { type: s.type, orgId: s.orgId || null, pageOwnerId: null };
+      }
+      return { type: 'local', orgId: null, pageOwnerId: null };
+    })();
+    // 최초/손상 상태에서도 scope 키는 항상 남겨서 새로고침 시 동작을 고정
+    if (!safeJsonParse(localStorage.getItem('shortcut_active_scope'), null)) {
+      localStorage.setItem('shortcut_active_scope', JSON.stringify({
+        type: activeScope.type,
+        orgId: activeScope.orgId || null
+      }));
+    }
+    let orgList = [];
+    let activeOrg = null;
+    let orgDragSrcIndex = null;
+    let orgCardOpenDropdown = null;
+    let orgDropdownRepositionBound = false;
+    let settingsModalMode = 'main';
+    let spaceModalContextOrg = null;
+    let userModalMode = 'profile';
+    let userAliasTargetOrgId = null;
+    let userAliasTargetUserId = null;
+    let orgRankingMap = {};
+    let personalRanking = null;
+    let workspaceOrder = [];
+    let pendingInviteCode = null;
     let dragSrcIndex = null;
+    let dockDragSrcIndex = null;
+    let resizeTimer = null;
+    let authBootstrapped = false;
+    let refreshAuthPromise = null;
+    let authLockQueue = Promise.resolve();
+    const debugState = {
+      origin: location.origin,
+      scope: null,
+      currentUserId: null,
+      isLoggedIn: false,
+      orgListLength: 0,
+      orgSelectOptions: 0,
+      orgLoadOwnerCount: null,
+      orgLoadMemberCount: null,
+      orgLoadOwnerError: null,
+      orgLoadMemberError: null,
+      shortcutLoadCount: null,
+      shortcutLoadOwnerId: null,
+      shortcutLoadOrgId: null,
+      authPhase: 'boot'
+    };
+    const SHOW_DEBUG = /(?:\?|&)debug=1(?:&|$)/.test(location.search);
+
+    function persistActiveScope() {
+      localStorage.setItem('shortcut_active_scope', JSON.stringify({
+        type: activeScope.type,
+        orgId: activeScope.orgId || null
+      }));
+      setDebugState({ scope: `${activeScope.type}:${activeScope.orgId || 'null'}` });
+    }
+
+    function normalizeWorkspaceOrder() {
+      const allowed = new Set(['personal', ...orgList.map((o) => `org:${o.id}`)]);
+      const next = (workspaceOrder || []).filter((k) => allowed.has(k));
+      if (!next.includes('personal')) next.unshift('personal');
+      orgList.forEach((o) => {
+        const key = `org:${o.id}`;
+        if (!next.includes(key)) next.push(key);
+      });
+      workspaceOrder = next;
+      localStorage.setItem('shortcut_workspace_order', JSON.stringify(workspaceOrder));
+      const uid = currentUser && currentUser.id;
+      if (uid) {
+        localStorage.setItem('shortcut_workspace_order_user_id', uid);
+        if (workspaceOrder[0]) {
+          localStorage.setItem('shortcut_workspace_leader', workspaceOrder[0]);
+          localStorage.setItem('shortcut_workspace_leader_user_id', uid);
+        }
+      }
+    }
+
+    function syncOrgListFromWorkspaceOrder() {
+      const pos = {};
+      workspaceOrder.forEach((k, i) => { pos[k] = i; });
+      orgList.sort((a, b) => {
+        const pa = Number.isFinite(pos[`org:${a.id}`]) ? pos[`org:${a.id}`] : 9999;
+        const pb = Number.isFinite(pos[`org:${b.id}`]) ? pos[`org:${b.id}`] : 9999;
+        return pa - pb;
+      });
+    }
+
+    function setDebugState(partial) {
+      Object.assign(debugState, partial || {});
+      renderDebugState();
+    }
+
+    function renderDebugState() {
+      const box = document.getElementById('debugStatusText');
+      if (!box) return;
+      if (!SHOW_DEBUG) {
+        box.style.display = 'none';
+        return;
+      }
+      box.style.display = 'block';
+      const scopeRaw = safeJsonParse(localStorage.getItem('shortcut_active_scope'), null);
+      box.textContent = [
+        '[debug]',
+        `origin=${debugState.origin}`,
+        `authPhase=${debugState.authPhase}`,
+        `currentUserId=${debugState.currentUserId || 'null'}`,
+        `isLoggedIn=${String(debugState.isLoggedIn)}`,
+        `activeScope=${debugState.scope || 'null'}`,
+        `localStorage.scope=${scopeRaw ? JSON.stringify(scopeRaw) : 'null'}`,
+        `orgListLength=${debugState.orgListLength}`,
+        `orgSelectOptions=${debugState.orgSelectOptions}`,
+        `orgLoad.ownerCount=${debugState.orgLoadOwnerCount === null ? 'null' : debugState.orgLoadOwnerCount}`,
+        `orgLoad.memberCount=${debugState.orgLoadMemberCount === null ? 'null' : debugState.orgLoadMemberCount}`,
+        `orgLoad.ownerError=${debugState.orgLoadOwnerError || 'null'}`,
+        `orgLoad.memberError=${debugState.orgLoadMemberError || 'null'}`,
+        `shortcutLoad.count=${debugState.shortcutLoadCount === null ? 'null' : debugState.shortcutLoadCount}`,
+        `shortcutLoad.ownerId=${debugState.shortcutLoadOwnerId || 'null'}`,
+        `shortcutLoad.orgId=${debugState.shortcutLoadOrgId || 'null'}`
+      ].join('\n');
+    }
 
     function loadShortcuts() {
-      const saved = localStorage.getItem('shortcuts');
-      shortcuts = saved ? JSON.parse(saved) : [...DEFAULT_SHORTCUTS];
+      const parsed = safeJsonParse(localStorage.getItem('shortcuts'), null);
+      shortcuts = Array.isArray(parsed) ? parsed : [...DEFAULT_SHORTCUTS];
+      enforceShortcutCapacity();
+    }
+
+    function loadDockUsers() {
+      const parsed = safeJsonParse(localStorage.getItem('dockUsers'), []);
+      dockUsers = Array.isArray(parsed) ? parsed : [];
+    }
+
+    function saveDockUsers() {
+      localStorage.setItem('dockUsers', JSON.stringify(dockUsers));
+      renderDock();
+    }
+
+    function clampShortcutPage() {
+      enforceShortcutCapacity();
+      const totalPages = getTotalShortcutPages();
+      if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
     }
 
     function loadTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        const theme = JSON.parse(saved);
-        bgUrl = theme.bgUrl || '';
-        logoUrl = theme.logoUrl || '';
-      }
+      const theme = safeJsonParse(localStorage.getItem('theme'), {});
+      bgUrl = theme.bgUrl || localStorage.getItem('shortcut_cached_bg_url') || '';
+      logoUrl = theme.logoUrl || localStorage.getItem('shortcut_cached_logo_url') || '';
+      isPagePrivate = Boolean(theme.isPagePrivate);
       applyTheme();
     }
 
     function saveTheme() {
-      localStorage.setItem('theme', JSON.stringify({ bgUrl, logoUrl }));
+      if (!isLoggedIn() || isLeaderWorkspace()) {
+        localStorage.setItem('theme', JSON.stringify({ bgUrl, logoUrl, isPagePrivate }));
+      }
       applyTheme();
+      void saveShortcutDocToSupabase();
+    }
+
+    function persistLeaderLocalCacheFromState() {
+      localStorage.setItem('shortcuts', JSON.stringify(Array.isArray(shortcuts) ? shortcuts : []));
+      localStorage.setItem('theme', JSON.stringify({ bgUrl, logoUrl, isPagePrivate: Boolean(isPagePrivate) }));
+      localStorage.setItem('shortcut_cached_bg_url', bgUrl || '');
+      localStorage.setItem('shortcut_cached_logo_url', logoUrl || '');
+      if (currentUser && currentUser.id) {
+        localStorage.setItem('shortcut_leader_cache_user_id', currentUser.id);
+        localStorage.setItem('shortcut_leader_cache_workspace', (workspaceOrder && workspaceOrder[0]) || 'personal');
+      }
+    }
+
+    async function syncLeaderLocalCacheFromServer() {
+      if (!supabaseClient || !isLoggedIn()) return false;
+      normalizeWorkspaceOrder();
+      const leaderKey = (workspaceOrder && workspaceOrder[0]) || 'personal';
+      if (leaderKey === getCurrentWorkspaceKey()) {
+        persistLeaderLocalCacheFromState();
+        return true;
+      }
+      const orgId = leaderKey.startsWith('org:') ? leaderKey.slice(4) : null;
+      try {
+        let q = supabaseClient
+          .from('shortcut_shortcuts')
+          .select('shortcuts_json, bg_url, logo_url, is_private')
+          .eq('page_owner_user_id', currentUser.id)
+          .order('updated_at', { ascending: false })
+          .limit(1);
+        q = orgId ? q.eq('organization_id', orgId) : q.is('organization_id', null);
+        const { data, error } = await withTimeout(
+          withLockRetry(async () => q),
+          1200,
+          'leader.cache.select'
+        );
+        if (error) {
+          if (!isLockError(error)) console.warn('[leader/cache-sync]', error);
+          return false;
+        }
+        const row = (data && data[0]) ? data[0] : null;
+        localStorage.setItem('shortcuts', JSON.stringify(Array.isArray(row?.shortcuts_json) ? row.shortcuts_json : [...DEFAULT_SHORTCUTS]));
+        localStorage.setItem('theme', JSON.stringify({
+          bgUrl: row?.bg_url || '',
+          logoUrl: row?.logo_url || '',
+          isPagePrivate: Boolean(row?.is_private)
+        }));
+        localStorage.setItem('shortcut_cached_bg_url', row?.bg_url || '');
+        localStorage.setItem('shortcut_cached_logo_url', row?.logo_url || '');
+        localStorage.setItem('shortcut_leader_cache_user_id', currentUser.id);
+        localStorage.setItem('shortcut_leader_cache_workspace', leaderKey);
+        return true;
+      } catch (e) {
+        if (!isLockError(e)) console.warn('[leader/cache-sync-ex]', e);
+        return false;
+      }
     }
 
     function applyTheme() {
@@ -471,9 +2271,376 @@
       }
     }
 
+    function parseShortcutDocPayload(raw) {
+      // backward compatibility:
+      // - old: shortcuts_json = [{...}, ...]
+      // - new: shortcuts_json = { background: { url, logo }, items: [{...}, ...] }
+      if (Array.isArray(raw)) {
+        return {
+          items: raw,
+          background: { url: '', logo: '' }
+        };
+      }
+      if (raw && typeof raw === 'object') {
+        const items = Array.isArray(raw.items) ? raw.items : [];
+        const bg = raw.background && typeof raw.background === 'object' ? raw.background : {};
+        return {
+          items,
+          background: {
+            url: bg.url || '',
+            logo: bg.logo || ''
+          }
+        };
+      }
+      return {
+        items: [],
+        background: { url: '', logo: '' }
+      };
+    }
+
+    async function loadOrganizations() {
+      if (!supabaseClient) {
+        orgList = [];
+        activeOrg = null;
+        setDebugState({ orgListLength: 0, authPhase: 'loadOrganizations:no-client' });
+        return;
+      }
+      if (!isLoggedIn()) {
+        await ensureCurrentUser();
+      }
+      if (!isLoggedIn()) {
+        orgList = [];
+        activeOrg = null;
+        setDebugState({
+          currentUserId: null,
+          isLoggedIn: false,
+          orgListLength: 0,
+          authPhase: 'loadOrganizations:not-logged-in'
+        });
+        return;
+      }
+      const uid = currentUser.id;
+      // .or + cs(uuid[]) 조합은 환경에 따라 파싱 이슈가 있어 owner/member 조회를 분리
+      const [ownerRes, memberRes] = await Promise.all([
+        withTimeout(
+          withLockRetry(async () =>
+            supabaseClient
+              .from('shortcut_organizations')
+              .select('*')
+              .eq('owner_id', uid)
+          ),
+          1200,
+          'org.owner.select'
+        ),
+        withTimeout(
+          withLockRetry(async () =>
+            supabaseClient
+              .from('shortcut_organizations')
+              .select('*')
+              .contains('member_user_ids', [uid])
+          ),
+          1200,
+          'org.member.select'
+        )
+      ]);
+      const ownerErr = ownerRes?.error || null;
+      const memberErr = memberRes?.error || null;
+      if (ownerErr && memberErr) {
+        console.warn(ownerErr, memberErr);
+        if (!isLockError(ownerErr) && !isLockError(memberErr)) {
+          showRuntimeError('조직 목록 로딩 실패', ownerErr.message || memberErr.message || 'unknown');
+        }
+        orgList = [];
+      } else {
+        if (ownerErr && !isLockError(ownerErr)) console.warn('[org/load-owner]', ownerErr);
+        if (memberErr && !isLockError(memberErr)) console.warn('[org/load-member]', memberErr);
+        const merged = [...(ownerRes?.data || []), ...(memberRes?.data || [])];
+        const seen = new Set();
+        orgList = merged.filter((o) => {
+          if (!o || !o.id || seen.has(o.id)) return false;
+          seen.add(o.id);
+          return true;
+        }).map((o) => {
+          const normalizedIds = getOrgMemberIds(o);
+          const normalizedAliases = getOrgAliasMap(o);
+          return {
+            ...o,
+            member_user_ids: normalizedIds,
+            member_aliases: normalizedAliases
+          };
+        });
+        await loadOrganizationRanking();
+        const hasDbRanking = Number.isFinite(personalRanking) || orgList.some((o) => Number.isFinite(orgRankingMap[o.id]));
+        const allowedKeys = new Set(['personal', ...orgList.map((o) => `org:${o.id}`)]);
+        const savedOrder = safeJsonParse(localStorage.getItem('shortcut_workspace_order'), []);
+        const orderUid = localStorage.getItem('shortcut_workspace_order_user_id');
+        const localOk = orderUid === uid && Array.isArray(savedOrder) && savedOrder.length > 0
+          && savedOrder.includes('personal')
+          && savedOrder.every((k) => allowedKeys.has(k));
+        if (localOk) {
+          workspaceOrder = savedOrder;
+        } else if (hasDbRanking) {
+          const entries = [{ key: 'personal', rank: Number.isFinite(personalRanking) ? personalRanking : 9999 }];
+          orgList.forEach((o) => {
+            entries.push({ key: `org:${o.id}`, rank: Number.isFinite(orgRankingMap[o.id]) ? orgRankingMap[o.id] : 9999 });
+          });
+          entries.sort((a, b) => a.rank - b.rank);
+          workspaceOrder = entries.map((e) => e.key);
+        } else {
+          workspaceOrder = Array.isArray(savedOrder) ? savedOrder : [];
+          if (!workspaceOrder.length) {
+            workspaceOrder = ['personal', ...orgList.map((o) => `org:${o.id}`)];
+          }
+        }
+        normalizeWorkspaceOrder();
+        syncOrgListFromWorkspaceOrder();
+        await syncLeaderLocalCacheFromServer();
+      }
+      setDebugState({
+        currentUserId: currentUser?.id || null,
+        isLoggedIn: isLoggedIn(),
+        orgListLength: orgList.length,
+        orgLoadOwnerCount: Array.isArray(ownerRes?.data) ? ownerRes.data.length : 0,
+        orgLoadMemberCount: Array.isArray(memberRes?.data) ? memberRes.data.length : 0,
+        orgLoadOwnerError: ownerErr ? (ownerErr.message || String(ownerErr)) : null,
+        orgLoadMemberError: memberErr ? (memberErr.message || String(memberErr)) : null,
+        authPhase: 'loadOrganizations:done'
+      });
+      if (isOrgScope()) {
+        activeOrg = orgList.find((o) => o.id === activeScope.orgId) || null;
+      } else {
+        activeOrg = null;
+      }
+    }
+
+    async function loadOrganizationRanking() {
+      if (!supabaseClient || !isLoggedIn()) {
+        orgRankingMap = {};
+        personalRanking = null;
+        return;
+      }
+      try {
+        const { data, error } = await withTimeout(
+          withLockRetry(async () =>
+            supabaseClient
+              .from('shortcut_shortcuts')
+              .select('organization_id, ranking')
+              .eq('page_owner_user_id', currentUser.id)
+          ),
+          1200,
+          'org.ranking.select'
+        );
+        if (error) {
+          const msg = (error.message || '').toLowerCase();
+          if (!msg.includes('ranking')) console.warn('[org/ranking-load]', error);
+          orgRankingMap = {};
+          return;
+        }
+        const map = {};
+        personalRanking = null;
+        (data || []).forEach((row) => {
+          if (!row) return;
+          const v = Number(row.ranking);
+          if (!Number.isFinite(v) || v <= 0) return;
+          if (row.organization_id) map[row.organization_id] = v;
+          else personalRanking = v;
+        });
+        orgRankingMap = map;
+      } catch (e) {
+        const msg = (e && e.message) ? e.message.toLowerCase() : '';
+        if (!msg.includes('ranking')) console.warn('[org/ranking-load-ex]', e);
+        orgRankingMap = {};
+        personalRanking = null;
+      }
+    }
+
+    async function saveOrganizationRanking() {
+      if (!supabaseClient || !isLoggedIn()) return;
+      normalizeWorkspaceOrder();
+      const rankByOrg = {};
+      let personalRankToSave = null;
+      let nextRank = 1;
+      workspaceOrder.forEach((k) => {
+        if (k === 'personal') {
+          personalRankToSave = nextRank++;
+          return;
+        }
+        if (k.startsWith('org:')) rankByOrg[k.slice(4)] = nextRank++;
+      });
+      const rows = orgList.map((org) => ({
+        organization_id: org.id,
+        page_owner_user_id: currentUser.id,
+        ranking: rankByOrg[org.id] || null,
+        updated_at: new Date().toISOString()
+      }));
+      if (rows.length > 0) {
+        const { error } = await withLockRetry(async () =>
+          supabaseClient
+            .from('shortcut_shortcuts')
+            .upsert(rows, { onConflict: 'organization_id,page_owner_user_id' })
+        );
+        if (error) {
+          const msg = (error.message || '').toLowerCase();
+          if (msg.includes('ranking')) {
+            showRuntimeError('ranking 컬럼이 없습니다', 'supabase/shortcut_schema.sql 적용 후 다시 시도하세요.');
+            return;
+          }
+          console.warn('[org/ranking-save]', error);
+        }
+      }
+      if (Number.isFinite(personalRankToSave)) {
+        personalRanking = personalRankToSave;
+        const { error: personalErr } = await withLockRetry(async () =>
+          supabaseClient
+            .from('shortcut_shortcuts')
+            .update({ ranking: personalRankToSave, updated_at: new Date().toISOString() })
+            .eq('page_owner_user_id', currentUser.id)
+            .is('organization_id', null)
+        );
+        if (personalErr) {
+          const msg = (personalErr.message || '').toLowerCase();
+          if (!msg.includes('ranking')) console.warn('[personal/ranking-save]', personalErr);
+        }
+      }
+    }
+
+    async function loadShortcutDocFromSupabase() {
+      if (!supabaseClient) return false;
+      if (!isLoggedIn()) {
+        await ensureCurrentUser();
+      }
+      if (!isLoggedIn()) return false;
+      const filterOrg = isOrgScope() ? activeScope.orgId : null;
+      const ownerId = activeScope.pageOwnerId || currentUser.id;
+      setDebugState({
+        shortcutLoadOwnerId: ownerId || null,
+        shortcutLoadOrgId: filterOrg || null
+      });
+      let q = supabaseClient
+        .from('shortcut_shortcuts')
+        .select('*')
+        .eq('page_owner_user_id', ownerId)
+        .order('updated_at', { ascending: false })
+        .limit(1);
+      if (filterOrg) q = q.eq('organization_id', filterOrg);
+      else q = q.is('organization_id', null);
+      const { data, error } = await withLockRetry(async () => q);
+      if (error) {
+        console.warn('[shortcut_shortcuts/select]', error);
+        if (!isLockError(error)) {
+          showRuntimeError('바로가기 데이터 로딩 실패', error);
+        }
+        return false;
+      }
+      setDebugState({ shortcutLoadCount: Array.isArray(data) ? data.length : 0 });
+      if (!data || !data[0]) return false;
+      const row = data[0];
+      const parsedDoc = parseShortcutDocPayload(row.shortcuts_json);
+      shortcuts = parsedDoc.items.length > 0 ? parsedDoc.items : shortcuts;
+      bgUrl = parsedDoc.background.url || row.bg_url || '';
+      isPagePrivate = Boolean(row.is_private);
+      if (isOrgScope() && activeOrg) {
+        // 조직 스코프에서는 "누구의 페이지든" 로고를 조직 로고로 강제한다.
+        logoUrl = activeOrg.logo_url || '';
+      } else if (canEditLogo()) {
+        logoUrl = parsedDoc.background.logo || row.logo_url || '';
+      }
+      if (isOrgScope() && activeOrg && !bgUrl) {
+        // 조직 공용 배경은 개인 배경/row 배경이 없을 때만 fallback
+        if (activeOrg.bg_url) bgUrl = activeOrg.bg_url;
+      }
+      applyTheme();
+      if (isLoggedIn() && isLeaderWorkspace()) {
+        persistLeaderLocalCacheFromState();
+      }
+      return true;
+    }
+
+    async function saveShortcutDocToSupabase() {
+      if (!supabaseClient) return;
+      if (!isLoggedIn()) {
+        await ensureCurrentUser();
+      }
+      if (!isLoggedIn()) return;
+      const ownerId = activeScope.pageOwnerId || currentUser.id;
+      const orgId = isOrgScope() ? activeScope.orgId : null;
+      const payload = {
+        organization_id: orgId,
+        page_owner_user_id: ownerId,
+        shortcuts_json: {
+          background: {
+            url: bgUrl || '',
+            logo: logoUrl || ''
+          },
+          items: shortcuts
+        },
+        bg_url: bgUrl || null,
+        logo_url: canEditLogo() ? (logoUrl || null) : null,
+        is_private: Boolean(isPagePrivate),
+        updated_at: new Date().toISOString()
+      };
+      let query = supabaseClient
+        .from('shortcut_shortcuts')
+        .select('id')
+        .eq('page_owner_user_id', ownerId)
+        .order('updated_at', { ascending: false })
+        .limit(20);
+      query = orgId ? query.eq('organization_id', orgId) : query.is('organization_id', null);
+      const { data, error } = await withLockRetry(async () => query);
+      if (error) {
+        console.warn('[shortcut_shortcuts/upsert-select]', error);
+        if (!isLockError(error)) {
+          showRuntimeError('저장 전 조회 실패', error);
+        }
+        return;
+      }
+      if (data && data[0]) {
+        const { error: upErr } = await withLockRetry(async () =>
+          supabaseClient.from('shortcut_shortcuts').update(payload).eq('id', data[0].id)
+        );
+        if (upErr) {
+          console.warn('[shortcut_shortcuts/update]', upErr);
+          if (!isLockError(upErr)) {
+            showRuntimeError('바로가기 업데이트 실패', upErr);
+          }
+        }
+        // 개인 페이지는 NULL unique 제약 한계로 중복 row가 생길 수 있어 정리
+        if (!orgId && data.length > 1) {
+          const duplicateIds = data.slice(1).map((r) => r.id).filter(Boolean);
+          if (duplicateIds.length > 0) {
+            const { error: delErr } = await withLockRetry(async () =>
+              supabaseClient
+                .from('shortcut_shortcuts')
+                .delete()
+                .in('id', duplicateIds)
+                .eq('page_owner_user_id', ownerId)
+                .is('organization_id', null)
+            );
+            if (delErr && !isLockError(delErr)) {
+              console.warn('[shortcut_shortcuts/post-save-dedupe-delete]', delErr);
+            }
+          }
+        }
+      } else {
+        const { error: insErr } = await withLockRetry(async () =>
+          supabaseClient.from('shortcut_shortcuts').insert(payload)
+        );
+        if (insErr) {
+          console.warn('[shortcut_shortcuts/insert]', insErr);
+          if (!isLockError(insErr)) {
+            showRuntimeError('바로가기 저장 실패', insErr);
+          }
+        }
+      }
+    }
+
     function saveShortcuts() {
-      localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+      enforceShortcutCapacity();
+      if (!isLoggedIn() || isLeaderWorkspace()) {
+        localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+      }
       render();
+      void saveShortcutDocToSupabase();
     }
 
     function getInitialLetter(name) {
@@ -489,14 +2656,364 @@
       return `<span class="letter">${getInitialLetter(item.name)}</span>`;
     }
 
+    function positionDockTooltip(wrap, tip) {
+      if (!wrap || !tip || wrap.classList.contains('dragging')) return;
+      const av = wrap.querySelector('.user-dock-avatar');
+      if (!av) return;
+      const r = av.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vPad = 8;
+      const gap = 10;
+      let cx = r.left + r.width / 2;
+      const apply = () => {
+        const th = Math.max(tip.offsetHeight, tip.getBoundingClientRect().height, 26);
+        const tw = Math.max(tip.offsetWidth, tip.getBoundingClientRect().width, 1);
+        let top = r.top - gap - th;
+        if (top < vPad) top = vPad;
+        const edge = 10;
+        const minC = edge + tw / 2;
+        const maxC = vw - edge - tw / 2;
+        cx = Math.min(maxC, Math.max(minC, cx));
+        tip.style.left = Math.round(cx) + 'px';
+        tip.style.top = Math.round(top) + 'px';
+      };
+      requestAnimationFrame(() => {
+        apply();
+        requestAnimationFrame(apply);
+      });
+    }
+
+    function refreshActiveDockTooltips() {
+      document.querySelectorAll('.user-dock-avatar-wrap:hover:not(.dragging)').forEach((w) => {
+        const tip = w.querySelector('.user-dock-tooltip');
+        if (tip) positionDockTooltip(w, tip);
+      });
+    }
+
+    function setupDockTooltipGlobalListeners() {
+      if (window.__dockTipGlobalBound) return;
+      window.__dockTipGlobalBound = true;
+      window.addEventListener('resize', refreshActiveDockTooltips);
+      const track = document.getElementById('userDockTrack');
+      if (track) track.addEventListener('scroll', refreshActiveDockTooltips, { passive: true });
+    }
+
+    function bindDockTooltipPosition(wrap, tip) {
+      setupDockTooltipGlobalListeners();
+      const update = () => positionDockTooltip(wrap, tip);
+      wrap.addEventListener('mouseenter', update);
+      wrap.addEventListener('mousemove', update);
+    }
+
+    function reorderAccountSectionByAuth() {
+      const modal = document.querySelector('#settingsOverlay .modal');
+      const accountSection = document.getElementById('accountSettingsSection');
+      if (!modal || !accountSection) return;
+      if (isLoggedIn()) {
+        const actions = modal.querySelector('.modal-actions');
+        if (actions) {
+          modal.appendChild(accountSection);
+        } else {
+          modal.appendChild(accountSection);
+        }
+      } else {
+        const title = modal.querySelector('h2');
+        if (title && title.nextSibling !== accountSection) {
+          modal.insertBefore(accountSection, title.nextSibling);
+        }
+      }
+    }
+
+    function renderSettingsProfileCard() {
+      const card = document.getElementById('profileCard');
+      const avatar = document.getElementById('profileAvatar');
+      const emailText = document.getElementById('profileEmailText');
+      const nameInput = document.getElementById('profileNameInput');
+      const nameText = document.getElementById('profileNameText');
+      const editRow = document.getElementById('profileNameEditRow');
+      const authTxt = document.getElementById('authStatusText');
+      if (!card || !avatar || !emailText || !nameInput || !nameText || !editRow || !authTxt) return;
+      if (!isLoggedIn()) {
+        card.classList.remove('open');
+        authTxt.style.display = 'block';
+        isProfileNameEditing = false;
+        return;
+      }
+      const profileName = currentUserProfile.username || currentUser.user_metadata?.name || '';
+      const avatarUrl = currentUserProfile.avatar_url || currentUser.user_metadata?.avatar_url || '';
+      card.classList.add('open');
+      authTxt.style.display = 'none';
+      avatar.src = avatarUrl || '';
+      avatar.style.display = avatarUrl ? 'block' : 'none';
+      const resolvedName = profileName || (currentUser.email ? currentUser.email.split('@')[0] : '');
+      nameInput.value = resolvedName;
+      nameText.textContent = resolvedName;
+      const editBtn = document.getElementById('profileNameEditBtn');
+      const saveBtn = document.getElementById('profileNameSaveBtn');
+      editRow.classList.toggle('open', isProfileNameEditing);
+      if (editBtn) editBtn.style.display = isProfileNameEditing ? 'none' : 'inline-flex';
+      if (saveBtn) saveBtn.style.display = isProfileNameEditing ? 'inline-flex' : 'none';
+      emailText.textContent = currentUser.email || currentUser.id || '';
+    }
+
+    async function loadCurrentUserProfile() {
+      if (!supabaseClient || !isLoggedIn()) {
+        currentUserProfile = { username: '', avatar_url: '' };
+        return;
+      }
+      const cached = userProfileCache[currentUser.id];
+      if (cached) {
+        currentUserProfile = {
+          username: cached.username || '',
+          avatar_url: cached.avatar_url || ''
+        };
+        return;
+      }
+      const { data, error } = await withLockRetry(async () =>
+        supabaseClient
+          .from('users')
+          .select('username, avatar_url')
+          .eq('id', currentUser.id)
+          .limit(1)
+      );
+      if (error) {
+        if (!isLockError(error)) console.warn('[profile/load-current-user]', error);
+        currentUserProfile = { username: '', avatar_url: '' };
+        return;
+      }
+      const row = (data && data[0]) ? data[0] : {};
+      currentUserProfile = {
+        username: row.username || '',
+        avatar_url: row.avatar_url || ''
+      };
+      userProfileCache[currentUser.id] = { ...currentUserProfile };
+    }
+
+    async function hydrateDockUsersFromProfiles() {
+      if (!supabaseClient || !Array.isArray(dockUsers) || dockUsers.length === 0) return;
+      const aliasMap = isOrgScope() ? getOrgAliasMap(activeOrg) : {};
+      const ids = [...new Set(dockUsers.map((u) => u && u.id).filter(Boolean))];
+      const missing = ids.filter((id) => !userProfileCache[id]);
+      if (missing.length > 0) {
+        const { data, error } = await withLockRetry(async () =>
+          supabaseClient
+            .from('users')
+            .select('id, username, avatar_url')
+            .in('id', missing)
+        );
+        if (error) {
+          if (!isLockError(error)) console.warn('[dock/users-profile-load]', error);
+        } else {
+          (data || []).forEach((row) => {
+            if (!row || !row.id) return;
+            userProfileCache[row.id] = {
+              username: row.username || '',
+              avatar_url: row.avatar_url || ''
+            };
+          });
+        }
+      }
+      dockUsers = dockUsers.map((u) => {
+        if (!u || !u.id) return u;
+        const profile = userProfileCache[u.id];
+        const alias = aliasMap[u.id] || u.alias || '';
+        if (!profile) {
+          return {
+            ...u,
+            alias,
+            name: alias || u.name || u.id.slice(0, 8)
+          };
+        }
+        const realName = profile.username || u.realName || u.name || u.id.slice(0, 8);
+        return {
+          ...u,
+          alias,
+          realName,
+          name: alias || realName,
+          img: profile.avatar_url || u.img || ''
+        };
+      });
+    }
+
+    function renderDock() {
+      const dockWrap = document.querySelector('.user-dock-wrap');
+      const dockEl = document.getElementById('userDock');
+      const addBtn = document.getElementById('userDockAddBtn');
+      const trackEl = document.getElementById('userDockTrack');
+      const visible = canSeeDock();
+      dockWrap.style.display = visible ? 'flex' : 'none';
+      const showAdd = canCreateInviteCode();
+      addBtn.style.display = showAdd ? 'flex' : 'none';
+      if (!visible) {
+        wasDockVisible = false;
+        return;
+      }
+      trackEl.classList.toggle('no-add', !showAdd);
+      const minSlots = showAdd ? 2 : 1;
+      dockEl.style.minWidth = `calc(${minSlots} * var(--dock-avatar) + ${(minSlots - 1)} * var(--dock-gap) + 2 * var(--dock-pad-x))`;
+      if (!wasDockVisible) {
+        dockEl.classList.remove('dock-anim-enter');
+        void dockEl.offsetWidth;
+        dockEl.classList.add('dock-anim-enter');
+        setTimeout(() => dockEl.classList.remove('dock-anim-enter'), 320);
+      }
+      wasDockVisible = true;
+      const host = document.getElementById('userDockItems');
+      host.innerHTML = '';
+      dockUsers.forEach((u, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'user-dock-avatar-wrap';
+        wrap.draggable = true;
+        wrap.dataset.dockIndex = String(idx);
+
+        const tip = document.createElement('span');
+        tip.className = 'user-dock-tooltip';
+        tip.textContent = (u.alias && u.alias.trim()) || (u.realName && u.realName.trim()) || u.name || '';
+
+        const initial = getInitialLetter(u.name || '?');
+        const inner = u.img
+          ? `<img src="${u.img}" alt="" draggable="false" onerror="this.outerHTML='<span class=\\'letter\\'>${initial}</span>'">`
+          : `<span class="letter">${initial}</span>`;
+        const href = (u.url || '').trim();
+        const avatarTag = href
+          ? `<a class="user-dock-avatar" href="${href}" target="_blank" rel="noopener noreferrer" draggable="false">${inner}</a>`
+          : `<div class="user-dock-avatar" role="img" aria-label="${(u.name || '').replace(/"/g, '&quot;')}">${inner}</div>`;
+        wrap.innerHTML = `
+          ${avatarTag}
+          <div class="dock-edit" title="편집" draggable="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+        `;
+        const canEditThisDockUser = isOrgOwner() || (currentUser && u && u.id === currentUser.id);
+        if (!canEditThisDockUser) {
+          wrap.querySelector('.dock-edit').style.display = 'none';
+        }
+        wrap.insertBefore(tip, wrap.querySelector('.dock-edit'));
+        bindDockTooltipPosition(wrap, tip);
+
+        wrap.querySelector('.dock-edit').addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          void openAliasModalForOrg(activeOrg, u.id);
+        });
+
+        const avatarEl = wrap.querySelector('.user-dock-avatar');
+        avatarEl.addEventListener('click', async (e) => {
+          if (!isOrgScope()) return;
+          e.preventDefault();
+          e.stopPropagation();
+          if (u.id) {
+            await openMemberPage(u.id);
+          }
+        });
+
+        wrap.addEventListener('dragstart', (e) => {
+          if (e.target.closest('.dock-edit')) {
+            e.preventDefault();
+            return;
+          }
+          dockDragSrcIndex = idx;
+          wrap.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', 'dock:' + idx);
+          try {
+            e.dataTransfer.setDragImage(wrap, 26, 26);
+          } catch (err) { /* ignore */ }
+        });
+        wrap.addEventListener('dragend', () => {
+          wrap.classList.remove('dragging');
+          document.querySelectorAll('.user-dock-avatar-wrap').forEach((w) => w.classList.remove('drag-over'));
+          dockDragSrcIndex = null;
+        });
+        wrap.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (dockDragSrcIndex === null) return;
+          wrap.classList.add('drag-over');
+        });
+        wrap.addEventListener('dragleave', () => wrap.classList.remove('drag-over'));
+        wrap.addEventListener('drop', async (e) => {
+          e.preventDefault();
+          wrap.classList.remove('drag-over');
+          if (dockDragSrcIndex === null || dockDragSrcIndex === idx) return;
+          const arr = [...dockUsers];
+          const [removed] = arr.splice(dockDragSrcIndex, 1);
+          const insertIdx = dockDragSrcIndex < idx ? idx - 1 : idx;
+          arr.splice(insertIdx, 0, removed);
+          dockUsers = arr;
+          saveDockUsers();
+          if (isOrgScope() && isOrgOwner()) {
+            const orderedMemberIds = dockUsers
+              .map((u) => u && u.id)
+              .filter(Boolean);
+            await upsertOrgMembers(orderedMemberIds);
+            if (activeOrg) {
+              activeOrg.member_user_ids = [...orderedMemberIds];
+            }
+          }
+        });
+
+        host.appendChild(wrap);
+      });
+    }
+
+    function updatePermissionHints() {
+      const authTxt = document.getElementById('authStatusText');
+      const orgTxt = document.getElementById('orgStatusText');
+      const googleBtn = document.getElementById('googleLoginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const emailLoginBtn = document.getElementById('emailPasswordLoginBtn');
+      const signupBtn = document.getElementById('emailSignupBtn');
+      const emailGroup = document.getElementById('emailAuthGroup');
+      const passwordGroup = document.getElementById('passwordAuthGroup');
+      const oauthRow = document.getElementById('oauthAuthRow');
+      reorderAccountSectionByAuth();
+      if (!authBootstrapped && supabaseClient) {
+        authTxt.textContent = '세션 확인 중...';
+        emailGroup.style.display = 'none';
+        passwordGroup.style.display = 'none';
+        oauthRow.style.display = 'none';
+        renderSettingsProfileCard();
+        return;
+      }
+      if (!isLoggedIn()) {
+        authTxt.textContent = '로그인 안됨 (로컬 저장 모드)';
+        emailGroup.style.display = 'block';
+        passwordGroup.style.display = 'block';
+        oauthRow.style.display = 'flex';
+        googleBtn.style.display = 'inline-flex';
+        logoutBtn.style.display = 'none';
+        emailLoginBtn.style.display = 'inline-flex';
+        signupBtn.style.display = 'inline-flex';
+      } else {
+        authTxt.textContent = `로그인됨: ${currentUser.email || currentUser.id}`;
+        emailGroup.style.display = 'none';
+        passwordGroup.style.display = 'none';
+        oauthRow.style.display = 'flex';
+        googleBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-flex';
+        emailLoginBtn.style.display = 'none';
+        signupBtn.style.display = 'none';
+      }
+      renderSettingsProfileCard();
+      if (!isOrgScope()) {
+        orgTxt.textContent = `현재: 개인 모드 (조직 ${orgList.length}개)`;
+      } else {
+        orgTxt.textContent = isOrgOwner()
+          ? `현재 조직: ${activeOrg?.name || ''} (Owner)`
+          : `현재 조직: ${activeOrg?.name || ''} (Member)`;
+      }
+    }
+
     function render() {
+      clampShortcutPage();
+      const spp = getShortcutsPerPage();
       const grid = document.getElementById('shortcutsGrid');
       const pagination = document.getElementById('pagination');
       grid.innerHTML = '';
 
-      const start = currentPage * ITEMS_PER_PAGE;
-      const pageItems = shortcuts.slice(start, start + ITEMS_PER_PAGE);
-      const totalPages = Math.ceil((shortcuts.length + 1) / ITEMS_PER_PAGE) || 1;
+      const start = currentPage * spp;
+      const pageItems = shortcuts.slice(start, start + spp);
+      const totalPages = getTotalShortcutPages();
 
       pageItems.forEach((item, idx) => {
         const realIndex = start + idx;
@@ -513,6 +3030,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </div>
         `;
+        if (!canEditCurrentPage()) {
+          wrap.querySelector('.edit-pencil').style.display = 'none';
+          wrap.draggable = false;
+        }
         wrap.addEventListener('contextmenu', (e) => {
           e.preventDefault();
           openEditModal(realIndex);
@@ -555,21 +3076,30 @@
         grid.appendChild(wrap);
       });
 
-      const addEl = document.createElement('div');
-      addEl.className = 'shortcut-item';
-      addEl.innerHTML = `
-        <div class="add-btn"><span>+</span></div>
-        <span class="add-label">추가</span>
-      `;
-      addEl.addEventListener('click', () => openAddModal());
-      grid.appendChild(addEl);
+      if (canEditCurrentPage()) {
+        const addEl = document.createElement('div');
+        addEl.className = 'shortcut-item';
+        addEl.innerHTML = `
+          <div class="add-btn"><span>+</span></div>
+          <span class="add-label">추가</span>
+        `;
+        addEl.addEventListener('click', () => openAddModal());
+        grid.appendChild(addEl);
+      }
 
       pagination.innerHTML = '';
-      for (let i = 0; i < totalPages; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'pagination-dot' + (i === currentPage ? ' active' : '');
-        dot.addEventListener('click', () => { currentPage = i; render(); });
-        pagination.appendChild(dot);
+      if (totalPages <= 1) {
+        pagination.style.display = 'none';
+      } else {
+        pagination.style.display = 'flex';
+        for (let i = 0; i < totalPages; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'pagination-dot' + (i === currentPage ? ' active' : '');
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', `페이지 ${i + 1}`);
+          dot.addEventListener('click', () => { currentPage = i; render(); });
+          pagination.appendChild(dot);
+        }
       }
     }
 
@@ -585,6 +3115,10 @@
     const deleteBtn = document.getElementById('deleteBtn');
 
     function openAddModal() {
+      if (!canEditCurrentPage()) {
+        notify('현재 페이지는 편집 권한이 없습니다.');
+        return;
+      }
       editIndexInput.value = '-1';
       modalTitle.textContent = '바로가기 추가';
       form.reset();
@@ -597,6 +3131,10 @@
     }
 
     function openEditModal(index) {
+      if (!canEditCurrentPage()) {
+        notify('현재 페이지는 편집 권한이 없습니다.');
+        return;
+      }
       const item = shortcuts[index];
       editIndexInput.value = index;
       modalTitle.textContent = '바로가기 수정';
@@ -625,7 +3163,16 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!canEditCurrentPage()) {
+        notify('현재 페이지는 편집 권한이 없습니다.');
+        return;
+      }
       const idx = parseInt(editIndexInput.value, 10);
+      const cap = getShortcutsMaxCount();
+      if (idx < 0 && shortcuts.length >= cap) {
+        alert(`바로가기는 최대 ${cap}개까지 저장할 수 있습니다. (${MAX_SHORTCUT_PAGES}페이지·한 페이지당 ${getShortcutsPerPage()}개 제한)`);
+        return;
+      }
       const data = {
         name: nameInput.value.trim(),
         url: urlInput.value.trim(),
@@ -649,18 +3196,704 @@
     // 설정 모달
     const settingsOverlay = document.getElementById('settingsOverlay');
     const settingsBtn = document.getElementById('settingsBtn');
+    const createOrgOverlay = document.getElementById('createOrgOverlay');
     const bgUrlInput = document.getElementById('bgUrl');
     const logoUrlInput = document.getElementById('logoUrl');
     const bulkConfigInput = document.getElementById('bulkConfig');
+    const profileNameInput = document.getElementById('profileNameInput');
+    const profileNameEditBtn = document.getElementById('profileNameEditBtn');
+    const profileNameSaveBtn = document.getElementById('profileNameSaveBtn');
 
-    function openSettingsModal() {
+    function getOrgCardIconMarkup(org) {
+      const iconUrl = (org && (org.icon || org.logo_url)) ? (org.icon || org.logo_url) : '';
+      if (iconUrl) {
+        return `<img src="${iconUrl}" alt="" onerror="this.outerHTML='${getInitialLetter(org.name || 'O')}'">`;
+      }
+      return getInitialLetter(org.name || 'O');
+    }
+
+    function refreshOrgSwitchSelect() {
+      const grid = document.getElementById('orgWorkspaceGrid');
+      if (!grid) return;
+      normalizeWorkspaceOrder();
+      grid.innerHTML = '';
+      const personalName = (currentUserProfile && currentUserProfile.username)
+        || currentUser?.user_metadata?.name
+        || (currentUser?.email ? currentUser.email.split('@')[0] : '개인');
+      const personalAvatar = (currentUserProfile && currentUserProfile.avatar_url)
+        || currentUser?.user_metadata?.avatar_url
+        || '';
+      const items = workspaceOrder.map((key) => {
+        if (key === 'personal') return { key, type: 'personal' };
+        const org = orgList.find((o) => `org:${o.id}` === key);
+        if (!org) return null;
+        return { key, type: 'organization', org };
+      }).filter(Boolean);
+
+      const clearOrgDragOver = () => {
+        grid.querySelectorAll('.org-card-main, .org-card').forEach((el) => el.classList.remove('drag-over'));
+      };
+
+      items.forEach((item, idx) => {
+        const isPersonal = item.type === 'personal';
+        const org = item.org;
+        const personalIconHtml = personalAvatar
+          ? `<img src="${personalAvatar}" alt="" onerror="this.outerHTML='P'">`
+          : 'P';
+
+        if (isPersonal) {
+          if (!isLoggedIn()) {
+            const card = document.createElement('button');
+            card.type = 'button';
+            const active = !isOrgScope();
+            card.className = 'org-card' + (active ? ' active' : '');
+            card.draggable = true;
+            card.dataset.orgIndex = String(idx);
+            card.dataset.workspaceKey = item.key;
+            card.innerHTML = `
+              <div class="org-card-icon">${personalIconHtml}</div>
+              <div class="org-card-name">${String(personalName || '개인').replace(/</g, '&lt;')}</div>
+            `;
+            card.addEventListener('click', async () => {
+              await switchScopeToPersonal();
+              refreshOrgSwitchSelect();
+            });
+            card.addEventListener('dragstart', (e) => {
+              orgDragSrcIndex = idx;
+              card.classList.add('dragging');
+              e.dataTransfer.effectAllowed = 'move';
+              e.dataTransfer.setData('text/plain', item.key);
+            });
+            card.addEventListener('dragend', () => {
+              card.classList.remove('dragging');
+              orgDragSrcIndex = null;
+              clearOrgDragOver();
+            });
+            card.addEventListener('dragover', (e) => {
+              e.preventDefault();
+              if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+              card.classList.add('drag-over');
+            });
+            card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+            card.addEventListener('drop', async (e) => {
+              e.preventDefault();
+              card.classList.remove('drag-over');
+              if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+              const arr = [...workspaceOrder];
+              const [moved] = arr.splice(orgDragSrcIndex, 1);
+              arr.splice(idx, 0, moved);
+              workspaceOrder = arr;
+              normalizeWorkspaceOrder();
+              syncOrgListFromWorkspaceOrder();
+              orgRankingMap = {};
+              orgList.forEach((orgItem, orderIdx) => { orgRankingMap[orgItem.id] = orderIdx + 1; });
+              refreshOrgSwitchSelect();
+              await syncLeaderLocalCacheFromServer();
+              await saveOrganizationRanking();
+            });
+            grid.appendChild(card);
+            return;
+          }
+
+          const shell = document.createElement('div');
+          shell.className = 'org-card-shell';
+          shell.draggable = true;
+          shell.dataset.orgIndex = String(idx);
+          shell.dataset.workspaceKey = item.key;
+
+          const mainBtn = document.createElement('button');
+          mainBtn.type = 'button';
+          const active = !isOrgScope();
+          mainBtn.className = 'org-card org-card-main' + (active ? ' active' : '');
+          mainBtn.innerHTML = `
+            <div class="org-card-icon">${personalIconHtml}</div>
+            <div class="org-card-name">${String(personalName || '개인').replace(/</g, '&lt;')}</div>
+          `;
+          mainBtn.addEventListener('click', async () => {
+            await switchScopeToPersonal();
+            refreshOrgSwitchSelect();
+          });
+
+          const menuWrap = document.createElement('div');
+          menuWrap.className = 'org-card-menu-wrap';
+          const kebab = document.createElement('button');
+          kebab.type = 'button';
+          kebab.className = 'org-card-kebab';
+          kebab.title = '더보기';
+          kebab.setAttribute('aria-expanded', 'false');
+          kebab.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="6" r="1.85"/><circle cx="12" cy="12" r="1.85"/><circle cx="12" cy="18" r="1.85"/></svg>';
+          const dropdown = document.createElement('div');
+          dropdown.className = 'org-card-dropdown';
+          dropdown.style.display = 'none';
+          const isLeader = isPersonalLeaderWorkspace();
+          const starSvg = isLeader
+            ? '<svg class="org-dd-icon org-dd-icon--star org-dd-icon--star-on" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+            : '<svg class="org-dd-icon org-dd-icon--star" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+          const gearSvg = '<svg class="org-dd-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+          const btnStart = document.createElement('button');
+          btnStart.type = 'button';
+          btnStart.className = 'org-card-dropdown-item';
+          btnStart.innerHTML = starSvg + '<span>시작페이지</span>';
+          const btnSpace = document.createElement('button');
+          btnSpace.type = 'button';
+          btnSpace.className = 'org-card-dropdown-item';
+          btnSpace.innerHTML = gearSvg + '<span>스페이스 설정</span>';
+          const closeDropdown = () => {
+            resetOrgCardDropdownPosition(dropdown);
+            dropdown.style.display = 'none';
+            kebab.setAttribute('aria-expanded', 'false');
+            if (orgCardOpenDropdown === dropdown) orgCardOpenDropdown = null;
+          };
+          kebab.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (orgCardOpenDropdown && orgCardOpenDropdown !== dropdown) {
+              resetOrgCardDropdownPosition(orgCardOpenDropdown);
+              orgCardOpenDropdown.style.display = 'none';
+              orgCardOpenDropdown = null;
+            }
+            const willOpen = dropdown.style.display === 'none';
+            if (willOpen) {
+              ensureOrgDropdownRepositionListeners();
+              dropdown.style.display = 'block';
+              positionOrgCardDropdown(menuWrap, dropdown);
+              kebab.setAttribute('aria-expanded', 'true');
+              orgCardOpenDropdown = dropdown;
+            } else {
+              closeDropdown();
+            }
+          });
+          btnStart.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void setPersonalAsDefaultStartPage();
+          });
+          btnSpace.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void enterPersonalSpaceSettingsView();
+          });
+          dropdown.appendChild(btnStart);
+          dropdown.appendChild(btnSpace);
+          menuWrap.appendChild(kebab);
+          menuWrap.appendChild(dropdown);
+          shell.appendChild(menuWrap);
+
+          shell.addEventListener('dragstart', (e) => {
+            if (e.target.closest('.org-card-menu-wrap')) {
+              e.preventDefault();
+              return;
+            }
+            orgDragSrcIndex = idx;
+            mainBtn.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', item.key);
+          });
+          shell.addEventListener('dragend', () => {
+            mainBtn.classList.remove('dragging');
+            orgDragSrcIndex = null;
+            clearOrgDragOver();
+          });
+          shell.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+            mainBtn.classList.add('drag-over');
+          });
+          shell.addEventListener('dragleave', () => mainBtn.classList.remove('drag-over'));
+          shell.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            mainBtn.classList.remove('drag-over');
+            if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+            const arr = [...workspaceOrder];
+            const [moved] = arr.splice(orgDragSrcIndex, 1);
+            arr.splice(idx, 0, moved);
+            workspaceOrder = arr;
+            normalizeWorkspaceOrder();
+            syncOrgListFromWorkspaceOrder();
+            orgRankingMap = {};
+            orgList.forEach((orgItem, orderIdx) => { orgRankingMap[orgItem.id] = orderIdx + 1; });
+            refreshOrgSwitchSelect();
+            await syncLeaderLocalCacheFromServer();
+            await saveOrganizationRanking();
+          });
+
+          shell.appendChild(mainBtn);
+          grid.appendChild(shell);
+          return;
+        }
+
+        const shell = document.createElement('div');
+        shell.className = 'org-card-shell';
+        shell.draggable = true;
+        shell.dataset.orgIndex = String(idx);
+        shell.dataset.workspaceKey = item.key;
+
+        const mainBtn = document.createElement('button');
+        mainBtn.type = 'button';
+        const active = isOrgScope() && activeScope.orgId === org.id;
+        mainBtn.className = 'org-card org-card-main' + (active ? ' active' : '');
+        mainBtn.innerHTML = `
+          <div class="org-card-icon">${getOrgCardIconMarkup(org)}</div>
+          <div class="org-card-name">${(org.name || '').replace(/</g, '&lt;')}</div>
+        `;
+        mainBtn.addEventListener('click', async () => {
+          await switchScopeToOrg(org.id);
+          refreshOrgSwitchSelect();
+        });
+
+        if (isLoggedIn()) {
+          const menuWrap = document.createElement('div');
+          menuWrap.className = 'org-card-menu-wrap';
+          const kebab = document.createElement('button');
+          kebab.type = 'button';
+          kebab.className = 'org-card-kebab';
+          kebab.title = '더보기';
+          kebab.setAttribute('aria-expanded', 'false');
+          kebab.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="6" r="1.85"/><circle cx="12" cy="12" r="1.85"/><circle cx="12" cy="18" r="1.85"/></svg>';
+          const dropdown = document.createElement('div');
+          dropdown.className = 'org-card-dropdown';
+          dropdown.style.display = 'none';
+          const isLeader = isOrgLeaderWorkspace(org);
+          const starSvg = isLeader
+            ? '<svg class="org-dd-icon org-dd-icon--star org-dd-icon--star-on" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+            : '<svg class="org-dd-icon org-dd-icon--star" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+          const gearSvg = '<svg class="org-dd-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+          const userSvg = '<svg class="org-dd-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21a8 8 0 10-16 0"/><circle cx="12" cy="7" r="4"/></svg>';
+          const planeSvg = '<svg class="org-dd-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+          const btnStart = document.createElement('button');
+          btnStart.type = 'button';
+          btnStart.className = 'org-card-dropdown-item';
+          btnStart.innerHTML = starSvg + '<span>시작페이지</span>';
+          const btnSpace = document.createElement('button');
+          btnSpace.type = 'button';
+          btnSpace.className = 'org-card-dropdown-item';
+          btnSpace.innerHTML = gearSvg + '<span>스페이스 설정</span>';
+          const btnAlias = document.createElement('button');
+          btnAlias.type = 'button';
+          btnAlias.className = 'org-card-dropdown-item';
+          btnAlias.innerHTML = userSvg + '<span>별명 설정하기</span>';
+          const btnInv = document.createElement('button');
+          btnInv.type = 'button';
+          btnInv.className = 'org-card-dropdown-item';
+          btnInv.innerHTML = planeSvg + '<span>초대하기</span>';
+          const closeDropdown = () => {
+            resetOrgCardDropdownPosition(dropdown);
+            dropdown.style.display = 'none';
+            kebab.setAttribute('aria-expanded', 'false');
+            if (orgCardOpenDropdown === dropdown) orgCardOpenDropdown = null;
+          };
+          kebab.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (orgCardOpenDropdown && orgCardOpenDropdown !== dropdown) {
+              resetOrgCardDropdownPosition(orgCardOpenDropdown);
+              orgCardOpenDropdown.style.display = 'none';
+              orgCardOpenDropdown = null;
+            }
+            const willOpen = dropdown.style.display === 'none';
+            if (willOpen) {
+              ensureOrgDropdownRepositionListeners();
+              dropdown.style.display = 'block';
+              positionOrgCardDropdown(menuWrap, dropdown);
+              kebab.setAttribute('aria-expanded', 'true');
+              orgCardOpenDropdown = dropdown;
+            } else {
+              closeDropdown();
+            }
+          });
+          btnStart.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void setOrgAsDefaultStartPage(org);
+          });
+          btnSpace.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void enterSpaceSettingsView(org);
+          });
+          btnAlias.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void openAliasModalForOrg(org);
+          });
+          btnInv.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            closeDropdown();
+            void enterSpaceInviteView(org);
+          });
+          dropdown.appendChild(btnStart);
+          dropdown.appendChild(btnSpace);
+          dropdown.appendChild(btnAlias);
+          dropdown.appendChild(btnInv);
+          menuWrap.appendChild(kebab);
+          menuWrap.appendChild(dropdown);
+          shell.appendChild(menuWrap);
+        }
+
+        shell.addEventListener('dragstart', (e) => {
+          if (e.target.closest('.org-card-menu-wrap')) {
+            e.preventDefault();
+            return;
+          }
+          orgDragSrcIndex = idx;
+          mainBtn.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', item.key);
+        });
+        shell.addEventListener('dragend', () => {
+          mainBtn.classList.remove('dragging');
+          orgDragSrcIndex = null;
+          clearOrgDragOver();
+        });
+        shell.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+          mainBtn.classList.add('drag-over');
+        });
+        shell.addEventListener('dragleave', () => mainBtn.classList.remove('drag-over'));
+        shell.addEventListener('drop', async (e) => {
+          e.preventDefault();
+          mainBtn.classList.remove('drag-over');
+          if (orgDragSrcIndex === null || orgDragSrcIndex === idx) return;
+          const arr = [...workspaceOrder];
+          const [moved] = arr.splice(orgDragSrcIndex, 1);
+          arr.splice(idx, 0, moved);
+          workspaceOrder = arr;
+          normalizeWorkspaceOrder();
+          syncOrgListFromWorkspaceOrder();
+          orgRankingMap = {};
+          orgList.forEach((orgItem, orderIdx) => { orgRankingMap[orgItem.id] = orderIdx + 1; });
+          refreshOrgSwitchSelect();
+          await syncLeaderLocalCacheFromServer();
+          await saveOrganizationRanking();
+        });
+
+        shell.appendChild(mainBtn);
+        grid.appendChild(shell);
+      });
+      if (isLoggedIn()) {
+        const createCard = document.createElement('button');
+        createCard.type = 'button';
+        createCard.className = 'org-card org-create-card';
+        createCard.draggable = false;
+        createCard.dataset.workspaceKey = 'create-org';
+        createCard.innerHTML = `
+          <div class="org-card-icon">+</div>
+          <div class="org-card-name">생성</div>
+        `;
+        createCard.addEventListener('click', () => {
+          const overlay = document.getElementById('createOrgOverlay');
+          if (!overlay) return;
+          // reset fields for predictable UX
+          const nameEl = document.getElementById('orgNameInput');
+          const iconUrlEl = document.getElementById('orgIconUrlInput');
+          const bgUrlEl = document.getElementById('orgBgUrlInput');
+          const iconUploadEl = document.getElementById('orgIconUploadInput');
+          if (nameEl) nameEl.value = '';
+          if (iconUrlEl) iconUrlEl.value = '';
+          if (bgUrlEl) bgUrlEl.value = '';
+          if (iconUploadEl) iconUploadEl.value = '';
+          overlay.classList.add('open');
+        });
+        grid.appendChild(createCard);
+      }
+      setDebugState({
+        orgSelectOptions: grid.children.length,
+        orgListLength: orgList.length,
+        scope: `${activeScope.type}:${activeScope.orgId || 'null'}`
+      });
+    }
+
+    async function switchScopeToPersonal() {
+      activeScope = { type: isLoggedIn() ? 'personal' : 'local', orgId: null, pageOwnerId: currentUser?.id || null };
+      persistActiveScope();
+      activeOrg = null;
+      if (isLoggedIn()) {
+        const ok = await loadShortcutDocFromSupabase();
+        if (!ok) {
+          shortcuts = [...DEFAULT_SHORTCUTS];
+          bgUrl = '';
+          logoUrl = '';
+          isPagePrivate = false;
+          applyTheme();
+        }
+      } else {
+        loadShortcuts();
+        loadTheme();
+      }
+      render();
+      renderDock();
+      updatePermissionHints();
+    }
+
+    async function switchScopeToOrg(orgId) {
+      const org = orgList.find((o) => o.id === orgId);
+      if (!org) return;
+      activeOrg = org;
+      activeScope = { type: 'organization', orgId: org.id, pageOwnerId: currentUser?.id || null };
+      persistActiveScope();
+      if (!await loadShortcutDocFromSupabase()) {
+        shortcuts = [];
+      }
+      const aliasMap = getOrgAliasMap(org);
+      dockUsers = getOrgMemberIds(org)
+        .map((uid) => ({
+          id: uid,
+          alias: aliasMap[uid] || '',
+          realName: '',
+          name: aliasMap[uid] || uid.slice(0, 8),
+          img: '',
+          url: ''
+        }));
+      if (!dockUsers.find((u) => u.id === org.owner_id)) {
+        dockUsers.unshift({
+          id: org.owner_id,
+          alias: aliasMap[org.owner_id] || '',
+          realName: '',
+          name: aliasMap[org.owner_id] || 'Owner',
+          img: '',
+          url: ''
+        });
+      }
+      await hydrateDockUsersFromProfiles();
+      render();
+      renderDock();
+      updatePermissionHints();
+    }
+
+    async function openMemberPage(userId) {
+      if (!isOrgScope() || !supabaseClient || !userId) return;
+      activeScope.pageOwnerId = userId;
+      if (userId !== currentUser?.id && !isOrgOwner()) {
+        const { data, error } = await supabaseClient
+          .from('shortcut_shortcuts')
+          .select('is_private')
+          .eq('organization_id', activeScope.orgId)
+          .eq('page_owner_user_id', userId)
+          .limit(1);
+        if (!error && data && data[0] && data[0].is_private) {
+          notify('이 구성원의 페이지는 비공개입니다.');
+          return;
+        }
+      }
+      await loadShortcutDocFromSupabase();
+      render();
+      updatePermissionHints();
+    }
+
+    function showSettingsMainView() {
+      settingsModalMode = 'main';
+      spaceModalContextOrg = null;
+      const panel = document.querySelector('#settingsOverlay .modal.settings-modal-panel');
+      if (panel) {
+        panel.classList.remove('settings-view-space-settings', 'settings-view-space-invite', 'settings-view-personal-space');
+      }
+      if (orgCardOpenDropdown) {
+        resetOrgCardDropdownPosition(orgCardOpenDropdown);
+        orgCardOpenDropdown.style.display = 'none';
+        orgCardOpenDropdown = null;
+      }
+    }
+
+    function renderPersonalSpaceHero() {
+      const iconWrap = document.getElementById('spaceSubHeroIcon');
+      const titleEl = document.getElementById('spaceSubHeroTitle');
+      if (!iconWrap || !titleEl || !isLoggedIn() || !currentUser) return;
+      const name = (currentUserProfile && currentUserProfile.username)
+        || currentUser.user_metadata?.name
+        || (currentUser.email ? currentUser.email.split('@')[0] : '')
+        || '개인';
+      const avatar = (currentUserProfile && currentUserProfile.avatar_url)
+        || currentUser.user_metadata?.avatar_url
+        || '';
+      titleEl.textContent = name;
+      iconWrap.innerHTML = '';
+      if (avatar) {
+        const img = document.createElement('img');
+        img.src = avatar;
+        img.alt = '';
+        img.onerror = function handlePersonalHeroErr() {
+          iconWrap.textContent = getInitialLetter(name || 'P');
+        };
+        iconWrap.appendChild(img);
+      } else {
+        iconWrap.textContent = getInitialLetter(name || 'P');
+      }
+    }
+
+    async function enterPersonalSpaceSettingsView() {
+      if (!isLoggedIn()) return;
+      settingsOverlay.classList.add('open');
+      await switchScopeToPersonal();
+      try {
+        if (supabaseClient) {
+          await syncAuthUiImmediately();
+          await loadCurrentUserProfile();
+          await loadOrganizations();
+        }
+      } catch (e) {
+        console.warn('enterPersonalSpaceSettingsView/session-refresh-failed', e);
+      }
+      settingsModalMode = 'personal-settings';
+      spaceModalContextOrg = null;
+      const panel = document.querySelector('#settingsOverlay .modal.settings-modal-panel');
+      if (panel) {
+        panel.classList.remove('settings-view-space-invite');
+        panel.classList.add('settings-view-space-settings', 'settings-view-personal-space');
+      }
+      renderPersonalSpaceHero();
+      const email = currentUser?.email || '';
+      const hint = document.getElementById('personalSpaceEmailHint');
+      if (hint) hint.textContent = email ? `로그인 이메일: ${email}` : '';
+      const aUrl = document.getElementById('personalSpaceAvatarUrl');
+      const dName = document.getElementById('personalSpaceDisplayName');
+      if (aUrl) aUrl.value = (currentUserProfile && currentUserProfile.avatar_url) || '';
+      if (dName) {
+        dName.value = (currentUserProfile && currentUserProfile.username)
+          || currentUser?.user_metadata?.name
+          || (email ? email.split('@')[0] : '')
+          || '';
+      }
       bgUrlInput.value = bgUrl;
       logoUrlInput.value = logoUrl;
+      logoUrlInput.disabled = false;
+      const lfg = logoUrlInput.closest('.form-group');
+      if (lfg) lfg.style.display = '';
       bulkConfigInput.value = exportBulkConfig();
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+    }
+
+    function renderSpaceSubHero(org) {
+      const iconWrap = document.getElementById('spaceSubHeroIcon');
+      const titleEl = document.getElementById('spaceSubHeroTitle');
+      if (!iconWrap || !titleEl || !org) return;
+      titleEl.textContent = org.name || '';
+      iconWrap.innerHTML = '';
+      const url = org.icon || org.logo_url || '';
+      if (url) {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        img.onerror = function handleSpaceIconErr() {
+          iconWrap.textContent = getInitialLetter(org.name || 'O');
+        };
+        iconWrap.appendChild(img);
+      } else {
+        iconWrap.textContent = getInitialLetter(org.name || 'O');
+      }
+    }
+
+    function populateSettingsFieldsFromAppState() {
+      bgUrlInput.value = bgUrl;
+      logoUrlInput.value = logoUrl;
+      logoUrlInput.disabled = !canEditLogo();
+      const logoFormGroup = logoUrlInput.closest('.form-group');
+      if (logoFormGroup) {
+        logoFormGroup.style.display = shouldShowLogoUrlInSettingsPanel() ? '' : 'none';
+      }
+      const orgIconUrlInput = document.getElementById('orgIconUrlInput');
+      if (orgIconUrlInput) orgIconUrlInput.value = activeOrg?.icon || '';
+      const pagePrivateEl = document.getElementById('pagePrivateCheckbox');
+      if (pagePrivateEl) pagePrivateEl.checked = isPagePrivate;
+      bulkConfigInput.value = exportBulkConfig();
+    }
+
+    async function enterSpaceSettingsView(org) {
+      if (!org || !isOwnerOfOrg(org)) return;
       settingsOverlay.classList.add('open');
+      try {
+        if (supabaseClient) {
+          await syncAuthUiImmediately();
+          await loadCurrentUserProfile();
+          await loadOrganizations();
+        }
+      } catch (e) {
+        console.warn('enterSpaceSettingsView/session-refresh-failed', e);
+      }
+      const latest = orgList.find((o) => o.id === org.id) || org;
+      settingsModalMode = 'space-settings';
+      spaceModalContextOrg = latest;
+      const panel = document.querySelector('#settingsOverlay .modal.settings-modal-panel');
+      if (panel) {
+        panel.classList.remove('settings-view-space-invite', 'settings-view-personal-space');
+        panel.classList.add('settings-view-space-settings');
+      }
+      renderSpaceSubHero(latest);
+      const sni = document.getElementById('spaceOrgNameInput');
+      if (sni) sni.value = latest.name || '';
+      bgUrlInput.value = latest.bg_url || '';
+      logoUrlInput.value = latest.logo_url || '';
+      logoUrlInput.disabled = false;
+      const lfg = logoUrlInput.closest('.form-group');
+      if (lfg) lfg.style.display = '';
+      bulkConfigInput.value = exportBulkConfig();
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+    }
+
+    async function enterSpaceInviteView(org) {
+      if (!org || !isOwnerOfOrg(org)) return;
+      settingsOverlay.classList.add('open');
+      const latest = orgList.find((o) => o.id === org.id) || org;
+      settingsModalMode = 'space-invite';
+      spaceModalContextOrg = latest;
+      const panel = document.querySelector('#settingsOverlay .modal.settings-modal-panel');
+      if (panel) {
+        panel.classList.remove('settings-view-space-settings', 'settings-view-personal-space');
+        panel.classList.add('settings-view-space-invite');
+      }
+      renderSpaceSubHero(latest);
+      const em = document.getElementById('spaceInviteEmailInput');
+      if (em) em.value = '';
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+      try {
+        if (supabaseClient) {
+          await syncAuthUiImmediately();
+          await loadCurrentUserProfile();
+          await loadOrganizations();
+        }
+      } catch (e) {
+        console.warn('enterSpaceInviteView/session-refresh-failed', e);
+      }
+      const latestAfterLoad = orgList.find((o) => o.id === org.id) || latest;
+      spaceModalContextOrg = latestAfterLoad;
+      renderSpaceSubHero(latestAfterLoad);
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+    }
+
+    async function openSettingsModal() {
+      settingsOverlay.classList.add('open');
+      showSettingsMainView();
+      try {
+        if (supabaseClient) {
+          // 세션 복원을 먼저 마친 뒤 UI를 그려 깜빡임/역전 상태 방지
+          await syncAuthUiImmediately();
+          await loadCurrentUserProfile();
+          await loadOrganizations();
+        }
+      } catch (e) {
+        console.warn('openSettingsModal/session-refresh-failed', e);
+      }
+      populateSettingsFieldsFromAppState();
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
     }
 
     function closeSettingsModal() {
+      showSettingsMainView();
       settingsOverlay.classList.remove('open');
     }
 
@@ -735,6 +3968,85 @@
     }
 
     document.getElementById('settingsApplyBtn').addEventListener('click', () => {
+      if (settingsModalMode === 'personal-settings' && isLoggedIn()) {
+        (async () => {
+          const nextName = (document.getElementById('personalSpaceDisplayName')?.value || '').trim();
+          const nextAvatarRaw = (document.getElementById('personalSpaceAvatarUrl')?.value || '').trim();
+          const nextAvatar = nextAvatarRaw || null;
+          if (!nextName) return notify('이름을 입력하세요.');
+          if (!supabaseClient) return notify('로그인이 필요합니다.');
+          if (bgUrlInput.value) bgUrl = bgUrlInput.value.trim();
+          if (logoUrlInput.value) logoUrl = logoUrlInput.value.trim();
+          const { error } = await withLockRetry(async () =>
+            supabaseClient
+              .from('users')
+              .update({
+                username: nextName || null,
+                avatar_url: nextAvatar
+              })
+              .eq('id', currentUser.id)
+          );
+          if (error && !isLockError(error)) return notify('프로필 저장 실패: ' + (error.message || ''));
+          currentUserProfile.username = nextName;
+          currentUserProfile.avatar_url = nextAvatar || '';
+          userProfileCache[currentUser.id] = {
+            username: currentUserProfile.username || '',
+            avatar_url: currentUserProfile.avatar_url || ''
+          };
+          saveTheme();
+          saveShortcuts();
+          notify('저장했습니다.');
+          closeSettingsModal();
+          renderSettingsProfileCard();
+          refreshOrgSwitchSelect();
+          renderDock();
+          render();
+        })();
+        return;
+      }
+      if (settingsModalMode === 'space-settings' && spaceModalContextOrg && isOwnerOfOrg(spaceModalContextOrg)) {
+        (async () => {
+          const nameEl = document.getElementById('spaceOrgNameInput');
+          const name = (nameEl && nameEl.value.trim()) || '';
+          if (!name) return notify('조직 이름을 입력하세요.');
+          const bg = bgUrlInput.value.trim() || null;
+          const logo = logoUrlInput.value.trim() || null;
+          if (!supabaseClient) return;
+          const oid = spaceModalContextOrg.id;
+          const { error } = await supabaseClient.from('shortcut_organizations').update({
+            name,
+            bg_url: bg,
+            logo_url: logo
+          }).eq('id', oid);
+          if (error) return notify('저장 실패: ' + (error.message || ''));
+          const entry = orgList.find((o) => o.id === oid);
+          if (entry) {
+            entry.name = name;
+            entry.bg_url = bg;
+            entry.logo_url = logo;
+          }
+          if (activeOrg && activeOrg.id === oid) {
+            activeOrg.name = name;
+            activeOrg.bg_url = bg;
+            activeOrg.logo_url = logo;
+            if (isOrgScope()) {
+              logoUrl = logo || '';
+              bgUrl = bg || '';
+              applyTheme();
+            }
+          }
+          if (spaceModalContextOrg && spaceModalContextOrg.id === oid) {
+            spaceModalContextOrg.name = name;
+            spaceModalContextOrg.bg_url = bg;
+            spaceModalContextOrg.logo_url = logo;
+          }
+          notify('스페이스 설정이 저장되었습니다.');
+          closeSettingsModal();
+          refreshOrgSwitchSelect();
+          render();
+        })();
+        return;
+      }
       const bulkText = bulkConfigInput.value.trim();
       if (bulkText) {
         const parsed = parseBulkConfig(bulkText);
@@ -747,21 +4059,842 @@
         }
       }
       if (bgUrlInput.value) bgUrl = bgUrlInput.value.trim();
-      if (logoUrlInput.value) logoUrl = logoUrlInput.value.trim();
+      if (shouldShowLogoUrlInSettingsPanel() && logoUrlInput.value) logoUrl = logoUrlInput.value.trim();
+      isPagePrivate = document.getElementById('pagePrivateCheckbox').checked;
       saveTheme();
       saveShortcuts();
+      if (isOrgScope() && isOrgOwner() && supabaseClient && activeOrg) {
+        supabaseClient.from('shortcut_organizations').update({
+          bg_url: bgUrl || null,
+          logo_url: logoUrl || null
+        }).eq('id', activeOrg.id).then(() => loadOrganizations());
+      }
       closeSettingsModal();
     });
 
     document.getElementById('settingsCancelBtn').addEventListener('click', closeSettingsModal);
-    settingsBtn.addEventListener('click', openSettingsModal);
+    settingsBtn.addEventListener('click', () => {
+      try {
+        void openSettingsModal();
+      } catch (e) {
+        console.warn('settings-open-fallback', e);
+        settingsOverlay.classList.add('open');
+      }
+    });
     settingsOverlay.addEventListener('click', (e) => {
       if (e.target === settingsOverlay) closeSettingsModal();
     });
+    document.getElementById('settingsBackBtn').addEventListener('click', () => {
+      showSettingsMainView();
+      populateSettingsFieldsFromAppState();
+      renderSettingsProfileCard();
+      reorderAccountSectionByAuth();
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+    });
+    document.addEventListener('click', (e) => {
+      if (!orgCardOpenDropdown) return;
+      if (e.target.closest('.org-card-menu-wrap')) return;
+      resetOrgCardDropdownPosition(orgCardOpenDropdown);
+      orgCardOpenDropdown.style.display = 'none';
+      orgCardOpenDropdown = null;
+    });
+    const spaceOrgNameInputEl = document.getElementById('spaceOrgNameInput');
+    if (spaceOrgNameInputEl) {
+      spaceOrgNameInputEl.addEventListener('input', () => {
+        if (settingsModalMode !== 'space-settings') return;
+        const t = document.getElementById('spaceSubHeroTitle');
+        if (t) t.textContent = spaceOrgNameInputEl.value || '';
+      });
+    }
+    const personalSpaceDisplayNameEl = document.getElementById('personalSpaceDisplayName');
+    if (personalSpaceDisplayNameEl) {
+      personalSpaceDisplayNameEl.addEventListener('input', () => {
+        if (settingsModalMode !== 'personal-settings') return;
+        const t = document.getElementById('spaceSubHeroTitle');
+        if (t) t.textContent = personalSpaceDisplayNameEl.value || '';
+      });
+    }
+    document.getElementById('createOrgCancelBtn').addEventListener('click', () => {
+      createOrgOverlay.classList.remove('open');
+    });
+    createOrgOverlay.addEventListener('click', (e) => {
+      if (e.target === createOrgOverlay) createOrgOverlay.classList.remove('open');
+    });
+    profileNameEditBtn.addEventListener('click', () => {
+      if (!isLoggedIn()) return;
+      isProfileNameEditing = true;
+      renderSettingsProfileCard();
+      profileNameInput.focus();
+      profileNameInput.select();
+    });
+    profileNameSaveBtn.addEventListener('click', async () => {
+      if (!isLoggedIn() || !supabaseClient) return;
+      const nextName = (profileNameInput.value || '').trim();
+      const { error } = await withLockRetry(async () =>
+        supabaseClient
+          .from('users')
+          .update({ username: nextName || null })
+          .eq('id', currentUser.id)
+      );
+      if (error) {
+        if (!isLockError(error)) {
+          notify('이름 저장 실패: ' + (error.message || 'unknown'));
+        }
+        return;
+      }
+      currentUserProfile.username = nextName;
+      userProfileCache[currentUser.id] = {
+        username: currentUserProfile.username || '',
+        avatar_url: currentUserProfile.avatar_url || ''
+      };
+      isProfileNameEditing = false;
+      renderSettingsProfileCard();
+      renderDock();
+      notify('이름이 저장되었습니다.');
+    });
 
-    loadShortcuts();
-    loadTheme();
-    render();
+    const userModalOverlay = document.getElementById('userModalOverlay');
+    const userForm = document.getElementById('userForm');
+    const userModalTitle = document.getElementById('userModalTitle');
+    const userEditIndex = document.getElementById('userEditIndex');
+    const userNameInput = document.getElementById('userName');
+    const userNameLabel = document.getElementById('userNameLabel');
+    const userImgInput = document.getElementById('userImg');
+    const userImgGroup = document.getElementById('userImgGroup');
+    const userDeleteBtn = document.getElementById('userDeleteBtn');
+
+    function openUserModal(index) {
+      const targetUser = (index != null && index >= 0 && dockUsers[index]) ? dockUsers[index] : null;
+      const isSelfProfile = !!(targetUser && currentUser && targetUser.id === currentUser.id);
+      if (isOrgScope() && !isOrgOwner() && !isSelfProfile) {
+        notify('Owner만 구성원을 관리할 수 있습니다.');
+        return;
+      }
+      if (index == null || index < 0) {
+        userEditIndex.value = '-1';
+        userModalTitle.textContent = '유저 추가';
+        userForm.reset();
+        userImgInput.value = '';
+        userDeleteBtn.style.display = 'none';
+        userDeleteBtn.onclick = null;
+      } else {
+        const u = dockUsers[index];
+        userEditIndex.value = String(index);
+        userModalTitle.textContent = '유저 수정';
+        userNameInput.value = u.name || '';
+        userImgInput.value = u.img || '';
+        if (isOrgOwner()) {
+          userDeleteBtn.style.display = 'inline-block';
+          userDeleteBtn.onclick = () => {
+            dockUsers.splice(index, 1);
+            saveDockUsers();
+            closeUserModal();
+          };
+        } else {
+          userDeleteBtn.style.display = 'none';
+          userDeleteBtn.onclick = null;
+        }
+      }
+      userModalMode = 'profile';
+      userAliasTargetOrgId = null;
+      if (userNameLabel) userNameLabel.textContent = '이름';
+      if (userImgGroup) userImgGroup.style.display = '';
+      userModalOverlay.classList.add('open');
+      userNameInput.focus();
+    }
+
+    async function openAliasModalForOrg(org, targetUserId) {
+      if (!isLoggedIn() || !org || !supabaseClient) return;
+      const memberIds = getOrgMemberIds(org);
+      const targetId = targetUserId || currentUser.id;
+      const isTargetMember = memberIds.includes(targetId) || org.owner_id === targetId;
+      if (!isTargetMember) {
+        notify('조직 구성원만 별명을 설정할 수 있습니다.');
+        return;
+      }
+      const canEditAlias = isOrgOwner() || targetId === currentUser.id;
+      if (!canEditAlias) {
+        notify('조직 구성원만 별명을 설정할 수 있습니다.');
+        return;
+      }
+      userModalMode = 'alias';
+      userAliasTargetOrgId = org.id;
+      userAliasTargetUserId = targetId;
+      userEditIndex.value = '-1';
+      userModalTitle.textContent = '별명 설정';
+      if (userNameLabel) userNameLabel.textContent = '별명 설정';
+      if (userImgGroup) userImgGroup.style.display = 'none';
+      userImgInput.value = '';
+      const aliasMap = getOrgAliasMap(org);
+      userNameInput.value = aliasMap[targetId] || '';
+      userDeleteBtn.style.display = 'none';
+      userDeleteBtn.onclick = null;
+      userModalOverlay.classList.add('open');
+      userNameInput.focus();
+      userNameInput.select();
+    }
+
+    function closeUserModal() {
+      userModalOverlay.classList.remove('open');
+      userModalMode = 'profile';
+      userAliasTargetOrgId = null;
+      userAliasTargetUserId = null;
+      if (userNameLabel) userNameLabel.textContent = '이름';
+      if (userImgGroup) userImgGroup.style.display = '';
+    }
+
+    async function upsertOrgMembers(memberIds) {
+      if (!supabaseClient || !activeOrg) return;
+      const unique = [...new Set(memberIds)];
+      await supabaseClient
+        .from('shortcut_organizations')
+        .update({ member_user_ids: unique })
+        .eq('id', activeOrg.id);
+    }
+
+    async function handleGenerateInviteCode() {
+      const org = getInviteTargetOrg();
+      if (!canCreateInviteCodeForOrg(org)) {
+        notify('Owner만 초대 코드를 생성할 수 있습니다.');
+        return;
+      }
+      const code = generateInviteCode();
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+      const { error } = await supabaseClient
+        .from('shortcut_organizations')
+        .update({ invite_code: code, invite_expires_at: expiresAt })
+        .eq('id', org.id);
+      if (error) {
+        notify('초대 코드 생성에 실패했습니다.');
+        return;
+      }
+      org.invite_code = code;
+      org.invite_expires_at = expiresAt;
+      if (activeOrg && activeOrg.id === org.id) {
+        activeOrg.invite_code = code;
+        activeOrg.invite_expires_at = expiresAt;
+      }
+      if (spaceModalContextOrg && spaceModalContextOrg.id === org.id) {
+        spaceModalContextOrg.invite_code = code;
+        spaceModalContextOrg.invite_expires_at = expiresAt;
+      }
+      const inList = orgList.find((o) => o.id === org.id);
+      if (inList) {
+        inList.invite_code = code;
+        inList.invite_expires_at = expiresAt;
+      }
+      notify(`초대 코드 생성 완료: ${code}`);
+    }
+
+    function buildInviteUrl(code) {
+      const u = new URL(location.href);
+      u.searchParams.set('invite', code);
+      return u.toString();
+    }
+
+    async function openInviteAcceptByCode(code) {
+      if (!code || !supabaseClient || !isLoggedIn()) return;
+      const { data, error } = await supabaseClient
+        .from('shortcut_organizations')
+        .select('*')
+        .eq('invite_code', code)
+        .limit(1);
+      if (error || !data || !data[0]) return;
+      const org = data[0];
+      if (!org.invite_expires_at || new Date(org.invite_expires_at).getTime() < Date.now()) {
+        notify('초대 코드가 만료되었습니다.');
+        return;
+      }
+      pendingInviteCode = code;
+      document.getElementById('inviteAcceptText').textContent = `${org.name}에 가입할까요?`;
+      const logo = document.getElementById('inviteOrgLogo');
+      if (org.logo_url) {
+        logo.src = org.logo_url;
+        logo.style.display = 'inline-block';
+      } else {
+        logo.style.display = 'none';
+      }
+      document.getElementById('inviteAcceptOverlay').classList.add('open');
+    }
+
+    async function acceptInviteCode() {
+      if (!pendingInviteCode || !supabaseClient || !isLoggedIn()) return;
+      const { data, error } = await supabaseClient
+        .from('shortcut_organizations')
+        .select('*')
+        .eq('invite_code', pendingInviteCode)
+        .limit(1);
+      if (error || !data || !data[0]) {
+        notify('초대 정보를 찾을 수 없습니다.');
+        return;
+      }
+      const org = data[0];
+      const memberIds = getOrgMemberIds(org);
+      if (!memberIds.includes(currentUser.id)) memberIds.push(currentUser.id);
+      await supabaseClient
+        .from('shortcut_organizations')
+        .update({ member_user_ids: memberIds })
+        .eq('id', org.id);
+      pendingInviteCode = null;
+      document.getElementById('inviteAcceptOverlay').classList.remove('open');
+      await loadOrganizations();
+      await saveOrganizationRanking();
+      await switchScopeToOrg(org.id);
+      refreshOrgSwitchSelect();
+      updatePermissionHints();
+      notify('조직 가입 완료');
+    }
+
+    async function resolveCurrentAuthUser() {
+      if (!supabaseClient) return null;
+      // 이벤트 핸들러에서 이미 확보한 유저가 있으면 네트워크 auth 조회를 건너뛴다.
+      if (currentUser && currentUser.id) {
+        setDebugState({ authPhase: 'resolveCurrentAuthUser:cached-user' });
+        return currentUser;
+      }
+      setDebugState({ authPhase: 'resolveCurrentAuthUser:start' });
+      try {
+        // 새로고침 시 getUser()가 네트워크/lock 대기로 멈추는 경우가 있어 getSession() 우선
+        const { data: sessionData, error: sessionErr } = await withTimeout(
+          withLockRetry(async () => supabaseClient.auth.getSession()),
+          2000,
+          'auth.getSession'
+        );
+        if (!sessionErr && sessionData?.session?.user) {
+          setDebugState({ authPhase: 'resolveCurrentAuthUser:session-hit' });
+          return sessionData.session.user;
+        }
+        // session이 없을 때만 getUser() 확인
+        const { data: userData, error: userErr } = await withTimeout(
+          withLockRetry(async () => supabaseClient.auth.getUser()),
+          2200,
+          'auth.getUser'
+        );
+        if (!userErr && userData?.user) {
+          setDebugState({ authPhase: 'resolveCurrentAuthUser:user-hit' });
+          return userData.user;
+        }
+        setDebugState({ authPhase: 'resolveCurrentAuthUser:empty' });
+        return null;
+      } catch (e) {
+        const msg = (e && e.message) ? e.message : String(e);
+        setDebugState({ authPhase: `resolveCurrentAuthUser:error:${msg.slice(0, 80)}` });
+        // lock 경합은 비치명 처리 (다음 auth event/재시도에서 복원)
+        if (msg.includes('auth-token') || msg.toLowerCase().includes('lock') || msg.toLowerCase().includes('timeout')) {
+          return currentUser || null;
+        }
+        throw e;
+      }
+    }
+
+    async function ensureCurrentUser() {
+      if (currentUser && currentUser.id) return currentUser;
+      try {
+        currentUser = await resolveCurrentAuthUser();
+      } catch (e) {
+        if (!isLockError(e)) {
+          console.warn('ensureCurrentUser/resolve-failed', e);
+        }
+      }
+      return currentUser;
+    }
+
+    async function refreshAuthSession() {
+      if (refreshAuthPromise) {
+        return refreshAuthPromise;
+      }
+      refreshAuthPromise = (async () => {
+      if (!supabaseClient) return;
+      try {
+        setDebugState({ authPhase: 'refreshAuthSession:start' });
+        if (!(currentUser && currentUser.id)) {
+          currentUser = await resolveCurrentAuthUser();
+        } else {
+          setDebugState({ authPhase: 'refreshAuthSession:use-cached-user' });
+        }
+        // 새로고침 직후 auth hydration 지연을 고려해 짧게 재시도
+        if (!currentUser) {
+          for (let i = 0; i < 3; i += 1) {
+            await new Promise((r) => setTimeout(r, 180 * (i + 1)));
+            currentUser = await resolveCurrentAuthUser();
+            if (currentUser) break;
+          }
+        }
+        setDebugState({
+          currentUserId: currentUser?.id || null,
+          isLoggedIn: Boolean(currentUser && currentUser.id)
+        });
+        if (currentUser) {
+          activeScope.pageOwnerId = currentUser.id;
+          setDebugState({ authPhase: 'refreshAuthSession:before-loadOrganizations' });
+          await loadOrganizations();
+          setDebugState({ authPhase: 'refreshAuthSession:after-loadOrganizations' });
+          refreshOrgSwitchSelect();
+          // 저장된 스코프 복원: 조직이면 해당 조직, 아니면 개인
+          if (activeScope.type === 'organization' && activeScope.orgId) {
+            const exists = orgList.some((o) => o.id === activeScope.orgId);
+            if (exists) {
+              await switchScopeToOrg(activeScope.orgId);
+            } else {
+              await switchScopeToPersonal();
+            }
+          } else {
+            const firstKey = (workspaceOrder && workspaceOrder[0]) || 'personal';
+            if (firstKey.startsWith('org:')) {
+              const firstOrgId = firstKey.slice(4);
+              const exists = orgList.some((o) => o.id === firstOrgId);
+              if (exists) await switchScopeToOrg(firstOrgId);
+              else await switchScopeToPersonal();
+            } else {
+              await switchScopeToPersonal();
+            }
+          }
+        } else {
+          await switchScopeToPersonal();
+          refreshOrgSwitchSelect();
+        }
+        const inviteFromUrl = getInviteCodeFromUrl();
+        if (inviteFromUrl && currentUser) {
+          await openInviteAcceptByCode(inviteFromUrl);
+        }
+        clearRuntimeError();
+      } catch (e) {
+        showRuntimeError('세션 복원 실패', e && e.message ? e.message : String(e));
+        setDebugState({ authPhase: 'refreshAuthSession:error' });
+      } finally {
+        authBootstrapped = true;
+        updatePermissionHints();
+        renderDock();
+        setDebugState({ authPhase: 'refreshAuthSession:done' });
+      }
+      })();
+      try {
+        await refreshAuthPromise;
+      } finally {
+        refreshAuthPromise = null;
+      }
+    }
+
+    async function syncAuthUiImmediately() {
+      if (!supabaseClient) {
+        currentUser = null;
+        authBootstrapped = true;
+        updatePermissionHints();
+        return;
+      }
+      await refreshAuthSession();
+    }
+
+    async function bindAuthAndOrgControls() {
+      let clearedGuestCacheOnLogin = false;
+      document.getElementById('emailPasswordLoginBtn').addEventListener('click', async () => {
+        try {
+          const email = document.getElementById('loginEmailInput').value.trim();
+          const password = document.getElementById('loginPasswordInput').value;
+          if (!email || !password) return notify('이메일/비밀번호를 입력하세요.');
+          if (!supabaseClient) return notify('Supabase 연결 설정이 비어있습니다. 코드의 고정 설정값을 확인하세요.');
+          const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+          if (error) {
+            showRuntimeError('로그인 실패', error);
+            return notify(error.message);
+          }
+          currentUser = data?.user || data?.session?.user || currentUser;
+          await syncAuthUiImmediately();
+          clearRuntimeError();
+          notify('로그인되었습니다.');
+        } catch (e) {
+          showRuntimeError('로그인 처리 중 예외', e && e.message ? e.message : String(e));
+        }
+      });
+
+      document.getElementById('emailSignupBtn').addEventListener('click', async () => {
+        try {
+          const email = document.getElementById('loginEmailInput').value.trim();
+          const password = document.getElementById('loginPasswordInput').value;
+          if (!email || !password) return notify('이메일/비밀번호를 입력하세요.');
+          if (!supabaseClient) return notify('Supabase 연결 설정이 비어있습니다. 코드의 고정 설정값을 확인하세요.');
+          const { error } = await supabaseClient.auth.signUp({ email, password });
+          if (error) {
+            showRuntimeError('회원가입 실패', error);
+            return notify(error.message);
+          }
+          clearRuntimeError();
+          notify('회원가입 완료. 이메일 확인이 필요할 수 있습니다.');
+        } catch (e) {
+          showRuntimeError('회원가입 처리 중 예외', e && e.message ? e.message : String(e));
+        }
+      });
+
+      document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+        if (!supabaseClient) return notify('Supabase 연결 설정이 비어있습니다. 코드의 고정 설정값을 확인하세요.');
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: location.href }
+        });
+        if (error) notify(error.message);
+      });
+
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        if (!supabaseClient) return;
+        let error = null;
+        try {
+          const result = await supabaseClient.auth.signOut({ scope: 'local' });
+          error = result?.error || null;
+        } catch (e) {
+          if (!isLockError(e)) {
+            showRuntimeError('로그아웃 실패', e && e.message ? e.message : String(e));
+            notify(e && e.message ? e.message : '로그아웃 실패');
+            return;
+          }
+          // lock 에러는 로컬 강제 정리로 복구 가능
+          error = null;
+        }
+        // 방어적으로 로컬 auth 스토리지 제거
+        try {
+          Object.keys(localStorage).forEach((k) => {
+            if (k.includes('supabase.auth') || k.includes('sb-') || k.includes('auth-token')) {
+              localStorage.removeItem(k);
+            }
+          });
+        } catch (e) {
+          console.warn('logout/local-storage-cleanup-failed', e);
+        }
+        currentUser = null;
+        authBootstrapped = true;
+        await syncAuthUiImmediately();
+        await switchScopeToPersonal();
+        clearRuntimeError();
+        if (error && !isLockError(error)) {
+          showRuntimeError('로그아웃 처리 중 경고', error);
+          notify((error.message || '로그아웃 오류') + ' (로컬 상태는 정리됨)');
+        } else {
+          notify('로그아웃되었습니다.');
+        }
+      });
+
+      document.getElementById('createOrgBtn').addEventListener('click', async () => {
+        const name = document.getElementById('orgNameInput').value.trim();
+        const icon = document.getElementById('orgIconUrlInput').value.trim() || null;
+        const orgBgUrl = document.getElementById('orgBgUrlInput').value.trim() || null;
+        if (!name) return notify('조직 이름을 입력하세요.');
+        if (!isLoggedIn() || !supabaseClient) return notify('로그인이 필요합니다.');
+        const row = {
+          name,
+          owner_id: currentUser.id,
+          member_user_ids: [currentUser.id],
+          member_aliases: {},
+          bg_url: orgBgUrl,
+          logo_url: logoUrl || null,
+          icon
+        };
+        const { error } = await supabaseClient.from('shortcut_organizations').insert(row);
+        if (error) return notify('조직 생성 실패: ' + error.message);
+        await loadOrganizations();
+        await saveOrganizationRanking();
+        const latest = orgList.find((o) => o.name === name && o.owner_id === currentUser.id);
+        if (latest) await switchScopeToOrg(latest.id);
+        document.getElementById('orgNameInput').value = '';
+        document.getElementById('orgIconUrlInput').value = '';
+        document.getElementById('orgBgUrlInput').value = '';
+        document.getElementById('orgIconUploadInput').value = '';
+        createOrgOverlay.classList.remove('open');
+        refreshOrgSwitchSelect();
+      });
+
+      document.getElementById('generateInviteBtn').addEventListener('click', handleGenerateInviteCode);
+      document.getElementById('userDockAddBtn').addEventListener('click', () => {
+        if (!isOrgScope() || !activeOrg) {
+          notify('조직 모드에서만 초대 패널을 열 수 있습니다.');
+          return;
+        }
+        void enterSpaceInviteView(activeOrg);
+      });
+
+      document.getElementById('copyInviteUrlBtn').addEventListener('click', async () => {
+        const org = getInviteTargetOrg();
+        if (!org || !org.invite_code) {
+          return notify('먼저 초대 코드를 생성하세요.');
+        }
+        const url = buildInviteUrl(org.invite_code);
+        await navigator.clipboard.writeText(url);
+        notify('초대 URL 복사 완료');
+      });
+
+      document.getElementById('spaceInviteSendBtn').addEventListener('click', async () => {
+        const org = spaceModalContextOrg;
+        const email = document.getElementById('spaceInviteEmailInput').value.trim();
+        if (!org || !isOwnerOfOrg(org)) return;
+        if (!email) return notify('이메일을 입력하세요.');
+        if (!org.invite_code) {
+          await handleGenerateInviteCode();
+        }
+        const org2 = getInviteTargetOrg();
+        if (!org2 || !org2.invite_code) return notify('초대 코드를 먼저 생성하세요.');
+        const url = buildInviteUrl(org2.invite_code);
+        const subject = encodeURIComponent(`${org2.name} 스페이스 초대`);
+        const body = encodeURIComponent(
+          `안녕하세요,\n\n아래 링크에서 ${org2.name} 스페이스 초대를 수락할 수 있습니다.\n\n${url}\n`
+        );
+        window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+      });
+
+      document.getElementById('joinOrgBtn').addEventListener('click', async () => {
+        const code = document.getElementById('joinCodeInput').value.trim();
+        if (!code) return notify('가입 코드를 입력하세요.');
+        if (!isLoggedIn()) return notify('로그인이 필요합니다.');
+        await openInviteAcceptByCode(code);
+      });
+
+      document.getElementById('inviteDeclineBtn').addEventListener('click', () => {
+        pendingInviteCode = null;
+        document.getElementById('inviteAcceptOverlay').classList.remove('open');
+      });
+      document.getElementById('inviteAcceptBtn').addEventListener('click', acceptInviteCode);
+      document.getElementById('inviteAcceptOverlay').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('inviteAcceptOverlay')) {
+          pendingInviteCode = null;
+          document.getElementById('inviteAcceptOverlay').classList.remove('open');
+        }
+      });
+    }
+
+    document.getElementById('userCancelBtn').addEventListener('click', closeUserModal);
+    userModalOverlay.addEventListener('click', (e) => {
+      if (e.target === userModalOverlay) closeUserModal();
+    });
+    userForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idx = parseInt(userEditIndex.value, 10);
+      const row = {
+        name: userNameInput.value.trim(),
+        img: userImgInput.value.trim() || ''
+      };
+      (async () => {
+        if (userModalMode === 'alias') {
+          const targetOrgId = userAliasTargetOrgId;
+          const targetUserId = userAliasTargetUserId || currentUser?.id;
+          if (!targetOrgId || !targetUserId || !currentUser?.id || !supabaseClient) return;
+          if (!isOrgOwner() && targetUserId !== currentUser.id) {
+            notify('본인 별명만 수정할 수 있습니다.');
+            return;
+          }
+          const { error } = await withLockRetry(async () =>
+            supabaseClient.rpc('set_org_member_alias', {
+              p_org_id: targetOrgId,
+              p_alias: row.name || null,
+              p_target_user_id: targetUserId
+            })
+          );
+          if (error && !isLockError(error)) {
+            const msg = (error.message || '').toLowerCase();
+            if (msg.includes('set_org_member_alias') || msg.includes('function')) {
+              notify('DB 함수가 없습니다. supabase/shortcut_schema.sql을 적용해주세요.');
+            } else if (msg.includes('forbidden')) {
+              notify('별명 수정 권한이 없습니다.');
+            } else {
+              notify('별명 저장 실패: ' + (error.message || 'unknown'));
+            }
+            return;
+          }
+          setOrgAliasLocal(targetOrgId, targetUserId, row.name);
+          await loadOrganizations();
+          if (isOrgScope() && activeScope.orgId === targetOrgId) {
+            await switchScopeToOrg(targetOrgId);
+          } else {
+            refreshOrgSwitchSelect();
+          }
+          closeUserModal();
+          renderDock();
+          notify('별명이 저장되었습니다.');
+          return;
+        }
+        if (idx >= 0 && dockUsers[idx] && dockUsers[idx].id && supabaseClient) {
+          const targetUserId = dockUsers[idx].id;
+          const canEditTargetUser = isOrgOwner() || (currentUser && targetUserId === currentUser.id);
+          if (!canEditTargetUser) {
+            notify('본인 프로필만 수정할 수 있습니다.');
+            return;
+          }
+          const { error } = await withLockRetry(async () =>
+            supabaseClient
+              .from('users')
+              .update({
+                username: row.name || null,
+                avatar_url: row.img || null
+              })
+              .eq('id', targetUserId)
+          );
+          if (error && !isLockError(error)) {
+            notify('프로필 저장 실패: ' + (error.message || 'unknown'));
+            return;
+          }
+          userProfileCache[targetUserId] = {
+            username: row.name || '',
+            avatar_url: row.img || ''
+          };
+          dockUsers[idx] = { ...dockUsers[idx], name: row.name, img: row.img };
+          saveDockUsers();
+        }
+        closeUserModal();
+        renderDock();
+      })();
+    });
+
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => render(), 150);
+    });
+
+    async function initApp() {
+      loadShortcuts();
+      loadDockUsers();
+      await initSupabaseIfPossible();
+      if (!supabaseClient || !hasSupabaseSessionInStorage()) {
+        loadTheme();
+      } else {
+        // 로그인 세션이 있을 때도 캐시된 배경/로고 URL을 먼저 적용해 첫 페인트를 빠르게 만든다.
+        bgUrl = localStorage.getItem('shortcut_cached_bg_url') || bgUrl || '';
+        logoUrl = localStorage.getItem('shortcut_cached_logo_url') || logoUrl || '';
+        applyTheme();
+      }
+      // First paint; logged-in + Supabase session은 refreshAuthSession에서 스코프 테마로 맞춤
+      render();
+      renderDock();
+      updatePermissionHints();
+      setDebugState({
+        scope: `${activeScope.type}:${activeScope.orgId || 'null'}`,
+        currentUserId: currentUser?.id || null,
+        isLoggedIn: isLoggedIn(),
+        authPhase: 'initApp:after-supabase'
+      });
+      await bindAuthAndOrgControls();
+      document.getElementById('orgIconUploadInput').addEventListener('change', async (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (f.size > 100 * 1024) {
+          notify('조직 아이콘 이미지는 100KB 이하만 가능합니다.');
+          e.target.value = '';
+          return;
+        }
+        const icon = await fileToDataUrl(f);
+        document.getElementById('orgIconUrlInput').value = icon;
+      });
+      const personalSpaceAvatarFileEl = document.getElementById('personalSpaceAvatarFile');
+      if (personalSpaceAvatarFileEl) {
+        personalSpaceAvatarFileEl.addEventListener('change', async (e) => {
+          const f = e.target.files && e.target.files[0];
+          if (!f) return;
+          if (f.size > 100 * 1024) {
+            notify('프로필 이미지는 100KB 이하만 가능합니다.');
+            e.target.value = '';
+            return;
+          }
+          const data = await fileToDataUrl(f);
+          const urlIn = document.getElementById('personalSpaceAvatarUrl');
+          if (urlIn) urlIn.value = data;
+        });
+      }
+      document.getElementById('bgUploadInput').addEventListener('change', async (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (f.size > 100 * 1024) {
+          notify('배경 이미지는 100KB 이하만 가능합니다.');
+          e.target.value = '';
+          return;
+        }
+        bgUrl = await fileToDataUrl(f);
+        document.getElementById('bgUrl').value = bgUrl;
+        saveTheme();
+      });
+      document.getElementById('logoUploadInput').addEventListener('change', async (e) => {
+        if (!canEditLogoInUpload()) {
+          notify('현재 로고 편집 권한이 없습니다.');
+          e.target.value = '';
+          return;
+        }
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (f.size > 100 * 1024) {
+          notify('로고 이미지는 100KB 이하만 가능합니다.');
+          e.target.value = '';
+          return;
+        }
+        logoUrl = await fileToDataUrl(f);
+        document.getElementById('logoUrl').value = logoUrl;
+        saveTheme();
+      });
+      if (supabaseClient) {
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+          try {
+            console.log('[auth-state-change]', event, session?.user?.email || null);
+            currentUser = session?.user || null;
+            authBootstrapped = true;
+            updatePermissionHints();
+            setDebugState({
+              authPhase: `onAuthStateChange:${event}`,
+              currentUserId: currentUser?.id || null,
+              isLoggedIn: Boolean(currentUser && currentUser.id)
+            });
+            if (event === 'SIGNED_OUT') {
+              clearedGuestCacheOnLogin = false;
+              await switchScopeToPersonal();
+              return;
+            }
+            if (!clearedGuestCacheOnLogin && (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') && currentUser && currentUser.id) {
+              // 로그인 이후에는 guest 로컬값(theme/shortcuts)이 UI에 재활용되지 않도록 정리
+              try {
+                localStorage.removeItem('theme');
+                localStorage.removeItem('shortcuts');
+              } catch (e) {
+                console.warn('auth/guest-cache-clear-failed', e);
+              }
+              clearedGuestCacheOnLogin = true;
+            }
+            if (currentUser && currentUser.id && activeScope.type === 'local') {
+              // 초기 이벤트에서 getSession timeout이 나도 local 스코프 고착을 피한다.
+              await switchScopeToPersonal();
+            }
+            if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+              await refreshAuthSession();
+            }
+          } catch (e) {
+            if (!isLockError(e)) {
+              showRuntimeError('Auth 이벤트 처리 실패', e && e.message ? e.message : String(e));
+            }
+          }
+        });
+        // 초기 렌더를 막지 않도록 백그라운드 동기화
+        void refreshAuthSession();
+      }
+    }
+
+    initApp();
+  </script>
+  <script>
+    window.addEventListener('error', (e) => {
+      console.error('[shortcut-runtime-error]', e.error || e.message);
+      const box = document.getElementById('authErrorText');
+      if (box) {
+        box.textContent = `[window.error] ${e.message || 'unknown'}\n${e.filename || ''}:${e.lineno || ''}:${e.colno || ''}`;
+        box.style.display = 'block';
+      }
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      const reasonMsg = e.reason && e.reason.message ? e.reason.message : String(e.reason || '');
+      if (reasonMsg.includes('auth-token') && reasonMsg.toLowerCase().includes('lock')) {
+        console.warn('[shortcut-lock-warning]', reasonMsg);
+        e.preventDefault();
+        return;
+      }
+      console.error('[shortcut-unhandled-promise]', e.reason);
+      const box = document.getElementById('authErrorText');
+      if (box) {
+        const reason = reasonMsg;
+        box.textContent = `[promise] ${reason}`;
+        box.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>
