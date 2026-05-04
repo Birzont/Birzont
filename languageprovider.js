@@ -258,12 +258,13 @@
         introPlatformLabel: '당신의 첫 AI 프롬프트 에이전트',
         introVersionLabel: ' ',
         introHeadline1: '빌드하고, 협업하고, 공유하세요.',
-        introHeadline2: '최적의 프롬프트는 Birzont가 만듭니다.',
-        introTab1Title: '프롬프트 빌더',
+        introHeadline2: '최적의 프롬프트는 Birzont가 만듭니다.', //One line, perfect prompt
+
+        introTab1Title: '의도 한줄로 구체적인 프롬프트 만들기',
         introTab1Body: '의도만 말하세요. 프롬프트는 Birzont가 만듭니다.',
-        introTab2Title: '1M+이상의 프롬프트와 템플릿',
+        introTab2Title: '1만개+의 프롬프트와 템플릿 적용하기',
         introTab2Body: '16가지 언어를 동시에 지원하는 1만+ 이상의 프롬프트와 템플릿을 둘러보세요.',
-        introTab3Title: '프롬프트 연동과 협업',
+        introTab3Title: '프롬프트 템플릿으로 협업하기',
         introTab3Body: '프롬프트 템플릿을 편집하고 협업하며 Slack, Notion과 연동하세요.',
         introTab4Title: '나만의 프롬프트 저장공간',
         introTab4Body: '프롬프트와 템플릿을 저장해 언제 어디서든 마음에 드는 프롬프트를 즉시 사용하세요.',
