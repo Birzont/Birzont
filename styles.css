@@ -581,6 +581,17 @@ body[data-latin-lang="false"] #desktop-nav a {
 .agent-card-left {
   word-break: keep-all;
   overflow-wrap: break-word;
+  /* Slightly tighter than former p-8 / md:p-12 (2rem / 3rem). */
+  padding: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .agent-card-left {
+    padding: 2.75rem;
+    flex: 0 0 36%;
+    width: 36%;
+    max-width: 36%;
+  }
 }
 
 /* Agent Card Right - 모바일에서 이미지가 보이도록 */
@@ -650,7 +661,7 @@ body[data-latin-lang="false"] #desktop-nav a {
 .product-card-large {
   transition: all 0.3s ease;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
-  height: 650px;
+  height: 628px;
 }
 
 .product-card-large > div {

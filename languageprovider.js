@@ -230,7 +230,7 @@
         heroSubtitle2: ' ',
         ctaGetStarted: '시작하기',
 
-        sectionExplore: '당신의 프롬프트를 위한 협업 플랫폼과 빌더.',
+        sectionExplore: '빌드하고, 협업하고, 공유하세요.',
         sectionExploreSub: ' ',
         sectionHow: '작동 방식',
         sectionHowSub: '생성, 추출, 연결, 공유, 판매까지 한 번에.',
@@ -255,19 +255,19 @@
         productsTitle: '우리의 제품',
         productsBody: '일상과 생산성을 높이기 위해 설계된 혁신적인 솔루션을 만나보세요. 모든 제품은 디테일과 사용자 경험을 중심으로 만들어졌습니다.',
         
-        introPlatformLabel: '당신의 첫 AI 프롬프트 에이전트',
+        introPlatformLabel: 'AI를 위한 프롬프팅 인프라',
         introVersionLabel: ' ',
-        introHeadline1: '빌드하고, 협업하고, 공유하세요.',
-        introHeadline2: '최적의 프롬프트는 Birzont가 만듭니다.', //One line, perfect prompt
+        introHeadline1: '프롬프트를 모두 이곳에서 해결하세요.',
+        introHeadline2: ' ',  
 
         introTab1Title: '의도 한줄로 구체적인 프롬프트 만들기',
-        introTab1Body: '의도만 말하세요. 프롬프트는 Birzont가 만듭니다.',
+        introTab1Body: '의도만 말하세요. 프롬프트는 Birzont가 만듭니다.', //설명필요
         introTab2Title: '1만개+의 프롬프트와 템플릿 적용하기',
-        introTab2Body: '16가지 언어를 동시에 지원하는 1만+ 이상의 프롬프트와 템플릿을 둘러보세요.',
+        introTab2Body: '16가지 언어를 동시에 지원하는 1만+ 이상의 프롬프트와 템플릿을 둘러보세요.', //설명필요
         introTab3Title: '프롬프트 템플릿으로 협업하기',
-        introTab3Body: '프롬프트 템플릿을 편집하고 협업하며 Slack, Notion과 연동하세요.',
+        introTab3Body: '프롬프트 템플릿을 편집하고 협업하며 Slack, Notion과 연동하세요.', //설명필요
         introTab4Title: '나만의 프롬프트 저장공간',
-        introTab4Body: '프롬프트와 템플릿을 저장해 언제 어디서든 마음에 드는 프롬프트를 즉시 사용하세요.',
+        introTab4Body: '프롬프트와 템플릿을 저장해 언제 어디서든 마음에 드는 프롬프트를 즉시 사용하세요.', //설명필요
 
         promptCard1Title: '효율적인 업무 자동화 스크립트 생성',
         promptCard1Body: '반복 업무를 자동화하는 Python 스크립트를 생성합니다. 설명을 기반으로 코드를 작성하고 최적화합니다.',
