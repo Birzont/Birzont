@@ -67,12 +67,13 @@
         job3Title: '[Talent Pool Registration] Marketing Lead',
         job3Location: 'Kyung Hee Startup Campus, Seoul',
         job3Salary: 'KRW 50k-100k',
-        heroTitle: 'Where the world builds prompts',
-        heroSubtitle1: 'Discover, share, and build AI prompts and agents.',
-        heroSubtitle2: 'A collaboration platform for prompt engineers and creators.',
+        heroTitle1: 'The home for better prompts',
+        heroTitle2: 'that upscale your ideas',
+        heroSubtitle1: 'Enhance, collaborate, and share your prompt templates with the world.',
+        heroSubtitle2: ' ',
         ctaGetStarted: 'Get Started',
         sectionExplore: 'Explore the Birzont',
-        sectionExploreSub: 'One platform for prompt generation, extraction, workflow, sharing, and selling.',
+        sectionExploreSub: ' ',
         sectionHow: 'How it works',
         sectionHowSub: 'Generate, extract, connect, share, and sell prompts-all in one place.',
         sectionPlans: 'Plans',
@@ -223,12 +224,14 @@
         job3Title: '[인재풀 등록] Marketing Lead',
         job3Location: '경희대학교 스타트업 캠퍼스, 서울',
         job3Salary: '₩5만-10만',
-        heroTitle: '전 세계의 프롬프트가 만들어지는 곳',
-        heroSubtitle1: 'AI 프롬프트와 에이전트를 발견하고, 공유하고, 만들어보세요.',
-        heroSubtitle2: '프롬프트 엔지니어와 크리에이터를 위한 협업 플랫폼.',
+        heroTitle1: '전 세계의 프롬프트가',
+        heroTitle2: '만들어지는 곳',
+        heroSubtitle1: '프롬프트 템플릿을 발견하고, 협업하고, 빌드하세요.',
+        heroSubtitle2: ' ',
         ctaGetStarted: '시작하기',
-        sectionExplore: 'Birzont 살펴보기',
-        sectionExploreSub: '프롬프트 생성, 추출, 워크플로우, 공유, 판매를 한 곳에서.',
+
+        sectionExplore: '당신의 프롬프트를 위한 협업 플랫폼과 빌더.',
+        sectionExploreSub: ' ',
         sectionHow: '작동 방식',
         sectionHowSub: '생성, 추출, 연결, 공유, 판매까지 한 번에.',
         sectionPlans: '요금제',
@@ -251,18 +254,20 @@
         aboutIntroBody: 'AI가 사회에 가져올 모든 결과를 예측할 수는 없지만, 강력한 기술을 설계할 때는 과감한 전진과 영향에 대한 신중한 성찰이 함께 필요하다는 점은 분명합니다. 그래서 우리는 사람에게 실질적인 이익을 주는 도구를 만듭니다.',
         productsTitle: '우리의 제품',
         productsBody: '일상과 생산성을 높이기 위해 설계된 혁신적인 솔루션을 만나보세요. 모든 제품은 디테일과 사용자 경험을 중심으로 만들어졌습니다.',
-        introPlatformLabel: '프롬프트 AI 플랫폼',
-        introVersionLabel: 'v1.0 MVP',
-        introHeadline1: '의도만 말하세요.',
+        
+        introPlatformLabel: '당신의 첫 AI 프롬프트 에이전트',
+        introVersionLabel: ' ',
+        introHeadline1: '빌드하고, 협업하고, 공유하세요.',
         introHeadline2: '최적의 프롬프트는 Birzont가 만듭니다.',
-        introTab1Title: '의도 기반 프롬프트 생성',
-        introTab1Body: 'Hearim 3.0 & Tobaki-2 모델이 자연어를 분석해 최적화된 프롬프트를 생성합니다.',
-        introTab2Title: '지능형 워크플로우 체인',
-        introTab2Body: '기획부터 실행까지 다단계 프롬프트를 하나의 파이프라인으로 연결해 복잡한 프로젝트를 자동화합니다.',
-        introTab3Title: '검증된 프롬프트 마켓플레이스',
-        introTab3Body: '5,000+ 고품질 템플릿을 탐색/공유하고 11개 언어로 즉시 적용하세요.',
-        introTab4Title: '적응형 개인화',
-        introTab4Body: '사용할수록 더 똑똑해집니다. 피드백을 학습해 실시간 맞춤 결과를 제공합니다.',
+        introTab1Title: '프롬프트 빌더',
+        introTab1Body: '의도만 말하세요. 프롬프트는 Birzont가 만듭니다.',
+        introTab2Title: '1M+이상의 프롬프트와 템플릿',
+        introTab2Body: '16가지 언어를 동시에 지원하는 1만+ 이상의 프롬프트와 템플릿을 둘러보세요.',
+        introTab3Title: '프롬프트 연동과 협업',
+        introTab3Body: '프롬프트 템플릿을 편집하고 협업하며 Slack, Notion과 연동하세요.',
+        introTab4Title: '나만의 프롬프트 저장공간',
+        introTab4Body: '프롬프트와 템플릿을 저장해 언제 어디서든 마음에 드는 프롬프트를 즉시 사용하세요.',
+
         promptCard1Title: '효율적인 업무 자동화 스크립트 생성',
         promptCard1Body: '반복 업무를 자동화하는 Python 스크립트를 생성합니다. 설명을 기반으로 코드를 작성하고 최적화합니다.',
         promptCard2Title: '창의적 아이디어 브레인스토밍 프롬프트',
@@ -274,6 +279,7 @@
         promptCard5Title: '긴 문서·회의록 핵심 요약',
         promptCard5Body: 'PDF/텍스트를 붙여넣으면 결론·액션아이템·타임라인으로 구조화해 요약합니다.',
         promptCard6Title: '리서치 질문 설계 & 출처 정리',
+
         promptCard6Body: '주제를 입력하면 검색 친화 하위 질문과 인용 형식을 함께 제안합니다.',
         bundleCardTitle1: '주식 투자 스타터팩 🪴',
         bundleCardTitle2: 'AI 글쓰기 번들 ✍️',
@@ -281,34 +287,37 @@
         bundleCardTitle4: '데이터 분석 입문 세트 📊',
         bundleCardTitle5: '콘텐츠 크리에이터 팩 🎬',
         bundleCardTitle6: '코드 리뷰 & 리팩터링 번들 💻',
+
         bizChip1: '디지털 제품',
         bizChip2: '에이전시',
         bizChip3: '이커머스',
         bizChip4: 'SaaS',
         bizChip5: '모바일 앱',
         bizChip6: '서비스',
+
         careerLabel: '채용 포지션',
         careerTitle1: '우리와 함께 AI의 미래를 만드세요.',
         careerTitle2: '당신의 여정이 여기서 시작됩니다.',
         timelineHeading1: 'Birzont의 이야기를',
-        timelineHeading2: '인공지능 위에서'
-        , featureTitle1: '프롬프트의 집'
-        , featureTagline1: '기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.'
-        , featureDesc1: '자체 튜닝된 Hearim & Tobaki 모델로 더 낮은 비용에 높은 품질의 프롬프트를 제공합니다.'
-        , featureTitle2: '자동화를 만듭니다'
-        , featureTagline2: '사용할수록 더 좋아지는 적응형 AI'
-        , featureDesc2: '피드백과 사용 패턴을 학습해 업무 흐름에 맞게 최적화됩니다.'
-        , featureTitle3: '출시하고 성장하세요'
-        , featureTagline3: '11개 언어, 5,000+ 검증 프롬프트를 즉시 활용'
-        , featureDesc3: '크리에이터 검증 프롬프트를 글로벌로 거래하고 바로 실행할 수 있습니다.'
-        , integrationsLabel: '연동'
-        , partnersTitle: '파트너를 소개합니다'
-        , companyTimelineTitle: '회사 연혁'
-        , seeMore: '더 보기'
-        , whatWeDoTitle: '하이퍼스케일 AI를 위한 인프라 소프트웨어를 만듭니다'
-        , whatWeDoBody: 'LLM과 생성형 AI 수요가 커지면서 대규모 AI 인프라 구축과 운영이 어려워졌습니다. 병렬화, 분산, 확장성, 성능 최적화, 장애 복구 같은 핵심 문제를 소프트웨어로 해결합니다.'
-        , ourVisionTitle: '인프라 장벽을 낮춰 AI를 더 많은 사람에게'
-        , ourVisionBody: 'AI의 성공은 열린 생태계와 다양한 참여자에서 시작됩니다. 우리는 인프라 기술 장벽을 낮춰 더 많은 고객이 AI를 활용하도록 돕습니다.'
+        timelineHeading2: '인공지능 위에서',
+
+        featureTitle1: '프롬프트의 집',
+        featureTagline1: '기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.',
+        featureDesc1: '자체 튜닝된 Hearim & Tobaki 모델로 더 낮은 비용에 높은 품질의 프롬프트를 제공합니다.',
+        featureTitle2: '자동화를 만듭니다',
+        featureTagline2: '사용할수록 더 좋아지는 적응형 AI',
+        featureDesc2: '피드백과 사용 패턴을 학습해 업무 흐름에 맞게 최적화됩니다.',
+        featureTitle3: '출시하고 성장하세요',
+        featureTagline3: '11개 언어, 5,000+ 검증 프롬프트를 즉시 활용',
+        featureDesc3: '크리에이터 검증 프롬프트를 글로벌로 거래하고 바로 실행할 수 있습니다.',
+        integrationsLabel: '연동',
+        partnersTitle: '파트너를 소개합니다',
+        companyTimelineTitle: '회사 연혁',
+        seeMore: '더 보기',
+        whatWeDoTitle: '하이퍼스케일 AI를 위한 인프라 소프트웨어를 만듭니다',
+        whatWeDoBody: 'LLM과 생성형 AI 수요가 커지면서 대규모 AI 인프라 구축과 운영이 어려워졌습니다. 병렬화, 분산, 확장성, 성능 최적화, 장애 복구 같은 핵심 문제를 소프트웨어로 해결합니다.',
+        ourVisionTitle: '인프라 장벽을 낮춰 AI를 더 많은 사람에게',
+        ourVisionBody: 'AI의 성공은 열린 생태계와 다양한 참여자에서 시작됩니다. 우리는 인프라 기술 장벽을 낮춰 더 많은 고객이 AI를 활용하도록 돕습니다.',
       },
       images: {
         heroBackground: "url('https://www.agoda.com/wp-content/uploads/2019/05/Seoul-itinerary-Seoul-Bukchon-Hanok-Village.jpg')",
@@ -378,12 +387,13 @@
         job3Title: '【タレントプール登録】マーケティングリード',
         job3Location: '慶熙スタートアップキャンパス、ソウル',
         job3Salary: '5万〜10万KRW',
-        heroTitle: '世界がプロンプトを作る場所',
+        heroTitle1: '世界がプロンプトを',
+        heroTitle2: '作る場所',
         heroSubtitle1: 'AIプロンプトとエージェントを発見・共有・構築しましょう。',
         heroSubtitle2: 'プロンプトエンジニアとクリエイターのためのコラボレーションプラットフォーム。',
         ctaGetStarted: '始める',
         sectionExplore: 'Birzontを探索する',
-        sectionExploreSub: 'プロンプトの生成・抽出・ワークフロー・共有・販売をワンプラットフォームで。',
+        sectionExploreSub: ' ',
         sectionHow: '使い方',
         sectionHowSub: 'プロンプトの生成・抽出・連携・共有・販売をすべて一か所で。',
         sectionPlans: 'プラン',
@@ -533,12 +543,13 @@
         job3Title: '【人才库登记】市场营销负责人',
         job3Location: '庆熙创业校区，首尔',
         job3Salary: '5万～10万韩元',
-        heroTitle: '全球构建提示词的地方',
+        heroTitle1: '全球构建',
+        heroTitle2: '提示词的地方',
         heroSubtitle1: '探索、分享并构建AI提示词与智能体。',
         heroSubtitle2: '面向提示词工程师与创作者的协作平台。',
         ctaGetStarted: '立即开始',
         sectionExplore: '探索Birzont',
-        sectionExploreSub: '提示词生成、提取、工作流、共享与销售，尽在一个平台。',
+        sectionExploreSub: ' ',
         sectionHow: '使用方式',
         sectionHowSub: '生成、提取、连接、共享并销售提示词——一站式搞定。',
         sectionPlans: '套餐方案',
@@ -689,12 +700,13 @@
         job3Title: '【人才库登记】市场营销负责人',
         job3Location: '庆熙创业校区，首尔',
         job3Salary: '5万～10万韩元',
-        heroTitle: '全球构建提示词的地方',
+        heroTitle1: '全球构建',
+        heroTitle2: '提示词的地方',
         heroSubtitle1: '探索、分享并构建AI提示词与智能体。',
         heroSubtitle2: '面向提示词工程师与创作者的协作平台。',
         ctaGetStarted: '立即开始',
         sectionExplore: '探索Birzont',
-        sectionExploreSub: '提示词生成、提取、工作流、共享与销售，尽在一个平台。',
+        sectionExploreSub: ' ',
         sectionHow: '使用方式',
         sectionHowSub: '生成、提取、连接、共享并销售提示词——一站式搞定。',
         sectionPlans: '套餐方案',
@@ -929,7 +941,13 @@
   }
 
   function applyStaticPageText(lang) {
-    setText('.hero-title', ui(lang, 'heroTitle', 'Where the world builds prompts'));
+    const heroTitleEl = document.querySelector('.hero-title');
+    if (heroTitleEl) {
+      const ht1 = ui(lang, 'heroTitle1', 'The home for better prompts');
+      const ht2 = ui(lang, 'heroTitle2', 'that upscale your ideas');
+      if (ht2) heroTitleEl.innerHTML = `${ht1}<br>${ht2}`;
+      else heroTitleEl.textContent = ht1;
+    }
     const heroSub = document.querySelector('p.blur-fade-once[data-hero-order="2"]');
     if (heroSub) heroSub.innerHTML = `${ui(lang, 'heroSubtitle1', 'Discover, share, and build AI prompts and agents.')}<br>${ui(lang, 'heroSubtitle2', 'A collaboration platform for prompt engineers and creators.')}`;
     setText('.try-free-button', ui(lang, 'ctaGetStarted', 'Get Started'));
@@ -968,7 +986,11 @@
     if (introHeaderSpans[0]) introHeaderSpans[0].textContent = ui(lang, 'introPlatformLabel', 'Prompt AI Platform');
     if (introHeaderSpans[1]) introHeaderSpans[1].textContent = ui(lang, 'introVersionLabel', 'v1.0 MVP');
     const introHeadline = document.querySelector('.agent-card-left header .group > p');
-    if (introHeadline) introHeadline.innerHTML = `${ui(lang, 'introHeadline1', 'Just say your intent.')}<br>${ui(lang, 'introHeadline2', 'Birzont creates the optimal prompt.')}`;
+    if (introHeadline) {
+      const h1 = ui(lang, 'introHeadline1', 'Just say your intent.');
+      const h2 = ui(lang, 'introHeadline2', 'Birzont creates the optimal prompt.');
+      introHeadline.textContent = h2 ? `${h1} ${h2}` : h1;
+    }
     const introTabs = document.querySelectorAll('.agent-card-left .product-tab');
     if (introTabs[0]) {
       const t1 = introTabs[0].querySelector('.product-tab-summary');

@@ -284,10 +284,29 @@ body {
     display: flex;
   }
 
+  /* Keep link pills from shrinking; allow row wrap when the bar is still narrow (e.g. long CJK labels). */
+  #desktop-nav .nav-item {
+    flex-shrink: 0;
+  }
+
   #desktop-start-btn {
     display: block;
   }
 
+}
+
+/* Non-Latin nav labels need a bit less padding/gap at medium desktop widths. */
+html[data-latin-lang="false"] #desktop-nav,
+body[data-latin-lang="false"] #desktop-nav {
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+}
+
+html[data-latin-lang="false"] #desktop-nav a,
+body[data-latin-lang="false"] #desktop-nav a {
+  font-size: 0.9375rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /* Utility classes */
@@ -556,6 +575,12 @@ body {
   width: 100%;
   height: 100%;
   min-height: 400px;
+}
+
+/* Agent card left: wrap at word/phrase boundaries (Korean/Japanese/Chinese), not mid-syllable. */
+.agent-card-left {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Agent Card Right - 모바일에서 이미지가 보이도록 */

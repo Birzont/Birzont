@@ -1,13 +1,13 @@
 (function () {
   const NAVBAR_TEMPLATE = `
     <header id="navbar" class="fixed top-0 left-0 w-full px-4 md:px-0 flex justify-center py-4 z-50 transition-all duration-300 bg-transparent">
-      <div class="w-full md:w-[calc(95%-110px)] md:max-w-[1506px] flex items-center relative">
-        <div class="flex-1 flex items-center order-1">
+      <div class="w-full md:w-[calc(95%-110px)] md:max-w-[1506px] flex items-center relative gap-2 md:gap-3">
+        <div class="flex-shrink-0 flex items-center order-1">
           <a href="index.html">
             <img id="logo-img" alt="Birzont Logo" width="120" height="36" class="object-contain" src="https://birzont.github.io/BirzontArchive/res/birzont_white.png">
           </a>
         </div>
-        <nav id="desktop-nav" class="flex-1 hidden md:flex gap-4 justify-center order-2">
+        <nav id="desktop-nav" class="flex-1 min-w-0 hidden md:flex flex-wrap gap-x-3 gap-y-1 justify-center items-center order-2">
             <div class="relative nav-item" data-item="Home">
               <a href="index.html" class="font-normal text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Home</a>
             </div>
@@ -25,7 +25,7 @@
             </div>
         </nav>
 
-        <div class="flex-1 flex justify-end items-center gap-2 order-3">
+        <div class="flex-shrink-0 flex justify-end items-center gap-2 order-3">
           <div class="relative hidden md:block">
             <button type="button" id="lang-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors hover:bg-gray-100/70 text-white" aria-label="Language" aria-haspopup="true" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
