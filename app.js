@@ -948,7 +948,7 @@ const productFeatures = [
     index: 0,
     modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
-    featureImage: "https://cdn-avatars.huggingface.co/v1/production/uploads/65072bf20c873319479d8f9d/XXPdlEku5msKe1y0FineF.jpeg"
+    featureImage: "resources/uione.png"
   },
   {
     title: tr('ui.featureTitle2', 'We build Automations'),
@@ -960,7 +960,7 @@ const productFeatures = [
     index: 1,
     modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
-    featureImage: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/c6/d7/4e/brienz-rothorn-bahn.jpg?w=900&h=500&s=1"
+    featureImage: "resources/uicompass.png"
   },
   {
     title: tr('ui.featureTitle3', 'Launch and grow'),
