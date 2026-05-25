@@ -972,7 +972,7 @@ const productFeatures = [
     index: 2,
     modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
-    featureImage: "https://i.pinimg.com/736x/23/1d/71/231d71195172650c2c4488435b1ca7e6.jpg"
+    featureImage: "resources/pencil.png"
   }
 ];
   
