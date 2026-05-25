@@ -68,7 +68,7 @@
         job3Location: 'Kyung Hee Startup Campus, Seoul',
         job3Salary: 'KRW 50k-100k',
         heroTitle1: 'The home for better prompts',
-        heroTitle2: 'that upscale your ideas',
+        heroTitle2: 'that upscale your agents',
         heroSubtitle1: 'Enhance, collaborate, and share your prompt templates with the world.',
         heroSubtitle2: ' ',
         ctaGetStarted: 'Get Started',
@@ -945,7 +945,7 @@
     const heroTitleEl = document.querySelector('.hero-title');
     if (heroTitleEl) {
       const ht1 = ui(lang, 'heroTitle1', 'The home for better prompts');
-      const ht2 = ui(lang, 'heroTitle2', 'that upscale your ideas');
+      const ht2 = ui(lang, 'heroTitle2', 'that upscale your agents');
       if (ht2) heroTitleEl.innerHTML = `${ht1}<br>${ht2}`;
       else heroTitleEl.textContent = ht1;
     }
