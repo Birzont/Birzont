@@ -147,7 +147,7 @@
         </div>
 
         <div class="border-t border-gray-300 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p class="text-gray-600 text-sm mb-4 md:mb-0">© 2025 Birzont Inc. All rights reserved.</p>
+          <p class="text-gray-600 text-sm mb-4 md:mb-0">© 2026 Birzont Inc. All rights reserved.</p>
           <div class="flex gap-6">
             <a href="#" class="text-gray-600 hover:text-black text-sm transition-colors">Privacy Policy</a>
             <a href="#" class="text-gray-600 hover:text-black text-sm transition-colors">Terms of Service</a>
