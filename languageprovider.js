@@ -43,7 +43,7 @@
         footerCompany: 'Company',
         footerProduct: 'Product',
         footerSupport: 'Support',
-        footerDesc: "Building AI to serve humanity's future.\n© 2025 Birzont. All rights reserved.",
+        footerDesc: "The Prompt infrastructure for AI agents. \n© 2026 Birzont. All rights reserved.",
         footerAboutUs: 'About us',
         footerCareer: 'Career',
         footerBlog: 'Blog',
@@ -97,7 +97,6 @@
         productsTitle: 'Our Products',
         productsBody: 'Discover our innovative solutions designed to enhance your daily life and productivity. Each product is crafted with attention to detail and user experience.',
         introPlatformLabel: 'Prompt AI Platform',
-        introVersionLabel: 'v1.0 MVP',
         introHeadline1: 'Just say your intent.',
         introHeadline2: 'Birzont creates the optimal prompt.',
         introTab1Title: 'Intent-based prompt generation',
@@ -256,7 +255,6 @@
         productsBody: '일상과 생산성을 높이기 위해 설계된 혁신적인 솔루션을 만나보세요. 모든 제품은 디테일과 사용자 경험을 중심으로 만들어졌습니다.',
         
         introPlatformLabel: 'AI를 위한 프롬프팅 인프라',
-        introVersionLabel: ' ',
         introHeadline1: '프롬프트를 모두 이곳에서 해결하세요.',
         introHeadline2: ' ',  
 
@@ -418,7 +416,6 @@
         productsTitle: '私たちの製品',
         productsBody: '日常生活と生産性を高めるために設計された革新的なソリューションをご紹介します。各製品は細部へのこだわりとユーザー体験を大切に作られています。',
         introPlatformLabel: 'プロンプトAIプラットフォーム',
-        introVersionLabel: 'v1.0 MVP',
         introHeadline1: '意図を伝えるだけで。',
         introHeadline2: 'Birzontが最適なプロンプトを作ります。',
         introTab1Title: '意図ベースのプロンプト生成',
@@ -574,7 +571,6 @@
         productsTitle: '我们的产品',
         productsBody: '探索我们精心设计的创新解决方案，提升您的日常生活与工作效率。每款产品都注重细节与用户体验。',
         introPlatformLabel: '提示词AI平台',
-        introVersionLabel: 'v1.0 MVP',
         introHeadline1: '只需表达您的意图。',
         introHeadline2: 'Birzont为您生成最优提示词。',
         introTab1Title: '基于意图的提示词生成',
@@ -731,7 +727,6 @@
         productsTitle: '我们的产品',
         productsBody: '探索我们精心设计的创新解决方案，提升您的日常生活与工作效率。每款产品都注重细节与用户体验。',
         introPlatformLabel: '提示词AI平台',
-        introVersionLabel: 'v1.0 MVP',
         introHeadline1: '只需表达您的意图。',
         introHeadline2: 'Birzont为您生成最优提示词。',
         introTab1Title: '基于意图的提示词生成',
@@ -985,7 +980,6 @@
     // Intro left block in main product card
     const introHeaderSpans = document.querySelectorAll('.agent-card-left header .group h3 span');
     if (introHeaderSpans[0]) introHeaderSpans[0].textContent = ui(lang, 'introPlatformLabel', 'Prompt AI Platform');
-    if (introHeaderSpans[1]) introHeaderSpans[1].textContent = ui(lang, 'introVersionLabel', 'v1.0 MVP');
     const introHeadline = document.querySelector('.agent-card-left header .group > p');
     if (introHeadline) {
       const h1 = ui(lang, 'introHeadline1', 'Just say your intent.');
