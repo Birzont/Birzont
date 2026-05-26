@@ -25,7 +25,7 @@
             </div>
         </nav>
 
-        <div class="flex-shrink-0 flex justify-end items-center gap-2 order-3">
+        <div class="flex-shrink-0 flex justify-end items-center gap-2 order-3 ml-auto">
           <div class="relative hidden md:block">
             <button type="button" id="lang-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors hover:bg-gray-100/70 text-white" aria-label="Language" aria-haspopup="true" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
