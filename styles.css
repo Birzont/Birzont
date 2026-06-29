@@ -2138,6 +2138,11 @@ body[data-latin-lang="false"] .product-card-title {
   font-style: normal !important;
 }
 
+html[data-latin-lang="false"] .biz-float-title-script,
+body[data-latin-lang="false"] .biz-float-title-script {
+  font-weight: 800;
+}
+
 .biz-float-chips {
   position: absolute;
   inset: 0;

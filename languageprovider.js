@@ -229,7 +229,7 @@
         heroSubtitle2: ' ',
         ctaGetStarted: '시작하기',
 
-        sectionExplore: '빌드하고, 협업하고, 공유하세요.',
+        sectionExplore: '수동으로 바꾸는 법을 연습해볼게요',
         sectionExploreSub: ' ',
         sectionHow: '작동 방식',
         sectionHowSub: ' ',
