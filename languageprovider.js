@@ -68,25 +68,25 @@
         job3Title: '[Talent Pool Registration] Marketing Lead',
         job3Location: 'Kyung Hee Startup Campus, Seoul',
         job3Salary: 'KRW 50k-100k',
-        heroTitle1: 'The home for better prompts',
-        heroTitle2: 'that upscale your agents',
-        heroSubtitle1: 'Enhance, collaborate, and share your prompt templates with the world.',
-        heroSubtitle2: ' ',
+        heroTitle1: "Your team's knowledge,",
+        heroTitle2: 'inside your agent with Birzont.',
+        heroSubtitle1: 'AI is smart—but it still doesn\'t know your team.',
+        heroSubtitle2: 'Connect Notion or a folder. Birzont syncs it to your agent in 30 seconds.',
         ctaGetStarted: 'Get Started',
-        sectionExplore: 'Explore the Birzont',
-        sectionExploreSub: ' ',
+        sectionExplore: 'How your agent learns your business',
+        sectionExploreSub: 'Connect team docs once—your agent starts remembering what your team knows.',
         sectionHow: 'How it works',
-        sectionHowSub: 'Generate, extract, connect, share, and sell prompts-all in one place.',
+        sectionHowSub: '30 seconds to a context-aware agent. Manual: 15–20 min → Birzont: 30 sec.',
         sectionPlans: 'Plans',
         sectionPlansSub: 'Choose the plan that fits you',
-        citySub: 'The hub for AI-powered creation and collaboration',
-        cityHeadline: 'Bridge, Build, Automation. With Birzont.',
-        cityBody: 'No more juggling tools for landing pages, copy, or agents. Birzont understands your brand, designs prompts, and shares with your team-all in one platform.',
-        sectionHomePrompts: 'Birzont, Home of Prompts',
-        sectionHomePromptsSub: 'Explore diverse prompts created by the community',
+        citySub: 'Connect once—your agent remembers your team.',
+        cityHeadline: 'A <em class="city-cta-em">context-aware</em> agent in 30 seconds.',
+        cityBody: 'Birzont structures and connects team docs for your agent.<br>Less explaining, sharper answers.',
+        sectionHomePrompts: 'Team prompt library',
+        sectionHomePromptsSub: 'Manage shared reference knowledge and prompts in one place',
         promptExplore: 'Explore Prompts',
-        builtForAny: 'Built for any',
-        builtBusiness: 'Business',
+        builtForAny: 'Your docs live everywhere.',
+        builtBusiness: 'Your agent <span class="biz-float-title-keep">remembers it all.</span>',
         aboutHero1: 'Where the Bridge ends, Bird flies.',
         aboutHero2: 'Birzont can be the bridge.',
         aboutWhatWeDo: 'What we do',
@@ -97,55 +97,55 @@
         aboutIntroBody: "While no one can foresee every outcome AI will have on society, we do know that designing powerful technologies requires both bold steps forward and intentional pauses to consider the effects. That's why we focus on building tools with human benefit at their foundation.",
         productsTitle: 'Our Products',
         productsBody: 'Discover our innovative solutions designed to enhance your daily life and productivity. Each product is crafted with attention to detail and user experience.',
-        introPlatformLabel: 'Prompt AI Platform',
-        introHeadline1: 'Just say your intent.',
-        introHeadline2: 'Birzont creates the optimal prompt.',
-        introTab1Title: 'Intent-based prompt generation',
-        introTab1Body: 'Hearim 3.0 & Tobaki-2 models analyze your natural language and generate optimized prompts.',
-        introTab2Title: 'Intelligent workflow chains',
-        introTab2Body: 'Connect multi-step prompts into a single pipeline from planning to execution. Automate complex projects.',
-        introTab3Title: 'Verified prompt marketplace',
-        introTab3Body: 'Explore and share 5,000+ high-quality templates. 11 languages. Instant apply. Extract prompts from anywhere.',
-        introTab4Title: 'Adaptive personalization',
-        introTab4Body: 'Gets smarter with use. RLHF-based learning adapts to your feedback and delivers personalized results in real time.',
-        promptCard1Title: 'Efficient task automation script generation',
-        promptCard1Body: 'Generates Python scripts to automate repetitive tasks. Based on your description, it writes and optimizes code for you.',
-        promptCard2Title: 'Creative idea brainstorming prompt',
-        promptCard2Body: 'Generates original and innovative ideas around your topic. Expands and refines ideas from multiple perspectives to maximize creativity.',
-        promptCard3Title: 'Test scenario generation and validation',
-        promptCard3Body: 'Generates and validates diverse scenarios for software testing. Auto-creates test cases from your requirements to boost efficiency.',
-        promptCard4Title: 'SNS & ad marketing copy generation',
-        promptCard4Body: 'Input your brand tone and target-get multiple short, impactful copy versions by channel.',
-        promptCard5Title: 'Long document & meeting notes summary',
-        promptCard5Body: 'Paste PDF or text-get structured conclusions, action items, and timeline for easy review.',
-        promptCard6Title: 'Research question design & citation formatting',
-        promptCard6Body: 'Input a topic-get search-friendly sub-questions and proper citation formats for your answers.',
+        introPlatformLabel: 'Agent knowledge layer',
+        introHeadline1: 'Stop copy-pasting.',
+        introHeadline2: 'Connect team knowledge to your agent.',
+        introTab1Title: 'One click from Notion to agent',
+        introTab1Body: 'Link scattered Notion, folders, and Confluence—your agent gets instant access to team knowledge.',
+        introTab2Title: 'Long docs, one agent-ready summary',
+        introTab2Body: 'Turn hundreds of pages into clean .md files your agent can actually read.',
+        introTab3Title: 'Cursor, Claude—each in its own format',
+        introTab3Body: 'Auto-convert to Cursor Rules, Claude.md, and more. Images included.',
+        introTab4Title: 'Docs change, your agent keeps up',
+        introTab4Body: 'When team docs update, your agent folder syncs automatically. Always fresh context.',
+        promptCard1Title: 'Auto-generate Cursor Rules',
+        promptCard1Body: 'Turn team conventions and coding guides into Cursor Rules and inject them instantly.',
+        promptCard2Title: 'Claude.md team context',
+        promptCard2Body: 'Structure project background, architecture, and ops rules as Claude.md for your agent.',
+        promptCard3Title: 'Notion docs → agent sync',
+        promptCard3Body: 'Convert Notion pages to agent-ready markdown and auto-reflect changes.',
+        promptCard4Title: 'Meeting notes → action items',
+        promptCard4Body: 'Extract decisions and action items from meeting notes as team reference knowledge.',
+        promptCard5Title: 'Brand guide → prompt injection',
+        promptCard5Body: 'Convert brand tone and visual guides into agent reference knowledge for consistent output.',
+        promptCard6Title: 'Onboarding doc auto-summary',
+        promptCard6Body: 'Summarize onboarding docs so every agent shares the same team context.',
         bundleCardTitle1: 'Stock investing starter pack 🪴',
         bundleCardTitle2: 'AI writing bundle ✍️',
         bundleCardTitle3: 'Startup pitch full package 🚀',
         bundleCardTitle4: 'Data analysis intro set 📊',
         bundleCardTitle5: 'Content creator pack 🎬',
         bundleCardTitle6: 'Code review & refactor bundle 💻',
-        bizChip1: 'Digital products',
-        bizChip2: 'Agencies',
-        bizChip3: 'E-commerce',
-        bizChip4: 'SaaS',
-        bizChip5: 'Mobile apps',
-        bizChip6: 'Services',
+        bizChip1: 'Notion',
+        bizChip2: 'Confluence',
+        bizChip3: 'Cursor',
+        bizChip4: 'Claude',
+        bizChip5: 'Local folders',
+        bizChip6: 'Markdown',
         careerLabel: 'Open roles',
         careerTitle1: 'Build the future of AI with us.',
         careerTitle2: 'Your journey starts here.',
         timelineHeading1: "Watch Birzont's story",
         timelineHeading2: 'On artificial intelligence'
-        , featureTitle1: 'Home of Prompts'
-        , featureTagline1: '90% lower cost than existing APIs for high-quality prompts.'
-        , featureDesc1: 'Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.'
-        , featureTitle2: 'We build Automations'
-        , featureTagline2: 'Adaptive AI that gets better the more you use it.'
-        , featureDesc2: 'We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.'
-        , featureTitle3: 'Launch and grow'
-        , featureTagline3: '5,000+ verified prompts in 11 languages. Use them instantly.'
-        , featureDesc3: 'Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.'
+        , featureTitle1: '01. Connect'
+        , featureTagline1: 'Notion, folders & Confluence'
+        , featureDesc1: 'Connect your team knowledge sources to Birzont. Get started in 30 seconds.'
+        , featureTitle2: '02. Convert'
+        , featureTagline2: 'Docs → .md automatically'
+        , featureDesc2: 'Summarize and structure team docs into agent-ready markdown—including images.'
+        , featureTitle3: '03. Sync'
+        , featureTagline3: 'Your agent is up to date'
+        , featureDesc3: 'Auto-apply to your agent folder. Changes sync in real time when documents update.'
         , integrationsLabel: 'INTEGRATIONS'
         , partnersTitle: 'Meet Our Partners'
         , companyTimelineTitle: 'Company Timeline'
@@ -225,26 +225,26 @@
         job3Title: '[인재풀 등록] Marketing Lead',
         job3Location: '경희대학교 스타트업 캠퍼스, 서울',
         job3Salary: '₩5만-10만',
-        heroTitle1: '전 세계의 프롬프트가',
-        heroTitle2: '만들어지는 곳',
-        heroSubtitle1: '프롬프트 템플릿을 발견하고, 협업하고, 빌드하세요.',
-        heroSubtitle2: ' ',
+        heroTitle1: '팀의 지식,',
+        heroTitle2: 'Birzont로 에이전트 안에',
+        heroSubtitle1: 'AI는 똑똑한데, 우리 팀 이야기는 아직 모릅니다.',
+        heroSubtitle2: 'Notion·폴더만 연결하세요. Birzont가 30초 만에 에이전트에 맞춰 동기화합니다.',
         ctaGetStarted: '시작하기',
 
-        sectionExplore: '수동으로 바꾸는 법을 연습해볼게요',
-        sectionExploreSub: ' ',
+        sectionExplore: '에이전트가 비즈니스를 아는 방법',
+        sectionExploreSub: '팀 문서를 연결하는 순간, 에이전트가 팀을 기억하기 시작합니다.',
         sectionHow: '작동 방식',
-        sectionHowSub: ' ',
+        sectionHowSub: '30초면 컨텍스트를 아는 에이전트. 기존 15~20분 → Birzont 30초.',
         sectionPlans: '요금제',
         sectionPlansSub: '나에게 맞는 플랜을 선택하세요',
-        citySub: 'AI 기반 창작·협업의 허브',
-        cityHeadline: '브릿지하고, 빌드하세요. Birzont와 함께',
-        cityBody: '랜딩, 카피, 에이전트를 위해 여러 도구를 오갈 필요가 없습니다. Birzont는 브랜드를 이해하고 프롬프트를 설계하며 팀과 공유하는 올인원 플랫폼입니다.',
-        sectionHomePrompts: 'Birzont, 프롬프트의 집',
-        sectionHomePromptsSub: '커뮤니티가 만든 다양한 프롬프트를 탐색해보세요',
+        citySub: '연결 한 번이면, 에이전트가 팀을 기억합니다.',
+        cityHeadline: '30초면 <em class="city-cta-em">컨텍스트를 아는</em> 에이전트.',
+        cityBody: 'Birzont가 팀 문서를 에이전트에 맞게 정리하고 연결합니다.<br>설명은 줄이고, 답변은 더 정확해집니다.',
+        sectionHomePrompts: '팀 프롬프트 라이브러리',
+        sectionHomePromptsSub: '팀이 공유하는 참조 지식과 프롬프트를 한곳에서 관리하세요',
         promptExplore: '프롬프트 탐색',
-        builtForAny: '모든 비즈니스를 위한',
-        builtBusiness: '플랫폼',
+        builtForAny: '팀 문서는 여기저기,',
+        builtBusiness: '에이전트는 하나로 <span class="biz-float-title-keep">기억합니다</span>',
         aboutHero1: '다리가 끝나는 곳에서, 새가 납니다.',
         aboutHero2: 'Birzont가 그 다리가 됩니다.',
         aboutWhatWeDo: '우리가 하는 일',
@@ -256,32 +256,31 @@
         productsTitle: '우리의 제품',
         productsBody: '일상과 생산성을 높이기 위해 설계된 혁신적인 솔루션을 만나보세요. 모든 제품은 디테일과 사용자 경험을 중심으로 만들어졌습니다.',
         
-        introPlatformLabel: 'AI를 위한 프롬프팅 인프라',
-        introHeadline1: '프롬프트를 모두 이곳에서 해결하세요.',
-        introHeadline2: ' ',  
+        introPlatformLabel: '에이전트 지식 레이어',
+        introHeadline1: '복사·붙여넣기는 그만.',
+        introHeadline2: '팀 지식을 에이전트에 연결하세요.',
 
-        introTab1Title: '의도 한줄로 구체적인 프롬프트 만들기',
-        introTab1Body: '의도만 말하세요. 프롬프트는 Birzont가 만듭니다.', //설명필요
-        introTab2Title: '1만개+의 프롬프트와 템플릿 적용하기',
-        introTab2Body: '16가지 언어를 동시에 지원하는 1만+ 이상의 프롬프트와 템플릿을 둘러보세요.', //설명필요
-        introTab3Title: '프롬프트 템플릿으로 협업하기',
-        introTab3Body: '프롬프트 템플릿을 편집하고 협업하며 Slack, Notion과 연동하세요.', //설명필요
-        introTab4Title: '나만의 프롬프트 저장공간',
-        introTab4Body: '프롬프트와 템플릿을 저장해 언제 어디서든 마음에 드는 프롬프트를 즉시 사용하세요.', //설명필요
+        introTab1Title: '클릭 한 번, Notion부터 에이전트까지',
+        introTab1Body: '흩어진 Notion·폴더·Confluence를 연결하면, 에이전트가 바로 팀 지식에 접근합니다.',
+        introTab2Title: '긴 문서도, 에이전트용 한 장 요약으로',
+        introTab2Body: '수백 페이지 문서를 에이전트가 읽기 좋은 .md 파일로 깔끔하게 정리합니다.',
+        introTab3Title: 'Cursor·Claude, 각자 맞는 형식으로',
+        introTab3Body: 'Cursor Rules, Claude.md처럼 에이전트마다 필요한 포맷으로 자동 변환합니다. 이미지도 문제없습니다.',
+        introTab4Title: '문서 바뀌면, 에이전트도 따라갑니다',
+        introTab4Body: '팀 문서가 업데이트되면 에이전트 폴더도 자동 반영. 항상 최신 맥락을 유지합니다.',
 
-        promptCard1Title: '효율적인 업무 자동화 스크립트 생성',
-        promptCard1Body: '반복 업무를 자동화하는 Python 스크립트를 생성합니다. 설명을 기반으로 코드를 작성하고 최적화합니다.',
-        promptCard2Title: '창의적 아이디어 브레인스토밍 프롬프트',
-        promptCard2Body: '주제를 바탕으로 독창적 아이디어를 생성하고 다양한 관점으로 확장/구체화합니다.',
-        promptCard3Title: '테스트 시나리오 생성 및 검증',
-        promptCard3Body: '요구사항을 기반으로 테스트 시나리오와 케이스를 자동 생성해 검증 효율을 높입니다.',
-        promptCard4Title: 'SNS·광고용 마케팅 카피 생성',
-        promptCard4Body: '브랜드 톤과 타깃을 입력하면 채널별 짧고 임팩트 있는 카피를 여러 버전으로 제안합니다.',
-        promptCard5Title: '긴 문서·회의록 핵심 요약',
-        promptCard5Body: 'PDF/텍스트를 붙여넣으면 결론·액션아이템·타임라인으로 구조화해 요약합니다.',
-        promptCard6Title: '리서치 질문 설계 & 출처 정리',
-
-        promptCard6Body: '주제를 입력하면 검색 친화 하위 질문과 인용 형식을 함께 제안합니다.',
+        promptCard1Title: 'Cursor Rules 자동 생성',
+        promptCard1Body: '팀 컨벤션과 코딩 가이드를 Cursor Rules로 변환해 에이전트에 즉시 주입합니다.',
+        promptCard2Title: 'Claude.md 팀 컨텍스트',
+        promptCard2Body: '프로젝트 배경, 아키텍처, 운영 규칙을 Claude.md 형식으로 구조화해 에이전트에 연결합니다.',
+        promptCard3Title: 'Notion 문서 → 에이전트 동기화',
+        promptCard3Body: 'Notion 페이지를 에이전트가 읽기 좋은 마크다운으로 변환하고 변경 사항을 자동 반영합니다.',
+        promptCard4Title: '회의록 → 액션 아이템 추출',
+        promptCard4Body: '회의록에서 결정 사항과 액션 아이템을 추출해 팀 에이전트 참조 지식으로 저장합니다.',
+        promptCard5Title: '브랜드 가이드 → 프롬프트 주입',
+        promptCard5Body: '브랜드 톤·비주얼 가이드를 에이전트 참조 지식으로 변환해 일관된 결과를 만듭니다.',
+        promptCard6Title: '온보딩 문서 자동 요약',
+        promptCard6Body: '신규 팀원용 온보딩 문서를 요약·구조화해 모든 에이전트가 같은 맥락을 공유하게 합니다.',
         bundleCardTitle1: '주식 투자 스타터팩 🪴',
         bundleCardTitle2: 'AI 글쓰기 번들 ✍️',
         bundleCardTitle3: '스타트업 피치 풀패키지 🚀',
@@ -289,12 +288,12 @@
         bundleCardTitle5: '콘텐츠 크리에이터 팩 🎬',
         bundleCardTitle6: '코드 리뷰 & 리팩터링 번들 💻',
 
-        bizChip1: '디지털 제품',
-        bizChip2: '에이전시',
-        bizChip3: '이커머스',
-        bizChip4: 'SaaS',
-        bizChip5: '모바일 앱',
-        bizChip6: '서비스',
+        bizChip1: 'Notion',
+        bizChip2: 'Confluence',
+        bizChip3: 'Cursor',
+        bizChip4: 'Claude',
+        bizChip5: '로컬 폴더',
+        bizChip6: 'Markdown',
 
         careerLabel: '채용 포지션',
         careerTitle1: '우리와 함께 AI의 미래를 만드세요.',
@@ -302,15 +301,15 @@
         timelineHeading1: 'Birzont의 이야기를',
         timelineHeading2: '인공지능 위에서',
 
-        featureTitle1: '전문가급 프롬프팅',
-        featureTagline1: '기존 API 대비 90% 낮은 비용으로 고품질 프롬프트를 제공합니다.',
-        featureDesc1: '자체 튜닝된 Hearim & Tobaki 모델로 더 낮은 비용에 높은 품질의 프롬프트를 제공합니다.',
-        featureTitle2: '빠른 원클릭',
-        featureTagline2: '사용할수록 더 좋아지는 적응형 AI',
-        featureDesc2: '피드백과 사용 패턴을 학습해 업무 흐름에 맞게 최적화됩니다.',
-        featureTitle3: '플로우를 이어서 실행',
-        featureTagline3: '11개 언어, 5,000+ 검증 프롬프트를 즉시 활용',
-        featureDesc3: '크리에이터 검증 프롬프트를 글로벌로 거래하고 바로 실행할 수 있습니다.',
+        featureTitle1: '01. 연동',
+        featureTagline1: 'Notion·폴더·Confluence 연결',
+        featureDesc1: '팀 지식 저장소를 Birzont에 연결하세요. Connect your Notion — 30초면 시작할 수 있습니다.',
+        featureTitle2: '02. 변환',
+        featureTagline2: '문서 → .md 자동 변환',
+        featureDesc2: '팀 문서를 에이전트가 읽기 좋은 마크다운으로 요약·구조화합니다. 이미지 포함 문서도 처리합니다.',
+        featureTitle3: '03. 동기화',
+        featureTagline3: 'Your agent is up to date',
+        featureDesc3: '에이전트 폴더에 자동 적용됩니다. 문서가 바뀌면 변경 사항이 실시간으로 반영됩니다.',
         integrationsLabel: '연동',
         partnersTitle: '파트너를 소개합니다',
         companyTimelineTitle: '회사 연혁',
@@ -976,25 +975,38 @@
     setText('.try-free-button', ui(lang, 'ctaGetStarted', 'Get Started'));
 
     const headings = document.querySelectorAll('h3[data-instrument-font]');
-    if (headings[0]) headings[0].textContent = ui(lang, 'sectionExplore', 'Explore the Birzont');
-    if (headings[1]) headings[1].textContent = ui(lang, 'sectionHow', 'How it works');
-    if (headings[2]) headings[2].textContent = ui(lang, 'sectionHomePrompts', 'Birzont, Home of Prompts');
+    const exploreHeading = document.querySelector('[aria-label="Birzont core features"] h3[data-instrument-font]');
+    const howHeading = document.querySelector('[aria-label="Birzont key value"] h3[data-instrument-font]');
+    const promptsHeading = document.querySelector('.cursor-prompts-section h3[data-instrument-font]');
+    if (exploreHeading) exploreHeading.textContent = ui(lang, 'sectionExplore', '에이전트가 비즈니스를 아는 방법');
+    if (howHeading) howHeading.textContent = ui(lang, 'sectionHow', 'How it works');
+    if (promptsHeading) promptsHeading.textContent = ui(lang, 'sectionHomePrompts', 'Birzont, Home of Prompts');
+    if (!exploreHeading && headings[0]) headings[0].textContent = ui(lang, 'sectionExplore', '에이전트가 비즈니스를 아는 방법');
+    if (!howHeading && headings[1]) headings[1].textContent = ui(lang, 'sectionHow', 'How it works');
+    if (!promptsHeading && headings[2]) headings[2].textContent = ui(lang, 'sectionHomePrompts', 'Birzont, Home of Prompts');
     const planHeading = document.querySelector('h2[data-instrument-font]');
     if (planHeading) planHeading.textContent = ui(lang, 'sectionPlans', 'Plans');
 
-    const centerSubs = document.querySelectorAll('p.text-lg.md\\:text-xl.text-gray-600.text-center');
-    if (centerSubs[0]) centerSubs[0].textContent = ui(lang, 'sectionExploreSub', 'One platform for prompt generation, extraction, workflow, sharing, and selling.');
-    if (centerSubs[1]) centerSubs[1].textContent = ui(lang, 'sectionHowSub', 'Generate, extract, connect, share, and sell prompts-all in one place.');
-    if (centerSubs[2]) centerSubs[2].textContent = ui(lang, 'sectionPlansSub', 'Choose the plan that fits you');
-    if (centerSubs[3]) centerSubs[3].textContent = ui(lang, 'sectionHomePromptsSub', 'Explore diverse prompts created by the community');
+    const exploreSub = document.querySelector('[data-section-sub="explore"]');
+    const howSub = document.querySelector('[data-section-sub="how"]');
+    const promptsSub = document.querySelector('[data-section-sub="prompts"]');
+    if (exploreSub) exploreSub.textContent = ui(lang, 'sectionExploreSub', '팀 문서를 연결하는 순간, 에이전트가 팀을 기억하기 시작합니다.');
+    if (howSub) howSub.textContent = ui(lang, 'sectionHowSub', '30초면 컨텍스트를 아는 에이전트. 기존 15~20분 → Birzont 30초.');
+    if (promptsSub) promptsSub.textContent = ui(lang, 'sectionHomePromptsSub', '팀이 공유하는 참조 지식과 프롬프트를 한곳에서 관리하세요');
 
-    setText('.city-cta-sub', ui(lang, 'citySub', 'The hub for AI-powered creation and collaboration'));
-    setText('.city-cta-headline', ui(lang, 'cityHeadline', 'Bridge, Build, Automation. With Birzont.'));
-    setText('.city-cta-body', ui(lang, 'cityBody', 'No more juggling tools for landing pages, copy, or agents.'));
-    setText('a[href="https://birzont.ai"][class*="hover:underline"]', ui(lang, 'promptExplore', 'Explore Prompts'));
+    setText('.city-cta-sub', ui(lang, 'citySub', '수동 15~20분 → Birzont 30초'));
+    const cityHeadlineEl = document.querySelector('.city-cta-headline');
+    if (cityHeadlineEl) {
+      cityHeadlineEl.innerHTML = ui(lang, 'cityHeadline', '30초면 <em class="city-cta-em">컨텍스트를 아는</em> 에이전트.');
+    }
+    const cityBodyEl = document.querySelector('.city-cta-body');
+    if (cityBodyEl) {
+      cityBodyEl.innerHTML = ui(lang, 'cityBody', 'Birzont가 팀 문서를 에이전트에 맞게 정리하고 연결합니다.<br>설명은 줄이고, 답변은 더 정확해집니다.');
+    }
+    setText('a.cursor-link[href="https://birzont.ai"]', ui(lang, 'promptExplore', '프롬프트 탐색'));
     const bizTitle = document.querySelector('.biz-float-title');
     if (bizTitle) {
-      bizTitle.innerHTML = `${ui(lang, 'builtForAny', 'Built for any')} <span class="biz-float-title-script">${ui(lang, 'builtBusiness', 'Business')}</span>`;
+      bizTitle.innerHTML = `${ui(lang, 'builtForAny', 'Built for any')}<br><span class="biz-float-title-script">${ui(lang, 'builtBusiness', 'Business')}</span>`;
     }
     const bizChips = document.querySelectorAll('.biz-float-chip');
     if (bizChips[0]) bizChips[0].lastChild.textContent = ` ${ui(lang, 'bizChip1', 'Digital products')}`;

@@ -975,9 +975,9 @@ function renderProductFeatures() {
  */
 const productFeatures = [
   {
-    title: tr('ui.featureTitle1', 'Home of Prompts'),
-    tagline: tr('ui.featureTagline1', '90% lower cost than existing APIs for high-quality prompts.'),
-    description: tr('ui.featureDesc1', 'Our self-tuned Hearim & Tobaki models (Deepseek-based) deliver high-quality prompts at 90% lower cost than existing APIs.'),
+    title: tr('ui.featureTitle1', '01. 연동'),
+    tagline: tr('ui.featureTagline1', 'Notion·폴더·Confluence 연결'),
+    description: tr('ui.featureDesc1', '팀 지식 저장소를 Birzont에 연결하세요. 30초면 시작할 수 있습니다.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
     bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
     link: "https://birzont.ai/pricing",
@@ -987,9 +987,9 @@ const productFeatures = [
     featureImage: "resources/uione.png"
   },
   {
-    title: tr('ui.featureTitle2', 'We build Automations'),
-    tagline: tr('ui.featureTagline2', 'Adaptive AI that gets better the more you use it.'),
-    description: tr('ui.featureDesc2', 'We analyze your feedback and usage patterns via Supabase to deliver an adaptive AI that optimizes for your workflow over time.'),
+    title: tr('ui.featureTitle2', '02. 변환'),
+    tagline: tr('ui.featureTagline2', '문서 → .md 자동 변환'),
+    description: tr('ui.featureDesc2', '팀 문서를 에이전트가 읽기 좋은 마크다운으로 요약·구조화합니다. 이미지 포함 문서도 처리합니다.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
     bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
     link: "https://birzont.ai/features",
@@ -999,9 +999,9 @@ const productFeatures = [
     featureImage: "resources/uicompass.png"
   },
   {
-    title: tr('ui.featureTitle3', 'Launch and grow'),
-    tagline: tr('ui.featureTagline3', '5,000+ verified prompts in 11 languages. Use them instantly.'),
-    description: tr('ui.featureDesc3', 'Trade 5,000+ creator-verified prompts globally. Use them instantly in 11 languages including Korean, English, and Chinese.'),
+    title: tr('ui.featureTitle3', '03. 동기화'),
+    tagline: tr('ui.featureTagline3', 'Your agent is up to date'),
+    description: tr('ui.featureDesc3', '에이전트 폴더에 자동 적용됩니다. 문서가 바뀌면 변경 사항이 실시간으로 반영됩니다.'),
     logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
     bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
     link: "https://birzont.ai/marketplace",
@@ -1961,6 +1961,7 @@ const productCarouselState = {
 };
 
 function initProductCarousel() {
+  const tablist = document.querySelector('.product-tablist');
   const tabs = document.querySelectorAll('.product-tablist .product-tab');
   const indicators = document.querySelectorAll('.product-indicator');
   const slides = document.querySelectorAll('.product-slide');
@@ -1969,7 +1970,8 @@ function initProductCarousel() {
   const nextBtn = document.getElementById('product-carousel-next');
   const productCard = document.querySelector('.product-card-large');
   let productAutoInterval = null;
-  const PRODUCT_AUTO_MS = 5200;
+  let hoverPause = false;
+  const PRODUCT_AUTO_MS = 2800;
 
   function stopProductAutoSlide() {
     if (productAutoInterval) {
@@ -1979,10 +1981,11 @@ function initProductCarousel() {
   }
 
   function startProductAutoSlide() {
+    if (hoverPause) return;
     stopProductAutoSlide();
     productAutoInterval = setInterval(() => {
       const next = (productCarouselState.currentSlide + 1) % productCarouselState.totalSlides;
-      goToSlide(next, true);
+      goToSlide(next, { fromAuto: true });
     }, PRODUCT_AUTO_MS);
   }
 
@@ -1991,12 +1994,19 @@ function initProductCarousel() {
     startProductAutoSlide();
   }
   
-  function goToSlide(index, fromAuto = false) {
+  function goToSlide(index, options = {}) {
+    const { fromAuto = false, fromHover = false } = options;
     if (index < 0 || index >= productCarouselState.totalSlides) return;
+    if (index === productCarouselState.currentSlide && !fromAuto) return;
     
     productCarouselState.currentSlide = index;
 
-    if (!fromAuto) {
+    if (tablist) {
+      tablist.classList.add('is-animating');
+      window.setTimeout(() => tablist.classList.remove('is-animating'), 560);
+    }
+
+    if (!fromAuto && !fromHover) {
       restartProductAutoSlide();
     }
     
@@ -2007,7 +2017,6 @@ function initProductCarousel() {
         tab.classList.add('product-tab-active');
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
-        // Show content for active tab
         if (content) {
           content.classList.add('product-tab-content-visible');
         }
@@ -2015,7 +2024,6 @@ function initProductCarousel() {
         tab.classList.remove('product-tab-active');
         tab.setAttribute('aria-selected', 'false');
         tab.setAttribute('tabindex', '-1');
-        // Hide content for inactive tabs
         if (content) {
           content.classList.remove('product-tab-content-visible');
         }
@@ -2033,15 +2041,15 @@ function initProductCarousel() {
       }
     });
     
-    // Update slides (desktop)
+    // Update slides (desktop) — opacity crossfade only
     slides.forEach((slide, i) => {
+      slide.removeAttribute('hidden');
       if (i === index) {
         slide.classList.add('product-slide-active');
         slide.removeAttribute('hidden');
         slide.setAttribute('aria-hidden', 'false');
       } else {
         slide.classList.remove('product-slide-active');
-        slide.setAttribute('hidden', '');
         slide.setAttribute('aria-hidden', 'true');
       }
     });
@@ -2064,17 +2072,39 @@ function initProductCarousel() {
     }
   }
   
-  // Tab click handlers
+  // Hover + click handlers
   tabs.forEach((tab, index) => {
+    tab.addEventListener('mouseenter', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
+    });
+    tab.addEventListener('focus', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
+    });
     tab.addEventListener('click', () => {
       goToSlide(index);
     });
   });
+
+  if (tablist) {
+    tablist.addEventListener('mouseleave', () => {
+      hoverPause = false;
+      startProductAutoSlide();
+    });
+  }
   
   // Indicator click handlers
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => {
       goToSlide(index);
+    });
+    indicator.addEventListener('mouseenter', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
     });
   });
   
@@ -2092,12 +2122,14 @@ function initProductCarousel() {
   }
   
   // Initialize first slide
-  goToSlide(0, true);
+  goToSlide(0, { fromAuto: true });
   startProductAutoSlide();
 
   if (productCard) {
-    productCard.addEventListener('mouseenter', stopProductAutoSlide);
-    productCard.addEventListener('mouseleave', startProductAutoSlide);
+    productCard.addEventListener('mouseleave', () => {
+      hoverPause = false;
+      startProductAutoSlide();
+    });
   }
 
   document.addEventListener('visibilitychange', () => {
