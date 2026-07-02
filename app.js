@@ -211,6 +211,24 @@ function updateHeader() {
   const closeIcon = document.getElementById('close-icon');
   
   if (!header) return;
+
+  if (document.body.classList.contains('birzont-home')) {
+    const shouldBeScrolled = window.scrollY > 0 || (state.isMobile && state.mobileMenuOpen);
+    header.classList.toggle('navbar-scrolled', shouldBeScrolled);
+    header.classList.toggle('bg-transparent', !shouldBeScrolled);
+    header.classList.remove('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg', 'shadow-md', 'border-2', 'border-black');
+
+    if (logoImg) {
+      const theme = document.documentElement.getAttribute('data-theme') || 'light';
+      logoImg.src = theme === 'dark'
+        ? 'https://birzont.github.io/BirzontArchive/res/birzont_white.png'
+        : 'https://birzont.github.io/BirzontArchive/res/birzont_black.png';
+    }
+
+    state.scrolled = shouldBeScrolled;
+    state.blinking = !shouldBeScrolled;
+    return;
+  }
   
   const shouldBeScrolled = window.scrollY > 0 || (state.isMobile && state.mobileMenuOpen);
   
@@ -1949,11 +1967,38 @@ function initProductCarousel() {
   const mobileCarouselImgs = document.querySelectorAll('.mobile-carousel-img');
   const prevBtn = document.getElementById('product-carousel-prev');
   const nextBtn = document.getElementById('product-carousel-next');
+  const productCard = document.querySelector('.product-card-large');
+  let productAutoInterval = null;
+  const PRODUCT_AUTO_MS = 5200;
+
+  function stopProductAutoSlide() {
+    if (productAutoInterval) {
+      clearInterval(productAutoInterval);
+      productAutoInterval = null;
+    }
+  }
+
+  function startProductAutoSlide() {
+    stopProductAutoSlide();
+    productAutoInterval = setInterval(() => {
+      const next = (productCarouselState.currentSlide + 1) % productCarouselState.totalSlides;
+      goToSlide(next, true);
+    }, PRODUCT_AUTO_MS);
+  }
+
+  function restartProductAutoSlide() {
+    stopProductAutoSlide();
+    startProductAutoSlide();
+  }
   
-  function goToSlide(index) {
+  function goToSlide(index, fromAuto = false) {
     if (index < 0 || index >= productCarouselState.totalSlides) return;
     
     productCarouselState.currentSlide = index;
+
+    if (!fromAuto) {
+      restartProductAutoSlide();
+    }
     
     // Update tabs
     tabs.forEach((tab, i) => {
@@ -2047,13 +2092,26 @@ function initProductCarousel() {
   }
   
   // Initialize first slide
-  goToSlide(0);
+  goToSlide(0, true);
+  startProductAutoSlide();
+
+  if (productCard) {
+    productCard.addEventListener('mouseenter', stopProductAutoSlide);
+    productCard.addEventListener('mouseleave', startProductAutoSlide);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopProductAutoSlide();
+    else startProductAutoSlide();
+  });
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   /** @type {{ startAutoSlide: () => void, stopAutoSlide: () => void }[]} */
   const promptCarouselControls = [];
+
+  window.updateHeader = updateHeader;
 
   // Mobile menu toggle
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');

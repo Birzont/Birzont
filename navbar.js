@@ -29,6 +29,22 @@
         </nav>
 
         <div class="flex-shrink-0 flex justify-end items-center gap-2 order-3 ml-auto">
+          <button type="button" id="theme-toggle-btn" class="hidden birzont-theme-toggle items-center justify-center p-1.5 rounded-lg transition-colors hover:bg-gray-100/70" aria-label="Toggle theme">
+            <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
           <div class="relative hidden md:block">
             <button type="button" id="lang-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors hover:bg-gray-100/70 text-white" aria-label="Language" aria-haspopup="true" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
@@ -111,6 +127,23 @@
         <a href="career.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Careers</a>
         <a href="secret-hobby.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">은밀한 취미</a>
         <div class="mt-4 pt-2 flex flex-col gap-2">
+          <button type="button" id="mobile-theme-btn" class="birzont-mobile-theme hidden md:hidden flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all font-medium">
+            <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span id="mobile-theme-label">Dark mode</span>
+          </button>
           <div class="relative md:hidden">
             <button type="button" id="mobile-lang-btn" class="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all font-medium">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -191,6 +224,56 @@
   }
 
   const CHECK_SVG = '<svg class="lang-check w-3.5 h-3.5 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+  function syncNavbarLogo() {
+    const logoImg = document.getElementById('logo-img');
+    if (!logoImg || !document.body.classList.contains('birzont-home')) return;
+
+    const theme = document.documentElement.getAttribute('data-theme') || 'light';
+    logoImg.src = theme === 'dark'
+      ? 'https://birzont.github.io/BirzontArchive/res/birzont_white.png'
+      : 'https://birzont.github.io/BirzontArchive/res/birzont_black.png';
+  }
+
+  function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const mobileThemeBtn = document.getElementById('mobile-theme-btn');
+    const mobileThemeLabel = document.getElementById('mobile-theme-label');
+    if (!document.body.classList.contains('birzont-home')) return;
+
+    function refreshThemeLabels() {
+      const theme = document.documentElement.getAttribute('data-theme') || 'light';
+      if (mobileThemeLabel) {
+        mobileThemeLabel.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+      }
+    }
+
+    function handleToggle() {
+      if (window.BirzontTheme) window.BirzontTheme.toggleTheme();
+      syncNavbarLogo();
+      refreshThemeLabels();
+      if (typeof window.updateHeader === 'function') window.updateHeader();
+    }
+
+    if (toggleBtn) {
+      toggleBtn.classList.remove('hidden');
+      toggleBtn.classList.add('flex');
+      toggleBtn.addEventListener('click', handleToggle);
+    }
+
+    if (mobileThemeBtn) {
+      mobileThemeBtn.classList.remove('hidden');
+      mobileThemeBtn.classList.add('flex');
+      mobileThemeBtn.addEventListener('click', handleToggle);
+    }
+
+    syncNavbarLogo();
+    refreshThemeLabels();
+    window.addEventListener('birzont-theme-change', () => {
+      syncNavbarLogo();
+      refreshThemeLabels();
+    });
+  }
 
   function initLangDropdown() {
     const langBtn = document.getElementById('lang-btn');
@@ -319,6 +402,7 @@
     app.insertBefore(fragment, app.firstChild);
     injectNavCard();
     initLangDropdown();
+    initThemeToggle();
   }
 
   if (document.readyState === 'loading') {

@@ -257,6 +257,9 @@
     const footerDiv = app.querySelector('.w-full.bg-white:last-child');
     if (footerDiv) {
       footerDiv.id = 'footer-injected';
+      if (document.body.classList.contains('birzont-home')) {
+        footerDiv.classList.add('cursor-footer-wrap');
+      }
     }
 
     // Initialize language selector
