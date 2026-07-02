@@ -49,6 +49,53 @@ body {
   opacity: 1;
 }
 
+.hero-title.hero-wave-active {
+  line-height: 1.15;
+}
+
+.hero-wave-char {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+.hero-title.hero-wave-playing .hero-wave-char {
+  animation: hero-title-wave 2.6s ease-in-out both;
+  animation-delay: calc(var(--wave-i) * 0.07s);
+}
+
+.hero-wave-space {
+  width: 0.3em;
+}
+
+@keyframes hero-title-wave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  20% {
+    transform: translateY(-0.22em) rotate(-2deg);
+  }
+
+  40% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  60% {
+    transform: translateY(0.08em) rotate(1deg);
+  }
+
+  80% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title.hero-wave-playing .hero-wave-char {
+    animation: none;
+  }
+}
+
 .hero-image-slide-up {
   opacity: 0;
   transform: translateY(80px);
@@ -2240,6 +2287,93 @@ body[data-latin-lang="false"] .biz-float-title-script {
   .biz-float-title {
     font-size: clamp(2.1rem, 7vw, 3.1rem);
     margin-bottom: 0;
+  }
+}
+
+/* Secret Hobby Page */
+.secret-hobby-body {
+  cursor: none;
+  background: #000;
+}
+
+.secret-hobby-page {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.secret-hobby-content {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, #1a1020 0%, #050505 55%, #000 100%);
+}
+
+.secret-hobby-item {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.secret-hobby-image img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 110px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  opacity: 0.95;
+}
+
+.secret-hobby-text {
+  color: #ff6b9d;
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 0 18px rgba(255, 107, 157, 0.35);
+  opacity: 0.92;
+}
+
+.secret-hobby-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #000;
+  pointer-events: none;
+  --mx: 50vw;
+  --my: 50vh;
+  -webkit-mask-image: radial-gradient(
+    circle 130px at var(--mx) var(--my),
+    transparent 0,
+    transparent 58%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    circle 130px at var(--mx) var(--my),
+    transparent 0,
+    transparent 58%,
+    #000 100%
+  );
+}
+
+@media (max-width: 767px) {
+  .secret-hobby-image img {
+    max-width: 72px;
+  }
+
+  .secret-hobby-overlay {
+    -webkit-mask-image: radial-gradient(
+      circle 100px at var(--mx) var(--my),
+      transparent 0,
+      transparent 58%,
+      #000 100%
+    );
+    mask-image: radial-gradient(
+      circle 100px at var(--mx) var(--my),
+      transparent 0,
+      transparent 58%,
+      #000 100%
+    );
   }
 }
 

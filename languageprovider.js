@@ -30,6 +30,7 @@
         navCompanyTitle: 'Company',
         navProductTitle: 'Product Lineup',
         navBlogTitle: 'Blogs',
+        navSecretHobby: 'Secret Hobby',
         navAboutCompany: 'About Company',
         navWhatWeDo: 'What we do',
         navOurTeam: 'Our Team',
@@ -186,6 +187,7 @@
         navCompanyTitle: '회사 소개',
         navProductTitle: '제품 라인업',
         navBlogTitle: '블로그',
+        navSecretHobby: '은밀한 취미',
         navAboutCompany: '회사 소개',
         navWhatWeDo: '우리가 하는 일',
         navOurTeam: '우리 팀',
@@ -349,6 +351,7 @@
         navCompanyTitle: '会社',
         navProductTitle: '製品ラインナップ',
         navBlogTitle: 'ブログ',
+        navSecretHobby: '秘密の趣味',
         navAboutCompany: '会社概要',
         navWhatWeDo: '私たちの取り組み',
         navOurTeam: 'チーム紹介',
@@ -504,6 +507,7 @@
         navCompanyTitle: '公司',
         navProductTitle: '产品阵容',
         navBlogTitle: '博客',
+        navSecretHobby: '秘密爱好',
         navAboutCompany: '公司简介',
         navWhatWeDo: '我们的业务',
         navOurTeam: '团队介绍',
@@ -660,6 +664,7 @@
         navCompanyTitle: '公司',
         navProductTitle: '产品阵容',
         navBlogTitle: '博客',
+        navSecretHobby: '秘密爱好',
         navAboutCompany: '公司简介',
         navWhatWeDo: '我们的业务',
         navOurTeam: '团队介绍',
@@ -936,13 +941,35 @@
     if (el && typeof value === 'string') el.textContent = value;
   }
 
+  function buildHeroTitleWaveHTML(line1, line2) {
+    let waveIndex = 0;
+
+    const wrapLine = (text) => Array.from(text).map((char) => {
+      const index = waveIndex++;
+      if (char === ' ') {
+        return `<span class="hero-wave-char hero-wave-space" style="--wave-i:${index}">&nbsp;</span>`;
+      }
+      const escaped = char
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      return `<span class="hero-wave-char" style="--wave-i:${index}">${escaped}</span>`;
+    }).join('');
+
+    const trimmed2 = (line2 || '').trim();
+    if (trimmed2) {
+      return `${wrapLine(line1)}<br class="hero-wave-break">${wrapLine(trimmed2)}`;
+    }
+    return wrapLine(line1);
+  }
+
   function applyStaticPageText(lang) {
     const heroTitleEl = document.querySelector('.hero-title');
     if (heroTitleEl) {
       const ht1 = ui(lang, 'heroTitle1', 'The home for better prompts');
       const ht2 = ui(lang, 'heroTitle2', 'that upscale your agents');
-      if (ht2) heroTitleEl.innerHTML = `${ht1}<br>${ht2}`;
-      else heroTitleEl.textContent = ht1;
+      heroTitleEl.classList.add('hero-wave-active');
+      heroTitleEl.innerHTML = buildHeroTitleWaveHTML(ht1, ht2 && ht2.trim() ? ht2 : '');
     }
     const heroSub = document.querySelector('p.blur-fade-once[data-hero-order="2"]');
     if (heroSub) heroSub.innerHTML = `${ui(lang, 'heroSubtitle1', 'Discover, share, and build AI prompts and agents.')}<br>${ui(lang, 'heroSubtitle2', 'A collaboration platform for prompt engineers and creators.')}`;
@@ -1065,12 +1092,14 @@
     if (desktopLinks[2]) desktopLinks[2].textContent = ui(lang, 'navCompanyTitle', 'Company');
     if (desktopLinks[3]) desktopLinks[3].textContent = ui(lang, 'navBlogTitle', 'Blog');
     if (desktopLinks[4]) desktopLinks[4].textContent = ui(lang, 'navCareers', 'Careers');
+    if (desktopLinks[5]) desktopLinks[5].textContent = ui(lang, 'navSecretHobby', '은밀한 취미');
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
     if (mobileLinks[0]) mobileLinks[0].textContent = ui(lang, 'navHome', 'Home');
     if (mobileLinks[1]) mobileLinks[1].textContent = ui(lang, 'navPricing', 'Pricing');
     if (mobileLinks[2]) mobileLinks[2].textContent = ui(lang, 'navCompanyTitle', 'Company');
     if (mobileLinks[3]) mobileLinks[3].textContent = ui(lang, 'navBlogTitle', 'Blog');
     if (mobileLinks[4]) mobileLinks[4].textContent = ui(lang, 'navCareers', 'Careers');
+    if (mobileLinks[5]) mobileLinks[5].textContent = ui(lang, 'navSecretHobby', '은밀한 취미');
     setText('#desktop-start-btn', ui(lang, 'navLogin', 'Log in'));
     const mobileLogin = document.querySelector('#mobile-menu a[href*="login"]');
     if (mobileLogin) mobileLogin.textContent = ui(lang, 'navLogin', 'Log in');

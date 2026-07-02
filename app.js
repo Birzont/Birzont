@@ -185,6 +185,24 @@ function updateMobileState() {
   }
 }
 
+function playHeroTitleWave(heroTitle) {
+  const title = heroTitle || document.querySelector('.hero-title.hero-wave-active');
+  if (!title) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  title.classList.remove('hero-wave-playing');
+  void title.offsetWidth;
+  title.classList.add('hero-wave-playing');
+
+  const charCount = title.querySelectorAll('.hero-wave-char').length;
+  const durationMs = 2600 + Math.max(0, charCount - 1) * 70;
+
+  if (title._heroWaveTimeout) clearTimeout(title._heroWaveTimeout);
+  title._heroWaveTimeout = setTimeout(() => {
+    title.classList.remove('hero-wave-playing');
+  }, durationMs);
+}
+
 function updateHeader() {
   const header = document.getElementById('navbar');
   const logoImg = document.getElementById('logo-img');
@@ -2116,6 +2134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!('IntersectionObserver' in window)) {
       targets.forEach(target => target.classList.add('blur-fade-once-visible'));
+      playHeroTitleWave(document.querySelector('.hero-title.hero-wave-active'));
       return;
     }
 
@@ -2123,6 +2142,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const initHeroSequence = () => {
       const heroTitle = document.querySelector('.hero-title');
       if (!heroTitle) return;
+
+      const revealHeroTitle = () => {
+        if (!heroTitle.classList.contains('blur-fade-once-visible')) {
+          heroTitle.classList.add('blur-fade-once-visible');
+          playHeroTitleWave(heroTitle);
+        }
+      };
+
+      heroTitle.addEventListener('mouseenter', () => playHeroTitleWave(heroTitle));
       
       const heroSection = heroTitle.closest('section');
       if (!heroSection) return;
@@ -2168,7 +2196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isVisible && heroElements.length > 0) {
           // 첫 번째 요소가 아직 나타나지 않았다면 나타나게 함
           if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
-            heroElements[0].classList.add('blur-fade-once-visible');
+            revealHeroTitle();
             setTimeout(() => {
               triggerNextElement(1);
             }, 500);
@@ -2184,7 +2212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
           if (entry.isIntersecting && entry.target === heroElements[0]) {
             if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
-              heroElements[0].classList.add('blur-fade-once-visible');
+              revealHeroTitle();
               setTimeout(() => {
                 triggerNextElement(1);
               }, 500);
@@ -2673,6 +2701,7 @@ function renderTeamMembers() {
       </div>
       <h3 class="text-2xl font-bold text-black mb-2 md:mb-2 team-member-name">${member.name}</h3>
       <p class="text-gray-600 text-lg team-member-role">${member.role}</p>
+      ${member.zodiac ? `<p class="text-gray-500 text-sm mt-1 team-member-zodiac">${member.zodiac}</p>` : ''}
     `;
     
     teamGrid.appendChild(card);
@@ -2735,6 +2764,7 @@ function openTeamModal(memberData) {
   const modal = document.getElementById('team-member-modal');
   const nameEl = document.getElementById('modal-member-name');
   const roleEl = document.getElementById('modal-member-role');
+  const zodiacEl = document.getElementById('modal-member-zodiac');
   const imageEl = document.getElementById('modal-member-image');
   const descriptionEl = document.getElementById('modal-member-description');
   const linkedinEl = document.getElementById('modal-member-linkedin');
@@ -2744,6 +2774,15 @@ function openTeamModal(memberData) {
   // Update modal content
   if (nameEl) nameEl.textContent = memberData.name;
   if (roleEl) roleEl.textContent = memberData.role;
+  if (zodiacEl) {
+    if (memberData.zodiac) {
+      zodiacEl.textContent = memberData.zodiac;
+      zodiacEl.classList.remove('hidden');
+    } else {
+      zodiacEl.textContent = '';
+      zodiacEl.classList.add('hidden');
+    }
+  }
   if (imageEl) {
     imageEl.src = memberData.image;
     imageEl.alt = memberData.name;

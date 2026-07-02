@@ -6,6 +6,7 @@
       {
         name: 'Samuel Kihoon',
         role: 'CEO',
+        zodiac: 'Scorpio',
         image: 'resources/samuelkihoon.jpeg',
         linkedin: 'https://linkedin.com/in/Kihoonx',
         description: 'As Birzont\'s CEO and CTO, he is building the future of AI technology. He studied Business Administration and Big Data Applications at Kyung Hee University, worked as a Notion seasonal intern and CTO at careermizing.com, and now leads Birzont.'
@@ -34,6 +35,7 @@
       {
         name: 'Hanbee Kim',
         role: 'Data Engineer',
+        zodiac: 'Aquarius',
         image: 'resources/hanbee.png',
         linkedin: '#',
         description: 'Detailed information about this team member will be shown here.'
@@ -50,6 +52,7 @@
       {
         name: '김기훈',
         role: '대표이사',
+        zodiac: '전갈자리',
         image: 'resources/samuelkihoon.jpeg',
         linkedin: 'https://linkedin.com/in/Kihoonx',
         description: '버존트의 CEO이자 CTO로서 AI 기술의 미래를 만들어가고 있습니다. 학력은 경희대학교 경영대학 및 빅데이터응용학과로, Notion 시즌인턴, 커리어마이징닷컴 CTO로 있었으며, 현재 버존트를 위해 일하고 있습니다.'
@@ -78,6 +81,7 @@
       {
         name: '김한비',
         role: '데이터 엔지니어',
+        zodiac: '물병자리',
         image: 'resources/hanbee.png',
         linkedin: '#',
         description: '팀 멤버에 대한 상세 정보가 여기에 표시됩니다.'

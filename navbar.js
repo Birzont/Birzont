@@ -23,6 +23,9 @@
             <div class="relative nav-item" data-item="Careers">
               <a href="career.html" class="font-normal text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">Careers</a>
             </div>
+            <div class="relative nav-item" data-item="SecretHobby">
+              <a href="secret-hobby.html" class="font-normal text-[1rem] transition-colors px-3 py-1.5 rounded-lg hover:bg-gray-100/70 text-white">은밀한 취미</a>
+            </div>
         </nav>
 
         <div class="flex-shrink-0 flex justify-end items-center gap-2 order-3 ml-auto">
@@ -106,6 +109,7 @@
         <a href="about.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Company</a>
         <a href="blog.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Blog</a>
         <a href="career.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">Careers</a>
+        <a href="secret-hobby.html" class="block py-3 px-4 text-lg font-medium border-b border-gray-100 hover:bg-gray-50">은밀한 취미</a>
         <div class="mt-4 pt-2 flex flex-col gap-2">
           <div class="relative md:hidden">
             <button type="button" id="mobile-lang-btn" class="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all font-medium">
