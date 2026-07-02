@@ -2302,11 +2302,13 @@ body[data-latin-lang="false"] .biz-float-title-script {
   z-index: 0;
   background: #0a0a0a;
   overflow: hidden;
+  touch-action: none;
 }
 
 .secret-hobby-content {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: radial-gradient(circle at 50% 40%, #1a1020 0%, #050505 55%, #000 100%);
 }
 
@@ -2321,6 +2323,7 @@ body[data-latin-lang="false"] .biz-float-title-script {
   width: auto;
   height: auto;
   max-width: 110px;
+  object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   opacity: 0.95;
@@ -2328,6 +2331,7 @@ body[data-latin-lang="false"] .biz-float-title-script {
 
 .secret-hobby-text {
   color: #ff6b9d;
+  font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-weight: 700;
   white-space: nowrap;
   text-shadow: 0 0 18px rgba(255, 107, 157, 0.35);
@@ -2340,40 +2344,15 @@ body[data-latin-lang="false"] .biz-float-title-script {
   z-index: 20;
   background: #000;
   pointer-events: none;
-  --mx: 50vw;
-  --my: 50vh;
-  -webkit-mask-image: radial-gradient(
-    circle 130px at var(--mx) var(--my),
-    transparent 0,
-    transparent 58%,
-    #000 100%
-  );
-  mask-image: radial-gradient(
-    circle 130px at var(--mx) var(--my),
-    transparent 0,
-    transparent 58%,
-    #000 100%
-  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 @media (max-width: 767px) {
   .secret-hobby-image img {
     max-width: 72px;
-  }
-
-  .secret-hobby-overlay {
-    -webkit-mask-image: radial-gradient(
-      circle 100px at var(--mx) var(--my),
-      transparent 0,
-      transparent 58%,
-      #000 100%
-    );
-    mask-image: radial-gradient(
-      circle 100px at var(--mx) var(--my),
-      transparent 0,
-      transparent 58%,
-      #000 100%
-    );
   }
 }
 
