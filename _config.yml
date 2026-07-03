@@ -1,0 +1,20 @@
+title: Birzont
+
+# Keep GitHub Pages artifact small so deploy finishes within the timeout.
+exclude:
+  - node_modules
+  - pnpm-lock.yaml
+  - next.config.mjs
+  - tsconfig.json
+  - tailwind.config.ts
+  - postcss.config.mjs
+  - components.json
+  - hooks
+  - design.md
+  - implementation-guide.txt
+  - docs
+  - supabase
+  - "index copy.html"
+  - .gitignore
+  - public
+  - styles/globals.css
