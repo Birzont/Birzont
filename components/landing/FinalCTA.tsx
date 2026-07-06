@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export function FinalCTA() {
   return (
     <section className="relative px-4 py-28 md:py-36 lg:px-8">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-500/[0.04] via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sage-600/[0.04] via-transparent to-transparent" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

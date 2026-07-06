@@ -23,7 +23,7 @@ export function MetricsSection() {
             transition={{ delay: i * 0.1, duration: 0.45 }}
           >
             <GlassCard className="relative overflow-hidden p-8 text-center">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.06] via-transparent to-blue-500/[0.04]" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-sage-500/[0.08] via-sage-600/[0.04]" />
               <p
                 className={
                   metric.large

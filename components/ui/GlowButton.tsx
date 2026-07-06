@@ -23,7 +23,7 @@ export function GlowButton({
   const base = cn(
     "btn-glow inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-transform hover:scale-[1.02] active:scale-[0.98]",
     variant === "primary" &&
-      "bg-white text-black shadow-[0_0_30px_rgba(34,197,94,0.25)] hover:shadow-[0_0_40px_rgba(34,197,94,0.4)]",
+      "bg-white text-black shadow-[0_0_30px_rgba(76,184,94,0.22)] hover:shadow-[0_0_40px_rgba(76,184,94,0.32)]",
     variant === "secondary" &&
       "border border-white/15 bg-white/5 text-white hover:border-white/25 hover:bg-white/10",
     className,

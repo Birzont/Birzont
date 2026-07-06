@@ -54,8 +54,8 @@ export function ProblemSection() {
         {PROBLEMS.map((problem) => (
           <motion.div key={problem.title} variants={item}>
             <GlassCard className="group h-full p-6 transition-colors hover:border-white/[0.12] hover:bg-white/[0.06]">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05] ring-1 ring-white/10 transition-colors group-hover:bg-emerald-500/10 group-hover:ring-emerald-500/20">
-                <problem.icon className="h-5 w-5 text-white/70 group-hover:text-emerald-400" />
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05] ring-1 ring-white/10 transition-colors group-hover:bg-sage-500/10 group-hover:ring-sage-500/20">
+                <problem.icon className="h-5 w-5 text-white/70 group-hover:text-sage-400" />
               </div>
               <h3 className="text-lg font-semibold leading-snug">{problem.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-white/50">{problem.body}</p>

@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <section id="product" className="relative overflow-hidden pt-32 pb-8 md:pt-40 md:pb-12">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-500/[0.07] via-blue-500/[0.04] to-transparent blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-b from-sage-500/[0.08] via-sage-600/[0.03] to-transparent blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl px-4 lg:px-8">
         <motion.div
@@ -23,13 +23,13 @@ export function Hero() {
             transition={{ delay: 0.1 }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-white/60"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-sage-400" />
             AI 에이전트를 위한 팀 지식 동기화 레이어
           </motion.div>
 
           <h1 className="text-balance text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl lg:text-[4.25rem]">
             팀의 지식을,{" "}
-            <span className="bg-gradient-to-r from-white via-emerald-200 to-blue-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-sage-400 to-sage-300 bg-clip-text text-transparent">
               모든 AI 에이전트 안으로.
             </span>
           </h1>

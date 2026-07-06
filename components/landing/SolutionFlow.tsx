@@ -33,7 +33,7 @@ export function SolutionFlow() {
         <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl lg:text-[2.75rem]">
           Birzont는 AI 에이전트를 위한
           <br />
-          <span className="bg-gradient-to-r from-emerald-300 to-blue-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-sage-400 to-sage-500 bg-clip-text text-transparent">
             지식 동기화 레이어
           </span>
           입니다.
@@ -58,11 +58,11 @@ export function SolutionFlow() {
               className="relative"
             >
               <GlassCard className="relative h-full p-6">
-                <span className="text-xs font-medium tracking-widest text-emerald-400/80">
+                <span className="text-xs font-medium tracking-widest text-sage-400/80">
                   {step.step}
                 </span>
-                <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/15 to-blue-500/10 ring-1 ring-white/10">
-                  <step.icon className="h-5 w-5 text-emerald-400" />
+                <div className="mt-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sage-500/15 to-sage-700/10 ring-1 ring-white/10">
+                  <step.icon className="h-5 w-5 text-sage-400" />
                 </div>
                 <h3 className="mt-5 text-xl font-semibold">{step.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/50">{step.body}</p>

@@ -14,7 +14,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2.5">
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/[0.06] ring-1 ring-white/10">
-            <Zap className="h-3.5 w-3.5 text-emerald-400" />
+            <Zap className="h-3.5 w-3.5 text-sage-400" />
           </div>
           <span className="font-semibold">Birzont</span>
         </div>

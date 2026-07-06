@@ -51,6 +51,13 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        sage: {
+          300: "#9ed9a6",
+          400: "#6ecf7a",
+          500: "#4cb85e",
+          600: "#3a9a4d",
+          700: "#2f7d40",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

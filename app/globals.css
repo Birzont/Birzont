@@ -6,9 +6,10 @@
   :root {
     --background: 240 10% 3.5%;
     --foreground: 0 0% 96%;
-    --birzont-green: 152 76% 48%;
-    --birzont-blue: 217 91% 60%;
-    --birzont-glow: 160 84% 39%;
+    --birzont-green: 138 42% 52%;
+    --birzont-green-light: 138 48% 68%;
+    --birzont-green-muted: 138 38% 40%;
+    --birzont-blue: 210 18% 58%;
   }
 
   html {
@@ -40,9 +41,9 @@
 
   .glow-green {
     box-shadow:
-      0 0 0 1px rgba(34, 197, 94, 0.2),
-      0 0 40px rgba(34, 197, 94, 0.15),
-      0 0 80px rgba(59, 130, 246, 0.08);
+      0 0 0 1px rgba(76, 184, 94, 0.28),
+      0 0 32px rgba(76, 184, 94, 0.14),
+      0 0 64px rgba(58, 154, 77, 0.08);
   }
 
   .btn-glow {
@@ -52,7 +53,7 @@
   .btn-glow::before {
     content: "";
     @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: radial-gradient(circle at center, rgba(34, 197, 94, 0.35), transparent 70%);
+    background: radial-gradient(circle at center, rgba(76, 184, 94, 0.32), transparent 70%);
   }
 
   .btn-glow:hover::before {

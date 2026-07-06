@@ -22,9 +22,9 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-[#050508]/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400/20 to-blue-500/20 ring-1 ring-white/10">
-            <Zap className="h-4 w-4 text-emerald-400" strokeWidth={2.5} />
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-emerald-400/10 to-transparent" />
+          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sage-400/20 to-sage-600/15 ring-1 ring-white/10">
+            <Zap className="h-4 w-4 text-sage-400" strokeWidth={2.5} />
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-sage-400/10 to-transparent" />
           </div>
           <span className="text-lg font-semibold tracking-tight">Birzont</span>
         </Link>
