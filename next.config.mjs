@@ -1,17 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',               // Static Export 모드
-  basePath: '/Birzont',           // Github 레포 이름 정확히
-  assetPrefix: '/Birzont/',      //CloudFlare에서는 삭제. 위에것도
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-}
+const isProd = process.env.NODE_ENV === "production";
 
-export default nextConfig
+const nextConfig = {
+  output: "export",
+  ...(isProd ? { basePath: "/Birzont", assetPrefix: "/Birzont/" } : {}),
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+  images: { unoptimized: true },
+};
+
+export default nextConfig;

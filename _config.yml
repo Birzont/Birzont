@@ -18,3 +18,8 @@ exclude:
   - .gitignore
   - public
   - styles/globals.css
+  - app
+  - components
+  - lib
+  - node_modules
+  - .next
