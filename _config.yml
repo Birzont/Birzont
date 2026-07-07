@@ -6,7 +6,6 @@ exclude:
   - pnpm-lock.yaml
   - next.config.mjs
   - tsconfig.json
-  - tailwind.config.ts
   - postcss.config.mjs
   - components.json
   - hooks
