@@ -123,18 +123,15 @@ export const KNOWLEDGE_SOURCES = [
 
 export const PROCESS_STATUSES = [
   "문서 읽는 중",
-  "핵심 지식 추출 중",
-  "팀 맥락 정리 중",
   "Markdown 변환 중",
-  "CLAUDE.md 생성 중",
-  "Cursor Rules 업데이트 중",
+  "에이전트 최신화 중",
 ] as const;
 
-export const AGENT_TARGETS = [
-  { label: "Cursor", icon: Zap, active: true },
-  { label: "Claude", icon: Brain, active: true },
-  { label: "로컬 에이전트", icon: Bot, active: false },
-  { label: "팀 공용 에이전트", icon: Users, active: true },
+export const AGENT_OUTPUT_FORMATS = [
+  { label: "Markdown", icon: FileText, active: true },
+  { label: "CLAUDE.md", icon: Brain, active: true },
+  { label: "Cursor Rules", icon: Zap, active: true },
+  { label: "AI 에이전트 작업공간", icon: Bot, active: true },
 ] as const;
 
 export const PROBLEMS: { title: string; body: string; icon: LucideIcon }[] = [

@@ -5,6 +5,30 @@
 @source "../components/**/*.{js,ts,jsx,tsx,mdx}";
 @source "../lib/**/*.{js,ts,jsx,tsx,mdx}";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #050607;
+  color: white;
+  font-family: Pretendard, Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
 @theme {
   --color-birzont-green: #5ee496;
   --color-birzont-green-dark: #3bc878;

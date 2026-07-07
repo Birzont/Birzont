@@ -7,7 +7,7 @@
     "dev:clean": "rm -rf .next && next dev",
     "build": "next build",
     "build:pages": "GITHUB_PAGES=true next build",
-    "sync:homepage": "npm run build && cp out/index.html index.html && rm -rf _next && cp -R out/_next _next",
+    "sync:homepage": "STATIC_EXPORT=true npm run build && cp out/index.html index.html && rm -rf _next && cp -R out/_next _next",
     "start": "next start",
     "lint": "next lint"
   },

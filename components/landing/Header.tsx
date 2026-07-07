@@ -9,6 +9,9 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+const navLinkClass =
+  "inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white";
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,33 +28,29 @@ export function Header() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-white/[0.06] bg-birzont-black/85 backdrop-blur-xl"
+          ? "border-b border-white/10 bg-[#050607]/90 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl"
           : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 lg:px-8">
-        <Link href="/" className="flex items-center gap-2.5">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 lg:px-8">
+        <Link
+          href="/"
+          className="inline-flex shrink-0 items-center gap-2.5 text-white no-underline"
+        >
           <BirzontLogo size={32} />
-          <span className="text-lg font-bold tracking-tight">Birzont</span>
+          <span className="text-lg font-bold tracking-tight text-white">Birzont</span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-8 md:flex">
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm text-white/55 transition-colors hover:text-white"
-            >
+            <Link key={item.href} href={item.href} className={navLinkClass}>
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="https://birzont.ai"
-            className="text-sm text-white/55 transition-colors hover:text-white"
-          >
+        <div className="hidden shrink-0 items-center gap-4 md:flex">
+          <Link href="https://birzont.ai" className={navLinkClass}>
             로그인
           </Link>
           <GlowButton href="https://birzont.ai">먼저 시작하기</GlowButton>
@@ -59,7 +58,7 @@ export function Header() {
 
         <button
           type="button"
-          className="rounded-xl p-2 text-white/70 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 transition-colors hover:bg-white/10 md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="메뉴"
         >
@@ -70,24 +69,26 @@ export function Header() {
       <motion.div
         initial={false}
         animate={open ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
-        className="overflow-hidden border-t border-white/[0.06] md:hidden"
+        className="overflow-hidden border-t border-white/10 bg-[#050607]/95 backdrop-blur-xl md:hidden"
       >
-        <div className="flex flex-col gap-4 px-4 py-4">
+        <div className="flex flex-col gap-4 px-4 py-5">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-white/70"
+              className={cn(navLinkClass, "py-1 text-white/75")}
               onClick={() => setOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex flex-col gap-2 pt-2">
-            <Link href="https://birzont.ai" className="text-sm text-white/60">
+          <div className="flex flex-col gap-3 border-t border-white/10 pt-4">
+            <Link href="https://birzont.ai" className={navLinkClass}>
               로그인
             </Link>
-            <GlowButton href="https://birzont.ai">먼저 시작하기</GlowButton>
+            <GlowButton href="https://birzont.ai" className="w-full justify-center">
+              먼저 시작하기
+            </GlowButton>
           </div>
         </div>
       </motion.div>
