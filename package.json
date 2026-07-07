@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:clean": "rm -rf .next && next dev",
     "build": "next build",
-    "build:pages": "GITHUB_PAGES=true next build",
-    "sync:homepage": "STATIC_EXPORT=true npm run build && cp out/index.html index.html && rm -rf _next && cp -R out/_next _next",
+    "clean": "rm -rf .next out",
+    "export:static": "rm -rf .next out && next build && touch out/.nojekyll",
+    "deploy": "npm run export:static && cp out/index.html index.html && rm -rf _next && cp -R out/_next _next && cp out/.nojekyll .nojekyll && cp out/birzont-logo.png birzont-logo.png",
     "start": "next start",
     "lint": "next lint"
   },
