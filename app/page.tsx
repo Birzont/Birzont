@@ -1,9 +1,13 @@
 import { Header } from "@/components/landing/Header";
-import { Hero } from "@/components/landing/Hero";
+import { HeroSection } from "@/components/landing/HeroSection";
 import { ProblemSection } from "@/components/landing/ProblemSection";
-import { SolutionFlow } from "@/components/landing/SolutionFlow";
+import { SolutionSection } from "@/components/landing/SolutionSection";
+import { UseCaseSection } from "@/components/landing/UseCaseSection";
 import { MetricsSection } from "@/components/landing/MetricsSection";
-import { FinalCTA } from "@/components/landing/FinalCTA";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { SecuritySection } from "@/components/landing/SecuritySection";
+import { CTASection } from "@/components/landing/CTASection";
+import { PricingSection } from "@/components/landing/PricingSection";
 import { Footer } from "@/components/landing/Footer";
 
 export default function HomePage() {
@@ -11,11 +15,15 @@ export default function HomePage() {
     <>
       <Header />
       <main>
-        <Hero />
+        <HeroSection />
         <ProblemSection />
-        <SolutionFlow />
+        <SolutionSection />
+        <UseCaseSection />
         <MetricsSection />
-        <FinalCTA />
+        <HowItWorksSection />
+        <SecuritySection />
+        <CTASection />
+        <PricingSection />
       </main>
       <Footer />
     </>

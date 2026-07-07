@@ -1,40 +1,46 @@
 "use client";
 
+import { BirzontLogo } from "@/components/ui/BirzontLogo";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { cn } from "@/lib/utils";
+import { NAV_ITEMS } from "@/lib/landing-data";
 import { motion } from "framer-motion";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-
-const NAV = [
-  { label: "제품", href: "#product" },
-  { label: "작동 방식", href: "#how-it-works" },
-  { label: "활용 사례", href: "#use-cases" },
-  { label: "요금제", href: "#pricing" },
-  { label: "문서", href: "#docs" },
-];
+import { useEffect, useState } from "react";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-[#050508]/80 backdrop-blur-xl">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        scrolled
+          ? "border-b border-white/[0.06] bg-birzont-black/85 backdrop-blur-xl"
+          : "bg-transparent",
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sage-400/20 to-sage-600/15 ring-1 ring-white/10">
-            <Zap className="h-4 w-4 text-sage-400" strokeWidth={2.5} />
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-sage-400/10 to-transparent" />
-          </div>
-          <span className="text-lg font-semibold tracking-tight">Birzont</span>
+          <BirzontLogo size={32} />
+          <span className="text-lg font-bold tracking-tight">Birzont</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {NAV.map((item) => (
+        <nav className="hidden items-center gap-7 md:flex">
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-white/60 transition-colors hover:text-white"
+              className="text-sm text-white/55 transition-colors hover:text-white"
             >
               {item.label}
             </Link>
@@ -44,7 +50,7 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <Link
             href="https://birzont.ai"
-            className="text-sm text-white/60 transition-colors hover:text-white"
+            className="text-sm text-white/55 transition-colors hover:text-white"
           >
             로그인
           </Link>
@@ -53,7 +59,7 @@ export function Header() {
 
         <button
           type="button"
-          className="rounded-lg p-2 text-white/70 md:hidden"
+          className="rounded-xl p-2 text-white/70 md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="메뉴"
         >
@@ -64,10 +70,10 @@ export function Header() {
       <motion.div
         initial={false}
         animate={open ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
-        className={cn("overflow-hidden border-t border-white/[0.06] md:hidden")}
+        className="overflow-hidden border-t border-white/[0.06] md:hidden"
       >
         <div className="flex flex-col gap-4 px-4 py-4">
-          {NAV.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
