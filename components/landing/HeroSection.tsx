@@ -17,13 +17,6 @@ export function HeroSection() {
       <div className="relative mx-auto flex max-w-6xl flex-col gap-16 px-4 lg:gap-20 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/70 shadow-[0_4px_24px_rgba(0,0,0,0.25)] backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#5ee496]" />
-              팀 지식을 모든 AI 에이전트 안으로
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.05}>
             <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">
               AI에게 매번 설명하는
               <br />

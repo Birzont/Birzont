@@ -369,16 +369,6 @@ export function KnowledgeFlowDemo() {
                     );
                   })}
                 </div>
-
-                <div className="mt-4 overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    key={engineStepIndex}
-                    className="h-1.5 rounded-full bg-gradient-to-r from-[#5ee496] to-[#3899f7]"
-                    initial={{ width: "0%" }}
-                    animate={{ width: `${((engineStepIndex + 1) / ENGINE_STEPS.length) * 100}%` }}
-                    transition={{ duration: 2.4, ease: "easeInOut" }}
-                  />
-                </div>
               </motion.div>
             </motion.div>
 
