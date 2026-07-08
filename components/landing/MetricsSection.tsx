@@ -3,7 +3,6 @@
 import { FadeIn, HookQuote } from "@/components/ui/FadeIn";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { HOOKING_QUOTES, METRICS } from "@/lib/landing-data";
-import { cn } from "@/lib/utils";
 
 export function MetricsSection() {
   return (
@@ -22,12 +21,7 @@ export function MetricsSection() {
         {METRICS.map((metric, i) => (
           <FadeIn key={metric.label} delay={0.1 * i}>
             <div className="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:[border-color:var(--theme-card-hover-border)]">
-              <span
-                className={cn(
-                  "font-bold tracking-tight text-birzont-green",
-                  metric.isText ? "text-3xl md:text-4xl" : "text-5xl md:text-6xl",
-                )}
-              >
+              <span className="inline-flex min-h-12 items-center justify-center text-5xl font-bold tracking-tight text-birzont-green md:min-h-[3.75rem] md:text-6xl">
                 {metric.value}
               </span>
               <p className="mt-4 text-sm leading-relaxed text-theme-subtle">{metric.label}</p>

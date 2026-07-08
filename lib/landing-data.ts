@@ -231,7 +231,7 @@ export const USE_CASES = [
 export const METRICS = [
   { value: "80%", label: "에이전트 환경 설정 시간 감소" },
   { value: "20%+", label: "반복 질문으로 낭비되는 토큰 절약" },
-  { value: "항상 최신", label: "변경된 팀 지식을 에이전트에 자동 반영", isText: true },
+  { value: "항상 최신", label: "변경된 팀 지식을 에이전트에 자동 반영" },
 ];
 
 export const HOW_IT_WORKS = [
