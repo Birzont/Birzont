@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -37,17 +36,15 @@ export function GlowButton({
 
   if (href) {
     return (
-      <motion.div whileTap={{ scale: 0.98 }}>
-        <Link href={href} className={base}>
-          {inner}
-        </Link>
-      </motion.div>
+      <Link href={href} className={base}>
+        {inner}
+      </Link>
     );
   }
 
   return (
-    <motion.button type="button" onClick={onClick} className={base} whileTap={{ scale: 0.98 }}>
+    <button type="button" onClick={onClick} className={base}>
       {inner}
-    </motion.button>
+    </button>
   );
 }

@@ -1,39 +1,29 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 
 type FadeInProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "down" | "none";
 };
 
-export function FadeIn({
-  children,
-  className,
-  delay = 0,
-  direction = "up",
-}: FadeInProps) {
+export function FadeIn({ children, className, delay = 0 }: FadeInProps) {
   const prefersReducedMotion = useReducedMotion();
-  const offset = direction === "up" ? 28 : direction === "down" ? -28 : 0;
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 1, y: offset > 0 ? 12 : offset < 0 ? -12 : 0 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+    <div
+      className={cn("animate-fade-in-up opacity-0", className)}
+      style={{ animationDelay: `${delay}s` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
