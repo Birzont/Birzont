@@ -38,7 +38,7 @@ export type PricingPlan = {
   name: string;
   price: string;
   period?: string;
-  description: string;
+  descriptionParts: readonly string[];
   cta: string;
   highlighted?: boolean;
   badge?: string;
@@ -49,7 +49,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     name: "Free",
     price: "무료",
-    description: "Birzont의 핵심 동기화를 개인이 먼저 체험합니다.",
+    descriptionParts: ["Birzont의 핵심 동기화를", "개인이 먼저 체험합니다."],
     cta: "무료로 시작",
     features: [
       "월 5회 지식 동기화",
@@ -63,7 +63,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Pro",
     price: "$9",
     period: "/월",
-    description: "매일 AI와 일하는 개인에게 필요한 자동 동기화.",
+    descriptionParts: ["매일 AI와 일하는", "개인에게 필요한", "자동 동기화."],
     cta: "Pro 시작하기",
     highlighted: true,
     badge: "가장 인기",
@@ -80,7 +80,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Team",
     price: "$29",
     period: "/월",
-    description: "팀 전체가 같은 맥락으로 AI와 일하게 만듭니다.",
+    descriptionParts: ["팀 전체가", "같은 맥락으로", "AI와 일하게 만듭니다."],
     cta: "Team 시작하기",
     features: [
       "무제한 지식 소스 · 동기화",
@@ -134,43 +134,77 @@ export const AGENT_OUTPUT_FORMATS = [
   { label: "AI 에이전트 작업공간", icon: Bot, active: true },
 ] as const;
 
-export const PROBLEMS: { title: string; body: string; icon: LucideIcon }[] = [
+export const PROBLEMS: { title: string; bodyParts: readonly string[]; icon: LucideIcon }[] = [
   {
     title: "지식은 흩어져 있습니다",
-    body: "문서, 회의록, 결정사항, 업무 규칙은 여러 도구에 쌓이지만 에이전트는 그 맥락을 보지 못합니다.",
+    bodyParts: [
+      "문서, 회의록, 결정사항, 업무 규칙은",
+      "여러 도구에 쌓이지만",
+      "에이전트는 그 맥락을",
+      "보지 못합니다.",
+    ],
     icon: Layers,
   },
   {
     title: "업데이트는 반영되지 않습니다",
-    body: "문서가 바뀔 때마다 사람이 직접 복사하고 정리해야 합니다. 그래서 에이전트는 항상 한 발 늦습니다.",
+    bodyParts: [
+      "문서가 바뀔 때마다",
+      "사람이 직접 복사하고 정리해야 합니다.",
+      "그래서 에이전트는",
+      "항상 한 발 늦습니다.",
+    ],
     icon: RefreshCw,
   },
   {
     title: "팀의 답변 기준이 달라집니다",
-    body: "팀원마다 다른 AI 도구와 다른 프롬프트를 사용합니다. 같은 질문에도 서로 다른 답이 나옵니다.",
+    bodyParts: [
+      "팀원마다 다른 AI 도구와",
+      "다른 프롬프트를 사용합니다.",
+      "같은 질문에도",
+      "서로 다른 답이 나옵니다.",
+    ],
     icon: Users,
   },
 ];
 
-export const SOLUTIONS: { title: string; body: string; icon: LucideIcon }[] = [
+export const SOLUTIONS: { title: string; bodyParts: readonly string[]; icon: LucideIcon }[] = [
   {
     title: "지식 연결",
-    body: "Notion, Confluence, 로컬 폴더, 사내 문서, 프롬프트 라이브러리를 연결합니다.",
+    bodyParts: [
+      "Notion, Confluence,",
+      "로컬 폴더, 사내 문서,",
+      "프롬프트 라이브러리를",
+      "연결합니다.",
+    ],
     icon: Link2,
   },
   {
     title: "자동 구조화",
-    body: "긴 문서와 흩어진 정보를 에이전트가 이해하기 쉬운 지식 구조로 정리합니다.",
+    bodyParts: [
+      "긴 문서와 흩어진 정보를",
+      "에이전트가 이해하기 쉬운",
+      "지식 구조로 정리합니다.",
+    ],
     icon: Wand2,
   },
   {
     title: "에이전트용 변환",
-    body: "Markdown, CLAUDE.md, Cursor Rules 등 각 에이전트 환경에 맞는 형태로 변환합니다.",
+    bodyParts: [
+      "Markdown, CLAUDE.md,",
+      "Cursor Rules 등",
+      "각 에이전트 환경에 맞는",
+      "형태로 변환합니다.",
+    ],
     icon: FileText,
   },
   {
     title: "자동 동기화",
-    body: "문서가 바뀌면 에이전트 작업공간도 최신 상태로 업데이트합니다.",
+    bodyParts: [
+      "문서가 바뀌면",
+      "에이전트 작업공간도",
+      "최신 상태로",
+      "업데이트합니다.",
+    ],
     icon: RefreshCw,
   },
 ];
@@ -204,17 +238,27 @@ export const HOW_IT_WORKS = [
   {
     step: "01",
     title: "연결하세요",
-    body: "Notion, 폴더, 문서 저장소를 선택합니다.",
+    bodyParts: ["Notion, 폴더,", "문서 저장소를", "선택합니다."],
   },
   {
     step: "02",
     title: "Birzont가 정리합니다",
-    body: "팀 지식을 요약하고 구조화해 에이전트용 문맥으로 바꿉니다.",
+    bodyParts: [
+      "팀 지식을 요약하고",
+      "구조화해",
+      "에이전트용 문맥으로",
+      "바꿉니다.",
+    ],
   },
   {
     step: "03",
     title: "에이전트가 기억합니다",
-    body: "Cursor, Claude, 로컬 에이전트가 최신 팀 지식을 참고합니다.",
+    bodyParts: [
+      "Cursor, Claude,",
+      "로컬 에이전트가",
+      "최신 팀 지식을",
+      "참고합니다.",
+    ],
   },
 ];
 

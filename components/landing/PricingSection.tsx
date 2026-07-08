@@ -2,6 +2,7 @@
 
 import { FadeIn } from "@/components/ui/FadeIn";
 import { GlowButton } from "@/components/ui/GlowButton";
+import { KeepTogetherText } from "@/components/ui/KeepTogetherText";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { cn } from "@/lib/utils";
 import { PRICING_COMPARISON, PRICING_PLANS } from "@/lib/landing-data";
@@ -9,7 +10,7 @@ import { Check } from "lucide-react";
 
 export function PricingSection() {
   return (
-    <SectionShell id="pricing" className="bg-birzont-cream text-birzont-black">
+    <SectionShell id="pricing" className="section-light">
       <FadeIn>
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
@@ -17,7 +18,7 @@ export function PricingSection() {
             <br />
             <span className="text-birzont-blue">요금제를 선택하세요.</span>
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-birzont-black/55 md:text-lg">
+          <p className="mt-5 text-base leading-relaxed text-on-light-muted md:text-lg">
             플랜이 올라갈수록 연결되는 지식, 동기화 빈도, 팀 맥락 공유 범위가
             넓어집니다.
           </p>
@@ -31,12 +32,12 @@ export function PricingSection() {
               className={cn(
                 "relative flex h-full flex-col rounded-2xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft",
                 plan.highlighted
-                  ? "border-birzont-blue/30 bg-white shadow-[0_8px_40px_rgba(56,153,247,0.12)] ring-1 ring-birzont-blue/20"
+                  ? "border-birzont-black/20 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] ring-1 ring-birzont-black/10"
                   : "border-birzont-black/10 bg-white/90",
               )}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-birzont-green to-birzont-blue px-3 py-1 text-[11px] font-semibold text-birzont-black">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-birzont-black px-3 py-1 text-[11px] font-semibold text-white">
                   {plan.badge}
                 </span>
               )}
@@ -49,8 +50,8 @@ export function PricingSection() {
                     <span className="text-sm text-birzont-black/45">{plan.period}</span>
                   )}
                 </div>
-                <p className="mt-3 min-h-[3rem] text-sm leading-relaxed text-birzont-black/55">
-                  {plan.description}
+                <p className="mt-3 min-h-[3rem] text-sm leading-relaxed text-on-light-muted">
+                  <KeepTogetherText parts={plan.descriptionParts} />
                 </p>
               </div>
 

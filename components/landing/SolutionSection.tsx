@@ -2,12 +2,13 @@
 
 import { BlobBackground } from "@/components/ui/BlobBackground";
 import { FadeIn, HookQuote } from "@/components/ui/FadeIn";
+import { KeepTogetherText } from "@/components/ui/KeepTogetherText";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { HOOKING_QUOTES, SOLUTIONS } from "@/lib/landing-data";
 
 export function SolutionSection() {
   return (
-    <SectionShell id="solution" className="relative overflow-hidden bg-birzont-black">
+    <SectionShell id="solution" className="section-dark relative overflow-hidden">
       <BlobBackground variant="dark" />
 
       <FadeIn>
@@ -18,7 +19,7 @@ export function SolutionSection() {
             <span className="gradient-text">지식 동기화 레이어</span>
             입니다.
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-white/50 md:text-lg">
+          <p className="mt-5 text-base leading-relaxed text-theme-subtle md:text-lg">
             팀 지식을 한 번 연결하면, 모든 에이전트가 같은 맥락으로 일합니다.
           </p>
         </div>
@@ -27,12 +28,14 @@ export function SolutionSection() {
       <div className="relative mt-16 grid gap-5 sm:grid-cols-2">
         {SOLUTIONS.map((item, i) => (
           <FadeIn key={item.title} delay={0.08 * i}>
-            <div className="glass-card group h-full p-7 transition-all hover:border-birzont-green/20 hover:bg-white/[0.08]">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-birzont-green/15 to-birzont-blue/10 ring-1 ring-white/10">
+            <div className="glass-card group h-full p-7 transition-all hover:bg-[color-mix(in_srgb,var(--theme-fg)_8%,transparent)] hover:[border-color:var(--theme-card-hover-border)]">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color-mix(in_srgb,var(--theme-fg)_6%,transparent)] ring-1 ring-[color-mix(in_srgb,var(--theme-fg)_10%,transparent)]">
                 <item.icon className="h-5 w-5 text-birzont-green" />
               </div>
               <h3 className="text-xl font-bold">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/50">{item.body}</p>
+              <p className="mt-3 text-sm leading-relaxed text-theme-subtle">
+                <KeepTogetherText parts={item.bodyParts} />
+              </p>
             </div>
           </FadeIn>
         ))}

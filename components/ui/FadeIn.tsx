@@ -35,7 +35,7 @@ type HookQuoteProps = {
 export function HookQuote({ quote, className }: HookQuoteProps) {
   return (
     <FadeIn className={cn("py-8 text-center", className)}>
-      <p className="mx-auto max-w-2xl text-lg font-medium italic text-white/40 md:text-xl">
+      <p className="mx-auto max-w-2xl text-lg font-medium italic text-theme-subtle md:text-xl">
         &ldquo;{quote}&rdquo;
       </p>
     </FadeIn>
@@ -45,7 +45,7 @@ export function HookQuote({ quote, className }: HookQuoteProps) {
 export function HookQuoteLight({ quote, className }: HookQuoteProps) {
   return (
     <FadeIn className={cn("py-8 text-center", className)}>
-      <p className="mx-auto max-w-2xl text-lg font-medium italic text-birzont-black/35 md:text-xl">
+      <p className="mx-auto max-w-2xl text-lg font-medium italic text-on-light-subtle md:text-xl">
         &ldquo;{quote}&rdquo;
       </p>
     </FadeIn>

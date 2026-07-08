@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function MetricsSection() {
   return (
-    <SectionShell id="metrics" className="relative overflow-hidden bg-birzont-black">
+    <SectionShell id="metrics" className="section-dark relative overflow-hidden">
       <FadeIn>
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
@@ -21,7 +21,7 @@ export function MetricsSection() {
       <div className="mt-16 grid gap-5 md:grid-cols-3">
         {METRICS.map((metric, i) => (
           <FadeIn key={metric.label} delay={0.1 * i}>
-            <div className="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:border-birzont-blue/20">
+            <div className="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:[border-color:var(--theme-card-hover-border)]">
               <span
                 className={cn(
                   "font-bold tracking-tight text-birzont-green",
@@ -30,14 +30,14 @@ export function MetricsSection() {
               >
                 {metric.value}
               </span>
-              <p className="mt-4 text-sm leading-relaxed text-white/50">{metric.label}</p>
+              <p className="mt-4 text-sm leading-relaxed text-theme-subtle">{metric.label}</p>
             </div>
           </FadeIn>
         ))}
       </div>
 
       <FadeIn delay={0.2}>
-        <p className="mt-8 text-center text-xs text-white/30">
+        <p className="mt-8 text-center text-xs text-theme-faint">
           초기 워크플로우 기준 추정치입니다.
         </p>
       </FadeIn>

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { AGENT_OUTPUT_FORMATS, KNOWLEDGE_SOURCES } from "@/lib/landing-data";
 import { useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const scrollViewport = {
   once: true,
@@ -58,7 +58,7 @@ function PipelineStepper({ activeStep }: { activeStep: number }) {
                 isActive &&
                   "border-[#5ee496]/30 bg-[#5ee496]/[0.08] shadow-[0_0_24px_rgba(94,228,150,0.12)]",
                 isComplete && "border-[#5ee496]/20 bg-[#5ee496]/[0.05]",
-                !isActive && !isComplete && "border-white/[0.06] bg-white/[0.02]",
+                !isActive && !isComplete && "demo-inactive-surface",
               )}
             >
               <span
@@ -66,7 +66,7 @@ function PipelineStepper({ activeStep }: { activeStep: number }) {
                   "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-500 ease-out",
                   isActive && "bg-[#5ee496] text-[#050607]",
                   isComplete && "bg-[#5ee496]/20 text-[#5ee496]",
-                  !isActive && !isComplete && "bg-white/[0.06] text-white/40",
+                  !isActive && !isComplete && "demo-inactive-badge",
                 )}
               >
                 {isComplete ? "✓" : step.num}
@@ -74,16 +74,16 @@ function PipelineStepper({ activeStep }: { activeStep: number }) {
               <span
                 className={cn(
                   "text-sm font-semibold transition-colors duration-500 ease-out",
-                  isActive && "text-white",
-                  isComplete && "text-white/80",
-                  !isActive && !isComplete && "text-white/45",
+                  isActive && "text-theme",
+                  isComplete && "text-theme/80",
+                  !isActive && !isComplete && "demo-inactive-text",
                 )}
               >
-                {step.title}
+                <span className="whitespace-nowrap">{step.title}</span>
               </span>
             </div>
             {i < PIPELINE_STEPS.length - 1 && (
-              <ArrowRight className="hidden h-4 w-4 shrink-0 text-white/20 sm:block" />
+              <ArrowRight className="hidden h-4 w-4 shrink-0 text-theme-faint sm:block" />
             )}
           </div>
         );
@@ -97,8 +97,8 @@ function ColumnHeader({
   description,
   accent,
 }: {
-  title: string;
-  description: string;
+  title: ReactNode;
+  description: ReactNode;
   accent: "green" | "blue";
 }) {
   return (
@@ -111,8 +111,8 @@ function ColumnHeader({
       >
         {accent === "green" ? "입력" : "출력"}
       </p>
-      <h3 className="text-lg font-bold text-white md:text-xl">{title}</h3>
-      <p className="mt-1 text-sm leading-relaxed text-white/45">{description}</p>
+      <h3 className="text-pretty text-lg font-bold text-theme md:text-xl">{title}</h3>
+      <p className="mt-1 text-pretty text-sm leading-relaxed text-theme-subtle">{description}</p>
     </div>
   );
 }
@@ -140,18 +140,25 @@ function EngineSteps({ activeIndex }: { activeIndex: number }) {
                 "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-[background-color,color] duration-500 ease-out",
                 isActive && "bg-[#5ee496] text-[#050607]",
                 isDone && !isActive && "bg-[#5ee496]/20 text-[#5ee496]",
-                !isActive && !isDone && "bg-white/[0.06] text-white/30",
+                !isActive && !isDone && "demo-inactive-badge",
               )}
             >
               {isDone && !isActive ? "✓" : i + 1}
             </span>
             <span
               className={cn(
-                "text-xs leading-snug transition-[color,font-weight] duration-500 ease-out md:text-[13px]",
-                isActive ? "font-medium text-white/90" : "font-normal text-white/50",
+                "text-pretty text-xs leading-snug transition-[color,font-weight] duration-500 ease-out md:text-[13px]",
+                isActive ? "font-medium text-theme" : "font-normal text-theme-subtle",
               )}
             >
-              {step}
+              {step === "Markdown / CLAUDE.md / Cursor Rules 생성" ? (
+                <>
+                  <span className="whitespace-nowrap">Markdown / CLAUDE.md /</span>{" "}
+                  <span className="whitespace-nowrap">Cursor Rules 생성</span>
+                </>
+              ) : (
+                <span className="whitespace-nowrap">{step}</span>
+              )}
             </span>
             {isActive && (
               <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-[#5ee496]" />
@@ -264,8 +271,17 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
           <div className="relative grid gap-10 lg:grid-cols-[1fr_1.15fr_1fr] lg:gap-6 xl:gap-8">
             <div>
               <ColumnHeader
-                title="팀 지식"
-                description="흩어진 문서를 한곳에서 연결"
+                title={
+                  <>
+                    <span className="whitespace-nowrap">팀 지식</span>
+                  </>
+                }
+                description={
+                  <>
+                    <span className="whitespace-nowrap">흩어진 문서를</span>{" "}
+                    <span className="whitespace-nowrap">한곳에서 연결</span>
+                  </>
+                }
                 accent="green"
               />
               <div className="space-y-2">
@@ -277,35 +293,33 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5ee496]/10">
                       <src.icon className="h-3.5 w-3.5 text-[#5ee496]" />
                     </div>
-                    <span className="text-sm font-medium text-white/85">{src.label}</span>
+                    <span className="text-sm font-medium text-theme">{src.label}</span>
                     <span className="ml-auto rounded-full bg-[#5ee496]/10 px-2 py-0.5 text-[10px] font-medium text-[#5ee496]/80">
                       source
                     </span>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-center text-xs italic text-white/30 lg:text-left">
-                흩어진 팀 지식
-              </p>
             </div>
 
             <div className="flex flex-col items-center">
               <div className="mb-5 w-full text-center lg:text-left">
-                <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-white/30">
+                <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-theme-faint">
                   처리
                 </p>
-                <h3 className="text-lg font-bold text-white md:text-xl">Birzont Engine</h3>
-                <p className="mt-1 text-sm leading-relaxed text-white/45">
-                  읽고, 정리하고, 변환하고, 동기화합니다
+                <h3 className="text-lg font-bold text-theme md:text-xl">Birzont Engine</h3>
+                <p className="mt-1 text-pretty text-sm leading-relaxed text-theme-subtle">
+                  <span className="whitespace-nowrap">읽고, 정리하고,</span>{" "}
+                  <span className="whitespace-nowrap">변환하고, 동기화합니다</span>
                 </p>
               </div>
 
               <div className="relative flex h-[248px] w-[248px] items-center justify-center md:h-[290px] md:w-[290px]">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#5ee496]/20 via-[#3899f7]/10 to-transparent blur-xl" />
-                <div className="absolute inset-3 rounded-full border border-white/10 bg-white/[0.03]" />
+                <div className="absolute inset-3 rounded-full border border-theme bg-[color-mix(in_srgb,var(--theme-fg)_3%,transparent)]" />
                 <div className="relative z-10 flex flex-col items-center gap-2.5">
                   <BirzontLogo size={72} />
-                  <span className="text-sm font-semibold text-white/90">Birzont Engine</span>
+                  <span className="text-sm font-semibold text-theme">Birzont Engine</span>
                 </div>
               </div>
 
@@ -316,8 +330,13 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
 
             <div>
               <ColumnHeader
-                title="에이전트 작업공간"
-                description="AI가 바로 읽고 사용하는 형태로 반영"
+                title={<span className="whitespace-nowrap">에이전트 작업공간</span>}
+                description={
+                  <>
+                    AI가 바로 읽고 사용하는{" "}
+                    <span className="whitespace-nowrap">형태로 반영</span>
+                  </>
+                }
                 accent="blue"
               />
               <div className="space-y-2">
@@ -329,7 +348,7 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#3899f7]/15">
                       <item.icon className="h-3.5 w-3.5 text-[#3899f7]" />
                     </div>
-                    <span className="text-sm font-medium text-white/90">{item.label}</span>
+                    <span className="text-sm font-medium text-theme">{item.label}</span>
                     <span className="ml-auto flex items-center gap-1 rounded-full bg-[#5ee496]/15 px-2 py-0.5 text-[10px] font-semibold text-[#5ee496]">
                       <CheckCircle2 className="h-3 w-3" />
                       synced
@@ -339,14 +358,11 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
 
                 <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-[#3899f7]/30 bg-gradient-to-r from-[#3899f7]/[0.12] to-[#5ee496]/[0.08] px-4 py-3">
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-[#5ee496]" />
-                  <span className="text-xs font-semibold text-[#5ee496]">
+                  <span className="whitespace-nowrap text-xs font-semibold text-[#5ee496]">
                     에이전트가 최신 상태입니다
                   </span>
                 </div>
               </div>
-              <p className="mt-4 text-center text-xs italic text-[#3899f7]/60 lg:text-right">
-                에이전트가 바로 쓰는 최신 맥락
-              </p>
             </div>
           </div>
         </div>

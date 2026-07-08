@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const navLinkClass =
-  "inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white";
+  "inline-flex items-center text-sm font-medium text-theme-subtle no-underline transition-colors hover:text-theme";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -28,14 +28,14 @@ export function Header() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-white/10 bg-[#050607]/90 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl"
+          ? "header-scrolled border-b shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-xl"
           : "bg-transparent",
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 lg:px-8">
         <Link
           href="/"
-          className="inline-flex shrink-0 items-center gap-2.5 text-white no-underline"
+          className="inline-flex shrink-0 items-center gap-2.5 text-theme no-underline"
         >
           <BirzontLogo size={32} className="md:hidden" />
           <img
@@ -43,7 +43,7 @@ export function Header() {
             alt="Birzont"
             width={120}
             height={32}
-            className="hidden h-8 w-auto object-contain brightness-0 invert md:block"
+            className="theme-logo hidden h-8 w-auto object-contain md:block"
           />
         </Link>
 
@@ -64,7 +64,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/80 transition-colors hover:bg-white/10 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-theme bg-theme-btn-secondary text-theme-subtle transition-colors hover:bg-theme-btn-secondary md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="메뉴"
         >
@@ -75,20 +75,20 @@ export function Header() {
       <motion.div
         initial={false}
         animate={open ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
-        className="overflow-hidden border-t border-white/10 bg-[#050607]/95 backdrop-blur-xl md:hidden"
+        className="header-scrolled overflow-hidden border-t backdrop-blur-xl md:hidden"
       >
         <div className="flex flex-col gap-4 px-4 py-5">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={cn(navLinkClass, "py-1 text-white/75")}
+              className={cn(navLinkClass, "py-1")}
               onClick={() => setOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex flex-col gap-3 border-t border-white/10 pt-4">
+          <div className="flex flex-col gap-3 border-t border-theme pt-4">
             <Link href="https://birzont.ai" className={navLinkClass}>
               로그인
             </Link>

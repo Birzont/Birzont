@@ -6,7 +6,7 @@ import { GlowButton } from "@/components/ui/GlowButton";
 
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden px-4 py-28 md:py-36 lg:px-8">
+    <section className="section-dark relative overflow-hidden px-4 py-28 md:py-36 lg:px-8">
       <BlobBackground variant="cta" />
 
       <div className="relative mx-auto max-w-3xl text-center">
@@ -19,7 +19,7 @@ export function CTASection() {
         </FadeIn>
 
         <FadeIn delay={0.08}>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-theme-muted md:text-lg">
             Birzont로 모든 에이전트를 최신 팀 맥락에 연결하세요.
           </p>
         </FadeIn>

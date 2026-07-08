@@ -1,13 +1,14 @@
 "use client";
 
 import { FadeIn, HookQuoteLight } from "@/components/ui/FadeIn";
+import { KeepTogetherText } from "@/components/ui/KeepTogetherText";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { HOOKING_QUOTES, HOW_IT_WORKS } from "@/lib/landing-data";
 import { ArrowRight } from "lucide-react";
 
 export function HowItWorksSection() {
   return (
-    <SectionShell id="how-it-works" className="bg-birzont-cream text-birzont-black">
+    <SectionShell id="how-it-works" className="section-light">
       <FadeIn>
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
@@ -29,8 +30,8 @@ export function HowItWorksSection() {
                   {step.step}
                 </span>
                 <h3 className="mt-4 text-xl font-bold">{step.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-birzont-black/55">
-                  {step.body}
+                <p className="mt-3 text-sm leading-relaxed text-on-light-muted">
+                  <KeepTogetherText parts={step.bodyParts} />
                 </p>
               </div>
 
