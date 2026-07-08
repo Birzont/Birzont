@@ -19,12 +19,9 @@ export function HowItWorksSection() {
         </div>
       </FadeIn>
 
-      <div className="relative mt-16">
-        <div className="absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-birzont-green/20 to-transparent md:block" />
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {HOW_IT_WORKS.map((step, i) => (
-            <FadeIn key={step.title} delay={0.12 * i} className="relative">
+      <div className="mt-16 grid gap-6 md:grid-cols-3">
+        {HOW_IT_WORKS.map((step, i) => (
+          <FadeIn key={step.title} delay={0.12 * i} className="relative">
               <div className="glass-card-light h-full p-7 transition-all hover:-translate-y-1">
                 <span className="text-xs font-bold tracking-widest text-birzont-green-dark">
                   {step.step}
@@ -40,9 +37,8 @@ export function HowItWorksSection() {
                   <ArrowRight className="h-4 w-4 text-birzont-black/15" />
                 </div>
               )}
-            </FadeIn>
-          ))}
-        </div>
+          </FadeIn>
+        ))}
       </div>
 
       <HookQuoteLight quote={HOOKING_QUOTES[4]} />
