@@ -24,7 +24,7 @@ export function ProblemSection() {
       <div className="mt-16 grid gap-5 md:grid-cols-3">
         {PROBLEMS.map((problem, i) => (
           <FadeIn key={problem.title} delay={0.1 * i}>
-            <div className="glass-card-light group h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft">
+            <div className="glass-card-light group h-full p-7 transition-all hover:-translate-y-1">
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-birzont-mint ring-1 ring-birzont-green/20 transition-colors group-hover:bg-birzont-green/15">
                 <problem.icon className="h-5 w-5 text-birzont-green-dark" />
               </div>

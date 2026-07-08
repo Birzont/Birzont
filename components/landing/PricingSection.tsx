@@ -30,9 +30,9 @@ export function PricingSection() {
           <FadeIn key={plan.name} delay={0.08 * i}>
             <div
               className={cn(
-                "relative flex h-full flex-col rounded-2xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft",
+                "relative flex h-full flex-col rounded-2xl border p-7 transition-all hover:-translate-y-1",
                 plan.highlighted
-                  ? "border-birzont-black/20 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] ring-1 ring-birzont-black/10"
+                  ? "border-birzont-black/20 bg-white ring-1 ring-birzont-black/10"
                   : "border-birzont-black/10 bg-white/90",
               )}
             >

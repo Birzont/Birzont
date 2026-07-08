@@ -25,7 +25,7 @@ export function HowItWorksSection() {
         <div className="grid gap-6 md:grid-cols-3">
           {HOW_IT_WORKS.map((step, i) => (
             <FadeIn key={step.title} delay={0.12 * i} className="relative">
-              <div className="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft">
+              <div className="glass-card-light h-full p-7 transition-all hover:-translate-y-1">
                 <span className="text-xs font-bold tracking-widest text-birzont-green-dark">
                   {step.step}
                 </span>

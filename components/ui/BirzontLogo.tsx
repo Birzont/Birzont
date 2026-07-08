@@ -14,7 +14,7 @@ export function BirzontLogo({ size = 32, className }: BirzontLogoProps) {
       alt="Birzont"
       width={clampedSize}
       height={clampedSize}
-      className={cn("shrink-0 object-contain drop-shadow-sm", className)}
+      className={cn("shrink-0 object-contain", className)}
       style={{
         width: clampedSize,
         height: clampedSize,

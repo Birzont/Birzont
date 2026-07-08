@@ -54,9 +54,9 @@ function PipelineStepper({ activeStep }: { activeStep: number }) {
           <div key={step.num} className="flex items-center gap-2 sm:gap-3">
             <div
               className={cn(
-                "flex items-center gap-3 rounded-xl border px-4 py-2.5 transition-[border-color,background-color,box-shadow] duration-500 ease-out",
+                "flex items-center gap-3 rounded-xl border px-4 py-2.5 transition-[border-color,background-color] duration-500 ease-out",
                 isActive &&
-                  "border-[#5ee496]/30 bg-[#5ee496]/[0.08] shadow-[0_0_24px_rgba(94,228,150,0.12)]",
+                  "border-[#5ee496]/30 bg-[#5ee496]/[0.08]",
                 isComplete && "border-[#5ee496]/20 bg-[#5ee496]/[0.05]",
                 !isActive && !isComplete && "demo-inactive-surface",
               )}
@@ -343,7 +343,7 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
                 {AGENT_OUTPUT_FORMATS.map((item) => (
                   <div
                     key={item.label}
-                    className="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/25 bg-[#3899f7]/[0.08] px-4 py-2.5 shadow-[0_0_16px_rgba(56,153,247,0.08)] transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#3899f7]/40 hover:bg-[#3899f7]/[0.12]"
+                    className="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/25 bg-[#3899f7]/[0.08] px-4 py-2.5 transition-[border-color,background-color] duration-300 hover:border-[#3899f7]/40 hover:bg-[#3899f7]/[0.12]"
                   >
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#3899f7]/15">
                       <item.icon className="h-3.5 w-3.5 text-[#3899f7]" />

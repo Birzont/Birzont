@@ -18,7 +18,7 @@ export function UseCaseSection() {
       <div className="mt-16 grid gap-5 sm:grid-cols-2">
         {USE_CASES.map((item, i) => (
           <FadeIn key={item.title} delay={0.08 * i}>
-            <div className="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft">
+            <div className="glass-card-light h-full p-7 transition-all hover:-translate-y-1">
               <div className="mb-3 inline-flex rounded-full bg-birzont-blue/10 px-3 py-1 text-xs font-semibold text-birzont-blue">
                 Use Case
               </div>

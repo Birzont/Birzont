@@ -116,9 +116,9 @@ button {
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
 
-  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.08);
-  --shadow-glow: 0 0 60px rgba(94, 228, 150, 0.15), 0 0 120px rgba(56, 153, 247, 0.08);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 0 #0000;
+  --shadow-glow: 0 0 #0000;
+  --shadow-card: 0 0 #0000;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
@@ -255,7 +255,7 @@ button {
   }
 
   .glass-card-light {
-    @apply rounded-2xl shadow-card backdrop-blur-xl;
+    @apply rounded-2xl backdrop-blur-xl;
     border: 1px solid var(--theme-card-light-border);
     background: var(--theme-card-light);
   }
@@ -279,7 +279,6 @@ button {
   button.btn-primary {
     background-color: var(--theme-btn-primary-bg);
     color: var(--theme-btn-primary-fg);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   }
 
   .btn-primary:hover,
