@@ -14,8 +14,8 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050607] via-[#0a0b0f] to-[#050607]" />
       <BlobBackground variant="dark" />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-16 px-4 lg:gap-20 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+      <div className="relative mx-auto flex max-w-6xl flex-col px-4 lg:px-8">
+        <div className="mx-auto flex min-h-[calc(100svh-4rem)] w-full max-w-3xl flex-col justify-center text-center md:min-h-0 md:justify-start">
           <FadeIn>
             <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">
               AI에게 매번 설명하는
@@ -41,7 +41,7 @@ export function HeroSection() {
           </FadeIn>
         </div>
 
-        <KnowledgeFlowDemo />
+        <KnowledgeFlowDemo className="mt-8 md:mt-16" />
       </div>
     </section>
   );

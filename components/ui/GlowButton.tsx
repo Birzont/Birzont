@@ -21,7 +21,7 @@ export function GlowButton({
   onClick,
 }: GlowButtonProps) {
   const base = cn(
-    "btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]",
+    "btn-glow inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]",
     variant === "primary" &&
       "gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)]",
     variant === "secondary" &&

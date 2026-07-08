@@ -79,7 +79,7 @@ function PipelineStepper({ activeStep }: { activeStep: number }) {
           <div key={step.num} className="flex items-center gap-2 sm:gap-3">
             <div
               className={cn(
-                "flex items-center gap-3 rounded-2xl border px-4 py-2.5 transition-all duration-500",
+                "flex items-center gap-3 rounded-xl border px-4 py-2.5 transition-all duration-500",
                 isActive &&
                   "border-[#5ee496]/30 bg-[#5ee496]/[0.08] shadow-[0_0_24px_rgba(94,228,150,0.12)]",
                 isComplete &&
@@ -217,7 +217,7 @@ function FlowConnectors({
   );
 }
 
-export function KnowledgeFlowDemo() {
+export function KnowledgeFlowDemo({ className }: { className?: string }) {
   const [engineStepIndex, setEngineStepIndex] = useState(0);
   const [hoveredSide, setHoveredSide] = useState<"in" | "out" | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -236,7 +236,10 @@ export function KnowledgeFlowDemo() {
   }, []);
 
   return (
-    <div ref={sectionRef} className="relative mt-16 w-full scroll-mt-24 py-4 md:mt-24 md:py-8">
+    <div
+      ref={sectionRef}
+      className={cn("relative w-full scroll-mt-24 py-4 md:py-8", className)}
+    >
       <motion.div
         initial={prefersReducedMotion ? "show" : "hidden"}
         animate={hasRevealed ? "show" : "hidden"}
@@ -268,7 +271,7 @@ export function KnowledgeFlowDemo() {
                   <motion.div
                     key={src.label}
                     variants={revealItem}
-                    className="group flex items-center gap-2.5 rounded-2xl border border-[#5ee496]/15 bg-[#5ee496]/[0.04] px-4 py-2.5 backdrop-blur-sm transition-all duration-300 hover:border-[#5ee496]/30 hover:bg-[#5ee496]/[0.08] hover:shadow-[0_0_16px_rgba(94,228,150,0.1)]"
+                    className="group flex items-center gap-2.5 rounded-xl border border-[#5ee496]/15 bg-[#5ee496]/[0.04] px-4 py-2.5 backdrop-blur-sm transition-all duration-300 hover:border-[#5ee496]/30 hover:bg-[#5ee496]/[0.08] hover:shadow-[0_0_16px_rgba(94,228,150,0.1)]"
                   >
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5ee496]/10">
                       <src.icon className="h-3.5 w-3.5 text-[#5ee496]" />
@@ -334,7 +337,7 @@ export function KnowledgeFlowDemo() {
                       <div
                         key={step}
                         className={cn(
-                          "flex items-center gap-2.5 rounded-xl px-3 py-2 transition-all duration-500",
+                          "flex items-center gap-2.5 rounded-lg px-3 py-2 transition-all duration-500",
                           isActive &&
                             "border border-[#5ee496]/25 bg-[#5ee496]/[0.08] shadow-[0_0_12px_rgba(94,228,150,0.08)]",
                           isDone && !isActive && "opacity-50",
@@ -390,7 +393,7 @@ export function KnowledgeFlowDemo() {
                   <motion.div
                     key={item.label}
                     variants={revealItem}
-                    className="group flex items-center gap-2.5 rounded-2xl border border-[#3899f7]/25 bg-[#3899f7]/[0.08] px-4 py-2.5 shadow-[0_0_20px_rgba(56,153,247,0.1)] backdrop-blur-sm transition-all duration-300 hover:border-[#3899f7]/40 hover:bg-[#3899f7]/[0.12] hover:shadow-[0_0_28px_rgba(56,153,247,0.18)]"
+                    className="group flex items-center gap-2.5 rounded-xl border border-[#3899f7]/25 bg-[#3899f7]/[0.08] px-4 py-2.5 shadow-[0_0_20px_rgba(56,153,247,0.1)] backdrop-blur-sm transition-all duration-300 hover:border-[#3899f7]/40 hover:bg-[#3899f7]/[0.12] hover:shadow-[0_0_28px_rgba(56,153,247,0.18)]"
                   >
                     <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#3899f7]/15">
                       <item.icon className="h-3.5 w-3.5 text-[#3899f7]" />
@@ -405,7 +408,7 @@ export function KnowledgeFlowDemo() {
 
                 <motion.div
                   variants={revealItem}
-                  className="mt-3 flex items-center gap-2.5 rounded-2xl border border-[#3899f7]/30 bg-gradient-to-r from-[#3899f7]/[0.12] to-[#5ee496]/[0.08] px-4 py-3 shadow-[0_0_24px_rgba(56,153,247,0.15)]"
+                  className="mt-3 flex items-center gap-2.5 rounded-xl border border-[#3899f7]/30 bg-gradient-to-r from-[#3899f7]/[0.12] to-[#5ee496]/[0.08] px-4 py-3 shadow-[0_0_24px_rgba(56,153,247,0.15)]"
                 >
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-[#5ee496]" />
                   <span className="text-xs font-semibold text-[#5ee496]">

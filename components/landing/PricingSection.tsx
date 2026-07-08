@@ -29,7 +29,7 @@ export function PricingSection() {
           <FadeIn key={plan.name} delay={0.08 * i}>
             <div
               className={cn(
-                "relative flex h-full flex-col rounded-3xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft",
+                "relative flex h-full flex-col rounded-2xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft",
                 plan.highlighted
                   ? "border-birzont-blue/30 bg-white shadow-[0_8px_40px_rgba(56,153,247,0.12)] ring-1 ring-birzont-blue/20"
                   : "border-birzont-black/10 bg-white/90",
@@ -76,7 +76,7 @@ export function PricingSection() {
       </div>
 
       <FadeIn delay={0.15}>
-        <div className="mt-16 overflow-hidden rounded-3xl border border-birzont-black/10 bg-white">
+        <div className="mt-16 overflow-hidden rounded-2xl border border-birzont-black/10 bg-white">
           <div className="border-b border-birzont-black/8 px-6 py-5">
             <h3 className="text-lg font-bold md:text-xl">요금제별 기능 비교</h3>
             <p className="mt-1 text-sm text-birzont-black/45">
