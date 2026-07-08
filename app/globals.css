@@ -93,8 +93,6 @@ html {
 
 body {
   margin: 0;
-  background: var(--theme-bg);
-  color: var(--theme-fg);
   font-family: Pretendard, Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
@@ -276,56 +274,57 @@ button {
     @apply opacity-100;
   }
 
-  .btn-primary {
+  .btn-primary,
+  a.btn-primary,
+  button.btn-primary {
     background-color: var(--theme-btn-primary-bg);
     color: var(--theme-btn-primary-fg);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   }
 
-  a.btn-primary,
-  a.btn-primary:visited,
+  .btn-primary:hover,
   a.btn-primary:hover,
-  a.btn-primary:active,
-  .btn-primary > span {
+  button.btn-primary:hover {
+    background-color: var(--theme-btn-primary-hover);
     color: var(--theme-btn-primary-fg);
   }
 
-  .btn-primary:hover {
-    background-color: var(--theme-btn-primary-hover);
-  }
-
+  .btn-secondary,
   a.btn-secondary,
-  a.btn-secondary:visited,
-  a.btn-secondary:hover,
-  a.btn-secondary:active,
-  .btn-secondary > span {
-    color: var(--theme-btn-secondary-fg);
-  }
-
-  .btn-secondary {
+  button.btn-secondary {
     border: 1px solid var(--theme-btn-secondary-border);
     background-color: var(--theme-btn-secondary-bg);
     color: var(--theme-btn-secondary-fg);
   }
 
-  .btn-outline-light {
+  .btn-outline-light,
+  a.btn-outline-light,
+  button.btn-outline-light {
     border: 1px solid var(--theme-btn-outline-border);
     background: transparent;
     color: var(--theme-btn-secondary-fg);
   }
 
-  .btn-outline-light:hover {
+  .btn-outline-light:hover,
+  a.btn-outline-light:hover,
+  button.btn-outline-light:hover {
     background-color: var(--theme-btn-secondary-bg);
+    color: var(--theme-btn-secondary-fg);
   }
 
-  .btn-outline-dark {
+  .btn-outline-dark,
+  a.btn-outline-dark,
+  button.btn-outline-dark {
     border: 1px solid rgba(26, 26, 31, 0.15);
     background: #ffffff;
     color: #1a1a1f;
   }
 
-  .btn-outline-dark:hover {
+  .btn-outline-dark:hover,
+  a.btn-outline-dark:hover,
+  button.btn-outline-dark:hover {
     background: #f7f8fa;
+    color: #1a1a1f;
   }
 
   .gradient-text {

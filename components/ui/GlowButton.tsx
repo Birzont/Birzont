@@ -35,6 +35,7 @@ export function GlowButton({
         variant === "primary" && "text-[var(--theme-btn-primary-fg)]",
         variant === "secondary" && "text-[var(--theme-btn-secondary-fg)]",
         variant === "outline-light" && "text-[var(--theme-btn-secondary-fg)]",
+        variant === "outline-dark" && "text-birzont-black",
       )}
     >
       {children}
