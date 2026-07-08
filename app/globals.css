@@ -151,4 +151,15 @@ button {
   .blob-dark {
     background: radial-gradient(circle, rgba(16, 17, 20, 0.55) 0%, rgba(16, 17, 20, 0) 70%);
   }
+
+  .knowledge-flow-path {
+    stroke-dasharray: 3 7;
+    animation: knowledge-flow-dash 5s linear infinite;
+  }
+
+  @keyframes knowledge-flow-dash {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
 }

@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "clean": "rm -rf .next out",
-    "export:static": "rm -rf .next out && next build && touch out/.nojekyll",
-    "deploy": "npm run export:static && cp out/index.html index.html && rm -rf _next && cp -R out/_next _next && cp out/.nojekyll .nojekyll && cp out/birzont-logo.png birzont-logo.png",
-    "start": "next start",
-    "lint": "next lint"
+    "export:static": "rm -rf .next out && next build && touch out/.nojekyll && echo 'birzont.com' > out/CNAME"
   },
   "dependencies": {
     "clsx": "^2.1.1",
