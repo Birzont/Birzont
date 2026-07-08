@@ -10,7 +10,9 @@ export function UseCaseSection() {
       <FadeIn>
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-            이런 팀에게 필요합니다.
+            AI를 팀 단위로 쓰기 시작했다면
+            <br />
+            <span className="text-birzont-blue">필요합니다.</span>
           </h2>
         </div>
       </FadeIn>

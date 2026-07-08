@@ -10,6 +10,8 @@ type GlowButtonProps = {
   variant?: "primary" | "secondary" | "outline-light" | "outline-dark";
   className?: string;
   onClick?: () => void;
+  type?: "button" | "submit";
+  disabled?: boolean;
 };
 
 export function GlowButton({
@@ -18,6 +20,8 @@ export function GlowButton({
   variant = "primary",
   className,
   onClick,
+  type = "button",
+  disabled,
 }: GlowButtonProps) {
   const base = cn(
     "btn-glow inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]",
@@ -51,7 +55,7 @@ export function GlowButton({
   }
 
   return (
-    <button type="button" onClick={onClick} className={base}>
+    <button type={type} onClick={onClick} disabled={disabled} className={base}>
       {inner}
     </button>
   );

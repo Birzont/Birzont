@@ -2,7 +2,7 @@
 
 import { BirzontLogo } from "@/components/ui/BirzontLogo";
 import { cn } from "@/lib/utils";
-import { AGENT_OUTPUT_FORMATS, KNOWLEDGE_SOURCES } from "@/lib/landing-data";
+import { AGENT_OUTPUT_FORMATS, KNOWLEDGE_SOURCES, MOBILE_FLOW_STEPS } from "@/lib/landing-data";
 import { useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -265,7 +265,39 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
       >
         <PipelineStepper activeStep={activePipelineStep} />
 
-        <div className="relative">
+        {/* Mobile: 3 stacked summary cards */}
+        <div className="space-y-4 lg:hidden">
+          {MOBILE_FLOW_STEPS.map((step, i) => (
+            <div
+              key={step.title}
+              className={cn(
+                "rounded-2xl border p-5",
+                step.accent === "green" &&
+                  "border-[#5ee496]/20 bg-[#5ee496]/[0.06]",
+                step.accent === "neutral" && "demo-inactive-surface",
+                step.accent === "blue" &&
+                  "border-[#3899f7]/25 bg-[#3899f7]/[0.08]",
+              )}
+            >
+              <div className="mb-2 flex items-center gap-2">
+                <span
+                  className={cn(
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold",
+                    step.accent === "green" && "bg-[#5ee496]/20 text-[#5ee496]",
+                    step.accent === "neutral" && "demo-inactive-badge",
+                    step.accent === "blue" && "bg-[#3899f7]/20 text-[#3899f7]",
+                  )}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-base font-bold text-theme">{step.title}</h3>
+              </div>
+              <p className="text-sm leading-relaxed text-theme-subtle">{step.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="relative hidden lg:block">
           <FlowConnectors visible={hasRevealed} />
 
           <div className="relative grid gap-10 lg:grid-cols-[1fr_1.15fr_1fr] lg:gap-6 xl:gap-8">

@@ -5,7 +5,7 @@ import { GlowButton } from "@/components/ui/GlowButton";
 import { KeepTogetherText } from "@/components/ui/KeepTogetherText";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { cn } from "@/lib/utils";
-import { PRICING_COMPARISON, PRICING_PLANS } from "@/lib/landing-data";
+import { CTA_LINKS, PRICING_COMPARISON, PRICING_PLANS } from "@/lib/landing-data";
 import { Check } from "lucide-react";
 
 export function PricingSection() {
@@ -19,8 +19,8 @@ export function PricingSection() {
             <span className="text-birzont-blue">요금제를 선택하세요.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-on-light-muted md:text-lg">
-            플랜이 올라갈수록 연결되는 지식, 동기화 빈도, 팀 맥락 공유 범위가
-            넓어집니다.
+            출시 전 베타 플랜입니다. 플랜이 올라갈수록 연결되는 지식, 동기화 빈도, 팀
+            맥락 공유 범위가 넓어집니다.
           </p>
         </div>
       </FadeIn>
@@ -60,7 +60,7 @@ export function PricingSection() {
               </div>
 
               <GlowButton
-                href="https://birzont.ai/pricing"
+                href={plan.name === "Team" ? CTA_LINKS.b2b.href : "#beta-form"}
                 variant={plan.highlighted ? "primary" : "outline-dark"}
                 className={cn(
                   "w-full justify-center",

@@ -3,7 +3,7 @@
 import { BirzontLogo } from "@/components/ui/BirzontLogo";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/lib/landing-data";
+import { CTA_LINKS, NAV_ITEMS } from "@/lib/landing-data";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export function Header() {
           <Link href="https://birzont.ai" className={navLinkClass}>
             로그인
           </Link>
-          <GlowButton href="https://birzont.ai">먼저 시작하기</GlowButton>
+          <GlowButton href={CTA_LINKS.primary.href}>{CTA_LINKS.primary.label}</GlowButton>
         </div>
 
         <button
@@ -92,8 +92,8 @@ export function Header() {
             <Link href="https://birzont.ai" className={navLinkClass}>
               로그인
             </Link>
-            <GlowButton href="https://birzont.ai" className="w-full justify-center">
-              먼저 시작하기
+            <GlowButton href={CTA_LINKS.primary.href} className="w-full justify-center">
+              {CTA_LINKS.primary.label}
             </GlowButton>
           </div>
         </div>
