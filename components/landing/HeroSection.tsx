@@ -1,6 +1,5 @@
 "use client";
 
-import { BlobBackground } from "@/components/ui/BlobBackground";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { KnowledgeFlowDemo } from "@/components/landing/KnowledgeFlowDemo";
@@ -11,9 +10,6 @@ export function HeroSection() {
       id="product"
       className="relative min-h-screen overflow-hidden bg-theme pt-28 pb-16 text-theme md:pt-36 md:pb-24"
     >
-      <div className="hero-overlay pointer-events-none absolute inset-0" />
-      <BlobBackground variant="dark" />
-
       <div className="relative mx-auto flex max-w-6xl flex-col px-4 lg:px-8">
         <div className="mx-auto flex min-h-[calc(100svh-4rem)] w-full max-w-3xl flex-col justify-center text-center md:min-h-0 md:justify-start">
           <FadeIn>

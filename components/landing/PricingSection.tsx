@@ -30,10 +30,10 @@ export function PricingSection() {
           <FadeIn key={plan.name} delay={0.08 * i}>
             <div
               className={cn(
-                "relative flex h-full flex-col rounded-2xl border p-7 transition-all hover:-translate-y-1",
+                "pricing-card relative flex h-full flex-col rounded-2xl border p-7 text-birzont-black transition-all hover:-translate-y-1",
                 plan.highlighted
                   ? "border-birzont-black/20 bg-white ring-1 ring-birzont-black/10"
-                  : "border-birzont-black/10 bg-white/90",
+                  : "border-birzont-black/10 bg-white",
               )}
             >
               {plan.badge && (
@@ -43,14 +43,18 @@ export function PricingSection() {
               )}
 
               <div className="mb-4">
-                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <h3 className="text-xl font-bold text-birzont-black">{plan.name}</h3>
                 <div className="mt-2 flex items-baseline gap-1">
-                  <span className="text-4xl font-bold tracking-tight">{plan.price}</span>
+                  <span className="text-4xl font-bold tracking-tight text-birzont-black">
+                    {plan.price}
+                  </span>
                   {plan.period && (
-                    <span className="text-sm text-birzont-black/45">{plan.period}</span>
+                    <span className="text-sm font-medium text-birzont-black/75">
+                      {plan.period}
+                    </span>
                   )}
                 </div>
-                <p className="mt-3 min-h-[3rem] text-sm leading-relaxed text-on-light-muted">
+                <p className="mt-3 min-h-[3rem] text-sm leading-relaxed text-birzont-black/70">
                   <KeepTogetherText parts={plan.descriptionParts} />
                 </p>
               </div>
@@ -58,14 +62,17 @@ export function PricingSection() {
               <GlowButton
                 href="https://birzont.ai/pricing"
                 variant={plan.highlighted ? "primary" : "outline-dark"}
-                className="w-full justify-center"
+                className={cn(
+                  "w-full justify-center",
+                  plan.highlighted && "pricing-card-primary-btn",
+                )}
               >
                 {plan.cta}
               </GlowButton>
 
               <ul className="mt-6 space-y-2.5">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2.5 text-sm text-birzont-black/70">
+                  <li key={feature} className="flex items-start gap-2.5 text-sm text-birzont-black/80">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark" />
                     {feature}
                   </li>
@@ -77,10 +84,10 @@ export function PricingSection() {
       </div>
 
       <FadeIn delay={0.15}>
-        <div className="mt-16 overflow-hidden rounded-2xl border border-birzont-black/10 bg-white">
+        <div className="mt-16 overflow-hidden rounded-2xl border border-birzont-black/10 bg-white text-birzont-black">
           <div className="border-b border-birzont-black/8 px-6 py-5">
-            <h3 className="text-lg font-bold md:text-xl">요금제별 기능 비교</h3>
-            <p className="mt-1 text-sm text-birzont-black/45">
+            <h3 className="text-lg font-bold text-birzont-black md:text-xl">요금제별 기능 비교</h3>
+            <p className="mt-1 text-sm text-birzont-black/70">
               상위 플랜일수록 더 많은 소스, 더 빠른 동기화, 더 넓은 팀 맥락을 제공합니다.
             </p>
           </div>
@@ -90,7 +97,7 @@ export function PricingSection() {
                 <tr className="border-b border-birzont-black/8 bg-birzont-mint/30 text-left">
                   <th className="px-6 py-4 font-semibold text-birzont-black/70">기능</th>
                   <th className="px-4 py-4 font-semibold text-birzont-black/70">Free</th>
-                  <th className="px-4 py-4 font-semibold text-birzont-blue">Pro</th>
+                  <th className="px-4 py-4 font-semibold text-birzont-black">Pro</th>
                   <th className="px-4 py-4 font-semibold text-birzont-black/70">Team</th>
                 </tr>
               </thead>

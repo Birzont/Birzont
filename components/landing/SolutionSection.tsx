@@ -1,6 +1,5 @@
 "use client";
 
-import { BlobBackground } from "@/components/ui/BlobBackground";
 import { FadeIn, HookQuote } from "@/components/ui/FadeIn";
 import { KeepTogetherText } from "@/components/ui/KeepTogetherText";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -9,8 +8,6 @@ import { HOOKING_QUOTES, SOLUTIONS } from "@/lib/landing-data";
 export function SolutionSection() {
   return (
     <SectionShell id="solution" className="section-dark relative overflow-hidden">
-      <BlobBackground variant="dark" />
-
       <FadeIn>
         <div className="relative mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">

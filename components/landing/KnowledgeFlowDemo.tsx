@@ -315,7 +315,6 @@ export function KnowledgeFlowDemo({ className }: { className?: string }) {
               </div>
 
               <div className="relative flex h-[248px] w-[248px] items-center justify-center md:h-[290px] md:w-[290px]">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#5ee496]/20 via-[#3899f7]/10 to-transparent blur-xl" />
                 <div className="absolute inset-3 rounded-full border border-theme bg-[color-mix(in_srgb,var(--theme-fg)_3%,transparent)]" />
                 <div className="relative z-10 flex flex-col items-center gap-2.5">
                   <BirzontLogo size={72} />

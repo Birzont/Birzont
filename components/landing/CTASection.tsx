@@ -1,14 +1,11 @@
 "use client";
 
-import { BlobBackground } from "@/components/ui/BlobBackground";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { GlowButton } from "@/components/ui/GlowButton";
 
 export function CTASection() {
   return (
     <section className="section-dark relative overflow-hidden px-4 py-28 md:py-36 lg:px-8">
-      <BlobBackground variant="cta" />
-
       <div className="relative mx-auto max-w-3xl text-center">
         <FadeIn>
           <h2 className="text-balance text-3xl font-bold tracking-tight md:text-5xl lg:text-[3.25rem]">

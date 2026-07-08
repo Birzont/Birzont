@@ -18,39 +18,38 @@ html {
 }
 
 :root {
-  --theme-bg: #050607;
-  --theme-bg-elevated: #0a0b0f;
+  --theme-bg: #2b2b2a;
+  --theme-bg-elevated: #2b2b2a;
   --theme-fg: #ffffff;
-  --theme-fg-muted: rgba(255, 255, 255, 0.6);
+  --theme-fg-muted: rgba(255, 255, 255, 0.65);
   --theme-fg-subtle: rgba(255, 255, 255, 0.45);
   --theme-fg-faint: rgba(255, 255, 255, 0.3);
-  --theme-section-light-bg: #f7f8fa;
-  --theme-section-light-fg: #1a1a1f;
-  --theme-section-light-muted: rgba(26, 26, 31, 0.55);
-  --theme-section-light-subtle: rgba(26, 26, 31, 0.35);
-  --theme-section-dark-bg: #1a1a1f;
+  --theme-section-light-bg: #323231;
+  --theme-section-light-fg: #f5f5f4;
+  --theme-section-light-muted: rgba(245, 245, 244, 0.65);
+  --theme-section-light-subtle: rgba(245, 245, 244, 0.4);
+  --theme-section-dark-bg: #2b2b2a;
   --theme-section-dark-fg: #ffffff;
-  --theme-header-bg: rgba(5, 6, 7, 0.9);
+  --theme-header-bg: rgba(43, 43, 42, 0.92);
   --theme-header-border: rgba(255, 255, 255, 0.1);
   --theme-card: rgba(255, 255, 255, 0.06);
   --theme-card-border: rgba(255, 255, 255, 0.1);
-  --theme-card-hover-border: rgba(255, 255, 255, 0.2);
-  --theme-card-light: rgba(255, 255, 255, 0.8);
-  --theme-card-light-border: rgba(0, 0, 0, 0.06);
+  --theme-card-hover-border: rgba(255, 255, 255, 0.18);
+  --theme-card-light: rgba(255, 255, 255, 0.07);
+  --theme-card-light-border: rgba(255, 255, 255, 0.1);
   --theme-btn-primary-bg: #ffffff;
-  --theme-btn-primary-fg: #050607;
+  --theme-btn-primary-fg: #2b2b2a;
   --theme-btn-primary-hover: rgba(255, 255, 255, 0.88);
   --theme-btn-secondary-border: rgba(255, 255, 255, 0.2);
-  --theme-btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --theme-btn-secondary-bg: rgba(255, 255, 255, 0.08);
   --theme-btn-secondary-fg: #ffffff;
   --theme-btn-outline-border: rgba(255, 255, 255, 0.25);
-  --theme-border: rgba(255, 255, 255, 0.06);
-  --theme-demo-inactive-border: rgba(255, 255, 255, 0.06);
-  --theme-demo-inactive-bg: rgba(255, 255, 255, 0.02);
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-demo-inactive-border: rgba(255, 255, 255, 0.08);
+  --theme-demo-inactive-bg: rgba(255, 255, 255, 0.04);
   --theme-demo-inactive-text: rgba(255, 255, 255, 0.45);
-  --theme-demo-inactive-badge-bg: rgba(255, 255, 255, 0.06);
+  --theme-demo-inactive-badge-bg: rgba(255, 255, 255, 0.08);
   --theme-demo-inactive-badge-text: rgba(255, 255, 255, 0.4);
-  --theme-blob-opacity: 1;
 }
 
 @media (prefers-color-scheme: light) {
@@ -87,7 +86,6 @@ html {
     --theme-demo-inactive-text: rgba(5, 6, 7, 0.45);
     --theme-demo-inactive-badge-bg: rgba(5, 6, 7, 0.06);
     --theme-demo-inactive-badge-text: rgba(5, 6, 7, 0.4);
-    --theme-blob-opacity: 0.35;
   }
 }
 
@@ -330,13 +328,25 @@ button {
     @apply bg-gradient-to-r from-birzont-green via-emerald-300 to-birzont-blue bg-clip-text text-transparent;
   }
 
-  .hero-overlay {
-    background: linear-gradient(
-      to bottom,
-      var(--theme-bg),
-      var(--theme-bg-elevated),
-      var(--theme-bg)
-    );
+  .pricing-card-primary-btn,
+  a.pricing-card-primary-btn,
+  button.pricing-card-primary-btn {
+    border: 1px solid rgba(26, 26, 31, 0.22);
+    background-color: #1a1a1f;
+    color: #ffffff;
+  }
+
+  .pricing-card-primary-btn:hover,
+  a.pricing-card-primary-btn:hover,
+  button.pricing-card-primary-btn:hover {
+    background-color: #050607;
+    color: #ffffff;
+  }
+
+  .pricing-card-primary-btn span,
+  a.pricing-card-primary-btn span,
+  button.pricing-card-primary-btn span {
+    color: #ffffff;
   }
 
   .demo-inactive-surface {
@@ -351,27 +361,6 @@ button {
   .demo-inactive-badge {
     background-color: var(--theme-demo-inactive-badge-bg);
     color: var(--theme-demo-inactive-badge-text);
-  }
-
-  .blob-green {
-    background: radial-gradient(circle, rgba(94, 228, 150, 0.35) 0%, rgba(94, 228, 150, 0) 70%);
-    opacity: var(--theme-blob-opacity);
-  }
-
-  .blob-blue {
-    background: radial-gradient(circle, rgba(56, 153, 247, 0.3) 0%, rgba(56, 153, 247, 0) 70%);
-    opacity: var(--theme-blob-opacity);
-  }
-
-  .blob-dark {
-    background: radial-gradient(circle, rgba(16, 17, 20, 0.55) 0%, rgba(16, 17, 20, 0) 70%);
-    opacity: var(--theme-blob-opacity);
-  }
-
-  @media (prefers-color-scheme: light) {
-    .blob-dark {
-      background: radial-gradient(circle, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
-    }
   }
 
   .knowledge-flow-path {
