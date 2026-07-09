@@ -34,7 +34,7 @@ jobs:
           for page in about.html blog.html career.html policy.html shortcut.html secret-hobby.html; do
             [ -f "$page" ] && cp "$page" _site/
           done
-          for asset in styles.css tailwind.css app.js navbar.js footer.js theme.js team.js languageprovider.js secret-hobby.js; do
+          for asset in styles.css app.js navbar.js footer.js theme.js team.js languageprovider.js secret-hobby.js; do
             [ -f "$asset" ] && cp "$asset" _site/
           done
           [ -d policy ] && cp -r policy _site/

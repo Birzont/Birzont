@@ -1,0 +1,133 @@
+/* Birzont landing overrides */
+
+/* Logo */
+.site-logo-wordmark {
+  height: 2rem;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.site-logo-icon {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .site-logo-icon {
+    display: none !important;
+  }
+}
+
+/* Tighter corners — buttons & cards only */
+a.btn-glow,
+button.btn-glow {
+  border-radius: 0.5rem !important;
+  padding-top: 0.68rem !important;
+  padding-bottom: 0.68rem !important;
+}
+
+.rounded-3xl {
+  border-radius: 0.75rem !important;
+}
+
+.rounded-2xl {
+  border-radius: 0.625rem !important;
+}
+
+.rounded-xl {
+  border-radius: 0.5rem !important;
+}
+
+/* Buttons: black & white only */
+a.btn-glow.gradient-cta,
+.btn-glow.gradient-cta {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: none !important;
+}
+
+a.btn-glow.gradient-cta:hover,
+.btn-glow.gradient-cta:hover {
+  background: #e8e8e8 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Secondary outline buttons on dark sections */
+a.btn-glow.border-white\/20 {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+a.btn-glow.border-white\/20:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+/* Outline buttons on light sections */
+a.btn-glow.border-birzont-black\/15 {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: none !important;
+}
+
+a.btn-glow.border-birzont-black\/15:hover {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+/* Pricing buttons should contrast against the white cards */
+#pricing a.btn-glow,
+#pricing .btn-glow.gradient-cta,
+#pricing .btn-glow.border-birzont-black\/15 {
+  background: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+#pricing a.btn-glow:hover,
+#pricing .btn-glow.gradient-cta:hover,
+#pricing .btn-glow.border-birzont-black\/15:hover {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+#pricing a.btn-glow span {
+  color: #ffffff !important;
+}
+
+/* Slightly tighter header CTA */
+header a.btn-glow {
+  padding-top: 0.58rem !important;
+  padding-bottom: 0.58rem !important;
+}
+
+/* Opaque scrolled header */
+header.header-scrolled {
+  background: rgba(5, 6, 7, 0.98) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Remove headline gradients and keep text monochrome */
+.gradient-text {
+  background: none !important;
+  background-image: none !important;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* Pricing badge */
+.bg-gradient-to-r.from-birzont-green.to-birzont-blue,
+span.bg-gradient-to-r {
+  background: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+}

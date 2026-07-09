@@ -1,24 +1,11 @@
 title: Birzont
 
-# Keep GitHub Pages artifact small so deploy finishes within the timeout.
+# Static site — deployed via GitHub Actions (.github/workflows/deploy.yml)
 exclude:
-  - node_modules
-  - pnpm-lock.yaml
-  - next.config.mjs
-  - tsconfig.json
-  - postcss.config.mjs
-  - components.json
-  - hooks
-  - design.md
-  - implementation-guide.txt
+  - .git
+  - .github
   - docs
   - supabase
-  - "index copy.html"
-  - .gitignore
-  - public
-  - styles/globals.css
-  - app
-  - components
-  - lib
-  - node_modules
-  - .next
+  - snippets
+  - README.md
+  - package.json
