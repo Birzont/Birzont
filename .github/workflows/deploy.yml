@@ -1,4 +1,4 @@
-name: Deploy Next.js static site to GitHub Pages
+name: Deploy static site to GitHub Pages
 
 on:
   push:
@@ -16,49 +16,45 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build static site
-        run: npm run export:static
-
-      - name: Verify output files
+      - name: Prepare site artifact
         run: |
-          test -f out/index.html
-          test -d out/_next
-          test -d out/_next/static
-          test -f out/.nojekyll
-          test -f out/CNAME
-          grep -n "_next/static" out/index.html
-          find out/_next/static/css -type f
-          find out/_next/static/chunks -type f | head -50
+          mkdir -p _site
+          cp index.html birzont-logo.png CNAME .nojekyll _site/
+          cp -r css js fonts _site/
+          for page in about.html blog.html career.html policy.html shortcut.html secret-hobby.html; do
+            [ -f "$page" ] && cp "$page" _site/
+          done
+          for asset in styles.css tailwind.css app.js navbar.js footer.js theme.js team.js languageprovider.js secret-hobby.js; do
+            [ -f "$asset" ] && cp "$asset" _site/
+          done
+          [ -d policy ] && cp -r policy _site/
+          [ -d public ] && cp -r public _site/
+          [ -d resources ] && cp -r resources _site/
+
+      - name: Verify static site files
+        run: |
+          test -f _site/index.html
+          test -f _site/css/landing.css
+          test -f _site/js/landing.js
+          test -f _site/birzont-logo.png
+          test -f _site/.nojekyll
+          test -f _site/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: _site
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
