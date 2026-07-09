@@ -1,13 +1,956 @@
 <!DOCTYPE html>
-<html lang="ko" class="h-full">
+<html lang="ko">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Birzont — AI 에이전트를 위한 팀 지식 동기화 레이어</title>
-  <meta name="description" content="흩어진 팀 지식을 정리하고, 에이전트가 바로 읽을 수 있는 형태로 변환해 Cursor, Claude, AI 작업공간에 자동으로 동기화합니다.">
-  <link rel="icon" type="image/png" href="birzont-logo.png">
-  <link rel="stylesheet" href="css/landing.css">
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Birzont Technologies Inc.</title>
+  <meta name="description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 Notion, 폴더, 문서를 Cursor·Claude 등 에이전트에 연결하는 지식 레이어입니다.">
+  <link rel="canonical" href="https://birzont.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Birzont">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Birzont">
+  <meta property="og:description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 에이전트 지식 레이어입니다.">
+  <meta property="og:url" content="https://birzont.com/">
+  <meta property="og:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:secure_url" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="Birzont">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Birzont">
+  <meta name="twitter:description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 에이전트 지식 레이어입니다.">
+  <meta name="twitter:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="BirzontTransparenT.png">
+  <link rel="apple-touch-icon" href="BirzontTransparenT.png">
+
+  <!-- Tailwind CSS CDN   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+ -->
+  <script src="tailwind.css"></script>
+
+  <!-- Theme (before paint) -->
+  <script src="theme.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 </head>
-<body class="min-h-screen bg-[#050607] text-white antialiased">
-<header data-header class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent"><div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 lg:px-8"><a class="inline-flex shrink-0 items-center gap-2.5 text-white no-underline" href="/"><img src="birzont-logo.png" alt="Birzont" width="32" height="32" class="shrink-0 object-contain drop-shadow-sm" style="width:32px;height:32px;max-width:32px;max-height:32px"/><span class="text-lg font-bold tracking-tight text-white">Birzont</span></a><nav class="hidden flex-1 items-center justify-center gap-8 md:flex"><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#product">제품</a><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#solution">솔루션</a><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#use-cases">활용 사례</a><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#how-it-works">작동 방식</a><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#security">보안</a><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="#pricing">요금제</a></nav><div class="hidden shrink-0 items-center gap-4 md:flex"><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="https://birzont.ai">로그인</a><div tabindex="0"><a class="btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)]" href="https://birzont.ai"><span class="relative z-10">먼저 시작하기</span></a></div></div><button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 transition-colors hover:bg-white/10 md:hidden" aria-label="메뉴" data-menu-toggle aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-5 w-5"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div><div data-mobile-menu class="overflow-hidden border-t border-white/10 bg-[#050607]/95 backdrop-blur-xl md:hidden" style="height:0;opacity:0"><div class="flex flex-col gap-4 px-4 py-5"><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#product">제품</a><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#solution">솔루션</a><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#use-cases">활용 사례</a><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#how-it-works">작동 방식</a><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#security">보안</a><a class="inline-flex items-center text-sm font-medium no-underline transition-colors hover:text-white py-1 text-white/75" href="#pricing">요금제</a><div class="flex flex-col gap-3 border-t border-white/10 pt-4"><a class="inline-flex items-center text-sm font-medium text-white/60 no-underline transition-colors hover:text-white" href="https://birzont.ai">로그인</a><div tabindex="0"><a class="btn-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)] w-full justify-center" href="https://birzont.ai"><span class="relative z-10">먼저 시작하기</span></a></div></div></div></div></header><main><section id="product" class="relative min-h-screen overflow-hidden bg-[#050607] pt-28 pb-16 text-white md:pt-36 md:pb-24"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050607] via-[#0a0b0f] to-[#050607]"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full blob-green blur-3xl opacity-30"></div><div class="absolute -right-24 top-1/4 h-[380px] w-[380px] rounded-full blob-blue blur-3xl opacity-25"></div><div class="absolute bottom-0 left-1/3 h-[300px] w-[300px] rounded-full blob-dark blur-3xl opacity-40"></div></div><div class="relative mx-auto flex max-w-6xl flex-col gap-16 px-4 lg:gap-20 lg:px-8"><div class="mx-auto max-w-3xl text-center"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/70 shadow-[0_4px_24px_rgba(0,0,0,0.25)] backdrop-blur-md"><span class="h-1.5 w-1.5 rounded-full bg-[#5ee496]"></span>팀 지식을 모든 AI 에이전트 안으로</div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><h1 class="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">AI에게 매번 설명하는<br/><span class="gradient-text">시대는 끝났습니다.</span></h1></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto mt-6 max-w-2xl text-balance text-base leading-relaxed text-white/60 md:text-lg">Birzont는 흩어진 팀 지식을 정리하고, 에이전트가 바로 읽을 수 있는 형태로 변환해 Cursor, Claude, AI 작업공간에 자동으로 동기화합니다.</p></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"><div tabindex="0"><a class="btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)]" href="https://birzont.ai"><span class="relative z-10">팀 지식 연결하기</span></a></div><div tabindex="0"><a class="btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] border border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15" href="#how-it-works"><span class="relative z-10">30초 데모 보기</span></a></div></div></div></div><div class="relative w-full"><div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-r from-[#5ee496]/10 via-transparent to-[#3899f7]/10 blur-2xl"></div><div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl md:p-8"><div class="pointer-events-none absolute inset-0"><div class="absolute h-1.5 w-1.5 rounded-full bg-[#5ee496]/80" style="opacity:0;transform:scale(0)"></div><div class="absolute h-1.5 w-1.5 rounded-full bg-[#5ee496]/80" style="opacity:0;transform:scale(0)"></div><div class="absolute h-1.5 w-1.5 rounded-full bg-[#5ee496]/80" style="opacity:0;transform:scale(0)"></div><div class="absolute h-1.5 w-1.5 rounded-full bg-[#3899f7]/80" style="opacity:0;transform:scale(0)"></div><div class="absolute h-1.5 w-1.5 rounded-full bg-[#3899f7]/80" style="opacity:0;transform:scale(0)"></div><div class="absolute h-1.5 w-1.5 rounded-full bg-[#3899f7]/80" style="opacity:0;transform:scale(0)"></div></div><div class="relative grid gap-6 lg:grid-cols-[1fr_1.1fr_1fr] lg:gap-5"><div><p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-white/40">지식 출처</p><div class="space-y-2.5"><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers h-4 w-4 shrink-0 text-[#5ee496]"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg><span class="text-sm font-medium text-white/85">Notion</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text h-4 w-4 shrink-0 text-[#5ee496]"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg><span class="text-sm font-medium text-white/85">Confluence</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-open h-4 w-4 shrink-0 text-[#5ee496]"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"></path></svg><span class="text-sm font-medium text-white/85">로컬 폴더</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square h-4 w-4 shrink-0 text-[#5ee496]"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="text-sm font-medium text-white/85">회의록</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text h-4 w-4 shrink-0 text-[#5ee496]"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg><span class="text-sm font-medium text-white/85">사내 문서</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div><div class="flex items-center gap-2.5 rounded-3xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles h-4 w-4 shrink-0 text-[#5ee496]"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg><span class="text-sm font-medium text-white/85">프롬프트 라이브러리</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check ml-auto h-3.5 w-3.5 text-[#5ee496]/70"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div></div></div><div class="flex flex-col items-center justify-center py-2 lg:py-0"><div class="relative flex h-48 w-48 items-center justify-center md:h-56 md:w-56"><div class="absolute inset-0 rounded-[45%_55%_52%_48%] bg-gradient-to-br from-[#5ee496]/30 via-[#3899f7]/20 to-black/40 blur-sm"></div><div class="absolute inset-2 rounded-[48%_52%_50%_50%] border border-white/10 bg-white/10 shadow-[0_8px_32px_rgba(94,228,150,0.15)] backdrop-blur-md"></div><div class="relative z-10 flex flex-col items-center gap-2"><img src="birzont-logo.png" alt="Birzont" width="56" height="56" class="shrink-0 object-contain drop-shadow-sm" style="width:56px;height:56px;max-width:56px;max-height:56px"/><span class="text-xs font-semibold text-white/90">Birzont Core</span></div></div><div class="mt-5 w-full max-w-[240px] rounded-3xl border border-white/10 bg-white/10 px-4 py-3 text-center shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md" style="opacity:1;transform:none"><div class="mb-2 flex items-center justify-center gap-2"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#5ee496] opacity-50"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-[#5ee496]"></span></span><span data-status-text class="text-sm font-medium text-white/90">문서 읽는 중</span></div><div class="h-1 overflow-hidden rounded-full bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-[#5ee496] to-[#3899f7]" data-progress-bar style="width:0%"></div></div></div></div><div><p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-white/40">변환 · 동기화</p><div class="space-y-2.5"><div class="flex items-center gap-2.5 rounded-3xl border px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md border-[#3899f7]/25 bg-[#3899f7]/10" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text h-4 w-4 shrink-0 text-[#3899f7]"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg><span class="text-sm font-medium text-white/90">Markdown</span><span class="ml-auto rounded-full bg-[#5ee496]/15 px-2 py-0.5 text-[10px] font-semibold text-[#5ee496]">sync</span></div><div class="flex items-center gap-2.5 rounded-3xl border px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md border-[#3899f7]/25 bg-[#3899f7]/10" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain h-4 w-4 shrink-0 text-[#3899f7]"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg><span class="text-sm font-medium text-white/90">CLAUDE.md</span><span class="ml-auto rounded-full bg-[#5ee496]/15 px-2 py-0.5 text-[10px] font-semibold text-[#5ee496]">sync</span></div><div class="flex items-center gap-2.5 rounded-3xl border px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md border-[#3899f7]/25 bg-[#3899f7]/10" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-4 w-4 shrink-0 text-[#3899f7]"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg><span class="text-sm font-medium text-white/90">Cursor Rules</span><span class="ml-auto rounded-full bg-[#5ee496]/15 px-2 py-0.5 text-[10px] font-semibold text-[#5ee496]">sync</span></div><div class="flex items-center gap-2.5 rounded-3xl border px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-md border-[#3899f7]/25 bg-[#3899f7]/10" style="opacity:1;transform:none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot h-4 w-4 shrink-0 text-[#3899f7]"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg><span class="text-sm font-medium text-white/90">AI 에이전트 작업공간</span><span class="ml-auto rounded-full bg-[#5ee496]/15 px-2 py-0.5 text-[10px] font-semibold text-[#5ee496]">sync</span></div><div class="mt-3 flex items-center gap-2 rounded-3xl border border-[#5ee496]/20 bg-[#5ee496]/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.2)] backdrop-blur-md"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-4 w-4 shrink-0 text-[#5ee496]"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span class="text-xs font-medium text-[#5ee496]">에이전트가 최신 상태입니다</span></div></div></div></div></div></div></div></section><section id="problem" class="relative px-4 py-24 md:py-32 lg:px-8 bg-birzont-cream text-birzont-black"><div class="mx-auto max-w-6xl"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">AI 에이전트는 강력합니다.<br/><span class="text-birzont-black/45">하지만 우리 팀을 모릅니다.</span></h2><p class="mt-5 text-base leading-relaxed text-birzont-black/55 md:text-lg">문제는 AI의 성능이 아니라, AI가 참고할 팀 맥락이 없다는 것입니다.</p></div></div><div class="mt-16 grid gap-5 md:grid-cols-3"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light group h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-birzont-mint ring-1 ring-birzont-green/20 transition-colors group-hover:bg-birzont-green/15"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers h-5 w-5 text-birzont-green-dark"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg></div><h3 class="text-xl font-bold">지식은 흩어져 있습니다</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">문서, 회의록, 결정사항, 업무 규칙은 여러 도구에 쌓이지만 에이전트는 그 맥락을 보지 못합니다.</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light group h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-birzont-mint ring-1 ring-birzont-green/20 transition-colors group-hover:bg-birzont-green/15"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw h-5 w-5 text-birzont-green-dark"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></div><h3 class="text-xl font-bold">업데이트는 반영되지 않습니다</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">문서가 바뀔 때마다 사람이 직접 복사하고 정리해야 합니다. 그래서 에이전트는 항상 한 발 늦습니다.</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light group h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-birzont-mint ring-1 ring-birzont-green/20 transition-colors group-hover:bg-birzont-green/15"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-5 w-5 text-birzont-green-dark"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div><h3 class="text-xl font-bold">팀의 답변 기준이 달라집니다</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">팀원마다 다른 AI 도구와 다른 프롬프트를 사용합니다. 같은 질문에도 서로 다른 답이 나옵니다.</p></div></div></div></div></section><section id="solution" class="px-4 py-24 md:py-32 lg:px-8 relative overflow-hidden bg-birzont-black"><div class="mx-auto max-w-6xl"><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full blob-green blur-3xl opacity-30"></div><div class="absolute -right-24 top-1/4 h-[380px] w-[380px] rounded-full blob-blue blur-3xl opacity-25"></div><div class="absolute bottom-0 left-1/3 h-[300px] w-[300px] rounded-full blob-dark blur-3xl opacity-40"></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="relative mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">Birzont는 AI 에이전트를 위한<br/><span class="gradient-text">지식 동기화 레이어</span>입니다.</h2><p class="mt-5 text-base leading-relaxed text-white/50 md:text-lg">팀 지식을 한 번 연결하면, 모든 에이전트가 같은 맥락으로 일합니다.</p></div></div><div class="relative mt-16 grid gap-5 sm:grid-cols-2"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card group h-full p-7 transition-all hover:border-birzont-green/20 hover:bg-white/[0.08]"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-birzont-green/15 to-birzont-blue/10 ring-1 ring-white/10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2 h-5 w-5 text-birzont-green"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" x2="16" y1="12" y2="12"></line></svg></div><h3 class="text-xl font-bold">지식 연결</h3><p class="mt-3 text-sm leading-relaxed text-white/50">Notion, Confluence, 로컬 폴더, 사내 문서, 프롬프트 라이브러리를 연결합니다.</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card group h-full p-7 transition-all hover:border-birzont-green/20 hover:bg-white/[0.08]"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-birzont-green/15 to-birzont-blue/10 ring-1 ring-white/10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles h-5 w-5 text-birzont-green"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg></div><h3 class="text-xl font-bold">자동 구조화</h3><p class="mt-3 text-sm leading-relaxed text-white/50">긴 문서와 흩어진 정보를 에이전트가 이해하기 쉬운 지식 구조로 정리합니다.</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card group h-full p-7 transition-all hover:border-birzont-green/20 hover:bg-white/[0.08]"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-birzont-green/15 to-birzont-blue/10 ring-1 ring-white/10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text h-5 w-5 text-birzont-green"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></div><h3 class="text-xl font-bold">에이전트용 변환</h3><p class="mt-3 text-sm leading-relaxed text-white/50">Markdown, CLAUDE.md, Cursor Rules 등 각 에이전트 환경에 맞는 형태로 변환합니다.</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card group h-full p-7 transition-all hover:border-birzont-green/20 hover:bg-white/[0.08]"><div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-birzont-green/15 to-birzont-blue/10 ring-1 ring-white/10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw h-5 w-5 text-birzont-green"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></div><h3 class="text-xl font-bold">자동 동기화</h3><p class="mt-3 text-sm leading-relaxed text-white/50">문서가 바뀌면 에이전트 작업공간도 최신 상태로 업데이트합니다.</p></div></div></div><div class="py-8 text-center" data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto max-w-2xl text-lg font-medium italic text-white/40 md:text-xl">“<!-- -->좋은 답변은 좋은 맥락에서 나옵니다.<!-- -->”</p></div></div></section><section id="use-cases" class="relative px-4 py-24 md:py-32 lg:px-8 bg-gradient-to-b from-birzont-mint/40 to-white"><div class="mx-auto max-w-6xl"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight text-birzont-black md:text-4xl lg:text-5xl">이런 팀에게 필요합니다.</h2></div></div><div class="mt-16 grid gap-5 sm:grid-cols-2"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-3 inline-flex rounded-full bg-birzont-blue/10 px-3 py-1 text-xs font-semibold text-birzont-blue">Use Case</div><h3 class="text-xl font-bold text-birzont-black">AI-first 스타트업</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">팀원이 Cursor, Claude, Perplexity를 매일 쓰지만 공통 맥락이 없는 팀</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-3 inline-flex rounded-full bg-birzont-blue/10 px-3 py-1 text-xs font-semibold text-birzont-blue">Use Case</div><h3 class="text-xl font-bold text-birzont-black">빠르게 바뀌는 제품팀</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">기획서, 정책, 고객 피드백, 회의록이 계속 바뀌는 팀</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-3 inline-flex rounded-full bg-birzont-blue/10 px-3 py-1 text-xs font-semibold text-birzont-blue">Use Case</div><h3 class="text-xl font-bold text-birzont-black">반복 설명이 많은 운영팀</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">같은 업무 규칙과 고객 응대를 매번 AI에게 다시 설명하는 팀</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><div class="mb-3 inline-flex rounded-full bg-birzont-blue/10 px-3 py-1 text-xs font-semibold text-birzont-blue">Use Case</div><h3 class="text-xl font-bold text-birzont-black">프롬프트와 문서를 함께 관리하는 팀</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">프롬프트, 레퍼런스 문서, 업무 지침을 하나의 에이전트 환경으로 묶고 싶은 팀</p></div></div></div><div class="py-8 text-center" data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto max-w-2xl text-lg font-medium italic text-birzont-black/35 md:text-xl">“<!-- -->모든 팀원이 같은 맥락으로 AI와 일하게 하세요.<!-- -->”</p></div></div></section><section id="metrics" class="px-4 py-24 md:py-32 lg:px-8 relative overflow-hidden bg-birzont-black"><div class="mx-auto max-w-6xl"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">에이전트 설정은 짧게,<br/><span class="gradient-text">답변 품질은 높게.</span></h2></div></div><div class="mt-16 grid gap-5 md:grid-cols-3"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:border-birzont-blue/20"><span class="font-bold tracking-tight text-birzont-green text-5xl md:text-6xl">80%</span><p class="mt-4 text-sm leading-relaxed text-white/50">에이전트 환경 설정 시간 감소</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:border-birzont-blue/20"><span class="font-bold tracking-tight text-birzont-green text-5xl md:text-6xl">20%+</span><p class="mt-4 text-sm leading-relaxed text-white/50">반복 질문으로 낭비되는 토큰 절약</p></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card flex h-full flex-col items-center p-8 text-center transition-all hover:border-birzont-blue/20"><span class="font-bold tracking-tight text-birzont-green text-3xl md:text-4xl">항상 최신</span><p class="mt-4 text-sm leading-relaxed text-white/50">변경된 팀 지식을 에이전트에 자동 반영</p></div></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mt-8 text-center text-xs text-white/30">초기 워크플로우 기준 추정치입니다.</p></div><div class="py-8 text-center" data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto max-w-2xl text-lg font-medium italic text-white/40 md:text-xl">“<!-- -->프롬프트보다 중요한 것은, 에이전트가 알고 있는 지식입니다.<!-- -->”</p></div></div></section><section id="how-it-works" class="relative px-4 py-24 md:py-32 lg:px-8 bg-birzont-cream text-birzont-black"><div class="mx-auto max-w-6xl"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">30초면 팀 지식이<br/><span class="text-birzont-blue">에이전트 안으로</span> 들어갑니다.</h2></div></div><div class="relative mt-16"><div class="absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-birzont-green/20 to-transparent md:block"></div><div class="grid gap-6 md:grid-cols-3"><div class="relative" data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><span class="text-xs font-bold tracking-widest text-birzont-green-dark">01</span><h3 class="mt-4 text-xl font-bold">연결하세요</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">Notion, 폴더, 문서 저장소를 선택합니다.</p></div><div class="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 md:block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 text-birzont-black/15"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div></div><div class="relative" data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><span class="text-xs font-bold tracking-widest text-birzont-green-dark">02</span><h3 class="mt-4 text-xl font-bold">Birzont가 정리합니다</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">팀 지식을 요약하고 구조화해 에이전트용 문맥으로 바꿉니다.</p></div><div class="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 md:block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 text-birzont-black/15"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></div></div><div class="relative" data-fade-in style="opacity:0;transform:translateY(12px)"><div class="glass-card-light h-full p-7 transition-all hover:-translate-y-1 hover:shadow-soft"><span class="text-xs font-bold tracking-widest text-birzont-green-dark">03</span><h3 class="mt-4 text-xl font-bold">에이전트가 기억합니다</h3><p class="mt-3 text-sm leading-relaxed text-birzont-black/55">Cursor, Claude, 로컬 에이전트가 최신 팀 지식을 참고합니다.</p></div></div></div></div><div class="py-8 text-center" data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto max-w-2xl text-lg font-medium italic text-birzont-black/35 md:text-xl">“<!-- -->더 이상 복사하고 붙여넣지 마세요.<!-- -->”</p></div></div></section><section id="security" class="border-t border-white/[0.04] bg-birzont-black px-4 py-16 lg:px-8"><div class="mx-auto flex max-w-4xl flex-col items-center gap-8 md:flex-row md:justify-center md:gap-16"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="flex items-center gap-3 text-white/45"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield h-5 w-5 text-birzont-blue/70"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span class="text-sm font-medium">엔터프라이즈급 보안</span></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="flex items-center gap-3 text-white/45"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock h-5 w-5 text-birzont-blue/70"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="text-sm font-medium">전송·저장 데이터 암호화</span></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="flex items-center gap-3 text-white/45"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye h-5 w-5 text-birzont-blue/70"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg><span class="text-sm font-medium">팀별 접근 권한 관리</span></div></div></div></section><section class="relative overflow-hidden px-4 py-28 md:py-36 lg:px-8"><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full blob-green blur-3xl opacity-50"></div><div class="absolute -right-24 top-1/4 h-[380px] w-[380px] rounded-full blob-blue blur-3xl opacity-40"></div><div class="absolute bottom-0 left-1/3 h-[300px] w-[300px] rounded-full blob-dark blur-3xl opacity-40"></div></div><div class="relative mx-auto max-w-3xl text-center"><div data-fade-in style="opacity:0;transform:translateY(12px)"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-5xl lg:text-[3.25rem]">팀 지식을 연결하세요.<br/><span class="gradient-text">AI가 달라집니다.</span></h2></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">Birzont로 모든 에이전트를 최신 팀 맥락에 연결하세요.</p></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"><div tabindex="0"><a class="btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)]" href="https://birzont.ai"><span class="relative z-10">먼저 시작하기</span></a></div><div tabindex="0"><a class="btn-glow inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] border border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15" href="mailto:contact@birzont.com"><span class="relative z-10">도입 문의하기</span></a></div></div></div></div></section><section id="pricing" class="relative px-4 py-24 md:py-32 lg:px-8 bg-birzont-cream text-birzont-black"><div class="mx-auto max-w-6xl"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mx-auto max-w-2xl text-center"><h2 class="text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">팀 규모에 맞는<br/><span class="text-birzont-blue">요금제를 선택하세요.</span></h2><p class="mt-5 text-base leading-relaxed text-birzont-black/55 md:text-lg">플랜이 올라갈수록 연결되는 지식, 동기화 빈도, 팀 맥락 공유 범위가 넓어집니다.</p></div></div><div class="mt-16 grid gap-5 lg:grid-cols-3"><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="relative flex h-full flex-col rounded-3xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft border-birzont-black/10 bg-white/90"><div class="mb-4"><h3 class="text-xl font-bold">Free</h3><div class="mt-2 flex items-baseline gap-1"><span class="text-4xl font-bold tracking-tight">무료</span></div><p class="mt-3 min-h-[3rem] text-sm leading-relaxed text-birzont-black/55">Birzont의 핵심 동기화를 개인이 먼저 체험합니다.</p></div><div tabindex="0"><a class="btn-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] border border-birzont-black/15 bg-white text-birzont-black hover:bg-birzont-mint/50 w-full justify-center" href="https://birzont.ai/pricing"><span class="relative z-10">무료로 시작</span></a></div><ul class="mt-6 space-y-2.5"><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>월 5회 지식 동기화</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>지식 소스 1개 연결</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>Markdown 변환</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>Cursor 기본 연동</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>맥락 스냅샷 1개 저장</li></ul></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="relative flex h-full flex-col rounded-3xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft border-birzont-blue/30 bg-white shadow-[0_8px_40px_rgba(56,153,247,0.12)] ring-1 ring-birzont-blue/20"><span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-birzont-green to-birzont-blue px-3 py-1 text-[11px] font-semibold text-birzont-black">가장 인기</span><div class="mb-4"><h3 class="text-xl font-bold">Pro</h3><div class="mt-2 flex items-baseline gap-1"><span class="text-4xl font-bold tracking-tight">$9</span><span class="text-sm text-birzont-black/45">/월</span></div><p class="mt-3 min-h-[3rem] text-sm leading-relaxed text-birzont-black/55">매일 AI와 일하는 개인에게 필요한 자동 동기화.</p></div><div tabindex="0"><a class="btn-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] gradient-cta text-birzont-black shadow-[0_4px_24px_rgba(94,228,150,0.35)] hover:shadow-[0_8px_32px_rgba(59,153,247,0.3)] w-full justify-center" href="https://birzont.ai/pricing"><span class="relative z-10">Pro 시작하기</span></a></div><ul class="mt-6 space-y-2.5"><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>무제한 지식 동기화</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>지식 소스 5개 연결</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>CLAUDE.md · Cursor Rules 자동 생성</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>Notion · 로컬 폴더 연동</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>맥락 스냅샷 10개 저장</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>에이전트 맥락 우선 반영</li></ul></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="relative flex h-full flex-col rounded-3xl border p-7 transition-all hover:-translate-y-1 hover:shadow-soft border-birzont-black/10 bg-white/90"><div class="mb-4"><h3 class="text-xl font-bold">Team</h3><div class="mt-2 flex items-baseline gap-1"><span class="text-4xl font-bold tracking-tight">$29</span><span class="text-sm text-birzont-black/45">/월</span></div><p class="mt-3 min-h-[3rem] text-sm leading-relaxed text-birzont-black/55">팀 전체가 같은 맥락으로 AI와 일하게 만듭니다.</p></div><div tabindex="0"><a class="btn-glow inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] border border-birzont-black/15 bg-white text-birzont-black hover:bg-birzont-mint/50 w-full justify-center" href="https://birzont.ai/pricing"><span class="relative z-10">Team 시작하기</span></a></div><ul class="mt-6 space-y-2.5"><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>무제한 지식 소스 · 동기화</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>팀 워크스페이스 · 공용 에이전트 맥락</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>Slack · Notion · Confluence 연동</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>팀 전용 프롬프트 라이브러리</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>맥락 스냅샷 50개 저장</li><li class="flex items-start gap-2.5 text-sm text-birzont-black/70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check mt-0.5 h-4 w-4 shrink-0 text-birzont-green-dark"><path d="M20 6 9 17l-5-5"></path></svg>우선 동기화 · 신기능 조기 액세스</li></ul></div></div></div><div data-fade-in style="opacity:0;transform:translateY(12px)"><div class="mt-16 overflow-hidden rounded-3xl border border-birzont-black/10 bg-white"><div class="border-b border-birzont-black/8 px-6 py-5"><h3 class="text-lg font-bold md:text-xl">요금제별 기능 비교</h3><p class="mt-1 text-sm text-birzont-black/45">상위 플랜일수록 더 많은 소스, 더 빠른 동기화, 더 넓은 팀 맥락을 제공합니다.</p></div><div class="overflow-x-auto"><table class="w-full min-w-[640px] text-sm"><thead><tr class="border-b border-birzont-black/8 bg-birzont-mint/30 text-left"><th class="px-6 py-4 font-semibold text-birzont-black/70">기능</th><th class="px-4 py-4 font-semibold text-birzont-black/70">Free</th><th class="px-4 py-4 font-semibold text-birzont-blue">Pro</th><th class="px-4 py-4 font-semibold text-birzont-black/70">Team</th></tr></thead><tbody class="divide-y divide-birzont-black/6"><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">월 동기화</td><td class="px-4 py-3.5 text-birzont-black/60">5회</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">무제한</td><td class="px-4 py-3.5 text-birzont-black/80">무제한</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">지식 소스 연결</td><td class="px-4 py-3.5 text-birzont-black/60">1개</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">5개</td><td class="px-4 py-3.5 text-birzont-black/80">무제한</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">에이전트 환경</td><td class="px-4 py-3.5 text-birzont-black/60">Cursor</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">Cursor + Claude</td><td class="px-4 py-3.5 text-birzont-black/80">팀 전체</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">CLAUDE.md / Cursor Rules</td><td class="px-4 py-3.5 text-birzont-black/60">기본 템플릿</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">자동 생성</td><td class="px-4 py-3.5 text-birzont-black/80">팀 공유</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">저장된 맥락 스냅샷</td><td class="px-4 py-3.5 text-birzont-black/60">1개</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">10개</td><td class="px-4 py-3.5 text-birzont-black/80">50개</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">Notion · Confluence</td><td class="px-4 py-3.5 text-birzont-black/60">—</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">Notion</td><td class="px-4 py-3.5 text-birzont-black/80">전체 연동</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">팀 워크스페이스</td><td class="px-4 py-3.5 text-birzont-black/60">—</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">—</td><td class="px-4 py-3.5 text-birzont-black/80">포함</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">팀 맥락 공유</td><td class="px-4 py-3.5 text-birzont-black/60">—</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">—</td><td class="px-4 py-3.5 text-birzont-black/80">포함</td></tr><tr class="hover:bg-birzont-mint/20"><td class="px-6 py-3.5 font-medium text-birzont-black/75">조기 기능 액세스</td><td class="px-4 py-3.5 text-birzont-black/60">—</td><td class="px-4 py-3.5 font-medium text-birzont-black/80">—</td><td class="px-4 py-3.5 text-birzont-black/80">우선</td></tr></tbody></table></div></div></div></div></section></main><footer class="border-t border-white/[0.06] bg-birzont-black px-4 py-14 lg:px-8"><div class="mx-auto max-w-6xl"><div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between"><div class="space-y-4"><div class="flex items-center gap-2.5"><img src="birzont-logo.png" alt="Birzont" width="32" height="32" class="shrink-0 object-contain drop-shadow-sm" style="width:32px;height:32px;max-width:32px;max-height:32px"/><span class="text-lg font-bold">Birzont</span></div><p class="max-w-xs text-sm leading-relaxed text-white/40">AI 에이전트를 위한 팀 지식 동기화 레이어</p></div><nav class="flex flex-wrap gap-x-8 gap-y-3"><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#product">제품</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#solution">솔루션</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#use-cases">활용 사례</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#how-it-works">작동 방식</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#security">보안</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#pricing">요금제</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="mailto:contact@birzont.com">문의</a></nav></div><div class="mt-12 border-t border-white/[0.06] pt-8"><p class="text-sm text-white/25">© 2026 Birzont Inc.</p></div></div></footer>  <script src="js/landing.js" defer></script>
-</body></html>
+
+<body class="font-['Inter',sans-serif] birzont-home">
+  <div id="app" class="min-h-screen overflow-x-hidden">
+    <!-- Main Hero Section -->
+    <section class="cursor-hero w-full pb-6 md:pb-8 relative">
+      <!-- Gradient Overlay -->
+      <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
+
+      <!-- Background Forest Image -->
+      <div class="hero-bg-forest absolute inset-0 pointer-events-none" style="z-index: 1;"></div>
+
+      <div
+        class="flex flex-col items-center justify-center w-full px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10">
+        <h1 class="text-center mb-6 hero-title blur-fade-once cursor-heading" data-hero-order="1"
+          style="font-size: clamp(2.6rem, 5.2vw, 4.6rem); line-height: 1.08;">
+          팀의 지식,<br>Birzont로 에이전트 안에
+        </h1>
+        <p class="text-center mb-8 max-w-2xl mx-auto blur-fade-once cursor-subheading" data-hero-order="2"
+          style="font-size: clamp(1.0625rem, 2.15vw, 1.25rem); line-height: 1.65;">
+          AI는 똑똑한데, 우리 팀 이야기는 아직 모릅니다.<br>
+          Notion·폴더만 연결하세요. Birzont가 30초 만에 에이전트에 맞춰 동기화합니다.
+        </p>
+        <div class="flex justify-center mb-14">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="cursor-btn-primary try-free-button inline-block text-center">
+            시작하기
+          </a>
+        </div>
+
+        <div class="w-full md:max-w-[93%] md:mx-auto" id="image-canvas-wrap" style="perspective: 1200px;">
+          <div id="image-canvas"
+            class="hero-image-slide-up hero-image-slide-up-visible w-full relative overflow-hidden transition-all duration-400"
+            style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative; transform-style: preserve-3d; transition: transform 0.25s ease-out;">
+            <img src="resources/products/mainscreen.png" alt="Birzont hero animation"
+              class="hero-foreground-gif hidden md:block">
+            <img src="resources/products/monile.png" alt="Birzont hero"
+              class="hero-foreground-gif hero-foreground-mobile block md:hidden">
+            <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo Blur Grid Section (3x2) -->
+    <div class="cursor-section w-full py-4 md:py-6 overflow-hidden -mt-4 md:-mt-6">
+      <div id="logo-blur-grid" class="logo-blur-grid px-4 md:px-8 max-w-5xl mx-auto">
+        <!-- 6 cells populated by initLogoBlurGrid -->
+        <div class="logo-blur-grid-inner grid grid-cols-3 grid-rows-2 gap-3 gap-x-4 md:gap-x-28 md:gap-y-4">
+          <div class="logo-blur-cell" data-cell="0"></div>
+          <div class="logo-blur-cell" data-cell="1"></div>
+          <div class="logo-blur-cell" data-cell="2"></div>
+          <div class="logo-blur-cell" data-cell="3"></div>
+          <div class="logo-blur-cell" data-cell="4"></div>
+          <div class="logo-blur-cell" data-cell="5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Introduction & Features Section -->
+    <div class="cursor-section-alt w-full pt-8 md:pt-12">
+      <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12"
+        aria-label="Birzont core features">
+        <div class="mt-2 md:mt-6">
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+            data-instrument-font>에이전트가 비즈니스를 아는 방법</h3>
+          <p class="text-lg md:text-xl text-center mb-0 blur-fade-once cursor-subheading" data-section-sub="explore">팀 문서를 연결하는 순간, 에이전트가 팀을 기억하기 시작합니다.</p>
+        </div>
+        <div
+          class="product-card-large bg-white rounded-2xl shadow overflow-hidden border border-gray-200 blur-fade-once">
+          <div class="flex flex-col md:flex-row gap-0 items-stretch agent-card-container">
+            <div
+              class="w-full flex-shrink-0 flex flex-col agent-card-left md:border-r md:border-gray-200">
+              <header class="agent-card-header mb-4 md:mb-6">
+                <div class="group">
+                  <h3 class="flex items-center gap-2 mb-4">
+                    <span class="text-base font-medium text-gray-600">에이전트 지식 레이어</span>
+                  </h3>
+                  <p class="text-2xl md:text-3xl font-bold text-black leading-tight">
+                    복사·붙여넣기는 그만. 팀 지식을 에이전트에 연결하세요.
+                  </p>
+                </div>
+              </header>
+
+              <div role="tablist" aria-label="Birzont key features" class="product-tablist">
+                <button type="button" role="tab" value="0" tabindex="0" aria-selected="true"
+                  class="product-tab product-tab-active">
+                  <p class="product-tab-summary">클릭 한 번, Notion부터 에이전트까지</p>
+                  <p class="product-tab-content product-tab-content-visible">흩어진 Notion·폴더·Confluence를 연결하면, 에이전트가 바로 팀 지식에 접근합니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="1" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">긴 문서도, 에이전트용 한 장 요약으로</p>
+                  <p class="product-tab-content">수백 페이지 문서를 에이전트가 읽기 좋은 .md 파일로 깔끔하게 정리합니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="2" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">Cursor·Claude, 각자 맞는 형식으로</p>
+                  <p class="product-tab-content">Cursor Rules, Claude.md처럼 에이전트마다 필요한 포맷으로 자동 변환합니다. 이미지도 문제없습니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="3" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">문서 바뀌면, 에이전트도 따라갑니다</p>
+                  <p class="product-tab-content">팀 문서가 업데이트되면 에이전트 폴더도 자동 반영. 항상 최신 맥락을 유지합니다.</p>
+                </button>
+              </div>
+
+              <div role="tablist" aria-label="Current slide indicator" class="flex gap-2 mt-1">
+                <button type="button" role="tab" value="0" tabindex="-1" aria-selected="true"
+                  class="product-indicator product-indicator-active" aria-label="Go to slide 1"></button>
+                <button type="button" role="tab" value="1" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 2"></button>
+                <button type="button" role="tab" value="2" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 3"></button>
+                <button type="button" role="tab" value="3" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 4"></button>
+              </div>
+            </div>
+
+            <div class="w-full md:flex-1 relative agent-card-right">
+              <div id="product-carousel" class="absolute inset-0 overflow-hidden bg-gray-50">
+                <div id="product-carousel-slides" class="absolute inset-0" aria-live="polite">
+                  <div value="0" role="group" aria-hidden="false" class="product-slide product-slide-active">
+                    <img src="resources/products/agent.png" alt="Notion·폴더·문서 원클릭 연동"
+                      class="product-slide-img">
+                  </div>
+                  <div value="1" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/template.png" alt="팀 지식 요약·구조화" class="product-slide-img">
+                  </div>
+                  <div value="2" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/market.png" alt="에이전트 구조별 자동 변환" class="product-slide-img">
+                  </div>
+                  <div value="3" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/custom.png" alt="변경 감지 자동 반영" class="product-slide-img">
+                  </div>
+                </div>
+
+                <div id="product-carousel-controls"
+                  class="absolute inset-0 flex items-center justify-between pointer-events-none px-4">
+                  <button type="button" id="product-carousel-prev"
+                    class="carousel-btn carousel-btn-prev pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Previous" style="display: none;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button type="button" id="product-carousel-next"
+                    class="carousel-btn carousel-btn-next pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Next">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Product Features Section (독립 영역) -->
+    <div class="cursor-section-alt w-full pt-8 md:pt-12">
+      <section class="pt-10 md:pt-16 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto"
+        aria-label="Birzont key value">
+        <div class="mt-6 md:mt-10">
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+            data-instrument-font>작동 방식</h3>
+          <p class="text-lg md:text-xl text-center mb-0 blur-fade-once cursor-subheading" data-section-sub="how">30초면 컨텍스트를 아는 에이전트. 기존 15~20분 → Birzont 30초.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full blur-fade-once mt-8 md:mt-12"
+          id="product-features-grid">
+          <!-- Product feature cards will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Product Language Section (주석 처리 - 당분간 미사용) -->
+    <!--
+    <div class="w-full bg-[#fafafa]">
+      <section class="pt-6 md:pt-8 pb-16 md:pb-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="product-language-grid">
+          <div class="language-demo blur-fade-once">
+            <div class="demo-surface">
+              <div class="demo-header">
+                <div>
+                  <h4 class="language-demo-title">스타트업 기본 회계 관리 프롬프트</h4>
+                  <p class="language-demo-info">@birzont · 2025. 11. 15. 오전 01:22 · 2 downloads</p>
+                </div>
+              </div>
+              <div class="demo-badge-row">
+                <div class="demo-badge">
+                  <span class="demo-badge-icon">
+                    <img src="https://fanlqfaphmayjxaavjrh.supabase.co/storage/v1/object/public/aimodels/4e4a548b-ac19-4947-864a-b00d10ebbfc9/953d844f-f577-42b3-8dbd-7edcacf3d518.png" alt="ChatGPT icon">
+                  </span>
+                  <span>ChatGPT</span>
+                </div>
+                <div class="demo-header-actions">
+                  <button type="button" class="demo-like" aria-label="Like">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span class="demo-like-count">0</span>
+                  </button>
+                  <button type="button" class="demo-share" aria-label="공유">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7m-5-4l-4-4m0 0L7 8m4-4v12"/></svg>
+                    <span class="demo-share-count">0</span>
+                  </button>
+                  <button type="button" class="demo-bookmark" aria-label="Bookmark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+                    <span>Bookmark</span>
+                  </button>
+                </div>
+              </div>
+              <p class="language-demo-description">
+                이 프롬프트는 스타트업의 기본적인 회계 관리 체계를 구축하는 데 도움을 줍니다. 회사 정보를 입력하면 맞춤형 회계 관리 시스템을 제안받을 수 있으며, 장부 관리부터 세금 신고까지 체계적으로 안내받을 수 있습니다.
+                특히 초기 스타트업이 필수적으로 관리해야 할 재무 항목들을 명확히 파악할 수 있습니다.
+              </p>
+
+                <div class="demo-card">
+                  <div class="demo-card-toolbar">
+                    <span>Prompt</span>
+                    <div class="demo-toolbar-actions">
+                      <button type="button">Copy</button>
+                      <button type="button" class="primary">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="9 6 18 12 9 18 9 6"></polygon></svg>
+                        Run on ChatGPT
+                      </button>
+                    </div>
+                  </div>
+                <div class="demo-card-body">
+                  <p>당신은 스타트업 전문 회계 컨설턴트입니다. 다음 정보를 바탕으로 스타트업 회계 관리 체계를 구축해주세요:</p>
+                  <p>회사명: <input type="text" class="demo-inline-input" placeholder="Birzont" /></p>
+                  <p>설립일: <input type="date" class="demo-inline-input" /></p>
+                  <p>사업 형태(개인사업자/법인): <input type="text" class="demo-inline-input" placeholder="예: 법인" /></p>
+                  <p>월 평균 매출액: <input type="number" class="demo-inline-input" placeholder="예: 30,000,000" /></p>
+                  <p>주요 비용 항목: <input type="text" class="demo-inline-input" placeholder="예: 마케팅, 인건비" /></p>
+                  <p>다음 항목에 대해 체계적으로 안내해주세요:</p>
+                  <ol>
+                    <li>기본 회계 체계 구축 방법</li>
+                    <li>필수 장부 관리 항목</li>
+                    <li>월별 재무 보고서 작성 가이드</li>
+                    <li>세금 신고 일정 및 주의사항</li>
+                    <li>주요 재무 지표 모니터링 방법</li>
+                  </ol>
+                  <p class="language-demo-note">각 항목은 실제 실행 가능한 예시와 함께 구체적으로 설명해주세요.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="language-content blur-fade-once">
+            <h3 class="language-title">Real-time transcription</h3>
+            <p class="language-description">알렉사, 로이 및 팀과 함께 모든 대화를 1초 미만으로 기록합니다. 언어 장벽 없이 글로벌 미팅을 완벽하게 캡처하세요.</p>
+            <div class="language-stats">
+              <div class="language-stat">
+                <p class="language-stat-value">12+</p>
+                <p class="language-stat-label">Languages</p>
+                <p class="language-stat-desc">English, Chinese, Spanish 등 글로벌 언어를 자연스럽게 지원합니다.</p>
+              </div>
+              <div class="language-stat">
+                <p class="language-stat-value">300<span class="language-stat-suffix">ms</span></p>
+                <p class="language-stat-label">Response time</p>
+                <p class="language-stat-desc">업계에서 가장 빠른 라이브 전사 속도를 경험해보세요.</p>
+              </div>
+              <div class="language-stat">
+                <p class="language-stat-value">95%</p>
+                <p class="language-stat-label">Accuracy</p>
+                <p class="language-stat-desc">수많은 팀이 신뢰한 정확도. 맥락 이해형 모델이 모든 단어를 잡아냅니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    -->
+
+    <!-- Pricing Section -->
+    <template>
+      <div class="w-full bg-[#fafafa]">
+        <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
+          <h2
+            class="text-[2.625rem] md:text-[3.125rem] font-bold text-center text-black mb-3 md:mb-4 font-instrument-heading"
+            data-instrument-font>Plans</h2>
+          <p class="text-lg md:text-xl text-gray-600 text-center mb-6 md:mb-8">Choose the plan that fits you</p>
+          <!--
+        <div class="flex justify-center mb-20 md:mb-24">
+          <a href="https://birzont.ai/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">더 알아보기</a>
+        </div>
+        -->
+
+          <!-- Pricing Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
+            <!-- Free Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Free</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">Free</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">Try
+                core features for free.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>5 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Basic agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>1 agent conversation saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Instant prompt execution</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>All other basic features</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Pro Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Pro</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$9</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">All
+                advanced features for individual users.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>50 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Advanced agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Unlimited agent conversations</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>10 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Save agent-generated prompts</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Verified profile badge</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Team Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Team</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$29</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">
+                Optimized for team collaboration and management.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>250 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team workspace</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Bundle template workflow creation</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team-only prompts & bundle sharing</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>30 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Early access to new features</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Slack, Notion integration</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Full profile features access</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Comparison Table (주석 처리 - 당분간 미사용) -->
+          <!--
+        <section class="mx-auto max-w-5xl mt-14 md:mt-16">
+          <h3 class="text-2xl md:text-3xl font-semibold tracking-tight text-center text-black mb-4 md:mb-6">요금제와 기능</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="border-b border-gray-200">
+                <tr class="text-left">
+                  <th class="px-4 py-4 font-semibold text-gray-700">기능</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Free</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Pro</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Team</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">월 크레딧</td>
+                  <td class="px-4 py-3 text-gray-900">5 Tokens</td>
+                  <td class="px-4 py-3 text-gray-900">50 Tokens</td>
+                  <td class="px-4 py-3 text-gray-900">250 Tokens</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">에이전트 품질</td>
+                  <td class="px-4 py-3 text-gray-900">기본</td>
+                  <td class="px-4 py-3 text-gray-900">고급</td>
+                  <td class="px-4 py-3 text-gray-900">고급</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">저장된 에이전트 대화</td>
+                  <td class="px-4 py-3 text-gray-900">1</td>
+                  <td class="px-4 py-3 text-gray-900">5</td>
+                  <td class="px-4 py-3 text-gray-900">50</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">프롬프트 & 번들 공유</td>
+                  <td class="px-4 py-3 text-gray-900">공개</td>
+                  <td class="px-4 py-3 text-gray-900">비공개</td>
+                  <td class="px-4 py-3 text-gray-900">팀 전체</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">광고</td>
+                  <td class="px-4 py-3 text-gray-900">표시됨</td>
+                  <td class="px-4 py-3 text-gray-900">제거됨</td>
+                  <td class="px-4 py-3 text-gray-900">제거됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">인증 뱃지</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">팀 워크스페이스</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">연동 (Slack, Notion)</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">조기 액세스</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">우선</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        -->
+        </section>
+      </div>
+    </template>
+
+    <!-- Built for any business (Floating chips) -->
+    <div class="cursor-section-elevated w-full py-14 md:py-18 biz-float-section">
+      <section class="max-w-[1506px] mx-auto px-4 md:px-0" aria-label="Built for any business">
+        <div class="biz-float-wrap blur-fade-once">
+          <h2 class="biz-float-title">
+            팀 문서는 여기저기,<br><span class="biz-float-title-script">에이전트는 하나로 <span class="biz-float-title-keep">기억합니다</span></span>
+          </h2>
+
+          <div class="biz-float-chips" aria-hidden="true">
+            <div class="biz-float-chip biz-chip-digital">
+              <span class="biz-float-chip-dot biz-dot-digital">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 10l8-6 8 6-8 6-8-6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M4 14l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Notion
+            </div>
+
+            <div class="biz-float-chip biz-chip-agencies">
+              <span class="biz-float-chip-dot biz-dot-agencies">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M22 21v-2a3 3 0 0 0-2-2.82" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                </svg>
+              </span>
+              Confluence
+            </div>
+
+            <div class="biz-float-chip biz-chip-ecommerce">
+              <span class="biz-float-chip-dot biz-dot-ecommerce">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M6 6h15l-1.5 9h-12L6 6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M6 6 4 3H1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="9" cy="20" r="1" fill="currentColor" />
+                  <circle cx="18" cy="20" r="1" fill="currentColor" />
+                </svg>
+              </span>
+              Cursor
+            </div>
+
+            <div class="biz-float-chip biz-chip-saas">
+              <span class="biz-float-chip-dot biz-dot-saas">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 4h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M12 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Claude
+            </div>
+
+            <div class="biz-float-chip biz-chip-mobile">
+              <span class="biz-float-chip-dot biz-dot-mobile">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <rect x="7" y="2" width="10" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              로컬 폴더
+            </div>
+
+            <div class="biz-float-chip biz-chip-services">
+              <span class="biz-float-chip-dot biz-dot-services">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M12 2l1.5 5H19l-4 3 1.5 5-4.5-3-4.5 3L9 10 5 7h5.5L12 2Z" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linejoin="round" />
+                  <path d="M2 22h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Markdown
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- City CTA banner (랜덤 city 배경 + 연한 검정 오버레이) — Home of Prompts 위 -->
+    <div class="cursor-section w-full">
+      <section
+        class="pt-12 md:pt-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-20 md:pb-24 blur-fade-once"
+        aria-label="Birzont intro banner">
+        <div id="city-cta-card"
+          class="city-cta-card relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true">
+          </div>
+          <div class="city-cta-overlay absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+          <div
+            class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
+            <h2
+              class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
+              30초면 <em class="city-cta-em">컨텍스트를 아는</em> 에이전트.
+            </h2>
+            <p class="city-cta-sub text-white/95 text-[1.06rem] md:text-[1.18rem] font-medium mb-4 md:mb-5">
+              연결 한 번이면, 에이전트가 팀을 기억합니다.
+            </p>
+            <p class="city-cta-body text-white/90 text-sm md:text-base leading-relaxed max-w-xl">
+              Birzont가 팀 문서를 에이전트에 맞게 정리하고 연결합니다.<br>
+              설명은 줄이고, 답변은 더 정확해집니다.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- User Prompts + Try for free (통합 영역) -->
+    <div class="cursor-prompts-section w-full relative overflow-hidden">
+      <section
+        class="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-20">
+        <h3
+          class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+          data-instrument-font>팀 프롬프트 라이브러리</h3>
+        <p class="text-lg md:text-xl text-center mb-14 md:mb-16 blur-fade-once cursor-subheading" data-section-sub="prompts">팀이 공유하는 참조 지식과 프롬프트를 한곳에서 관리하세요</p>
+        <div class="user-prompts-container flex flex-col gap-5 md:gap-8">
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="1">
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/cursor-ai.png" alt="Cursor icon">
+                    </span>
+                    <span>Cursor</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">1</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Cursor Rules 자동 생성</h4>
+                <p class="user-prompt-description">팀 컨벤션과 코딩 가이드를 Cursor Rules로 변환해 에이전트에 즉시 주입합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/ios11/200/FFFFFF/claude-ai.png" alt="Claude icon">
+                    </span>
+                    <span>Claude</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">2</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Claude.md 팀 컨텍스트</h4>
+                <p class="user-prompt-description">프로젝트 배경, 아키텍처, 운영 규칙을 Claude.md 형식으로 구조화해 에이전트에 연결합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek.png"
+                        alt="DeepSeek icon">
+                    </span>
+                    <span>DeepSeek</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">0</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Notion 문서 → 에이전트 동기화</h4>
+                <p class="user-prompt-description">Notion 페이지를 에이전트가 읽기 좋은 마크다운으로 변환하고 변경 사항을 자동 반영합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="2">
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/chatgpt.png" alt="ChatGPT icon">
+                    </span>
+                    <span>ChatGPT</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">5</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">3</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">회의록 → 액션 아이템 추출</h4>
+                <p class="user-prompt-description">회의록에서 결정 사항과 액션 아이템을 추출해 팀 에이전트 참조 지식으로 저장합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/color/512/google-gemini.png" alt="Gemini icon">
+                    </span>
+                    <span>Gemini</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">4</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">브랜드 가이드 → 프롬프트 주입</h4>
+                <p class="user-prompt-description">브랜드 톤·비주얼 가이드를 에이전트 참조 지식으로 변환해 일관된 결과를 만듭니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://img.icons8.com/color/512/perplexity-ai.png" alt="Perplexity icon">
+                    </span>
+                    <span>Perplexity</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">3</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">온보딩 문서 자동 요약</h4>
+                <p class="user-prompt-description">신규 팀원용 온보딩 문서를 요약·구조화해 모든 에이전트가 같은 맥락을 공유하게 합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-8 md:mt-10 blur-fade-once">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="cursor-link font-medium text-base md:text-lg hover:underline inline-block">
+            프롬프트 탐색
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer will be injected by footer.js -->
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script src="languageprovider.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
