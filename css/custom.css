@@ -1,5 +1,236 @@
 /* Birzont landing overrides */
 
+/* ── Theme tokens (system preference) ── */
+:root {
+  color-scheme: light dark;
+  --bg-page: #ffffff;
+  --bg-section-light: #f7f8fa;
+  --bg-section-dark: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-muted: #f7f8fa;
+  --bg-header-scrolled: rgba(255, 255, 255, 0.98);
+  --text-primary: #1a1a1f;
+  --text-muted: rgba(26, 26, 31, 0.55);
+  --text-on-dark: #1a1a1f;
+  --text-on-dark-muted: rgba(26, 26, 31, 0.55);
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-on-dark: rgba(0, 0, 0, 0.1);
+  --glass-on-dark: rgba(0, 0, 0, 0.03);
+  --checklist-item-bg: rgba(232, 251, 240, 0.5);
+  --form-field-bg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-page: #2b2b2a;
+    --bg-section-light: #2b2b2a;
+    --bg-section-dark: #2b2b2a;
+    --bg-card: #363635;
+    --bg-card-muted: #323231;
+    --bg-header-scrolled: rgba(43, 43, 42, 0.98);
+    --text-primary: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.55);
+    --text-on-dark: #ffffff;
+    --text-on-dark-muted: rgba(255, 255, 255, 0.55);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-on-dark: rgba(255, 255, 255, 0.1);
+    --glass-on-dark: rgba(255, 255, 255, 0.06);
+    --checklist-item-bg: rgba(255, 255, 255, 0.05);
+    --form-field-bg: #323231;
+  }
+}
+
+/* Page shell */
+html,
+body {
+  background-color: var(--bg-page) !important;
+  color: var(--text-primary);
+}
+
+body.bg-\[\#050607\] {
+  background-color: var(--bg-page) !important;
+}
+
+/* Section backgrounds */
+#hero,
+#product,
+#beta-form,
+.bg-\[\#050607\],
+.bg-\[\#050607\]\/95 {
+  background-color: var(--bg-section-dark) !important;
+  color: var(--text-on-dark);
+}
+
+#checklist,
+#use-cases,
+#how-it-works,
+#pricing,
+.bg-birzont-cream {
+  background-color: var(--bg-section-light) !important;
+  background-image: none !important;
+  color: var(--text-primary) !important;
+}
+
+#before-after,
+#output-examples,
+#security,
+footer,
+.bg-birzont-black {
+  background-color: var(--bg-section-dark) !important;
+  background-image: none !important;
+  color: var(--text-on-dark);
+}
+
+/* Remove ambient spread/glow backgrounds */
+.flow-desktop .absolute.-inset-6,
+#how-it-works .absolute.left-0.right-0.top-1\/2,
+.bg-gradient-to-b.from-birzont-mint\/40,
+.bg-gradient-to-r.from-\[\#5ee496\]\/10 {
+  display: none !important;
+}
+
+.glass-card,
+.glass-card-light,
+.backdrop-blur-xl,
+.backdrop-blur-md,
+.backdrop-blur-sm {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#product .rounded-3xl.border-white\/10 {
+  background-color: var(--glass-on-dark) !important;
+}
+
+/* Light-mode text on formerly-dark sections */
+@media (prefers-color-scheme: light) {
+  #hero h1,
+  #hero p,
+  #product,
+  #beta-form h2,
+  #beta-form p,
+  #beta-form label,
+  #before-after h2,
+  #output-examples h2,
+  #security h2,
+  #security p,
+  footer p,
+  footer a {
+    color: var(--text-on-dark);
+  }
+
+  #hero .text-white\/60,
+  #product .text-white\/50,
+  #product .text-white\/85,
+  #product .text-white\/90,
+  #beta-form .text-white\/55,
+  #security .text-white\/55 {
+    color: var(--text-on-dark-muted) !important;
+  }
+
+  header:not(.header-scrolled) nav a,
+  header:not(.header-scrolled) .text-white\/60,
+  header:not(.header-scrolled) .text-white\/75 {
+    color: rgba(26, 26, 31, 0.6) !important;
+  }
+
+  header:not(.header-scrolled) nav a:hover,
+  header:not(.header-scrolled) a:hover {
+    color: #1a1a1f !important;
+  }
+
+  header:not(.header-scrolled) [data-menu-toggle] {
+    color: rgba(26, 26, 31, 0.8) !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+
+  [data-mobile-menu] {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  [data-mobile-menu] a {
+    color: rgba(26, 26, 31, 0.75) !important;
+  }
+
+  [data-mobile-menu] .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .site-logo-wordmark {
+    filter: none !important;
+  }
+
+  #checklist h2,
+  #checklist p,
+  #checklist .text-birzont-black,
+  #use-cases h2,
+  #use-cases h3,
+  #use-cases p,
+  #how-it-works h2,
+  #how-it-works h3,
+  #how-it-works p,
+  #pricing h2,
+  #pricing h3,
+  #pricing p,
+  #pricing li,
+  .text-birzont-black {
+    color: var(--text-primary) !important;
+  }
+
+  .text-birzont-black\/55,
+  .text-birzont-black\/70,
+  .text-birzont-black\/75 {
+    color: var(--text-muted) !important;
+  }
+}
+
+/* Dark-mode text on formerly-light sections */
+@media (prefers-color-scheme: dark) {
+  #checklist h2,
+  #checklist p,
+  #checklist .text-birzont-black,
+  #checklist .text-sm,
+  #use-cases h2,
+  #use-cases h3,
+  #use-cases p,
+  #how-it-works h2,
+  #how-it-works h3,
+  #how-it-works p,
+  #pricing h2,
+  #pricing h3,
+  #pricing p,
+  #pricing li,
+  #pricing td,
+  #pricing th,
+  .text-birzont-black {
+    color: var(--text-primary) !important;
+  }
+
+  .text-birzont-black\/55,
+  .text-birzont-black\/70,
+  .text-birzont-black\/75,
+  .text-birzont-black\/45,
+  .text-birzont-black\/60,
+  .text-birzont-black\/80 {
+    color: var(--text-muted) !important;
+  }
+
+  #checklist .rounded-2xl.border-birzont-black\/10.bg-white,
+  .glass-card-light,
+  #pricing .bg-white\/90,
+  #pricing .bg-white,
+  #pricing .rounded-3xl.border {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  #checklist .checklist-btn {
+    color: var(--text-primary) !important;
+  }
+}
+
 /* Logo */
 .site-logo-wordmark {
   height: 2rem;
@@ -111,9 +342,20 @@ header a.btn-glow {
 
 /* Opaque scrolled header */
 header.header-scrolled {
-  background: rgba(5, 6, 7, 0.98) !important;
+  background: var(--bg-header-scrolled) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+
+@media (prefers-color-scheme: light) {
+  header.header-scrolled nav a,
+  header.header-scrolled .text-white\/60 {
+    color: rgba(26, 26, 31, 0.6) !important;
+  }
+
+  header.header-scrolled nav a:hover {
+    color: #1a1a1f !important;
+  }
 }
 
 /* Remove headline gradients and keep text monochrome */
@@ -247,7 +489,7 @@ main {
 
 .pipeline-step.is-active .pipeline-step-num {
   background: #5ee496;
-  color: #050607;
+  color: #2b2b2a;
 }
 
 /* Checklist */
@@ -257,8 +499,8 @@ main {
   align-items: flex-start;
   gap: 0.75rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(232, 251, 240, 0.5);
+  border: 1px solid var(--border-subtle);
+  background: var(--checklist-item-bg);
   padding: 0.875rem 1rem;
   text-align: left;
   cursor: pointer;
@@ -267,7 +509,7 @@ main {
 
 .checklist-btn:hover {
   border-color: rgba(59, 200, 120, 0.3);
-  background: rgba(232, 251, 240, 0.8);
+  background: var(--checklist-item-bg);
 }
 
 .checklist-box {
@@ -279,8 +521,8 @@ main {
   align-items: center;
   justify-content: center;
   border-radius: 0.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #fff;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
   font-size: 0.75rem;
 }
 
@@ -315,14 +557,14 @@ main {
 }
 
 .before-panel {
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.55);
+  background: var(--glass-on-dark);
+  color: var(--text-on-dark-muted);
 }
 
 .after-panel {
   border: 1px solid rgba(94, 228, 150, 0.25);
   background: rgba(94, 228, 150, 0.08);
-  color: #fff;
+  color: var(--text-on-dark);
 }
 
 /* Output examples */
@@ -341,11 +583,11 @@ main {
 .beta-form-textarea {
   width: 100%;
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #050607;
+  border: 1px solid var(--border-on-dark);
+  background: var(--form-field-bg);
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
-  color: #fff;
+  color: var(--text-on-dark);
   outline: none;
 }
 
