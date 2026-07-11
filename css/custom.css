@@ -145,6 +145,7 @@ main {
 /* Hero mobile */
 #hero {
   min-height: 0;
+  padding-top: 72px;
 }
 
 #hero h1 {
@@ -155,14 +156,28 @@ main {
 }
 
 @media (min-width: 768px) {
+  #hero {
+    padding-top: 9rem;
+  }
+
   #hero h1 {
-    font-size: inherit;
+    font-size: 3rem;
     line-height: 1.08;
+  }
+}
+
+@media (min-width: 1024px) {
+  #hero h1 {
+    font-size: 3.25rem;
   }
 }
 
 .hero-subcopy-desktop {
   display: none;
+}
+
+.hero-subcopy-mobile {
+  display: inline;
 }
 
 @media (min-width: 768px) {
@@ -388,11 +403,16 @@ main {
   opacity: 0.55 !important;
 }
 
-/* Hide old sections */
-#problem,
-#solution,
-#metrics {
-  display: none !important;
+/* Mobile overflow fixes */
+@media (max-width: 767px) {
+  .absolute.-left-32,
+  .absolute.-right-24 {
+    display: none !important;
+  }
+
+  section {
+    max-width: 100vw;
+  }
 }
 
 /* How it works: hide connector arrows */
