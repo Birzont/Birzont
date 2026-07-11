@@ -229,6 +229,11 @@ footer,
   #checklist .checklist-btn {
     color: var(--text-primary) !important;
   }
+
+  [data-diagnosis-btn],
+  [data-diagnosis-btn] span {
+    color: #000000 !important;
+  }
 }
 
 /* Logo */
@@ -300,15 +305,23 @@ a.btn-glow.border-white\/20:hover {
 }
 
 /* Outline buttons on light sections */
-a.btn-glow.border-birzont-black\/15 {
+a.btn-glow.border-birzont-black\/15,
+button.btn-glow.border-birzont-black\/15,
+[data-diagnosis-btn] {
   background: #ffffff !important;
   color: #000000 !important;
   border: 1px solid rgba(0, 0, 0, 0.2) !important;
   box-shadow: none !important;
 }
 
-a.btn-glow.border-birzont-black\/15:hover {
+a.btn-glow.border-birzont-black\/15:hover,
+button.btn-glow.border-birzont-black\/15:hover,
+[data-diagnosis-btn]:hover {
   background: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+[data-diagnosis-btn] span {
   color: #000000 !important;
 }
 
