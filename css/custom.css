@@ -131,3 +131,275 @@ span.bg-gradient-to-r {
   background-image: none !important;
   color: #ffffff !important;
 }
+
+/* Layout */
+html,
+body {
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+/* Hero mobile */
+#hero {
+  min-height: 0;
+}
+
+#hero h1 {
+  width: 100%;
+  max-width: 100%;
+  font-size: clamp(2.125rem, 8.5vw, 2.625rem);
+  line-height: 1.12;
+}
+
+@media (min-width: 768px) {
+  #hero h1 {
+    font-size: inherit;
+    line-height: 1.08;
+  }
+}
+
+.hero-subcopy-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-subcopy-desktop {
+    display: inline;
+  }
+
+  .hero-subcopy-mobile {
+    display: none;
+  }
+}
+
+/* Product flow */
+.flow-desktop {
+  display: none;
+}
+
+.flow-mobile {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .flow-desktop {
+    display: block;
+  }
+
+  .flow-mobile {
+    display: none;
+  }
+}
+
+.pipeline-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.pipeline-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.pipeline-step.is-active {
+  border-color: rgba(94, 228, 150, 0.3);
+  background: rgba(94, 228, 150, 0.08);
+}
+
+.pipeline-step-num {
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pipeline-step.is-active .pipeline-step-num {
+  background: #5ee496;
+  color: #050607;
+}
+
+/* Checklist */
+.checklist-btn {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(232, 251, 240, 0.5);
+  padding: 0.875rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.checklist-btn:hover {
+  border-color: rgba(59, 200, 120, 0.3);
+  background: rgba(232, 251, 240, 0.8);
+}
+
+.checklist-box {
+  margin-top: 0.125rem;
+  display: flex;
+  height: 1.25rem;
+  width: 1.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  font-size: 0.75rem;
+}
+
+.checklist-box.is-checked {
+  border-color: #3bc878;
+  background: #3bc878;
+  color: #fff;
+}
+
+/* Before / After */
+.before-after-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .before-after-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.before-panel,
+.after-panel {
+  flex: 1;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.before-panel {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.after-panel {
+  border: 1px solid rgba(94, 228, 150, 0.25);
+  background: rgba(94, 228, 150, 0.08);
+  color: #fff;
+}
+
+/* Output examples */
+.code-card pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Beta form */
+.beta-form-field,
+.beta-form-select,
+.beta-form-textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #050607;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #fff;
+  outline: none;
+}
+
+.beta-form-field:focus,
+.beta-form-select:focus,
+.beta-form-textarea:focus {
+  border-color: rgba(94, 228, 150, 0.4);
+}
+
+.beta-chip {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.beta-chip.is-active {
+  border-color: rgba(94, 228, 150, 0.4);
+  background: rgba(94, 228, 150, 0.15);
+  color: #fff;
+}
+
+.checklist-summary {
+  display: none;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(94, 228, 150, 0.3);
+  background: rgba(94, 228, 150, 0.1);
+  padding: 1rem;
+}
+
+.checklist-summary.is-visible {
+  display: block;
+}
+
+.checklist-summary li {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.engine-step.is-active {
+  border-color: rgba(94, 228, 150, 0.25) !important;
+  background: rgba(94, 228, 150, 0.08) !important;
+  opacity: 1 !important;
+}
+
+.engine-step.is-done {
+  opacity: 0.55 !important;
+}
+
+/* Hide old sections */
+#problem,
+#solution,
+#metrics {
+  display: none !important;
+}
+
+/* How it works: hide connector arrows */
+#how-it-works .absolute.-right-3 {
+  display: none !important;
+}
+
+#how-it-works .absolute.left-0.right-0.top-1\/2 {
+  display: none !important;
+}
