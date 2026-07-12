@@ -16,7 +16,7 @@
     '문서 읽는 중',
     '핵심 맥락 추출',
     '에이전트용 구조화',
-    'Markdown / CLAUDE.md / Cursor Rules 생성',
+    'Markdown 생성',
     '작업공간 반영',
   ];
 

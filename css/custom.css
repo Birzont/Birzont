@@ -104,6 +104,44 @@ footer,
 
 /* Light-mode text on formerly-dark sections */
 @media (prefers-color-scheme: light) {
+  main,
+  header {
+    color: #000000;
+  }
+
+  /* Force readable black text — keep mint/blue accent classes */
+  main :is(h1, h2, h3, h4, p, li, label, pre, td, th, span, a):not([class*="text-[#"]):not([class*="text-birzont-blue"]):not([class*="text-birzont-green"]):not(.text-\[\#5ee496\]),
+  header nav a,
+  header [data-menu-toggle] {
+    color: #000000;
+  }
+
+  main [class*="text-white"],
+  header [class*="text-white"]:not(.gradient-cta):not(.gradient-cta *) {
+    color: #000000 !important;
+  }
+
+  main :is(.text-white\/30, .text-white\/35, .text-white\/40, .text-white\/50, .text-white\/55, .text-white\/60, .text-white\/65, .text-white\/70, .text-white\/85, .text-white\/90),
+  #before-after .before-panel,
+  #before-after .before-panel p,
+  .code-card pre,
+  .beta-chip,
+  .pipeline-step,
+  .engine-step,
+  .glass-card,
+  .flow-mobile .glass-card p {
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  #before-after .after-panel,
+  #before-after .after-panel p,
+  main h1,
+  main h2,
+  main h3,
+  .after-panel .text-sm.font-medium {
+    color: #000000 !important;
+  }
+
   #hero h1,
   #hero p,
   #product,
@@ -116,7 +154,7 @@ footer,
   #security p,
   footer p,
   footer a {
-    color: var(--text-on-dark);
+    color: #000000 !important;
   }
 
   #hero .text-white\/60,
@@ -125,7 +163,51 @@ footer,
   #product .text-white\/90,
   #beta-form .text-white\/55,
   #security .text-white\/55 {
-    color: var(--text-on-dark-muted) !important;
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  #before-after .before-after-card {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  #before-after .before-panel {
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+
+  #before-after .after-panel {
+    background: rgba(94, 228, 150, 0.12) !important;
+    border-color: rgba(94, 228, 150, 0.35) !important;
+  }
+
+  .pipeline-step {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #000000 !important;
+  }
+
+  .pipeline-step-num {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #000000 !important;
+  }
+
+  .beta-chip {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .beta-chip.is-active {
+    color: #000000 !important;
+  }
+
+  a.btn-glow.border-white\/20,
+  a.btn-glow.border-white\/20 span {
+    color: #000000 !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    background: transparent !important;
+  }
+
+  a.btn-glow.border-white\/20:hover {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #000000 !important;
   }
 
   header:not(.header-scrolled) nav a,
@@ -188,6 +270,20 @@ footer,
 
 /* Dark-mode text on formerly-light sections */
 @media (prefers-color-scheme: dark) {
+  main {
+    color: #ffffff;
+  }
+
+  main [class*="text-birzont-black"],
+  main [class*="text-white"] {
+    color: #ffffff !important;
+  }
+
+  main :is(.text-birzont-black\/35, .text-birzont-black\/45, .text-birzont-black\/55, .text-birzont-black\/60, .text-birzont-black\/70, .text-birzont-black\/75, .text-birzont-black\/80),
+  main :is(.text-white\/30, .text-white\/35, .text-white\/40, .text-white\/50, .text-white\/55, .text-white\/60, .text-white\/65, .text-white\/70, .text-white\/85, .text-white\/90) {
+    color: rgba(255, 255, 255, 0.55) !important;
+  }
+
   #checklist h2,
   #checklist p,
   #checklist .text-birzont-black,
@@ -228,11 +324,6 @@ footer,
 
   #checklist .checklist-btn {
     color: var(--text-primary) !important;
-  }
-
-  [data-diagnosis-btn],
-  [data-diagnosis-btn] span {
-    color: #000000 !important;
   }
 }
 
@@ -546,10 +637,18 @@ main {
 }
 
 /* Before / After */
+#before-after .mt-16.grid > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .before-after-card {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  height: 100%;
+  min-height: 9rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.25rem;
@@ -557,16 +656,31 @@ main {
 
 @media (min-width: 768px) {
   .before-after-card {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: stretch;
+    min-height: 7.5rem;
+  }
+
+  .before-after-card > .flex.items-center {
+    align-self: center;
   }
 }
 
 .before-panel,
 .after-panel {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 4.5rem;
   border-radius: 0.75rem;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.before-after-card > .flex.items-center {
+  flex-shrink: 0;
+  align-self: center;
 }
 
 .before-panel {
@@ -587,7 +701,7 @@ main {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-on-dark-muted);
 }
 
 /* Beta form */
