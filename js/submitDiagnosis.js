@@ -6,7 +6,7 @@
   'use strict';
 
   var FALLBACK_APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbxpBDmFpuHyL2dm8ittvAOFfxfW7cVnWAMCLosCQpo9bty0KcoTBDULoAMPBP7p4fHC/exec';
+    'https://script.google.com/macros/s/AKfycbyMT15cqn52l1n3PyNI1Jom2N3X6xDhaktwpYoKse67vp7mGdIbnnxt8rBa6-kTGI_-/exec';
 
   function getAppsScriptUrl() {
     if (typeof global.BIRZONT_GOOGLE_APPS_SCRIPT_URL === 'string' && global.BIRZONT_GOOGLE_APPS_SCRIPT_URL) {
