@@ -34,6 +34,8 @@
    * 존재하는 질문·답변만 answers로 정규화하고, scores/result는 빈 기본값으로 둔다.
    */
   function buildAnswers(formData) {
+    var biggestProblem = emptyToString(formData.biggestProblem || formData.painPoint);
+    var betaUsageIntent = emptyToString(formData.betaUsageIntent || formData.betaInterest);
     var answers = [
       {
         questionId: 'team-size',
@@ -54,15 +56,15 @@
         score: 0,
       },
       {
-        questionId: 'pain-point',
+        questionId: 'biggestProblem',
         question: '가장 큰 문제점',
-        answer: emptyToString(formData.painPoint),
+        answer: biggestProblem,
         score: 0,
       },
       {
-        questionId: 'beta-interest',
+        questionId: 'betaUsageIntent',
         question: '베타 사용 의향',
-        answer: emptyToString(formData.betaInterest),
+        answer: betaUsageIntent,
         score: 0,
       },
       {
@@ -80,15 +82,61 @@
     var answers = buildAnswers(formData);
     var email = emptyToString(formData.email);
     var categoryScores = {};
-    // 폼 필드명: painPoint / betaInterest → Sheets 권장 키로 정규화
-    var biggestProblem = emptyToString(formData.painPoint);
-    var betaUsageIntent = emptyToString(formData.betaInterest);
+    // DOM/수집 단계에서 이미 통일된 키를 우선 사용
+    var biggestProblem = emptyToString(
+      formData.biggestProblem != null && formData.biggestProblem !== ''
+        ? formData.biggestProblem
+        : formData.painPoint
+    );
+    var betaUsageIntent = emptyToString(
+      formData.betaUsageIntent != null && formData.betaUsageIntent !== ''
+        ? formData.betaUsageIntent
+        : formData.betaInterest
+    );
 
-    var nested = {
+    return {
       submittedAt: new Date().toISOString(),
       submissionId: submissionId,
       source: 'birzont.com',
       diagnosisType: '우리 팀 진단하기',
+      name: '',
+      email: email,
+      phone: '',
+      company: '',
+      teamName: '',
+      position: '',
+      teamSize: emptyToString(formData.teamSize),
+      aiTools: (formData.aiTools || []).join(', '),
+      knowledgeSources: (formData.knowledgeSources || []).join(', '),
+      betaUsageIntent: betaUsageIntent,
+      biggestProblem: biggestProblem,
+      checklistItems: (formData.checklistItems || []).join(' | '),
+      totalScore: 0,
+      resultType: '',
+      resultTitle: '',
+      resultDescription: '',
+      answersJson: JSON.stringify(answers),
+      categoryScoresJson: JSON.stringify(categoryScores),
+      userInfoJson: JSON.stringify({
+        name: '',
+        email: email,
+        phone: '',
+        company: '',
+        teamName: '',
+        position: '',
+      }),
+      scoresJson: JSON.stringify({ totalScore: 0, categoryScores: categoryScores }),
+      resultJson: JSON.stringify({
+        resultType: '',
+        resultTitle: '',
+        resultDescription: '',
+      }),
+      metadataJson: JSON.stringify({
+        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+      }),
+      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
       userInfo: {
         name: '',
         email: email,
@@ -98,67 +146,12 @@
         position: '',
       },
       answers: answers,
-      scores: {
-        totalScore: 0,
-        categoryScores: categoryScores,
-      },
-      result: {
-        resultType: '',
-        resultTitle: '',
-        resultDescription: '',
-      },
+      scores: { totalScore: 0, categoryScores: categoryScores },
+      result: { resultType: '', resultTitle: '', resultDescription: '' },
       metadata: {
         pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
       },
-      teamSize: emptyToString(formData.teamSize),
-      aiTools: (formData.aiTools || []).join(', '),
-      knowledgeSources: (formData.knowledgeSources || []).join(', '),
-      painPoint: biggestProblem,
-      betaInterest: betaUsageIntent,
-      biggestProblem: biggestProblem,
-      betaUsageIntent: betaUsageIntent,
-      checklistItems: (formData.checklistItems || []).join(' | '),
-    };
-
-    return {
-      submittedAt: nested.submittedAt,
-      submissionId: nested.submissionId,
-      source: nested.source,
-      diagnosisType: nested.diagnosisType,
-      name: '',
-      email: email,
-      phone: '',
-      company: '',
-      teamName: '',
-      position: '',
-      teamSize: nested.teamSize,
-      aiTools: nested.aiTools,
-      knowledgeSources: nested.knowledgeSources,
-      // Sheets / Apps Script 권장 키 (최상위)
-      betaUsageIntent: betaUsageIntent,
-      biggestProblem: biggestProblem,
-      // 기존 키 호환
-      painPoint: biggestProblem,
-      betaInterest: betaUsageIntent,
-      checklistItems: nested.checklistItems,
-      totalScore: 0,
-      resultType: '',
-      resultTitle: '',
-      resultDescription: '',
-      answersJson: JSON.stringify(answers),
-      categoryScoresJson: JSON.stringify(categoryScores),
-      userInfoJson: JSON.stringify(nested.userInfo),
-      scoresJson: JSON.stringify(nested.scores),
-      resultJson: JSON.stringify(nested.result),
-      metadataJson: JSON.stringify(nested.metadata),
-      pageUrl: nested.metadata.pageUrl,
-      userAgent: nested.metadata.userAgent,
-      userInfo: nested.userInfo,
-      answers: answers,
-      scores: nested.scores,
-      result: nested.result,
-      metadata: nested.metadata,
     };
   }
 

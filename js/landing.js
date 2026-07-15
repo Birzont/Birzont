@@ -234,6 +234,18 @@
   }
 
   function collectBetaFormData(form) {
+    // Apps Script / Sheets 키와 동일한 id·name에서 직접 읽음
+    const betaUsageIntentEl = document.getElementById('betaUsageIntent');
+    const biggestProblemEl = document.getElementById('biggestProblem');
+    const betaUsageIntent = (betaUsageIntentEl && betaUsageIntentEl.value
+      ? String(betaUsageIntentEl.value)
+      : ''
+    ).trim();
+    const biggestProblem = (biggestProblemEl && biggestProblemEl.value
+      ? String(biggestProblemEl.value)
+      : ''
+    ).trim();
+
     return {
       teamSize: form.querySelector('[name="team-size"]')?.value || '',
       aiTools: [...form.querySelectorAll('[data-chip-group="ai-tools"] [data-chip].is-active')].map(
@@ -242,8 +254,11 @@
       knowledgeSources: [
         ...form.querySelectorAll('[data-chip-group="knowledge"] [data-chip].is-active'),
       ].map((el) => el.textContent.trim()),
-      painPoint: form.querySelector('[name="pain-point"]')?.value || '',
-      betaInterest: form.querySelector('[name="beta-interest"]')?.value || '',
+      betaUsageIntent,
+      biggestProblem,
+      // 하위 호환 (payload 빌더 fallback)
+      painPoint: biggestProblem,
+      betaInterest: betaUsageIntent,
       email: form.querySelector('[name="email"]')?.value || '',
       checklistItems: loadChecklistItems(),
     };
@@ -294,11 +309,17 @@
       const submissionId = diagnosisApi.createSubmissionId();
       const payload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
 
+      // DOM 값을 payload 최상위에 한 번 더 확정 (다른 객체로 덮어쓰지 않도록)
+      payload.betaUsageIntent = formData.betaUsageIntent || '';
+      payload.biggestProblem = formData.biggestProblem || '';
+
       if (
         typeof location !== 'undefined' &&
-        (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || /[?&]debug=1(?:&|$)/.test(location.search))
+        (location.hostname === 'localhost' ||
+          location.hostname === '127.0.0.1' ||
+          /[?&]debug=1(?:&|$)/.test(location.search))
       ) {
-        console.log('Google Sheets payload fields:', {
+        console.log('[Diagnosis submit fields]', {
           betaUsageIntent: payload.betaUsageIntent,
           biggestProblem: payload.biggestProblem,
         });
@@ -316,8 +337,6 @@
         isSubmitting = false;
       }
 
-      // 저장 실패해도 사용자에게 접수 완료 UX는 유지 (재입력 강제하지 않음)
-      // 실패 시에만 재시도 가능하도록 버튼을 다시 연다.
       if (saveFailed) {
         setSubmitButtonState(submitBtn, { disabled: false, label: SUBMIT_LABEL_DEFAULT });
         alert('진단 신청은 접수되었습니다. 결과 저장 중 오류가 발생했습니다.');
