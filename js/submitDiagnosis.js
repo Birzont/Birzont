@@ -55,7 +55,7 @@
       },
       {
         questionId: 'pain-point',
-        question: '가장 불편한 문제',
+        question: '가장 큰 문제점',
         answer: emptyToString(formData.painPoint),
         score: 0,
       },
@@ -80,6 +80,9 @@
     var answers = buildAnswers(formData);
     var email = emptyToString(formData.email);
     var categoryScores = {};
+    // 폼 필드명: painPoint / betaInterest → Sheets 권장 키로 정규화
+    var biggestProblem = emptyToString(formData.painPoint);
+    var betaUsageIntent = emptyToString(formData.betaInterest);
 
     var nested = {
       submittedAt: new Date().toISOString(),
@@ -108,16 +111,16 @@
         pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
       },
-      // 원본 폼 필드 (시트에서 컬럼으로 쓰기 쉽게)
       teamSize: emptyToString(formData.teamSize),
       aiTools: (formData.aiTools || []).join(', '),
       knowledgeSources: (formData.knowledgeSources || []).join(', '),
-      painPoint: emptyToString(formData.painPoint),
-      betaInterest: emptyToString(formData.betaInterest),
+      painPoint: biggestProblem,
+      betaInterest: betaUsageIntent,
+      biggestProblem: biggestProblem,
+      betaUsageIntent: betaUsageIntent,
       checklistItems: (formData.checklistItems || []).join(' | '),
     };
 
-    // Apps Script가 평탄 구조를 기대할 때를 위한 필드
     return {
       submittedAt: nested.submittedAt,
       submissionId: nested.submissionId,
@@ -132,8 +135,12 @@
       teamSize: nested.teamSize,
       aiTools: nested.aiTools,
       knowledgeSources: nested.knowledgeSources,
-      painPoint: nested.painPoint,
-      betaInterest: nested.betaInterest,
+      // Sheets / Apps Script 권장 키 (최상위)
+      betaUsageIntent: betaUsageIntent,
+      biggestProblem: biggestProblem,
+      // 기존 키 호환
+      painPoint: biggestProblem,
+      betaInterest: betaUsageIntent,
       checklistItems: nested.checklistItems,
       totalScore: 0,
       resultType: '',
@@ -147,7 +154,6 @@
       metadataJson: JSON.stringify(nested.metadata),
       pageUrl: nested.metadata.pageUrl,
       userAgent: nested.metadata.userAgent,
-      // 중첩 구조도 함께 전달 (Apps Script가 객체로 파싱하는 경우)
       userInfo: nested.userInfo,
       answers: answers,
       scores: nested.scores,

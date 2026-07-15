@@ -294,6 +294,16 @@
       const submissionId = diagnosisApi.createSubmissionId();
       const payload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
 
+      if (
+        typeof location !== 'undefined' &&
+        (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || /[?&]debug=1(?:&|$)/.test(location.search))
+      ) {
+        console.log('Google Sheets payload fields:', {
+          betaUsageIntent: payload.betaUsageIntent,
+          biggestProblem: payload.biggestProblem,
+        });
+      }
+
       let saveFailed = false;
       try {
         await diagnosisApi.submitDiagnosis(payload);
