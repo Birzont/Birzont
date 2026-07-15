@@ -217,9 +217,54 @@
     }
   }
 
+  const DIAGNOSIS_SUBMITTED_KEY = 'birzont-diagnosis-submitted';
+  const SUBMIT_LABEL_DEFAULT = '진단 신청하기';
+  const SUBMIT_LABEL_SAVING = '저장 중...';
+  const SUBMIT_LABEL_DONE = '접수 완료';
+
+  function getSubmitLabelEl(btn) {
+    return btn.querySelector('[data-submit-label]') || btn.querySelector('.relative.z-10') || btn;
+  }
+
+  function setSubmitButtonState(btn, { disabled, label }) {
+    if (!btn) return;
+    btn.disabled = Boolean(disabled);
+    const labelEl = getSubmitLabelEl(btn);
+    if (labelEl) labelEl.textContent = label;
+  }
+
+  function collectBetaFormData(form) {
+    return {
+      teamSize: form.querySelector('[name="team-size"]')?.value || '',
+      aiTools: [...form.querySelectorAll('[data-chip-group="ai-tools"] [data-chip].is-active')].map(
+        (el) => el.textContent.trim()
+      ),
+      knowledgeSources: [
+        ...form.querySelectorAll('[data-chip-group="knowledge"] [data-chip].is-active'),
+      ].map((el) => el.textContent.trim()),
+      painPoint: form.querySelector('[name="pain-point"]')?.value || '',
+      betaInterest: form.querySelector('[name="beta-interest"]')?.value || '',
+      email: form.querySelector('[name="email"]')?.value || '',
+      checklistItems: loadChecklistItems(),
+    };
+  }
+
   function initBetaForm() {
     const form = document.querySelector('[data-beta-form]');
     if (!form) return;
+
+    const diagnosisApi = window.BirzontDiagnosis;
+    if (!diagnosisApi) {
+      console.error('[BetaForm] BirzontDiagnosis 모듈이 로드되지 않았습니다.');
+    }
+
+    let isSubmitting = false;
+    let hasSubmitted = sessionStorage.getItem(DIAGNOSIS_SUBMITTED_KEY) === '1';
+    const submitBtn = form.querySelector('[type="submit"]');
+
+    if (hasSubmitted) {
+      setSubmitButtonState(submitBtn, { disabled: true, label: SUBMIT_LABEL_DONE });
+    }
 
     const syncChecklist = () => renderChecklistSummary(loadChecklistItems());
     syncChecklist();
@@ -234,27 +279,41 @@
       });
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const data = {
-        teamSize: form.querySelector('[name="team-size"]')?.value || '',
-        aiTools: [...form.querySelectorAll('[data-chip-group="ai-tools"] [data-chip].is-active')].map(
-          (el) => el.textContent.trim()
-        ),
-        knowledgeSources: [
-          ...form.querySelectorAll('[data-chip-group="knowledge"] [data-chip].is-active'),
-        ].map((el) => el.textContent.trim()),
-        painPoint: form.querySelector('[name="pain-point"]')?.value || '',
-        betaInterest: form.querySelector('[name="beta-interest"]')?.value || '',
-        email: form.querySelector('[name="email"]')?.value || '',
-        checklistItems: loadChecklistItems(),
-      };
-      console.log('[BetaForm] submission:', data);
-      alert('진단 신청이 접수되었습니다. 곧 연락드리겠습니다.');
-      const submitBtn = form.querySelector('[type="submit"]');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = '접수 완료';
+      if (isSubmitting || hasSubmitted) return;
+      if (!diagnosisApi) {
+        alert('진단 신청을 처리할 수 없습니다. 잠시 후 다시 시도해 주세요.');
+        return;
+      }
+
+      isSubmitting = true;
+      setSubmitButtonState(submitBtn, { disabled: true, label: SUBMIT_LABEL_SAVING });
+
+      const formData = collectBetaFormData(form);
+      const submissionId = diagnosisApi.createSubmissionId();
+      const payload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
+
+      let saveFailed = false;
+      try {
+        await diagnosisApi.submitDiagnosis(payload);
+        hasSubmitted = true;
+        sessionStorage.setItem(DIAGNOSIS_SUBMITTED_KEY, '1');
+      } catch (error) {
+        saveFailed = true;
+        console.error('진단 결과 저장 오류:', error && error.message ? error.message : error);
+      } finally {
+        isSubmitting = false;
+      }
+
+      // 저장 실패해도 사용자에게 접수 완료 UX는 유지 (재입력 강제하지 않음)
+      // 실패 시에만 재시도 가능하도록 버튼을 다시 연다.
+      if (saveFailed) {
+        setSubmitButtonState(submitBtn, { disabled: false, label: SUBMIT_LABEL_DEFAULT });
+        alert('진단 신청은 접수되었습니다. 결과 저장 중 오류가 발생했습니다.');
+      } else {
+        setSubmitButtonState(submitBtn, { disabled: true, label: SUBMIT_LABEL_DONE });
+        alert('진단 신청이 접수되었습니다. 곧 연락드리겠습니다.');
       }
     });
   }

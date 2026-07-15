@@ -189,6 +189,36 @@ footer,
     color: #000000 !important;
   }
 
+  /* Product flow cards — match source-list contrast in light mode */
+  #product .engine-step {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  #product .engine-step span {
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  #product .engine-step.is-active {
+    border-color: rgba(94, 228, 150, 0.35) !important;
+    background: rgba(94, 228, 150, 0.1) !important;
+  }
+
+  #product .engine-step.is-active span {
+    color: #000000 !important;
+  }
+
+  #product .mt-5.w-full.max-w-\[240px\].rounded-xl.border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+  }
+
+  #product .absolute.inset-2.rounded-full.border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+  }
+
   .beta-chip {
     border-color: rgba(0, 0, 0, 0.12) !important;
     background: rgba(0, 0, 0, 0.04) !important;
@@ -760,6 +790,12 @@ main {
   font-size: 0.875rem;
   line-height: 1.5;
   margin-top: 0.5rem;
+}
+
+.engine-step {
+  border-color: var(--border-on-dark);
+  background: var(--glass-on-dark);
+  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
 .engine-step.is-active {
