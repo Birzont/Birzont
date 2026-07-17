@@ -105,12 +105,18 @@
       company: '',
       teamName: '',
       position: '',
+      // Sheet 열 매핑용 (Apps Script appendRow A–J)
+      nameOrTeam: '',
       teamSize: emptyToString(formData.teamSize),
+      usedAi: (formData.aiTools || []).join(', '),
       aiTools: (formData.aiTools || []).join(', '),
+      knowledgeStorage: (formData.knowledgeSources || []).join(', '),
       knowledgeSources: (formData.knowledgeSources || []).join(', '),
-      betaUsageIntent: betaUsageIntent,
       biggestProblem: biggestProblem,
+      betaUsageIntent: betaUsageIntent,
+      additionalComment: (formData.checklistItems || []).join(' | '),
       checklistItems: (formData.checklistItems || []).join(' | '),
+      referralPath: 'birzont.com',
       totalScore: 0,
       resultType: '',
       resultTitle: '',
@@ -156,6 +162,42 @@
   }
 
   /**
+   * Apps Script appendRow(A–J)가 읽는 평탄 payload만 전송.
+   * 중첩 객체(answers/userInfo 등)는 파싱·키 혼선을 줄이기 위해 body에서 제외.
+   */
+  function toSheetPayload(data) {
+    var d = data && typeof data === 'object' ? data : {};
+    var biggestProblem = emptyToString(d.biggestProblem || d.painPoint || '');
+    var betaUsageIntent = emptyToString(d.betaUsageIntent || d.betaInterest || '');
+    var usedAi = emptyToString(d.usedAi || d.aiTools || '');
+    var knowledgeStorage = emptyToString(d.knowledgeStorage || d.knowledgeSources || '');
+
+    return {
+      submittedAt: emptyToString(d.submittedAt) || new Date().toISOString(),
+      email: emptyToString(d.email),
+      nameOrTeam: emptyToString(d.nameOrTeam || d.teamName || d.name),
+      teamSize: emptyToString(d.teamSize),
+      usedAi: usedAi,
+      aiTools: usedAi,
+      knowledgeStorage: knowledgeStorage,
+      knowledgeSources: knowledgeStorage,
+      // G / H — Apps Script 필수 키
+      biggestProblem: biggestProblem,
+      betaUsageIntent: betaUsageIntent,
+      // 구버전 Apps Script 호환 별칭 (같은 사용자 입력값)
+      painPoint: biggestProblem,
+      betaInterest: betaUsageIntent,
+      additionalComment: emptyToString(d.additionalComment || d.checklistItems),
+      checklistItems: emptyToString(d.checklistItems || d.additionalComment),
+      referralPath: emptyToString(d.referralPath || d.source || 'birzont.com'),
+      source: emptyToString(d.source || d.referralPath || 'birzont.com'),
+      pageUrl: emptyToString(d.pageUrl),
+      submissionId: emptyToString(d.submissionId),
+      diagnosisType: emptyToString(d.diagnosisType || '우리 팀 진단하기'),
+    };
+  }
+
+  /**
    * @param {unknown} data
    * @returns {Promise<unknown>}
    */
@@ -165,12 +207,14 @@
       throw new Error('Google Apps Script URL이 설정되지 않았습니다.');
     }
 
+    var sheetPayload = toSheetPayload(data);
+
     var response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'text/plain;charset=utf-8',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(sheetPayload),
       // Apps Script는 doPost 후 302로 echo URL을 넘김. follow 시 POST→GET으로 깨질 수 있음.
       redirect: 'manual',
     });
@@ -210,6 +254,7 @@
     getAppsScriptUrl: getAppsScriptUrl,
     createSubmissionId: createSubmissionId,
     createDiagnosisPayload: createDiagnosisPayload,
+    toSheetPayload: toSheetPayload,
     submitDiagnosis: submitDiagnosis,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

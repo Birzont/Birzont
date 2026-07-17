@@ -220,7 +220,6 @@
   const DIAGNOSIS_SUBMITTED_KEY = 'birzont-diagnosis-submitted';
   const SUBMIT_LABEL_DEFAULT = '진단 신청하기';
   const SUBMIT_LABEL_SAVING = '저장 중...';
-  const SUBMIT_LABEL_DONE = '접수 완료';
 
   function getSubmitLabelEl(btn) {
     return btn.querySelector('[data-submit-label]') || btn.querySelector('.relative.z-10') || btn;
@@ -233,18 +232,69 @@
     if (labelEl) labelEl.textContent = label;
   }
 
+  function readFieldValue(primaryId, legacyNames) {
+    const byId = document.getElementById(primaryId);
+    if (byId && typeof byId.value === 'string' && byId.value.trim()) {
+      return byId.value.trim();
+    }
+
+    for (let i = 0; i < legacyNames.length; i += 1) {
+      const el = document.querySelector('[name="' + legacyNames[i] + '"]');
+      if (el && typeof el.value === 'string' && el.value.trim()) {
+        return el.value.trim();
+      }
+    }
+
+    if (byId && typeof byId.value === 'string') {
+      return byId.value.trim();
+    }
+
+    return '';
+  }
+
   function collectBetaFormData(form) {
-    // Apps Script / Sheets 키와 동일한 id·name에서 직접 읽음
-    const betaUsageIntentEl = document.getElementById('betaUsageIntent');
-    const biggestProblemEl = document.getElementById('biggestProblem');
-    const betaUsageIntent = (betaUsageIntentEl && betaUsageIntentEl.value
-      ? String(betaUsageIntentEl.value)
-      : ''
-    ).trim();
-    const biggestProblem = (biggestProblemEl && biggestProblemEl.value
-      ? String(biggestProblemEl.value)
-      : ''
-    ).trim();
+    const formDataApi = new FormData(form);
+
+    // 1) getElementById (권장 id)
+    // 2) FormData name
+    // 3) 구버전 name 폴백 (캐시된 HTML 대비)
+    let biggestProblem = '';
+    const biggestProblemElement = document.getElementById('biggestProblem');
+    if (biggestProblemElement && biggestProblemElement.value) {
+      biggestProblem = String(biggestProblemElement.value).trim();
+    }
+    if (!biggestProblem) {
+      biggestProblem = String(
+        formDataApi.get('biggestProblem') ||
+          formDataApi.get('pain-point') ||
+          formDataApi.get('painPoint') ||
+          ''
+      ).trim();
+    }
+    if (!biggestProblem) {
+      biggestProblem = readFieldValue('biggestProblem', ['biggestProblem', 'pain-point', 'painPoint']);
+    }
+
+    let betaUsageIntent = '';
+    const betaUsageIntentElement = document.getElementById('betaUsageIntent');
+    if (betaUsageIntentElement && betaUsageIntentElement.value) {
+      betaUsageIntent = String(betaUsageIntentElement.value).trim();
+    }
+    if (!betaUsageIntent) {
+      betaUsageIntent = String(
+        formDataApi.get('betaUsageIntent') ||
+          formDataApi.get('beta-interest') ||
+          formDataApi.get('betaInterest') ||
+          ''
+      ).trim();
+    }
+    if (!betaUsageIntent) {
+      betaUsageIntent = readFieldValue('betaUsageIntent', [
+        'betaUsageIntent',
+        'beta-interest',
+        'betaInterest',
+      ]);
+    }
 
     return {
       teamSize: form.querySelector('[name="team-size"]')?.value || '',
@@ -254,11 +304,8 @@
       knowledgeSources: [
         ...form.querySelectorAll('[data-chip-group="knowledge"] [data-chip].is-active'),
       ].map((el) => el.textContent.trim()),
-      betaUsageIntent,
       biggestProblem,
-      // 하위 호환 (payload 빌더 fallback)
-      painPoint: biggestProblem,
-      betaInterest: betaUsageIntent,
+      betaUsageIntent,
       email: form.querySelector('[name="email"]')?.value || '',
       checklistItems: loadChecklistItems(),
     };
@@ -273,13 +320,14 @@
       console.error('[BetaForm] BirzontDiagnosis 모듈이 로드되지 않았습니다.');
     }
 
-    let isSubmitting = false;
-    let hasSubmitted = sessionStorage.getItem(DIAGNOSIS_SUBMITTED_KEY) === '1';
-    const submitBtn = form.querySelector('[type="submit"]');
+    // 이전 세션에서 막혀 있던 제출 잠금 해제 — 반복 신청 허용
+    try {
+      sessionStorage.removeItem(DIAGNOSIS_SUBMITTED_KEY);
+    } catch (_) {}
 
-    if (hasSubmitted) {
-      setSubmitButtonState(submitBtn, { disabled: true, label: SUBMIT_LABEL_DONE });
-    }
+    let isSubmitting = false;
+    const submitBtn = form.querySelector('[type="submit"]');
+    setSubmitButtonState(submitBtn, { disabled: false, label: SUBMIT_LABEL_DEFAULT });
 
     const syncChecklist = () => renderChecklistSummary(loadChecklistItems());
     syncChecklist();
@@ -296,7 +344,8 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (isSubmitting || hasSubmitted) return;
+      // 전송 중인 중복 클릭만 막고, 완료 후에는 다시 신청 가능
+      if (isSubmitting) return;
       if (!diagnosisApi) {
         alert('진단 신청을 처리할 수 없습니다. 잠시 후 다시 시도해 주세요.');
         return;
@@ -307,41 +356,57 @@
 
       const formData = collectBetaFormData(form);
       const submissionId = diagnosisApi.createSubmissionId();
-      const payload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
+      const existingPayload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
 
-      // DOM 값을 payload 최상위에 한 번 더 확정 (다른 객체로 덮어쓰지 않도록)
-      payload.betaUsageIntent = formData.betaUsageIntent || '';
-      payload.biggestProblem = formData.biggestProblem || '';
+      // 제출 직전 DOM에서 사용자 입력값을 다시 읽음 (하드코딩 금지)
+      const biggestProblemElement = document.getElementById('biggestProblem');
+      const betaUsageIntentElement = document.getElementById('betaUsageIntent');
+      const biggestProblem =
+        (biggestProblemElement && biggestProblemElement.value
+          ? String(biggestProblemElement.value).trim()
+          : '') ||
+        formData.biggestProblem ||
+        '';
+      const betaUsageIntent =
+        (betaUsageIntentElement && betaUsageIntentElement.value
+          ? String(betaUsageIntentElement.value).trim()
+          : '') ||
+        formData.betaUsageIntent ||
+        '';
 
-      if (
-        typeof location !== 'undefined' &&
-        (location.hostname === 'localhost' ||
-          location.hostname === '127.0.0.1' ||
-          /[?&]debug=1(?:&|$)/.test(location.search))
-      ) {
-        console.log('[Diagnosis submit fields]', {
-          betaUsageIntent: payload.betaUsageIntent,
-          biggestProblem: payload.biggestProblem,
-        });
-      }
+      const payload = Object.assign({}, existingPayload, {
+        biggestProblem: biggestProblem,
+        betaUsageIntent: betaUsageIntent,
+        painPoint: biggestProblem,
+        betaInterest: betaUsageIntent,
+      });
+
+      const sheetBody =
+        typeof diagnosisApi.toSheetPayload === 'function'
+          ? diagnosisApi.toSheetPayload(payload)
+          : payload;
+
+      console.log('[Diagnosis actual submit]', {
+        biggestProblem: sheetBody.biggestProblem,
+        betaUsageIntent: sheetBody.betaUsageIntent,
+        fullPayloadKeys: Object.keys(sheetBody),
+      });
 
       let saveFailed = false;
       try {
-        await diagnosisApi.submitDiagnosis(payload);
-        hasSubmitted = true;
-        sessionStorage.setItem(DIAGNOSIS_SUBMITTED_KEY, '1');
+        // fetch body는 sheetBody(= biggestProblem/betaUsageIntent 포함 평탄 객체)
+        await diagnosisApi.submitDiagnosis(sheetBody);
       } catch (error) {
         saveFailed = true;
         console.error('진단 결과 저장 오류:', error && error.message ? error.message : error);
       } finally {
         isSubmitting = false;
+        setSubmitButtonState(submitBtn, { disabled: false, label: SUBMIT_LABEL_DEFAULT });
       }
 
       if (saveFailed) {
-        setSubmitButtonState(submitBtn, { disabled: false, label: SUBMIT_LABEL_DEFAULT });
         alert('진단 신청은 접수되었습니다. 결과 저장 중 오류가 발생했습니다.');
       } else {
-        setSubmitButtonState(submitBtn, { disabled: true, label: SUBMIT_LABEL_DONE });
         alert('진단 신청이 접수되었습니다. 곧 연락드리겠습니다.');
       }
     });
