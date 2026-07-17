@@ -253,48 +253,22 @@
   }
 
   function collectBetaFormData(form) {
-    const formDataApi = new FormData(form);
-
-    // 1) getElementById (권장 id)
-    // 2) FormData name
-    // 3) 구버전 name 폴백 (캐시된 HTML 대비)
-    let biggestProblem = '';
     const biggestProblemElement = document.getElementById('biggestProblem');
-    if (biggestProblemElement && biggestProblemElement.value) {
-      biggestProblem = String(biggestProblemElement.value).trim();
-    }
-    if (!biggestProblem) {
-      biggestProblem = String(
-        formDataApi.get('biggestProblem') ||
-          formDataApi.get('pain-point') ||
-          formDataApi.get('painPoint') ||
-          ''
-      ).trim();
-    }
-    if (!biggestProblem) {
-      biggestProblem = readFieldValue('biggestProblem', ['biggestProblem', 'pain-point', 'painPoint']);
-    }
-
-    let betaUsageIntent = '';
     const betaUsageIntentElement = document.getElementById('betaUsageIntent');
-    if (betaUsageIntentElement && betaUsageIntentElement.value) {
-      betaUsageIntent = String(betaUsageIntentElement.value).trim();
-    }
-    if (!betaUsageIntent) {
-      betaUsageIntent = String(
-        formDataApi.get('betaUsageIntent') ||
-          formDataApi.get('beta-interest') ||
-          formDataApi.get('betaInterest') ||
-          ''
-      ).trim();
-    }
-    if (!betaUsageIntent) {
-      betaUsageIntent = readFieldValue('betaUsageIntent', [
-        'betaUsageIntent',
-        'beta-interest',
-        'betaInterest',
-      ]);
-    }
+
+    const biggestProblem =
+      typeof biggestProblemElement?.value === 'string'
+        ? biggestProblemElement.value.trim()
+        : readFieldValue('biggestProblem', ['biggestProblem', 'pain-point', 'painPoint']);
+
+    const betaUsageIntent =
+      typeof betaUsageIntentElement?.value === 'string'
+        ? betaUsageIntentElement.value.trim()
+        : readFieldValue('betaUsageIntent', [
+            'betaUsageIntent',
+            'beta-interest',
+            'betaInterest',
+          ]);
 
     return {
       teamSize: form.querySelector('[name="team-size"]')?.value || '',
@@ -358,44 +332,52 @@
       const submissionId = diagnosisApi.createSubmissionId();
       const existingPayload = diagnosisApi.createDiagnosisPayload(formData, submissionId);
 
-      // 제출 직전 DOM에서 사용자 입력값을 다시 읽음 (하드코딩 금지)
+      // 제출 직전: 실제 DOM value를 다시 읽어 최상위 key로 확정
       const biggestProblemElement = document.getElementById('biggestProblem');
       const betaUsageIntentElement = document.getElementById('betaUsageIntent');
       const biggestProblem =
-        (biggestProblemElement && biggestProblemElement.value
-          ? String(biggestProblemElement.value).trim()
-          : '') ||
-        formData.biggestProblem ||
-        '';
+        typeof biggestProblemElement?.value === 'string'
+          ? biggestProblemElement.value.trim()
+          : formData.biggestProblem || '';
       const betaUsageIntent =
-        (betaUsageIntentElement && betaUsageIntentElement.value
-          ? String(betaUsageIntentElement.value).trim()
-          : '') ||
-        formData.betaUsageIntent ||
-        '';
+        typeof betaUsageIntentElement?.value === 'string'
+          ? betaUsageIntentElement.value.trim()
+          : formData.betaUsageIntent || '';
 
-      const payload = Object.assign({}, existingPayload, {
-        biggestProblem: biggestProblem,
-        betaUsageIntent: betaUsageIntent,
-        painPoint: biggestProblem,
-        betaInterest: betaUsageIntent,
+      console.log('[Birzont actual form values]', {
+        biggestProblem,
+        betaUsageIntent,
       });
 
-      const sheetBody =
+      if (!biggestProblem) {
+        console.warn('[Birzont] 가장 불편한 문제 값이 제출 직전에 비어 있습니다.');
+      }
+      if (!betaUsageIntent) {
+        console.warn('[Birzont] 베타 사용 의향 값이 제출 직전에 비어 있습니다.');
+      }
+
+      const payload = Object.assign({}, existingPayload, {
+        biggestProblem: biggestProblem || '',
+        betaUsageIntent: betaUsageIntent || '',
+        painPoint: biggestProblem || '',
+        betaInterest: betaUsageIntent || '',
+      });
+
+      // fetch에 넘기는 최종 body (평탄 8열 구조)
+      const sheetPayload =
         typeof diagnosisApi.toSheetPayload === 'function'
           ? diagnosisApi.toSheetPayload(payload)
           : payload;
 
-      console.log('[Diagnosis actual submit]', {
-        biggestProblem: sheetBody.biggestProblem,
-        betaUsageIntent: sheetBody.betaUsageIntent,
-        fullPayloadKeys: Object.keys(sheetBody),
+      console.log('[Birzont actual payload]', {
+        biggestProblem: sheetPayload.biggestProblem,
+        betaUsageIntent: sheetPayload.betaUsageIntent,
+        payloadKeys: Object.keys(sheetPayload),
       });
 
       let saveFailed = false;
       try {
-        // fetch body는 sheetBody(= biggestProblem/betaUsageIntent 포함 평탄 객체)
-        await diagnosisApi.submitDiagnosis(sheetBody);
+        await diagnosisApi.submitDiagnosis(sheetPayload);
       } catch (error) {
         saveFailed = true;
         console.error('진단 결과 저장 오류:', error && error.message ? error.message : error);
