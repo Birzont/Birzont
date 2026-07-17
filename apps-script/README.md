@@ -5,7 +5,7 @@
 - ID: `1cJiJ4tiqkKe-lGHlabBwMiLXPna2YxH5jejwQaE-7pA`
 - 탭 이름: **진단응답**
 - Web App URL:  
-  `https://script.google.com/macros/s/AKfycbxOeJkle5eO_lyQrz7XC0hgY2JmHrSF7Ix2fKZ2teiamNDM5Ulzq8EJEezL50m2AdVU/exec`
+  `https://script.google.com/macros/s/AKfycbx2DrVJ5C-0GrfMfV13H5IHgWawymb1OmLv1sM4oQSNCCp9_3AGSp3ZNozRMtQnEhoD/exec`
 
 ## 열 순서 (8열)
 
