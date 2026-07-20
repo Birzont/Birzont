@@ -167,16 +167,37 @@ footer,
   }
 
   #before-after .before-after-card {
-    border-color: rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
   }
 
   #before-after .before-panel {
     background: rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
   }
 
   #before-after .after-panel {
     background: rgba(94, 228, 150, 0.12) !important;
-    border-color: rgba(94, 228, 150, 0.35) !important;
+    border: 1px solid rgba(94, 228, 150, 0.35) !important;
+  }
+
+  /* Output example cards — clear card chrome in light mode */
+  #output-examples .code-card,
+  #output-examples .glass-card {
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
+    border-radius: 0.75rem !important;
+  }
+
+  #output-examples .code-card > .border-b {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Security checklist + FAQ — same bordered card treatment */
+  #security li.rounded-xl,
+  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl {
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
   }
 
   .pipeline-step {
@@ -228,15 +249,35 @@ footer,
     color: #000000 !important;
   }
 
+  /* Hero CTAs — match diagnosis-style bordered buttons in light mode */
+  #hero a.btn-glow.gradient-cta,
+  #hero a.btn-glow.gradient-cta span,
+  a.btn-glow.gradient-cta,
+  .btn-glow.gradient-cta {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.22) !important;
+  }
+
+  #hero a.btn-glow.gradient-cta:hover,
+  a.btn-glow.gradient-cta:hover,
+  .btn-glow.gradient-cta:hover {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+  }
+
+  #hero a.btn-glow.border-white\/20,
+  #hero a.btn-glow.border-white\/20 span,
   a.btn-glow.border-white\/20,
   a.btn-glow.border-white\/20 span {
     color: #000000 !important;
-    border-color: rgba(0, 0, 0, 0.2) !important;
-    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.22) !important;
+    background: #ffffff !important;
   }
 
+  #hero a.btn-glow.border-white\/20:hover,
   a.btn-glow.border-white\/20:hover {
-    background: rgba(0, 0, 0, 0.06) !important;
+    background: #f0f0f0 !important;
     color: #000000 !important;
   }
 
