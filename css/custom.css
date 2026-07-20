@@ -166,38 +166,43 @@ footer,
     color: rgba(0, 0, 0, 0.55) !important;
   }
 
-  #before-after .before-after-card {
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    background: #ffffff !important;
+  /* Match use-cases glass-card-light (soft card / button look) */
+  #before-after .before-after-card,
+  #output-examples .code-card,
+  #output-examples .glass-card,
+  #security li.rounded-xl,
+  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl {
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 1.5rem !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1) !important;
   }
 
   #before-after .before-panel {
     background: rgba(0, 0, 0, 0.04) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
   }
 
   #before-after .after-panel {
     background: rgba(94, 228, 150, 0.12) !important;
-    border: 1px solid rgba(94, 228, 150, 0.35) !important;
-  }
-
-  /* Output example cards — clear card chrome in light mode */
-  #output-examples .code-card,
-  #output-examples .glass-card {
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    background: #ffffff !important;
-    border-radius: 0.75rem !important;
+    border: none !important;
   }
 
   #output-examples .code-card > .border-b {
-    border-color: rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
   }
 
-  /* Security checklist + FAQ — same bordered card treatment */
+  #output-examples .code-card,
   #security li.rounded-xl,
   #security .mx-auto.mt-12.max-w-2xl > .rounded-xl {
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    background: #ffffff !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #output-examples .code-card:hover,
+  #security li.rounded-xl:hover,
+  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
   }
 
   .pipeline-step {
@@ -249,35 +254,30 @@ footer,
     color: #000000 !important;
   }
 
-  /* Hero CTAs — match diagnosis-style bordered buttons in light mode */
+  /* Hero CTAs — no border ring in light mode */
   #hero a.btn-glow.gradient-cta,
-  #hero a.btn-glow.gradient-cta span,
-  a.btn-glow.gradient-cta,
-  .btn-glow.gradient-cta {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.22) !important;
+  #hero a.btn-glow.gradient-cta span {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  #hero a.btn-glow.gradient-cta:hover,
-  a.btn-glow.gradient-cta:hover,
-  .btn-glow.gradient-cta:hover {
-    background: #f0f0f0 !important;
-    color: #000000 !important;
+  #hero a.btn-glow.gradient-cta:hover {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
   }
 
   #hero a.btn-glow.border-white\/20,
-  #hero a.btn-glow.border-white\/20 span,
-  a.btn-glow.border-white\/20,
-  a.btn-glow.border-white\/20 span {
+  #hero a.btn-glow.border-white\/20 span {
     color: #000000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.22) !important;
-    background: #ffffff !important;
+    border: none !important;
+    background: rgba(0, 0, 0, 0.06) !important;
+    box-shadow: none !important;
   }
 
-  #hero a.btn-glow.border-white\/20:hover,
-  a.btn-glow.border-white\/20:hover {
-    background: #f0f0f0 !important;
+  #hero a.btn-glow.border-white\/20:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
     color: #000000 !important;
   }
 
@@ -441,7 +441,7 @@ a.btn-glow.gradient-cta,
   background: #ffffff !important;
   background-image: none !important;
   color: #000000 !important;
-  border: 1px solid #ffffff !important;
+  border: none !important;
   box-shadow: none !important;
 }
 
@@ -720,9 +720,17 @@ main {
   gap: 0.75rem;
   height: 100%;
   min-height: 9rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  border: 1px solid var(--border-on-dark);
+  background: var(--bg-card);
   padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.before-after-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 @media (min-width: 768px) {
