@@ -277,6 +277,27 @@ footer,
     color: #000000 !important;
   }
 
+  /* Beta form card — visible border in light mode */
+  #beta-form [data-beta-form] {
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Beta submit — match hero primary CTA */
+  #beta-form button.btn-glow.gradient-cta,
+  #beta-form button.btn-glow.gradient-cta span {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #beta-form button.btn-glow.gradient-cta:hover {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
   header:not(.header-scrolled) nav a,
   header:not(.header-scrolled) .text-white\/60,
   header:not(.header-scrolled) .text-white\/75 {
