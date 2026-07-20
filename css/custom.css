@@ -162,16 +162,16 @@ footer,
   #product .text-white\/85,
   #product .text-white\/90,
   #beta-form .text-white\/55,
-  #security .text-white\/55 {
+  #security .text-white\/55,
+  #security .text-white\/85,
+  #security .text-white\/35 {
     color: rgba(0, 0, 0, 0.55) !important;
   }
 
   /* Match use-cases glass-card-light (soft card / button look) */
   #before-after .before-after-card,
   #output-examples .code-card,
-  #output-examples .glass-card,
-  #security li.rounded-xl,
-  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl {
+  #output-examples .glass-card {
     border: 1px solid rgba(0, 0, 0, 0.06) !important;
     background: rgba(255, 255, 255, 0.8) !important;
     border-radius: 1.5rem !important;
@@ -192,15 +192,11 @@ footer,
     border-color: rgba(0, 0, 0, 0.06) !important;
   }
 
-  #output-examples .code-card,
-  #security li.rounded-xl,
-  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl {
+  #output-examples .code-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  #output-examples .code-card:hover,
-  #security li.rounded-xl:hover,
-  #security .mx-auto.mt-12.max-w-2xl > .rounded-xl:hover {
+  #output-examples .code-card:hover {
     transform: translateY(-0.25rem);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
   }
@@ -771,6 +767,22 @@ main {
   border: 1px solid rgba(94, 228, 150, 0.25);
   background: rgba(94, 228, 150, 0.08);
   color: var(--text-on-dark);
+}
+
+/* Security checklist + FAQ — same button-card treatment as use-cases */
+#security .glass-card-light {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+#security .glass-card-light .text-white,
+#security .glass-card-light .text-white\/85 {
+  color: var(--text-primary) !important;
+}
+
+#security .glass-card-light .text-white\/55 {
+  color: var(--text-muted) !important;
 }
 
 /* Output examples */
