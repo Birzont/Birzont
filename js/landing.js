@@ -110,7 +110,6 @@
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const engineStepEls = document.querySelectorAll('[data-engine-step]');
     const agentCard = document.querySelector('[data-agent-card]');
-    const agentChecks = document.querySelectorAll('[data-agent-check]');
     const buildSteps = document.querySelectorAll('[data-build-step]');
     const statusLabel = document.querySelector('[data-agent-status-label]');
     const statusMeta = document.querySelector('[data-agent-status-meta]');
@@ -120,19 +119,6 @@
       agentCard.classList.toggle('is-ready', ready);
       if (statusLabel) statusLabel.textContent = ready ? '생성 완료' : '생성 중';
       if (statusMeta) statusMeta.textContent = ready ? '방금 업데이트됨' : '처리 중…';
-
-      if (!ready) {
-        agentChecks.forEach((el) => el.classList.remove('is-visible'));
-        return;
-      }
-
-      agentChecks.forEach((el, i) => {
-        window.setTimeout(() => {
-          if (agentCard.classList.contains('is-ready')) {
-            el.classList.add('is-visible');
-          }
-        }, i * 90);
-      });
     };
 
     const syncBuildFlow = (engineIndex) => {
@@ -163,7 +149,6 @@
     if (prefersReduced) {
       progressBar.style.width = '100%';
       applyEngineIndex(ENGINE_STEPS.length - 1);
-      agentChecks.forEach((el) => el.classList.add('is-visible'));
       return;
     }
 
@@ -172,16 +157,21 @@
     let lastTick = 0;
     applyEngineIndex(0);
 
+    // Most steps ~1.3s; final "AI 에이전트 생성" ~3s
+    const stepDurationMs = (index) =>
+      index === ENGINE_STEPS.length - 1 ? 3000 : 1300;
+    const tickInterval = 32;
+
     const tick = (now) => {
-      if (now - lastTick > 40) {
+      if (now - lastTick > tickInterval) {
         lastTick = now;
-        width += 2;
+        width += (100 * tickInterval) / stepDurationMs(engineIndex);
         if (width >= 100) {
           width = 0;
           engineIndex = (engineIndex + 1) % ENGINE_STEPS.length;
           applyEngineIndex(engineIndex);
         }
-        progressBar.style.width = `${width}%`;
+        progressBar.style.width = `${Math.min(width, 100)}%`;
       }
       requestAnimationFrame(tick);
     };
