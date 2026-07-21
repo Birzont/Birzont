@@ -110,7 +110,6 @@
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const engineStepEls = document.querySelectorAll('[data-engine-step]');
     const agentCard = document.querySelector('[data-agent-card]');
-    const buildSteps = document.querySelectorAll('[data-build-step]');
     const statusLabel = document.querySelector('[data-agent-status-label]');
     const statusMeta = document.querySelector('[data-agent-status-meta]');
 
@@ -119,16 +118,6 @@
       agentCard.classList.toggle('is-ready', ready);
       if (statusLabel) statusLabel.textContent = ready ? '생성 완료' : '생성 중';
       if (statusMeta) statusMeta.textContent = ready ? '방금 업데이트됨' : '처리 중…';
-    };
-
-    const syncBuildFlow = (engineIndex) => {
-      // Map engine steps → build pills: 0-1 → first, 2 → second, 3 → third, 4 → fourth
-      const doneCount =
-        engineIndex >= 4 ? 4 : engineIndex >= 3 ? 3 : engineIndex >= 2 ? 2 : engineIndex >= 0 ? 1 : 0;
-      buildSteps.forEach((el, i) => {
-        el.classList.toggle('is-done', i < doneCount);
-        el.classList.toggle('is-active', i === doneCount - 1 || (doneCount === 4 && i === 3));
-      });
     };
 
     const applyEngineIndex = (engineIndex) => {
@@ -142,7 +131,6 @@
         const active = engineIndex >= 4 ? 2 : engineIndex >= 1 ? 1 : 0;
         el.classList.toggle('is-active', step === active);
       });
-      syncBuildFlow(engineIndex);
       setAgentReady(engineIndex === ENGINE_STEPS.length - 1);
     };
 

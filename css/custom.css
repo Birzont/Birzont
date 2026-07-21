@@ -983,54 +983,13 @@ header .site-logo,
   opacity: 0.55 !important;
 }
 
-/* Agent build flow + result card (product output) */
-.agent-build-flow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.5rem;
-  margin: 0 0 1rem;
-  padding: 0;
-  list-style: none;
-}
-
-.agent-build-flow li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border-on-dark);
-  background: var(--glass-on-dark);
-  padding: 0.3rem 0.65rem;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-on-dark-muted);
-  opacity: 0.45;
-  transition: opacity 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
-}
-
-.agent-build-flow li.is-done,
-.agent-build-flow li.is-active {
-  opacity: 1;
-  border-color: rgba(94, 228, 150, 0.35);
-  background: rgba(94, 228, 150, 0.1);
-  color: var(--text-on-dark);
-}
-
-.agent-build-check {
-  display: inline-flex;
-  width: 0.875rem;
-  height: 0.875rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: rgba(94, 228, 150, 0.2);
-  color: #5ee496;
-  font-size: 0.625rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
+/* Agent result card (product output) */
 .agent-result-card {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 0;
+  flex: 0 0 auto;
   border-radius: 1rem;
   border: 1px solid var(--border-on-dark);
   background: var(--glass-on-dark);
@@ -1055,7 +1014,7 @@ header .site-logo,
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.75rem;
 }
 
 .agent-status-dot {
@@ -1093,7 +1052,7 @@ header .site-logo,
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.75rem;
 }
 
 .agent-result-logo {
@@ -1125,11 +1084,12 @@ header .site-logo,
 }
 
 .agent-result-checks {
-  margin: 0 0 0.875rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   list-style: none;
   display: grid;
   gap: 0.4rem;
+  flex: 0 0 auto;
 }
 
 .agent-result-checks li {
@@ -1167,7 +1127,7 @@ header .site-logo,
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem;
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.75rem;
 }
 
 .agent-result-tags span {
@@ -1191,6 +1151,7 @@ header .site-logo,
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: 0;
 }
 
 .agent-btn-primary,
