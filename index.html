@@ -136,13 +136,13 @@
     <div class="pipeline-stepper">
       <div class="pipeline-step is-active" data-pipeline-step="0"><span class="pipeline-step-num">01</span><span>지식 연결</span></div>
       <div class="pipeline-step" data-pipeline-step="1"><span class="pipeline-step-num">02</span><span>Birzont 변환</span></div>
-      <div class="pipeline-step" data-pipeline-step="2"><span class="pipeline-step-num">03</span><span>에이전트 동기화</span></div>
+      <div class="pipeline-step" data-pipeline-step="2"><span class="pipeline-step-num">03</span><span>에이전트 생성</span></div>
     </div>
 
     <div class="flow-mobile space-y-4">
       <div class="glass-card p-5"><p class="mb-1 text-xs font-bold text-[#5ee496]">01 팀 지식 연결</p><p class="text-sm text-white/60">Notion, 회의록, 문서, 프롬프트를 연결합니다.</p></div>
-      <div class="glass-card p-5"><p class="mb-1 text-xs font-bold text-white/70">02 Birzont가 맥락 생성</p><p class="text-sm text-white/60">흩어진 정보를 에이전트가 읽기 좋은 구조로 바꿉니다.</p></div>
-      <div class="glass-card p-5"><p class="mb-1 text-xs font-bold text-[#3899f7]">03 AI 작업공간에 동기화</p><p class="text-sm text-white/60">Cursor, Claude, AI 에이전트가 같은 팀 맥락을 참고합니다.</p></div>
+      <div class="glass-card p-5"><p class="mb-1 text-xs font-bold text-white/70">02 Birzont가 맥락 생성</p><p class="text-sm text-white/60">흩어진 정보를 읽고 정리해 에이전트용 지식으로 바꿉니다.</p></div>
+      <div class="glass-card p-5"><p class="mb-1 text-xs font-bold text-[#5ee496]">03 AI 에이전트 생성</p><p class="text-sm text-white/60">팀 지식이 반영된 실행 가능한 업무용 에이전트가 생성됩니다.</p></div>
     </div>
 
     <div class="flow-desktop">
@@ -165,7 +165,7 @@
             <div class="flex flex-col items-center">
               <p class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-white/40 w-full text-center lg:text-left">처리</p>
               <h3 class="mb-1 text-lg font-bold w-full text-center lg:text-left">Birzont Engine</h3>
-              <p class="mb-4 text-sm text-white/50 w-full text-center lg:text-left">읽고, 정리하고, 변환하고, 동기화합니다</p>
+              <p class="mb-4 text-sm text-white/50 w-full text-center lg:text-left">읽고, 정리하고, 업무용 에이전트를 생성합니다</p>
               <div class="relative flex h-48 w-48 items-center justify-center md:h-56 md:w-56 max-w-full">
                 <div class="absolute inset-2 rounded-full border border-white/10 bg-white/10 backdrop-blur-md"></div>
                 <div class="relative z-10 flex flex-col items-center gap-2">
@@ -174,30 +174,65 @@
                 </div>
               </div>
               <div class="mt-5 w-full max-w-[280px] space-y-2.5">
-                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">1. 문서 읽는 중</span></div>
+                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">1. 팀 지식 읽기</span></div>
                 <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">2. 핵심 맥락 추출</span></div>
-                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">3. 에이전트용 구조화</span></div>
-                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">4. Markdown 생성</span></div>
-                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">5. 작업공간 반영</span></div>
+                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">3. 에이전트 지식 구조화</span></div>
+                <div data-engine-step class="engine-step flex flex-col items-start gap-1 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">4. 업무 규칙 및 도구 구성</span><span class="text-[11px] leading-snug text-white/40">Markdown, Rules 및 에이전트 컨텍스트 자동 구성</span></div>
+                <div data-engine-step class="engine-step flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 opacity-35"><span class="text-sm font-medium text-white/85">5. AI 에이전트 생성</span></div>
               </div>
               <div class="mt-5 w-full max-w-[240px] rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-center">
                 <div class="mb-2 flex items-center justify-center gap-2">
                   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#5ee496] opacity-50"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-[#5ee496]"></span></span>
-                  <span data-status-text class="text-sm font-medium text-white/90">문서 읽는 중</span>
+                  <span data-status-text class="text-sm font-medium text-white/90">팀 지식 읽기</span>
                 </div>
                 <div class="h-1 overflow-hidden rounded-full bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-[#5ee496] to-[#3899f7]" data-progress-bar style="width:0%"></div></div>
               </div>
             </div>
             <div>
-              <p class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-[#3899f7]/70">출력</p>
-              <h3 class="mb-1 text-lg font-bold">에이전트 작업공간</h3>
-              <p class="mb-4 text-sm text-white/50">AI가 바로 읽고 사용하는 형태로 반영</p>
-              <div class="space-y-2.5">
-                <div class="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/15 bg-[#3899f7]/[0.04] px-4 py-3"><span class="text-sm font-medium text-white/85">Markdown</span><span class="ml-auto text-[10px] text-[#3899f7]/80">synced</span></div>
-                <div class="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/15 bg-[#3899f7]/[0.04] px-4 py-3"><span class="text-sm font-medium text-white/85">CLAUDE.md</span><span class="ml-auto text-[10px] text-[#3899f7]/80">synced</span></div>
-                <div class="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/15 bg-[#3899f7]/[0.04] px-4 py-3"><span class="text-sm font-medium text-white/85">Cursor Rules</span><span class="ml-auto text-[10px] text-[#3899f7]/80">synced</span></div>
-                <div class="flex items-center gap-2.5 rounded-xl border border-[#3899f7]/15 bg-[#3899f7]/[0.04] px-4 py-3"><span class="text-sm font-medium text-white/85">AI 에이전트 작업공간</span><span class="ml-auto text-[10px] text-[#3899f7]/80">synced</span></div>
-                <div class="flex items-center gap-2.5 rounded-xl border border-[#5ee496]/15 bg-[#5ee496]/[0.04] px-4 py-3"><span class="text-sm font-medium text-[#5ee496]/80">에이전트가 최신 상태입니다</span></div>
+              <p class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-[#5ee496]/70">출력</p>
+              <h3 class="mb-1 text-lg font-bold">AI 에이전트 생성</h3>
+              <p class="mb-4 text-sm text-white/50">팀 지식이 반영된 실행 가능한 에이전트가 자동으로 생성됩니다</p>
+
+              <ol class="agent-build-flow" data-agent-build-flow aria-label="에이전트 생성 흐름">
+                <li data-build-step><span class="agent-build-check" aria-hidden="true">✓</span><span>팀 지식 반영</span></li>
+                <li data-build-step><span class="agent-build-check" aria-hidden="true">✓</span><span>업무 규칙 구성</span></li>
+                <li data-build-step><span class="agent-build-check" aria-hidden="true">✓</span><span>도구 연결</span></li>
+                <li data-build-step><span class="agent-build-check" aria-hidden="true">✓</span><span>에이전트 생성</span></li>
+              </ol>
+
+              <div class="agent-result-card" data-agent-card>
+                <div class="agent-result-status">
+                  <span class="agent-status-dot" data-agent-status-dot></span>
+                  <span class="agent-status-label" data-agent-status-label>생성 중</span>
+                  <span class="agent-status-meta" data-agent-status-meta>처리 중…</span>
+                </div>
+
+                <div class="agent-result-identity">
+                  <img src="birzont-logo.png" alt="" width="40" height="40" class="agent-result-logo" style="width:40px;height:40px"/>
+                  <div class="min-w-0">
+                    <p class="agent-result-name">Birzont Team Agent</p>
+                    <p class="agent-result-role">팀의 지식과 업무 맥락을 이해하고 실행하는 AI 에이전트</p>
+                  </div>
+                </div>
+
+                <ul class="agent-result-checks">
+                  <li data-agent-check><span class="agent-check-icon" aria-hidden="true">✓</span><span>6개의 지식 소스 연결</span></li>
+                  <li data-agent-check><span class="agent-check-icon" aria-hidden="true">✓</span><span>팀 최신 문맥 반영</span></li>
+                  <li data-agent-check><span class="agent-check-icon" aria-hidden="true">✓</span><span>업무 규칙 자동 구성</span></li>
+                  <li data-agent-check><span class="agent-check-icon" aria-hidden="true">✓</span><span>에이전트 도구 연결 완료</span></li>
+                </ul>
+
+                <div class="agent-result-tags">
+                  <span>팀 지식 검색</span>
+                  <span>회의 후속 작업</span>
+                  <span>문서 작성</span>
+                  <span>업무 자동화</span>
+                </div>
+
+                <div class="agent-result-actions">
+                  <button type="button" class="agent-btn-primary" data-agent-run>에이전트 실행하기</button>
+                  <button type="button" class="agent-btn-secondary" data-agent-config>구성 확인</button>
+                </div>
               </div>
             </div>
           </div>
@@ -389,7 +424,7 @@
 </main>
 
 <footer class="border-t border-white/[0.06] bg-birzont-black px-4 py-14 lg:px-8"><div class="mx-auto max-w-6xl"><div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between"><div class="space-y-4"><div class="flex items-center gap-2.5"><img src="https://birzont.github.io/BirzontArchive/res/birzont_black.png" alt="Birzont" width="120" height="32" class="site-logo-wordmark h-8 w-auto object-contain"/></div><p class="max-w-xs text-sm leading-relaxed text-white/40">AI 에이전트를 위한 팀 지식 동기화 레이어</p></div><nav class="flex flex-wrap gap-x-8 gap-y-3"><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#product">제품</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#checklist">문제 공감</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#use-cases">활용 사례</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#how-it-works">작동 방식</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#security">보안</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#beta-form">베타 신청</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="#pricing">요금제</a><a class="text-sm text-white/45 transition-colors hover:text-white/80" href="mailto:contact@birzont.com">팀 도입 문의하기</a></nav></div><div class="mt-12 border-t border-white/[0.06] pt-8"><p class="text-sm text-white/25">© 2026 Birzont Inc.</p></div></div></footer>
-<script src="js/submitDiagnosis.js?v=20260717-4" defer></script>
-<script src="js/landing.js?v=20260717-4" defer></script>
+<script src="js/submitDiagnosis.js?v=20260721-1" defer></script>
+<script src="js/landing.js?v=20260721-1" defer></script>
 </body>
 </html>

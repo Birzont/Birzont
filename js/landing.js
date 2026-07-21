@@ -13,11 +13,11 @@
   ];
 
   const ENGINE_STEPS = [
-    '문서 읽는 중',
+    '팀 지식 읽기',
     '핵심 맥락 추출',
-    '에이전트용 구조화',
-    'Markdown 생성',
-    '작업공간 반영',
+    '에이전트 지식 구조화',
+    '업무 규칙 및 도구 구성',
+    'AI 에이전트 생성',
   ];
 
   const header = document.querySelector('[data-header]');
@@ -109,21 +109,68 @@
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const engineStepEls = document.querySelectorAll('[data-engine-step]');
+    const agentCard = document.querySelector('[data-agent-card]');
+    const agentChecks = document.querySelectorAll('[data-agent-check]');
+    const buildSteps = document.querySelectorAll('[data-build-step]');
+    const statusLabel = document.querySelector('[data-agent-status-label]');
+    const statusMeta = document.querySelector('[data-agent-status-meta]');
+
+    const setAgentReady = (ready) => {
+      if (!agentCard) return;
+      agentCard.classList.toggle('is-ready', ready);
+      if (statusLabel) statusLabel.textContent = ready ? '생성 완료' : '생성 중';
+      if (statusMeta) statusMeta.textContent = ready ? '방금 업데이트됨' : '처리 중…';
+
+      if (!ready) {
+        agentChecks.forEach((el) => el.classList.remove('is-visible'));
+        return;
+      }
+
+      agentChecks.forEach((el, i) => {
+        window.setTimeout(() => {
+          if (agentCard.classList.contains('is-ready')) {
+            el.classList.add('is-visible');
+          }
+        }, i * 90);
+      });
+    };
+
+    const syncBuildFlow = (engineIndex) => {
+      // Map engine steps → build pills: 0-1 → first, 2 → second, 3 → third, 4 → fourth
+      const doneCount =
+        engineIndex >= 4 ? 4 : engineIndex >= 3 ? 3 : engineIndex >= 2 ? 2 : engineIndex >= 0 ? 1 : 0;
+      buildSteps.forEach((el, i) => {
+        el.classList.toggle('is-done', i < doneCount);
+        el.classList.toggle('is-active', i === doneCount - 1 || (doneCount === 4 && i === 3));
+      });
+    };
+
+    const applyEngineIndex = (engineIndex) => {
+      statusText.textContent = ENGINE_STEPS[engineIndex];
+      engineStepEls.forEach((el, i) => {
+        el.classList.toggle('is-active', i === engineIndex);
+        el.classList.toggle('is-done', i < engineIndex);
+      });
+      document.querySelectorAll('[data-pipeline-step]').forEach((el) => {
+        const step = Number(el.dataset.pipelineStep);
+        const active = engineIndex >= 4 ? 2 : engineIndex >= 1 ? 1 : 0;
+        el.classList.toggle('is-active', step === active);
+      });
+      syncBuildFlow(engineIndex);
+      setAgentReady(engineIndex === ENGINE_STEPS.length - 1);
+    };
 
     if (prefersReduced) {
       progressBar.style.width = '100%';
-      if (engineStepEls.length) {
-        engineStepEls.forEach((el, i) => {
-          el.classList.toggle('is-active', i === engineStepEls.length - 1);
-          el.classList.toggle('is-done', i < engineStepEls.length - 1);
-        });
-      }
+      applyEngineIndex(ENGINE_STEPS.length - 1);
+      agentChecks.forEach((el) => el.classList.add('is-visible'));
       return;
     }
 
     let engineIndex = 0;
     let width = 0;
     let lastTick = 0;
+    applyEngineIndex(0);
 
     const tick = (now) => {
       if (now - lastTick > 40) {
@@ -132,17 +179,7 @@
         if (width >= 100) {
           width = 0;
           engineIndex = (engineIndex + 1) % ENGINE_STEPS.length;
-          statusText.textContent = ENGINE_STEPS[engineIndex];
-          engineStepEls.forEach((el, i) => {
-            el.classList.toggle('is-active', i === engineIndex);
-            el.classList.toggle('is-done', i < engineIndex);
-          });
-          document.querySelectorAll('[data-pipeline-step]').forEach((el) => {
-            const step = Number(el.dataset.pipelineStep);
-            const active =
-              engineIndex >= 4 ? 2 : engineIndex >= 1 ? 1 : 0;
-            el.classList.toggle('is-active', step === active);
-          });
+          applyEngineIndex(engineIndex);
         }
         progressBar.style.width = `${width}%`;
       }
