@@ -1,0 +1,2932 @@
+// Global state
+const state = {
+  scrolled: false,
+  fadeTriggered: false,
+  activeCard: null,
+  videoPlaying: false,
+  blinking: true,
+  activeIndexes: new Set(),
+  isMobile: window.innerWidth <= 900,
+  mobileMenuOpen: false,
+  baseNumPixels: 150,
+  pixelElements: [],
+  activeYear: 2026,
+  hideTimeout: null,
+  activeAppCard: null
+};
+
+function tr(key, fallback) {
+  if (!window.LanguageProvider) return fallback;
+  const lang = window.LanguageProvider.getLang();
+  return window.LanguageProvider.t(lang, key) || fallback;
+}
+
+// Data
+const products = [
+  {
+    title: "Birzont",
+    description: "Supported by OpenAI, Claude, Grok and Gemini ",
+    defaultLogoSrc: "resources/products/birzontsticker.png",
+    bgColor: "https://i.pinimg.com/736x/37/5f/ff/375fff127fbc42ea2c95ad3118c779ba.jpg",
+    link: "https://google.com",
+    index: 0,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Prompistbg.png"
+  },
+  {
+    title: "Bloxer",
+    description: tr('ui.productDesc2', 'This app offers innovative services with an easy interface and practical features.'),
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    bgColor: "https://i.redd.it/vgr7nzhng0a51.jpg",
+    link: "https://google.com",
+    index: 1,
+    modalImage: "https://play.ht/blog/wp-content/uploads/2024/04/what-is-perplexity-ai.webp"
+  },
+  {
+    title: "Prompist",
+    description: tr('ui.productDesc3', 'Official app with the latest promotions and event updates.'),
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    bgColor: "https://i.pinimg.com/736x/72/08/4e/72084e6ead0494777077769b16d172cb.jpg",
+    link: "https://google.com",
+    index: 2,
+    modalImage: "https://images.indianexpress.com/2025/04/perplexity.jpg"
+  }
+];
+
+const topRowLogos = [
+  {
+    name: "Slack",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Slack_Technologies_Logo.svg/2560px-Slack_Technologies_Logo.svg.png",
+  },
+  {
+    name: "Google",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png",
+  },
+  {
+    name: "Facebook",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Facebook_logo_%282023%29.svg/2560px-Facebook_logo_%282023%29.svg.png",
+  },
+  {
+    name: "OpenAI",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/1280px-OpenAI_Logo.svg.png",
+  },
+  { name: "Amazon", src: "https://www.allaboutlean.com/wp-content/uploads/2019/10/Amazon-Logo.png" },
+  {
+    name: "Wrtn",
+    src: "https://wrtn.io/wp-content/themes/wrtn-edited/images/logo.svg",
+  },
+];
+
+const timelineEvents = [
+  {
+    year: 2026,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline1', 'Launched our first prototype.'),
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline2', 'Launched our first prototype.'),
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline3', 'Reached 100,000 users after launch with fast growth.'),
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline4', 'Accelerated expansion through strategic partnerships.'),
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2025,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline5', 'Improved UX with innovative AI features.'),
+    imageSrc: "https://img.freepik.com/free-photo/gyeongbokgung-palace_74190-3180.jpg?semt=ais_hybrid&w=740",
+  },
+  {
+    year: 2024,
+    title: "-",
+    subtitle: "-",
+    description: tr('ui.timeline6', 'Secured Series A and completed core AI algorithms.'),
+    imageSrc: "https://m.motemote.kr/file_data/motemote20160302/2022/10/12/61ef6bdb2d66b82aa4f992b11be460e6.jpg",
+  },
+];
+
+function getBlogPosts() {
+  return window.LanguageProvider
+    ? window.LanguageProvider.getBlogPosts(window.LanguageProvider.getLang())
+    : [];
+}
+
+const navCardContent = {
+  Company: {
+    title: tr('ui.navCompanyTitle', 'Company'),
+    items: [
+      { text: tr('ui.navAboutCompany', 'About Company'), href: "about.html#about" },
+      { text: tr('ui.navWhatWeDo', 'What we do'), href: "about.html#what-we-do" },
+      { text: tr('ui.navOurTeam', 'Our Team'), href: "about.html#team" },
+      { text: tr('ui.navTimeline', 'Timeline'), href: "about.html#timeline" }
+    ],
+    image: "https://birzont.github.io/BirzontArchive/res/CompassPen.png"
+  },
+  Product: {
+    title: tr('ui.navProductTitle', 'Product Lineup'),
+    items: [
+      { text: "Prompist", href: "#" },
+      { text: "Bloxer", href: "#" },
+      { text: "Jibung", href: "#" }
+    ],
+    image: "https://birzont.github.io/BirzontArchive/res/GatLamp.png"
+  },
+  Blog: {
+    title: tr('ui.navBlogTitle', 'Blog Categories'),
+    items: [
+      { text: tr('ui.navNewsroom', 'Newsroom'), href: "#" },
+      { text: "AGI", href: "#" },
+      { text: tr('ui.navEverything', 'Everything'), href: "#" },
+      { text: "Research", href: "#" }
+    ],
+    image: "https://birzont.github.io/BirzontArchive/res/CoffeeBook.png"
+  },
+  // Career: {
+  //   title: "채용 정보",
+  //   items: [
+  //     { text: "Careers", href: "#" },
+  //     { text: "Talent pool", href: "#" }
+  //     // { text: "Culture Fits", href: "#" }
+  //   ],
+  //   image: "https://birzont.github.io/BirzontArchive/res/TreeBuilding.png"
+  // },
+  
+};
+
+// Utility functions
+function updateMobileState() {
+  const wasMobile = state.isMobile;
+  state.isMobile = window.innerWidth <= 900;
+  
+  if (!wasMobile && state.isMobile) {
+    state.mobileMenuOpen = false;
+    updateMobileMenu();
+  }
+  
+  if (wasMobile && !state.isMobile) {
+    state.mobileMenuOpen = false;
+    updateMobileMenu();
+  }
+}
+
+function playHeroTitleWave(heroTitle) {
+  const title = heroTitle || document.querySelector('.hero-title.hero-wave-active');
+  if (!title) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  title.classList.remove('hero-wave-playing');
+  void title.offsetWidth;
+  title.classList.add('hero-wave-playing');
+
+  const charCount = title.querySelectorAll('.hero-wave-char').length;
+  const durationMs = 2600 + Math.max(0, charCount - 1) * 70;
+
+  if (title._heroWaveTimeout) clearTimeout(title._heroWaveTimeout);
+  title._heroWaveTimeout = setTimeout(() => {
+    title.classList.remove('hero-wave-playing');
+  }, durationMs);
+}
+
+function updateHeader() {
+  const header = document.getElementById('navbar');
+  const logoImg = document.getElementById('logo-img');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  
+  if (!header) return;
+
+  if (document.body.classList.contains('birzont-home')) {
+    const shouldBeScrolled = window.scrollY > 0 || (state.isMobile && state.mobileMenuOpen);
+    header.classList.toggle('navbar-scrolled', shouldBeScrolled);
+    header.classList.toggle('bg-transparent', !shouldBeScrolled);
+    header.classList.remove('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg', 'shadow-md', 'border-2', 'border-black');
+
+    if (logoImg) {
+      const theme = document.documentElement.getAttribute('data-theme') || 'light';
+      logoImg.src = theme === 'dark'
+        ? 'https://birzont.github.io/BirzontArchive/res/birzont_white.png'
+        : 'https://birzont.github.io/BirzontArchive/res/birzont_black.png';
+    }
+
+    state.scrolled = shouldBeScrolled;
+    state.blinking = !shouldBeScrolled;
+    return;
+  }
+  
+  const shouldBeScrolled = window.scrollY > 0 || (state.isMobile && state.mobileMenuOpen);
+  
+  if (shouldBeScrolled) {
+    header.classList.remove('bg-transparent');
+    if (state.isMobile) {
+      header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
+      if (logoImg) {
+        logoImg.src = state.mobileMenuOpen || state.scrolled ? 
+          "https://birzont.github.io/BirzontArchive/res/birzont_bicon.png" : 
+          "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      }
+      
+      // 햄버거 버튼 색상 변경
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('text-white');
+        mobileMenuBtn.classList.add('text-black');
+      }
+      if (menuIcon) {
+        menuIcon.classList.remove('text-white');
+        menuIcon.classList.add('text-black');
+      }
+      if (closeIcon) {
+        closeIcon.classList.remove('text-white');
+        closeIcon.classList.add('text-black');
+      }
+      // Log in 버튼 색상 변경 (모바일)
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-transparent', 'text-white', 'border-white');
+        startBtn.classList.add('bg-black', 'text-white', 'border-transparent');
+      }
+    } else {
+      header.classList.add('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_black.png";
+      
+      // Update start button when scrolled
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-transparent', 'text-white', 'border-white', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+        startBtn.classList.add('bg-black', 'text-white', 'border-transparent', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+      }
+    }
+    
+    // Update nav links and lang button
+    const navLinks = header.querySelectorAll('#desktop-nav a');
+    navLinks.forEach(link => {
+      link.classList.remove('text-white');
+      link.classList.add('text-gray-900');
+    });
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+      langBtn.classList.remove('text-white');
+      langBtn.classList.add('text-gray-900');
+    }
+    
+    state.scrolled = true;
+    state.blinking = false;
+  } else {
+    if (state.isMobile) {
+      header.classList.remove('backdrop-blur-md', 'bg-white', 'text-black', 'shadow-md');
+      header.classList.add('bg-transparent');
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_wicon.png";
+      
+      // 햄버거 버튼 색상 원래대로
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('text-black');
+        mobileMenuBtn.classList.add('text-white');
+      }
+      if (menuIcon) {
+        menuIcon.classList.remove('text-black');
+        menuIcon.classList.add('text-white');
+      }
+      if (closeIcon) {
+        closeIcon.classList.remove('text-black');
+        closeIcon.classList.add('text-white');
+      }
+      // Log in 버튼 색상 원래대로 (모바일, 스크롤 안함)
+      const startBtnMobile = document.getElementById('desktop-start-btn');
+      if (startBtnMobile) {
+        startBtnMobile.classList.remove('bg-black', 'border-transparent');
+        startBtnMobile.classList.add('bg-transparent', 'text-white', 'border-white');
+      }
+    } else {
+      header.classList.remove('border-2', 'border-black', 'backdrop-blur-md', 'bg-white', 'text-black', 'shadow-lg');
+      header.classList.add('bg-transparent');
+      if (logoImg) logoImg.src = "https://birzont.github.io/BirzontArchive/res/birzont_white.png";
+      
+      // Update start button when at top
+      const startBtn = document.getElementById('desktop-start-btn');
+      if (startBtn) {
+        startBtn.classList.remove('bg-black', 'text-white', 'border-transparent', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+        startBtn.classList.add('bg-transparent', 'text-white', 'border-white', 'hover:bg-white', 'hover:text-black', 'hover:border-black');
+      }
+    }
+    
+    // Update nav links and lang button
+    const navLinks = header.querySelectorAll('#desktop-nav a');
+    navLinks.forEach(link => {
+      link.classList.add('text-white');
+      link.classList.remove('text-gray-900');
+    });
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+      langBtn.classList.add('text-white');
+      langBtn.classList.remove('text-gray-900');
+    }
+    
+    state.scrolled = false;
+    state.blinking = true;
+  }
+}
+
+function updateMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  
+  if (!menu || !menuIcon || !closeIcon) return;
+  
+  if (state.mobileMenuOpen) {
+    menu.classList.remove('-translate-y-full', 'opacity-0');
+    menu.classList.add('translate-y-0', 'opacity-100');
+    menuIcon.style.display = 'none';
+    closeIcon.style.display = 'block';
+  } else {
+    menu.classList.remove('translate-y-0', 'opacity-100');
+    menu.classList.add('-translate-y-full', 'opacity-0');
+    menuIcon.style.display = 'block';
+    closeIcon.style.display = 'none';
+  }
+  
+  updateHeader();
+}
+
+function createPixels() {
+  const pixelsRef = document.getElementById('pixels-ref');
+  if (!pixelsRef) return;
+  
+  pixelsRef.innerHTML = '';
+  state.pixelElements = [];
+  
+  const fragment = document.createDocumentFragment();
+  
+  for (let i = 0; i < state.baseNumPixels; i++) {
+    const pixel = document.createElement('div');
+    pixel.classList.add('pixel');
+    pixel.style.top = `${Math.random() * 100}%`;
+    pixel.style.left = `${Math.random() * 100}%`;
+    pixel.style.backgroundColor = "#fff";
+    pixel.style.opacity = "0";
+    
+    if (i < 3) pixel.style.backgroundColor = "hotpink";
+    else if (i < 5) pixel.style.backgroundColor = "lime";
+    
+    fragment.appendChild(pixel);
+    state.pixelElements.push(pixel);
+  }
+  
+  pixelsRef.appendChild(fragment);
+}
+
+function blinkRandomPixels() {
+  if (!state.blinking || !state.pixelElements.length) return;
+  
+  const newLitIndexes = new Set();
+  const blinkCount = Math.min(30 + Math.floor(state.baseNumPixels / 20), state.baseNumPixels);
+  
+  while (newLitIndexes.size < blinkCount) {
+    const index = Math.floor(Math.random() * state.pixelElements.length);
+    newLitIndexes.add(index);
+  }
+  
+  state.activeIndexes = newLitIndexes;
+  
+  state.pixelElements.forEach((pixel, idx) => {
+    if (newLitIndexes.has(idx)) {
+      pixel.style.opacity = "0.8";
+      pixel.style.transform = "translateY(0)";
+    } else {
+      pixel.style.opacity = "0";
+    }
+  });
+}
+
+function createAppCard(product) {
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'w-full app-card-container';
+  
+  const card = document.createElement('div');
+  card.className = 'relative rounded-3xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group';
+  card.style.backgroundImage = `url(${product.bgColor})`;
+  card.style.backgroundSize = 'cover';
+  card.style.backgroundPosition = 'center';
+  
+  const cardContent = document.createElement('div');
+  const appCardBaseClasses = 'flex flex-col h-full animate-fadeIn p-4 sm:p-6 md:p-8 relative z-10';
+  cardContent.className = appCardBaseClasses;
+  cardContent.dataset.showDescription = 'false';
+  cardContent.dataset.baseClass = appCardBaseClasses;
+  
+  const logoContainer = document.createElement('div');
+  logoContainer.className = 'flex-grow flex items-center justify-center';
+  
+  const logoWrapper = document.createElement('div');
+  logoWrapper.className = 'relative rounded-xl flex items-center justify-center overflow-hidden transition-all duration-200 bg-transparent';
+  logoWrapper.style.width = state.isMobile ? '100%' : 'clamp(120px, 80%, 240px)';
+  logoWrapper.style.height = state.isMobile ? '100%' : 'clamp(120px, 80%, 240px)';
+  logoWrapper.style.maxWidth = '100%';
+  
+  const displayImageSrc = product.featureImage || product.defaultLogoSrc;
+  const logoImg = document.createElement('img');
+  logoImg.src = displayImageSrc;
+  logoImg.alt = product.title;
+  logoImg.className = 'object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert w-full h-auto';
+  logoImg.style.maxWidth = 'clamp(100px, 100%, 230px)';
+  logoImg.style.maxHeight = 'clamp(100px, 100%, 230px)';
+  
+  logoWrapper.appendChild(logoImg);
+  logoContainer.appendChild(logoWrapper);
+  cardContent.appendChild(logoContainer);
+  
+  const titleSection = document.createElement('div');
+  titleSection.className = 'hidden md:flex justify-between items-center mt-4';
+  
+  const title = document.createElement('h2');
+  title.className = 'font-bold text-black transition-colors duration-500 group-hover:text-white';
+  title.style.fontSize = 'clamp(1rem, 2vw, 1.875rem)';
+  title.textContent = product.title;
+  
+  const plusBtn = document.createElement('button');
+  plusBtn.className = 'bg-black text-white rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-500 group-hover:bg-white group-hover:text-black';
+  plusBtn.style.width = 'clamp(2rem, 3vw, 2.5rem)';
+  plusBtn.style.height = 'clamp(2rem, 3vw, 2.5rem)';
+  plusBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: clamp(0.875rem, 1.5vw, 1.25rem); height: clamp(0.875rem, 1.5vw, 1.25rem)">
+      <path d="M5 12h14"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+  
+  titleSection.appendChild(title);
+  titleSection.appendChild(plusBtn);
+  cardContent.appendChild(titleSection);
+  
+  card.appendChild(cardContent);
+  
+  const mobileTitle = document.createElement('h2');
+  mobileTitle.className = 'md:hidden text-black mt-3 font-bold';
+  mobileTitle.style.fontSize = 'clamp(1rem, 5vw, 1.25rem)';
+  mobileTitle.textContent = product.title;
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'absolute inset-0 bg-black opacity-0 transition-opacity duration-500 group-hover:opacity-30';
+  
+  card.appendChild(overlay);
+  
+  card.addEventListener('click', (e) => {
+    if (state.isMobile) {
+      showMobileModal(product);
+    } else {
+      toggleCardDescription(cardContent, product);
+    }
+  });
+  
+  cardContainer.appendChild(card);
+  cardContainer.appendChild(mobileTitle);
+  
+  return cardContainer;
+}
+
+function toggleCardDescription(cardContent, product) {
+  const showDescription = cardContent.dataset.showDescription === 'true';
+  const baseClasses = cardContent.dataset.baseClass || 'flex flex-col h-full animate-fadeIn p-4 sm:p-6 md:p-8 relative z-10';
+  const activeClasses = 'flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl';
+  
+  if (showDescription) {
+    // Hide description
+    cardContent.dataset.showDescription = 'false';
+    cardContent.innerHTML = '';
+    cardContent.className = baseClasses;
+    
+    // Recreate original content
+    const logoContainer = document.createElement('div');
+    logoContainer.className = 'flex-grow flex items-center justify-center';
+    
+    const logoWrapper = document.createElement('div');
+    logoWrapper.className = 'relative rounded-xl flex items-center justify-center overflow-hidden transition-all duration-200 bg-transparent';
+    logoWrapper.style.width = 'clamp(120px, 80%, 240px)';
+    logoWrapper.style.height = 'clamp(120px, 80%, 240px)';
+    logoWrapper.style.maxWidth = '100%';
+    
+    const logoImg = document.createElement('img');
+    logoImg.src = product.defaultLogoSrc;
+    logoImg.alt = product.title;
+    logoImg.className = 'object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert w-full h-auto';
+    logoImg.style.maxWidth = 'clamp(100px, 100%, 230px)';
+    logoImg.style.maxHeight = 'clamp(100px, 100%, 230px)';
+    
+    logoWrapper.appendChild(logoImg);
+    logoContainer.appendChild(logoWrapper);
+    cardContent.appendChild(logoContainer);
+    
+    const titleSection = document.createElement('div');
+    titleSection.className = 'hidden md:flex justify-between items-center mt-4';
+    
+    const title = document.createElement('h2');
+    title.className = 'font-bold text-black transition-colors duration-500 group-hover:text-white';
+    title.style.fontSize = 'clamp(1rem, 2vw, 1.875rem)';
+    title.textContent = product.title;
+    
+    const plusBtn = document.createElement('button');
+    plusBtn.className = 'bg-black text-white rounded-full flex items-center justify-center border-none cursor-pointer transition-all duration-500 group-hover:bg-white group-hover:text-black';
+    plusBtn.style.width = 'clamp(2rem, 3vw, 2.5rem)';
+    plusBtn.style.height = 'clamp(2rem, 3vw, 2.5rem)';
+    plusBtn.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: clamp(0.875rem, 1.5vw, 1.25rem); height: clamp(0.875rem, 1.5vw, 1.25rem)">
+        <path d="M5 12h14"></path>
+        <path d="M12 5v14"></path>
+      </svg>
+    `;
+    
+    titleSection.appendChild(title);
+    titleSection.appendChild(plusBtn);
+    cardContent.appendChild(titleSection);
+  } else {
+    // Show description - 먼저 기존 콘텐츠를 완전히 제거
+    cardContent.dataset.showDescription = 'true';
+    cardContent.innerHTML = ''; // 기존 로고, 텍스트, +버튼 제거
+    cardContent.className = activeClasses;
+    
+    const header = document.createElement('div');
+    header.className = 'flex items-center gap-3 mb-4';
+    
+    const iconWrapper = document.createElement('div');
+    iconWrapper.className = 'bg-white p-2 rounded-md flex items-center justify-center';
+    
+    const iconImg = document.createElement('img');
+    iconImg.src = product.defaultLogoSrc;
+    iconImg.alt = `${product.title} 아이콘`;
+    iconImg.width = 36;
+    iconImg.height = 36;
+    iconImg.className = 'object-contain';
+    
+    iconWrapper.appendChild(iconImg);
+    header.appendChild(iconWrapper);
+    
+    const title = document.createElement('h2');
+    title.className = 'font-bold transition-colors duration-500';
+    title.style.fontSize = 'clamp(1.5rem, 3vw, 1.875rem)';
+    title.textContent = product.title;
+    header.appendChild(title);
+    
+    cardContent.appendChild(header);
+    
+    const content = document.createElement('div');
+    content.className = 'flex flex-col';
+    
+    const description = document.createElement('p');
+    description.className = 'transition-colors duration-500 mb-2';
+    description.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    description.textContent = product.description;
+    content.appendChild(description);
+    
+    const link = document.createElement('a');
+    link.href = product.link;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'w-fit py-2 px-4 border border-white/70 text-white/80 rounded-xl no-underline transition-all duration-500 hover:bg-white hover:text-black hover:border-white flex items-center gap-2';
+    link.style.fontSize = 'clamp(0.875rem, 1.5vw, 1.125rem)';
+    link.innerHTML = `${tr('ui.quickLink', 'Go now')} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+    link.addEventListener('click', (e) => e.stopPropagation());
+    content.appendChild(link);
+    
+    cardContent.appendChild(content);
+    
+    const spacer = document.createElement('div');
+    spacer.className = 'flex-grow';
+    cardContent.appendChild(spacer);
+  }
+}
+
+function showMobileModal(product) {
+  // Remove existing modal if any
+  const existingModal = document.getElementById('app-card-modal');
+  if (existingModal) {
+    const existingContent = existingModal.querySelector('.modal-content');
+    if (existingContent) {
+      existingContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      existingContent.style.opacity = '0';
+      existingContent.style.transform = 'scale(0.95)';
+    }
+    setTimeout(() => {
+      existingModal.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  }
+  
+  const modal = document.createElement('div');
+  modal.id = 'app-card-modal';
+  modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm';
+  modal.style.opacity = '0';
+  modal.style.transition = 'opacity 0.3s ease';
+  
+  const modalContent = document.createElement('div');
+  modalContent.className = 'modal-content team-modal-content relative';
+  modalContent.style.opacity = '0';
+  modalContent.style.transform = 'scale(0.95)';
+  modalContent.addEventListener('click', (e) => e.stopPropagation());
+  
+  // Close on Escape key handler
+  let escapeHandler = null;
+  
+  // Close function - define before using it
+  const closeProductModal = () => {
+    const content = modal.querySelector('.modal-content');
+    if (content) {
+      content.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      content.style.opacity = '0';
+      content.style.transform = 'scale(0.95)';
+    }
+    modal.style.opacity = '0';
+    if (escapeHandler) {
+      document.removeEventListener('keydown', escapeHandler);
+      escapeHandler = null;
+    }
+    setTimeout(() => {
+      modal.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeProductModal();
+    }
+  });
+  
+  // Close on Escape key
+  escapeHandler = (e) => {
+    if (e.key === 'Escape' && document.getElementById('app-card-modal')) {
+      closeProductModal();
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
+  
+  const header = document.createElement('div');
+  header.className = 'flex justify-between items-center mb-4';
+  
+  const headerLeft = document.createElement('div');
+  headerLeft.className = 'flex items-center gap-2 bg-[#f5f3f0] rounded-xl p-2 px-3';
+  
+  const iconImg = document.createElement('img');
+  iconImg.src = product.defaultLogoSrc;
+  iconImg.alt = product.title;
+  iconImg.width = 40;
+  iconImg.height = 40;
+  iconImg.className = 'object-contain';
+  
+  const title = document.createElement('h2');
+  title.className = 'text-2xl font-bold text-black leading-tight';
+  title.style.fontSize = '28px';
+  title.textContent = product.title;
+  
+  headerLeft.appendChild(iconImg);
+  headerLeft.appendChild(title);
+  
+  header.appendChild(headerLeft);
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors';
+  closeBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-700">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  `;
+  closeBtn.addEventListener('click', closeProductModal);
+  
+  modalContent.appendChild(header);
+  modalContent.appendChild(closeBtn);
+  
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'relative w-full aspect-video mb-6 overflow-hidden rounded-xl';
+  
+  const image = document.createElement('img');
+  image.src = product.modalImage || product.defaultLogoSrc;
+  image.alt = `${product.title} 이미지`;
+  image.className = 'object-cover w-full h-full';
+  
+  imageContainer.appendChild(image);
+  modalContent.appendChild(imageContainer);
+  
+  const descriptionSection = document.createElement('div');
+  descriptionSection.className = 'mb-6';
+  
+  const descTitle = document.createElement('h3');
+  descTitle.className = 'text-lg font-medium mb-2 text-black';
+  descTitle.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionTitle') : null) || 'App description';
+  descriptionSection.appendChild(descTitle);
+  
+  const descText = document.createElement('p');
+  descText.className = 'text-gray-700 mb-4';
+  descText.textContent = product.description;
+  descriptionSection.appendChild(descText);
+  
+  const extraText1 = document.createElement('p');
+  extraText1.className = 'text-gray-700 mb-4';
+  extraText1.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionBody1') : null) || 'This app is designed around user experience with an intuitive interface and powerful features.';
+  descriptionSection.appendChild(extraText1);
+  
+  const extraText2 = document.createElement('p');
+  extraText2.className = 'text-gray-700';
+  extraText2.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appDescriptionBody2') : null) || 'Customize it to your workflow, and keep improving with continuous updates.';
+  descriptionSection.appendChild(extraText2);
+  
+  modalContent.appendChild(descriptionSection);
+  
+  const linkContainer = document.createElement('div');
+  linkContainer.className = 'flex justify-center';
+  
+  const link = document.createElement('a');
+  link.href = product.link;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.className = 'w-full bg-black text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-medium';
+  link.innerHTML = `${(window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.appOpenLink') : null) || 'Open app'} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+  link.addEventListener('click', (e) => e.stopPropagation());
+  
+  linkContainer.appendChild(link);
+  modalContent.appendChild(linkContainer);
+  
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+  
+  // Trigger animation
+  setTimeout(() => {
+    modal.style.opacity = '1';
+    setTimeout(() => {
+      modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      modalContent.style.opacity = '1';
+      modalContent.style.transform = 'scale(1)';
+    }, 10);
+  }, 10);
+}
+
+function renderProducts() {
+  const container = document.getElementById('products-grid');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  // Check if we're on about.html page - check if container has flex-col class (about.html uses flex-col, index.html uses grid)
+  const isAboutPage = container.classList.contains('flex') && container.classList.contains('flex-col');
+  
+  if (isAboutPage) {
+    // About page: Long horizontal cards with background images
+    products.forEach(product => {
+      const card = createAboutProductCard(product);
+      container.appendChild(card);
+    });
+  } else {
+    // Index page: Original square cards
+    products.forEach(product => {
+      const card = createAppCard(product);
+      container.appendChild(card);
+    });
+  }
+}
+
+function createAboutProductCard(product) {
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'w-full about-product-card-container';
+  
+  const card = document.createElement('div');
+  card.className = 'relative rounded-2xl cursor-pointer overflow-hidden transition-all duration-500 group about-product-card';
+  card.style.backgroundImage = `url(${product.bgColor})`;
+  card.style.backgroundSize = 'cover';
+  card.style.backgroundPosition = 'center';
+  card.style.height = '140px';
+  card.style.minHeight = '140px';
+  card.style.maxWidth = '1200px';
+  card.style.margin = '0 auto';
+  
+  // Dark overlay that appears on hover
+  const overlay = document.createElement('div');
+  overlay.className = 'absolute inset-0 bg-black opacity-20 transition-opacity duration-500 group-hover:opacity-60';
+  
+  // Content container
+  const content = document.createElement('div');
+  content.className = 'relative z-10 h-full flex items-center justify-between px-8 py-6';
+  
+  // Left side: Logo/Title
+  const leftContent = document.createElement('div');
+  leftContent.className = 'flex items-center gap-4';
+  
+  const logoImg = document.createElement('img');
+  logoImg.src = product.defaultLogoSrc;
+  logoImg.alt = product.title;
+  logoImg.className = 'w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert';
+  
+  const title = document.createElement('h3');
+  title.className = 'text-white text-2xl md:text-3xl font-medium';
+  title.textContent = product.title;
+  
+  leftContent.appendChild(logoImg);
+  leftContent.appendChild(title);
+  
+  // Right side: Plus icon
+  const plusIcon = document.createElement('div');
+  plusIcon.className = 'w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-500 group-hover:bg-white/30';
+  plusIcon.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"></path>
+      <path d="M12 5v14"></path>
+    </svg>
+  `;
+  
+  content.appendChild(leftContent);
+  content.appendChild(plusIcon);
+  
+  card.appendChild(overlay);
+  card.appendChild(content);
+  
+  // Click handler - show modal (keep existing modal functionality)
+  card.addEventListener('click', (e) => {
+    showMobileModal(product);
+  });
+  
+  cardContainer.appendChild(card);
+  return cardContainer;
+}
+
+function createProductFeatureCard(product) {
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'w-full app-card-container';
+  
+  const card = document.createElement('div');
+  card.className = 'product-feature-card relative rounded-2xl aspect-square cursor-pointer overflow-hidden transition-all duration-500 flex flex-col group shadow';
+  card.style.backgroundImage = `url(${product.bgColor})`;
+  card.style.backgroundSize = 'cover';
+  card.style.backgroundPosition = 'center';
+  
+  // 이미지 영역 - 전체 카드
+  const logoArea = document.createElement('div');
+  logoArea.className = 'absolute inset-0 overflow-hidden product-card-logo-area';
+  logoArea.style.display = 'flex';
+  logoArea.style.flexDirection = 'column';
+  
+  const displayImageSrc = product.featureImage || product.defaultLogoSrc;
+  const logoImg = document.createElement('img');
+  logoImg.src = displayImageSrc;
+  logoImg.alt = product.title;
+  logoImg.className = 'transition-all duration-500';
+  logoImg.style.width = '100%';
+  logoImg.style.height = '100%';
+  logoImg.style.objectFit = 'cover';
+  logoImg.style.display = 'block';
+  logoImg.style.flexGrow = '1';
+  
+  logoArea.appendChild(logoImg);
+  card.appendChild(logoArea);
+  
+  // 상단 제목 오버레이 (데스크톱용) / 모바일에서는 카드 아래로 이동
+  const titleOverlay = document.createElement('div');
+  titleOverlay.className = 'product-card-title-overlay product-card-title-wrap';
+  const title = document.createElement('h2');
+  title.className = 'font-bold text-black transition-colors duration-500 product-card-title';
+  title.textContent = product.title;
+  titleOverlay.appendChild(title);
+  
+  // 하단 한두줄 문장 (기본 표시)
+  let taglineOverlay = null;
+  if (product.tagline) {
+    taglineOverlay = document.createElement('div');
+    taglineOverlay.className = 'absolute bottom-0 left-0 right-0 flex justify-center items-center product-card-tagline-overlay';
+    const tagline = document.createElement('p');
+    tagline.className = 'product-card-tagline';
+    tagline.textContent = product.tagline;
+    taglineOverlay.appendChild(tagline);
+    card.appendChild(taglineOverlay);
+  }
+  
+  // 클릭 시 설명 표시를 위한 컨텐츠 영역 (숨김)
+  const cardContent = document.createElement('div');
+  cardContent.className = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl opacity-0 pointer-events-none transition-opacity duration-500';
+  cardContent.dataset.showDescription = 'false';
+  card.appendChild(cardContent);
+  
+  card.addEventListener('click', (e) => {
+    toggleProductFeatureCardDescription(cardContent, logoArea, null, taglineOverlay, product, titleOverlay);
+  });
+  
+  cardContainer.appendChild(card);
+  cardContainer.appendChild(titleOverlay);
+  
+  return cardContainer;
+}
+
+function toggleProductFeatureCardDescription(cardContent, logoArea, textArea, taglineOverlay, product, titleOverlay) {
+  const showDescription = cardContent.dataset.showDescription === 'true';
+  const baseClasses = 'absolute inset-0 flex flex-col h-full animate-fadeIn p-8 text-white relative z-10 backdrop-blur-md bg-black/70 rounded-3xl transition-opacity duration-500';
+  
+  if (showDescription) {
+    // Hide description
+    cardContent.dataset.showDescription = 'false';
+    cardContent.className = `${baseClasses} opacity-0 pointer-events-none`;
+    cardContent.style.opacity = '0';
+    cardContent.style.pointerEvents = 'none';
+    cardContent.innerHTML = '';
+    logoArea.style.opacity = '1';
+    if (textArea) textArea.style.opacity = '1';
+    if (taglineOverlay) taglineOverlay.style.opacity = '1';
+    if (titleOverlay) titleOverlay.style.opacity = '1';
+  } else {
+    // Show description only
+    cardContent.dataset.showDescription = 'true';
+    cardContent.innerHTML = '';
+    cardContent.className = baseClasses;
+    cardContent.style.opacity = '1';
+    cardContent.style.pointerEvents = 'auto';
+    
+    const description = document.createElement('p');
+    description.className = 'transition-colors duration-500 product-card-overlay-description';
+    description.textContent = product.description;
+    cardContent.appendChild(description);
+    
+    logoArea.style.opacity = '0';
+    if (textArea) textArea.style.opacity = '0';
+    if (taglineOverlay) taglineOverlay.style.opacity = '0';
+    if (titleOverlay) titleOverlay.style.opacity = '0';
+  }
+}
+
+function renderProductFeatures() {
+  const container = document.getElementById('product-features-grid');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  /**
+ * Birzont Product Feature Data
+ * 사업계획서의 기술적 경쟁력을 사용자 언어로 치환하여 구성
+ */
+const productFeatures = [
+  {
+    title: tr('ui.featureTitle1', '01. 연동'),
+    tagline: tr('ui.featureTagline1', 'Notion·폴더·Confluence 연결'),
+    description: tr('ui.featureDesc1', '팀 지식 저장소를 Birzont에 연결하세요. 30초면 시작할 수 있습니다.'),
+    logo: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    bgColor: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    link: "https://birzont.ai/pricing",
+    index: 0,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Prompist.png",
+    featureImage: "resources/uione.png"
+  },
+  {
+    title: tr('ui.featureTitle2', '02. 변환'),
+    tagline: tr('ui.featureTagline2', '문서 → .md 자동 변환'),
+    description: tr('ui.featureDesc2', '팀 문서를 에이전트가 읽기 좋은 마크다운으로 요약·구조화합니다. 이미지 포함 문서도 처리합니다.'),
+    logo: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    bgColor: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
+    link: "https://birzont.ai/features",
+    index: 1,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Bloxer.png",
+    featureImage: "resources/uicompass.png"
+  },
+  {
+    title: tr('ui.featureTitle3', '03. 동기화'),
+    tagline: tr('ui.featureTagline3', 'Your agent is up to date'),
+    description: tr('ui.featureDesc3', '에이전트 폴더에 자동 적용됩니다. 문서가 바뀌면 변경 사항이 실시간으로 반영됩니다.'),
+    logo: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    bgColor: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
+    link: "https://birzont.ai/marketplace",
+    index: 2,
+    modalImage: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    defaultLogoSrc: "https://birzont.github.io/BirzontArchive/res/Jibung.png",
+    featureImage: "resources/pencil.png"
+  }
+];
+  
+  productFeatures.forEach(feature => {
+    const card = createProductFeatureCard(feature);
+    container.appendChild(card);
+  });
+}
+
+function initDemoSocialCounts() {
+  const likeBtn = document.querySelector('.demo-like');
+  const shareBtn = document.querySelector('.demo-share');
+  const bookmarkBtn = document.querySelector('.demo-bookmark');
+  const likeCountEl = document.querySelector('.demo-like-count');
+  const shareCountEl = document.querySelector('.demo-share-count');
+  
+  if (!likeBtn || !shareBtn || !bookmarkBtn || !likeCountEl || !shareCountEl) return;
+  
+  const randomCount = () => Math.floor(Math.random() * 31);
+  
+  let likeCount = randomCount();
+  const shareCount = randomCount();
+  
+  likeCountEl.textContent = String(likeCount);
+  shareCountEl.textContent = String(shareCount);
+  
+  let liked = false;
+  likeBtn.addEventListener('click', () => {
+    if (liked) return;
+    liked = true;
+    likeCount += 1;
+    likeCountEl.textContent = String(likeCount);
+    likeBtn.classList.add('liked');
+  });
+  
+  let bookmarked = false;
+  bookmarkBtn.addEventListener('click', () => {
+    bookmarked = !bookmarked;
+    bookmarkBtn.classList.toggle('bookmarked', bookmarked);
+  });
+}
+
+/** 6개 중 1개를 랜덤 번들 카드로 교체 (#2596be 계열 그라데이션 랜덤) */
+function initRandomUserPromptBundle() {
+  const container = document.querySelector('.user-prompts-container');
+  if (!container) return;
+
+  const cards = container.querySelectorAll('.user-prompt-card');
+  if (!cards.length) return;
+
+  const idx = Math.floor(Math.random() * cards.length);
+  const card = cards[idx];
+
+  const gradientClass =
+    Math.random() < 0.5 ? 'user-prompt-bundle--g0' : 'user-prompt-bundle--g1';
+
+  const bundleTitles = [
+    tr('ui.bundleCardTitle1', 'Stock investing starter pack 🪴'),
+    tr('ui.bundleCardTitle2', 'AI writing bundle ✍️'),
+    tr('ui.bundleCardTitle3', 'Startup pitch full package 🚀'),
+    tr('ui.bundleCardTitle4', 'Data analysis intro set 📊'),
+    tr('ui.bundleCardTitle5', 'Content creator pack 🎬'),
+    tr('ui.bundleCardTitle6', 'Code review & refactor bundle 💻'),
+  ];
+  const title = bundleTitles[Math.floor(Math.random() * bundleTitles.length)];
+  const tokens = 60 + Math.floor(Math.random() * 55);
+
+  card.className = `user-prompt-card user-prompt-bundle ${gradientClass}`;
+  card.setAttribute('data-prompt-type', 'bundle');
+
+  card.innerHTML = `
+    <div class="user-prompt-bundle-top">
+      <div class="user-prompt-bundle-icons" aria-hidden="true">
+        <span class="user-prompt-bundle-icon-tile">
+          <img src="https://img.icons8.com/color/48/google-gemini.png" alt="" width="20" height="20">
+        </span>
+        <span class="user-prompt-bundle-icon-tile user-prompt-bundle-icon-tile--dark">
+          <img src="https://img.icons8.com/ios11/48/FFFFFF/claude-ai.png" alt="" width="18" height="18">
+        </span>
+        <span class="user-prompt-bundle-icon-tile">
+          <img src="https://img.icons8.com/color/48/chatgpt.png" alt="" width="20" height="20">
+        </span>
+      </div>
+      <button type="button" class="user-prompt-bundle-like-pill user-prompt-like" aria-label="Like">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="user-prompt-bundle-heart-svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="user-prompt-like-count">0</span>
+      </button>
+    </div>
+    <h4 class="user-prompt-bundle-title">${title}</h4>
+    <div class="user-prompt-bundle-bottom">
+      <span class="user-prompt-bundle-author">@birzont</span>
+      <div class="user-prompt-bundle-meta">
+        <span class="user-prompt-bundle-token" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <polygon points="12,3 20.2,7.5 20.2,16.5 12,21 3.8,16.5 3.8,7.5" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="user-prompt-bundle-token-count">${tokens}</span>
+      </div>
+    </div>
+  `;
+}
+
+function initUserPromptCards() {
+  const promptCards = document.querySelectorAll('.user-prompt-card');
+  
+  promptCards.forEach(card => {
+    const likeBtn = card.querySelector('.user-prompt-like');
+    const bookmarkBtn = card.querySelector('.user-prompt-bookmark');
+    const likeCountEl = card.querySelector('.user-prompt-like-count');
+    
+    if (!likeBtn || !likeCountEl) return;
+    
+    let liked = false;
+    let likeCount = parseInt(likeCountEl.textContent) || 0;
+    
+    likeBtn.addEventListener('click', () => {
+      liked = !liked;
+      if (liked) {
+        likeCount += 1;
+        likeBtn.classList.add('liked');
+      } else {
+        likeCount -= 1;
+        likeBtn.classList.remove('liked');
+      }
+      likeCountEl.textContent = String(likeCount);
+    });
+    
+    if (bookmarkBtn) {
+      let bookmarked = false;
+      bookmarkBtn.addEventListener('click', () => {
+        bookmarked = !bookmarked;
+        bookmarkBtn.classList.toggle('bookmarked', bookmarked);
+      });
+    }
+  });
+}
+
+function renderLogoSlider() {
+  const container = document.getElementById('logo-slider-container');
+  if (!container) return;
+  
+  const wrapper = document.createElement('div');
+  wrapper.className = 'bg-[#f8f6f0] rounded-3xl py-16 px-8 md:px-12';
+  
+  const header = document.createElement('div');
+  header.className = 'text-center mb-8';
+  
+  const label = document.createElement('p');
+  label.className = 'text-gray-600 font-medium mb-2';
+  label.textContent = tr('ui.integrationsLabel', 'INTEGRATIONS');
+  header.appendChild(label);
+  
+  const title = document.createElement('h2');
+  title.className = 'text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333]';
+  title.textContent = tr('ui.partnersTitle', 'Meet Our Partners');
+  header.appendChild(title);
+  
+  const description = document.createElement('p');
+  description.className = 'text-gray-600 max-w-2xl mx-auto text-center mb-12';
+  description.textContent = tr('ui.partnersDescription', 'We partner with global companies to build innovative AI solutions for the future.');
+  header.appendChild(description);
+  
+  wrapper.appendChild(header);
+  
+  const sliderWrapper = document.createElement('div');
+  sliderWrapper.className = 'overflow-hidden';
+  
+  const slider = document.createElement('div');
+  slider.className = 'flex whitespace-nowrap';
+  slider.style.animation = 'marquee 15s linear infinite';
+  slider.style.willChange = 'transform';
+  
+  // Create three sets for seamless loop
+  for (let set = 0; set < 3; set++) {
+    topRowLogos.forEach((logo, index) => {
+      const logoDiv = document.createElement('div');
+      logoDiv.className = `bg-white rounded-2xl ${state.isMobile ? 'px-6 py-4' : 'px-12 py-8'} flex items-center justify-center shadow-sm ${state.isMobile ? 'mx-1' : 'mx-5'} hover:shadow-md transition-all duration-300 hover:bg-[#0080ff] hover:text-white group`;
+      logoDiv.style.minWidth = state.isMobile ? '160px' : '216px';
+      logoDiv.style.height = state.isMobile ? '70px' : '96px';
+      
+      const img = document.createElement('img');
+      img.src = logo.src;
+      img.alt = logo.name;
+      img.className = `${state.isMobile ? 'h-8' : 'h-12'} object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert`;
+      
+      logoDiv.appendChild(img);
+      slider.appendChild(logoDiv);
+    });
+  }
+  
+  sliderWrapper.appendChild(slider);
+  wrapper.appendChild(sliderWrapper);
+  container.appendChild(wrapper);
+}
+
+function renderTimeline() {
+  const container = document.getElementById('timeline-container');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  // Check if we're on about.html page
+  const isAboutPage = window.location.pathname.includes('about.html') || 
+                      window.location.href.includes('about.html') ||
+                      document.querySelector('title')?.textContent.includes('About');
+  
+  if (isAboutPage) {
+    // About page: Vertical timeline with year tabs
+    renderAboutTimeline(container);
+  } else {
+    // Index page: Original timeline with image card
+    renderIndexTimeline(container);
+  }
+}
+
+function renderAboutTimeline(container) {
+  // Year tabs container (light rounded bar)
+  const yearTabsContainer = document.createElement('div');
+  yearTabsContainer.className = 'flex justify-center mb-12';
+  
+  const yearTabs = document.createElement('div');
+  yearTabs.className = 'inline-flex gap-0 rounded-2xl bg-gray-100 p-1';
+  
+  const uniqueYears = [...new Set(timelineEvents.map(e => e.year))].sort((a, b) => b - a);
+  
+  uniqueYears.forEach(year => {
+    const tab = document.createElement('button');
+    tab.className = `px-6 py-2 font-medium transition-all duration-300 timeline-year-tab rounded-xl ${
+      state.activeYear === year 
+        ? 'bg-white text-black shadow-sm' 
+        : 'text-gray-600 hover:text-gray-800'
+    }`;
+    tab.textContent = year;
+    
+    tab.addEventListener('click', () => {
+      state.activeYear = year;
+      renderTimeline();
+    });
+    yearTabs.appendChild(tab);
+  });
+  
+  yearTabsContainer.appendChild(yearTabs);
+  container.appendChild(yearTabsContainer);
+  
+  // Timeline wrapper
+  const timelineWrapper = document.createElement('div');
+  timelineWrapper.className = 'relative max-w-5xl mx-auto';
+  
+  // Timeline line (centered on all devices)
+  const timelineLine = document.createElement('div');
+  timelineLine.className = 'absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-300 -translate-x-1/2';
+  timelineLine.style.zIndex = '1';
+  
+  // Events for active year - sort by index (most recent first)
+  const activeYearEvents = timelineEvents.filter(e => e.year === state.activeYear).reverse();
+  
+  const eventsContainer = document.createElement('div');
+  eventsContainer.className = 'relative';
+  
+  activeYearEvents.forEach((event, index) => {
+    const isLeft = index % 2 === 0; // Alternate left and right
+    
+    const eventItem = document.createElement('div');
+    eventItem.className = 'relative pb-12 last:pb-0';
+    if (state.isMobile) {
+      eventItem.style.width = '45%';
+    } else {
+      eventItem.style.width = '48%';
+    }
+    eventItem.style[isLeft ? 'marginRight' : 'marginLeft'] = 'auto';
+    eventItem.style.position = 'relative';
+    eventItem.style.zIndex = '2';
+    
+    // Content
+    const content = document.createElement('div');
+    if (state.isMobile) {
+      content.className = isLeft ? 'text-right pr-2' : 'text-left pl-2';
+    } else {
+      content.className = isLeft ? 'text-right pr-4' : 'text-left pl-4';
+    }
+    
+    // Date (most recent first, so reverse the date number)
+    const date = document.createElement('div');
+    date.className = 'text-xl md:text-xl font-bold text-black mb-1';
+    const totalEvents = activeYearEvents.length;
+    const dateNumber = totalEvents - index;
+    date.textContent = `${event.year}.${String(dateNumber).padStart(2, '0')}`;
+    
+    // Description
+    const description = document.createElement('div');
+    description.className = 'text-gray-600 text-base md:text-base';
+    description.textContent = event.subtitle || event.description;
+    
+    content.appendChild(date);
+    content.appendChild(description);
+    
+    eventItem.appendChild(content);
+    eventsContainer.appendChild(eventItem);
+    
+    // Dot (positioned exactly on the timeline line at center)
+    const dot = document.createElement('div');
+    dot.className = 'absolute w-3 h-3 rounded-full bg-gray-600';
+    dot.style.left = '50%';
+    dot.style.transform = 'translateX(-50%)';
+    dot.style.top = `${index * 12}rem`; // Approximate position based on index
+    dot.style.zIndex = '3';
+    eventsContainer.appendChild(dot);
+  });
+  
+  // Update dot positions after rendering
+  setTimeout(() => {
+    const dots = eventsContainer.querySelectorAll('.absolute.w-3.h-3.rounded-full');
+    const items = eventsContainer.querySelectorAll('.relative.pb-12');
+    dots.forEach((dot, index) => {
+      if (items[index]) {
+        const itemTop = items[index].offsetTop;
+        // Position dot slightly below the top (align with date text middle)
+        dot.style.top = `${itemTop + 16}px`;
+        dot.style.transform = 'translate(-50%, -50%)';
+      }
+    });
+  }, 10);
+  
+  timelineWrapper.appendChild(timelineLine);
+  timelineWrapper.appendChild(eventsContainer);
+  container.appendChild(timelineWrapper);
+}
+
+function renderIndexTimeline(container) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'w-full py-12';
+  
+  const header = document.createElement('div');
+  header.className = 'flex flex-col md:flex-row w-full mb-12';
+  
+  const headerLeft = document.createElement('div');
+  headerLeft.className = 'w-full md:w-1/2 mb-8 md:mb-0';
+  
+  const title = document.createElement('h2');
+  title.className = 'text-4xl font-bold mb-4 text-[#333]';
+  title.textContent = tr('ui.companyTimelineTitle', 'Company Timeline');
+  headerLeft.appendChild(title);
+  
+  const headerRight = document.createElement('div');
+  headerRight.className = 'w-full md:w-1/2 flex items-center';
+  
+  const description = document.createElement('p');
+  description.className = 'text-gray-600 text-lg md:text-xl leading-relaxed';
+  description.textContent = tr('ui.timelineDescription', "Explore Birzont's milestones and growth journey.");
+  headerRight.appendChild(description);
+  
+  header.appendChild(headerLeft);
+  header.appendChild(headerRight);
+  wrapper.appendChild(header);
+  
+  const content = document.createElement('div');
+  content.className = 'flex flex-col md:flex-row gap-8 mt-12';
+  
+  // Image card
+  const activeEvent = timelineEvents.find(e => e.year === state.activeYear) || timelineEvents[0];
+  
+  const imageCard = document.createElement('div');
+  imageCard.id = 'timeline-image-card';
+  imageCard.className = 'w-full md:w-3/5 relative rounded-3xl overflow-hidden';
+  imageCard.style.minHeight = '500px';
+  imageCard.style.position = 'relative';
+  
+  const image = document.createElement('img');
+  image.src = activeEvent.imageSrc;
+  image.alt = `${activeEvent.year} - ${activeEvent.title}`;
+  image.className = 'object-cover transition-opacity duration-500 ease-in-out';
+  image.style.width = '100%';
+  image.style.height = '100%';
+  image.style.position = 'absolute';
+  image.style.top = '0';
+  image.style.left = '0';
+  image.style.objectFit = 'cover';
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-500 ease-in-out';
+  
+  const textOverlay = document.createElement('div');
+  textOverlay.className = 'absolute bottom-0 left-0 p-8 text-white';
+  textOverlay.style.zIndex = '10';
+  
+  const yearTitle = document.createElement('h2');
+  yearTitle.className = 'text-6xl font-bold mb-2';
+  yearTitle.textContent = activeEvent.year;
+  
+  const eventTitle = document.createElement('h3');
+  eventTitle.className = 'text-3xl font-bold mb-2';
+  eventTitle.textContent = activeEvent.title;
+  
+  const subtitle = document.createElement('p');
+  subtitle.className = 'text-xl mb-4';
+  subtitle.textContent = activeEvent.subtitle;
+  
+  const eventDescription = document.createElement('p');
+  eventDescription.className = 'text-lg';
+  eventDescription.textContent = activeEvent.description;
+  
+  textOverlay.appendChild(yearTitle);
+  textOverlay.appendChild(eventTitle);
+  textOverlay.appendChild(subtitle);
+  textOverlay.appendChild(eventDescription);
+  
+  imageCard.appendChild(image);
+  imageCard.appendChild(overlay);
+  imageCard.appendChild(textOverlay);
+  
+  // Timeline list
+  const timelineList = document.createElement('div');
+  timelineList.id = 'timeline-list';
+  timelineList.className = 'w-full md:w-2/5 bg-gray-50 rounded-3xl p-8 flex items-start h-auto';
+  
+  const timelineInner = document.createElement('div');
+  timelineInner.className = 'relative w-full';
+  
+  const timelineLine = document.createElement('div');
+  timelineLine.className = 'absolute left-4 top-0 bottom-0 w-1 bg-black';
+  timelineInner.appendChild(timelineLine);
+  
+  timelineEvents.forEach((event) => {
+    const eventItem = document.createElement('div');
+    eventItem.className = `relative pl-12 py-6 cursor-pointer transition-all duration-300 group ${state.activeYear === event.year ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`;
+    eventItem.addEventListener('click', () => {
+      state.activeYear = event.year;
+      renderTimeline();
+    });
+    
+    const dot = document.createElement('div');
+    dot.className = `absolute left-4 w-4 h-4 rounded-full -translate-x-1/2 transition-all duration-300 ${state.activeYear === event.year ? 'bg-[#146bf7] transform scale-125' : 'bg-black group-hover:bg-[#146bf7]'}`;
+    eventItem.appendChild(dot);
+    
+    const year = document.createElement('h3');
+    year.className = `text-5xl font-bold transition-all duration-300 ${state.activeYear === event.year ? 'text-[#146bf7] opacity-100' : 'text-black group-hover:text-[#146bf7] opacity-90'}`;
+    year.textContent = event.year;
+    eventItem.appendChild(year);
+    
+    timelineInner.appendChild(eventItem);
+  });
+  
+  timelineList.appendChild(timelineInner);
+  
+  content.appendChild(imageCard);
+  content.appendChild(timelineList);
+  wrapper.appendChild(content);
+  container.appendChild(wrapper);
+  
+  // Update card height based on timeline height
+  setTimeout(() => {
+    const timelineListEl = document.getElementById('timeline-list');
+    const imageCardEl = document.getElementById('timeline-image-card');
+    if (timelineListEl && imageCardEl) {
+      const timelineHeight = timelineListEl.offsetHeight;
+      imageCardEl.style.height = `${timelineHeight}px`;
+    }
+  }, 100);
+}
+
+function renderBlog() {
+  const container = document.getElementById('blog-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const header = document.createElement('div');
+  header.className = 'flex justify-between items-center mb-16 md:mb-16 blog-header';
+  
+  const title = document.createElement('h2');
+  title.className = 'text-4xl font-bold text-black';
+  title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'blog.title') : null) || 'Birzont\'s Diverse Stories';
+  
+  const moreLink = document.createElement('a');
+  moreLink.href = '#';
+  moreLink.className = 'px-5 py-2 border border-black rounded-lg text-black hover:bg-black hover:text-white transition-colors duration-300 font-medium md:block hidden';
+  moreLink.textContent = tr('ui.seeMore', 'See more');
+  
+  header.appendChild(title);
+  header.appendChild(moreLink);
+  
+  // Mobile: List view, Desktop: Grid view
+  const listContainer = document.createElement('div');
+  listContainer.className = 'blog-list-container md:hidden';
+  
+  const grid = document.createElement('div');
+  grid.className = 'hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 blog-grid';
+  
+  getBlogPosts().forEach((post, index) => {
+    // Mobile: List item
+    const listItem = document.createElement('a');
+    listItem.href = post.url;
+    listItem.target = '_blank';
+    listItem.rel = 'noopener noreferrer';
+    listItem.className = 'block blog-list-item';
+    
+    const listContent = document.createElement('div');
+    listContent.className = 'py-4 border-b border-gray-200';
+    
+    const listTitle = document.createElement('h3');
+    listTitle.className = 'text-lg font-medium text-black mb-2';
+    listTitle.textContent = post.title;
+    
+    const listDate = document.createElement('p');
+    listDate.className = 'text-gray-500 text-sm';
+    listDate.textContent = post.date;
+    
+    listContent.appendChild(listTitle);
+    listContent.appendChild(listDate);
+    listItem.appendChild(listContent);
+    listContainer.appendChild(listItem);
+    
+    // Desktop: Card with image
+    const postLink = document.createElement('a');
+    postLink.href = post.url;
+    postLink.target = '_blank';
+    postLink.rel = 'noopener noreferrer';
+    postLink.className = 'group';
+    
+    const card = document.createElement('div');
+    card.className = 'transition-all duration-300 transform hover:-translate-y-2';
+    
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'relative aspect-video w-full overflow-hidden rounded-xl';
+    
+    const image = document.createElement('img');
+    image.src = post.imageSrc;
+    image.alt = post.title;
+    image.className = 'object-cover transition-transform duration-500 group-hover:scale-105';
+    image.style.width = '100%';
+    image.style.height = '100%';
+    image.style.position = 'absolute';
+    image.style.top = '0';
+    image.style.left = '0';
+    image.style.objectFit = 'cover';
+    
+    imageContainer.appendChild(image);
+    
+    const content = document.createElement('div');
+    content.className = 'mt-6 px-2';
+    
+    const postTitle = document.createElement('h3');
+    postTitle.className = 'text-xl font-medium mb-3 line-clamp-2 text-black group-hover:text-[#664938] transition-colors duration-300';
+    postTitle.textContent = post.title;
+    
+    const postDate = document.createElement('p');
+    postDate.className = 'text-gray-500 text-sm';
+    postDate.textContent = post.date;
+    
+    content.appendChild(postTitle);
+    content.appendChild(postDate);
+    
+    card.appendChild(imageContainer);
+    card.appendChild(content);
+    postLink.appendChild(card);
+    grid.appendChild(postLink);
+  });
+  
+  container.appendChild(header);
+  container.appendChild(listContainer);
+  container.appendChild(grid);
+}
+
+function renderBlogPage() {
+  const container = document.getElementById('blog-container');
+  if (!container) return;
+  
+  // Clear container
+  container.innerHTML = '';
+  
+  // Grid view for all devices
+  const grid = document.createElement('div');
+  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 blog-grid';
+  
+  getBlogPosts().forEach((post, index) => {
+    // Card with image
+    const postLink = document.createElement('a');
+    postLink.href = post.url;
+    postLink.target = '_blank';
+    postLink.rel = 'noopener noreferrer';
+    postLink.className = 'group';
+    
+    const card = document.createElement('div');
+    card.className = 'transition-all duration-300 transform hover:-translate-y-2';
+    
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'relative aspect-video w-full overflow-hidden rounded-xl';
+    
+    const image = document.createElement('img');
+    image.src = post.imageSrc;
+    image.alt = post.title;
+    image.className = 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105';
+    
+    imageContainer.appendChild(image);
+    
+    const content = document.createElement('div');
+    content.className = 'mt-4 md:mt-6 px-1 md:px-2';
+    
+    const postTitle = document.createElement('h3');
+    postTitle.className = 'text-2xl md:text-xl font-medium mb-2 md:mb-3 line-clamp-2 text-black group-hover:text-[#664938] transition-colors duration-300';
+    postTitle.textContent = post.title;
+    
+    const postDate = document.createElement('p');
+    postDate.className = 'text-gray-500 text-lg md:text-sm';
+    postDate.textContent = post.date;
+    
+    content.appendChild(postTitle);
+    content.appendChild(postDate);
+    
+    card.appendChild(imageContainer);
+    card.appendChild(content);
+    postLink.appendChild(card);
+    grid.appendChild(postLink);
+  });
+  
+  container.appendChild(grid);
+}
+
+function renderCareers() {
+  const container = document.getElementById('careers-container');
+  if (!container) return;
+  
+  const wrapper = document.createElement('div');
+  wrapper.className = 'rounded-3xl py-24 px-8 md:px-12 text-center relative overflow-hidden careers-section';
+  wrapper.style.backgroundImage = 'url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?cs=srgb&dl=pexels-eberhardgross-1421903.jpg&fm=jpg)';
+  wrapper.style.backgroundSize = 'cover';
+  wrapper.style.backgroundPosition = 'center';
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'absolute inset-0 bg-black opacity-35';
+  
+  const content = document.createElement('div');
+  content.className = 'relative z-10 flex flex-col items-center justify-center min-h-[200px] careers-content';
+  
+  const title = document.createElement('h2');
+  title.className = 'text-4xl font-bold mb-6 text-white careers-title';
+  title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersTitle') : null) || 'Looking for where to join?';
+  
+  const text1 = document.createElement('p');
+  text1.className = 'text-white/80 mb-2 careers-text';
+  text1.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersText1') : null) || 'Build your ideas at Birzont.';
+  
+  const text2 = document.createElement('p');
+  text2.className = 'text-white/80 mb-10 careers-text';
+  text2.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersText2') : null) || 'We are waiting for great talents like you.';
+  
+  const linkContainer = document.createElement('div');
+  linkContainer.className = 'flex justify-center';
+  
+  const link = document.createElement('a');
+  link.href = 'career.html';
+  link.className = 'inline-block border border-white/70 text-white hover:bg-white hover:text-black transition-all duration-300 rounded-lg py-3 px-8 font-medium careers-button';
+  link.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersCta') : null) || 'View job openings';
+  
+  linkContainer.appendChild(link);
+  
+  content.appendChild(title);
+  content.appendChild(text1);
+  content.appendChild(text2);
+  content.appendChild(linkContainer);
+  
+  wrapper.appendChild(overlay);
+  wrapper.appendChild(content);
+  container.appendChild(wrapper);
+}
+
+const careerJobs = [
+  {
+    id: 1,
+    category: 'ENGINEERING',
+    title: '[Talent Pool Registration] Founding Engineer',
+    type: 'Remote',
+    location: 'Flushing, NY',
+    workType: 'On-site',
+    salary: '$250k-$350k (after seed)',
+    equity: '0.25%-0.5%',
+    flagEmoji: '🇺🇸',
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
+  },
+  {
+    id: 2,
+    category: 'ENGINEERING',
+    title: tr('ui.job2Title', '[Talent Pool Registration] Product Manager'),
+    type: 'Full time',
+    location: tr('ui.job2Location', 'Kyung Hee Startup Campus, Seoul'),
+    workType: 'Hybrid',
+    salary: tr('ui.job2Salary', 'KRW 50k-100k'),
+    equity: '0.2%',
+    flagEmoji: '🇰🇷',
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
+  },
+  {
+    id: 3,
+    category: 'ENGINEERING',
+    title: tr('ui.job3Title', '[Talent Pool Registration] Marketing Lead'),
+    type: 'Full time',
+    location: tr('ui.job3Location', 'Kyung Hee Startup Campus, Seoul'),
+    workType: 'Hybrid',
+    salary: tr('ui.job3Salary', 'KRW 50k-100k'),
+    equity: '0.2%',
+    flagEmoji: '🇰🇷',
+    applyUrl: 'https://www.linkedin.com/company/birzont/'
+  }
+];
+
+function renderCareerListings() {
+  const container = document.getElementById('career-listings-container');
+  if (!container) return;
+  
+  // Clear container
+  container.innerHTML = '';
+  
+  // Group jobs by category
+  const jobsByCategory = {};
+  careerJobs.forEach(job => {
+    if (!jobsByCategory[job.category]) {
+      jobsByCategory[job.category] = [];
+    }
+    jobsByCategory[job.category].push(job);
+  });
+  
+  // Render each category
+  Object.keys(jobsByCategory).forEach((category, categoryIndex) => {
+    // Divider before category (except first)
+    if (categoryIndex > 0) {
+      const divider = document.createElement('hr');
+      divider.className = 'border-gray-200 my-8 md:my-12';
+      container.appendChild(divider);
+    }
+    
+    // Category header
+    const categoryHeader = document.createElement('div');
+    categoryHeader.className = 'mb-6 md:mb-8';
+    const categoryText = document.createElement('p');
+    categoryText.className = 'text-gray-400 text-xs md:text-sm font-medium uppercase tracking-wider';
+    categoryText.textContent = category;
+    categoryHeader.appendChild(categoryText);
+    container.appendChild(categoryHeader);
+    
+    // Divider after category header
+    const divider = document.createElement('hr');
+    divider.className = 'border-gray-200 mb-6 md:mb-8';
+    container.appendChild(divider);
+    
+    // Jobs in this category
+    jobsByCategory[category].forEach(job => {
+      const jobCard = document.createElement('div');
+      jobCard.className = 'border-b border-gray-200 pb-6 md:pb-8 mb-6 md:mb-8';
+      
+      // Job header (title with type tag on the right)
+      const jobHeader = document.createElement('div');
+      jobHeader.className = 'flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2';
+      
+      const titleContainer = document.createElement('div');
+      titleContainer.className = 'flex items-center gap-3 flex-wrap';
+      
+      const title = document.createElement('h3');
+      title.className = 'text-xl md:text-2xl font-bold text-black';
+      title.textContent = job.title;
+      
+      const typeTag = document.createElement('span');
+      typeTag.className = 'inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium';
+      typeTag.textContent = job.type;
+      
+      titleContainer.appendChild(title);
+      titleContainer.appendChild(typeTag);
+      
+      jobHeader.appendChild(titleContainer);
+      
+      // Details section with location, compensation, and apply button
+      const detailsSection = document.createElement('div');
+      detailsSection.className = 'flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2';
+      
+      // Left side: location and compensation
+      const leftDetails = document.createElement('div');
+      leftDetails.className = 'flex flex-col gap-2';
+      
+      // Job details (location and work type)
+      const jobDetails = document.createElement('div');
+      jobDetails.className = 'flex flex-wrap items-center gap-2 text-gray-600 text-base md:text-lg';
+      
+      const locationContainer = document.createElement('div');
+      locationContainer.className = 'flex items-center gap-2';
+      
+      // Flag icon
+      const flagIcon = document.createElement('span');
+      flagIcon.className = 'text-base';
+      flagIcon.innerHTML = job.flagEmoji || '🇺🇸';
+      
+      const location = document.createElement('span');
+      location.textContent = job.location;
+      
+      locationContainer.appendChild(flagIcon);
+      locationContainer.appendChild(location);
+      
+      const dot1 = document.createElement('span');
+      dot1.className = 'text-gray-400';
+      dot1.textContent = '•';
+      
+      const workType = document.createElement('span');
+      workType.textContent = job.workType;
+      
+      jobDetails.appendChild(locationContainer);
+      jobDetails.appendChild(dot1);
+      jobDetails.appendChild(workType);
+      
+      // Compensation
+      const compensation = document.createElement('div');
+      compensation.className = 'flex items-center gap-2 text-gray-600 text-base md:text-lg';
+      
+      const salary = document.createElement('span');
+      salary.textContent = job.salary;
+      
+      const dot2 = document.createElement('span');
+      dot2.className = 'text-gray-400';
+      dot2.textContent = '•';
+      
+      const equity = document.createElement('span');
+      equity.textContent = job.equity;
+      
+      compensation.appendChild(salary);
+      compensation.appendChild(dot2);
+      compensation.appendChild(equity);
+      
+      leftDetails.appendChild(jobDetails);
+      leftDetails.appendChild(compensation);
+      
+      // Apply button (right aligned, vertically centered with location info)
+      const applyButton = document.createElement('a');
+      applyButton.href = job.applyUrl;
+      applyButton.className = 'inline-flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-300 text-sm md:text-base md:-mt-2';
+      applyButton.textContent = 'Apply now';
+      
+      detailsSection.appendChild(leftDetails);
+      detailsSection.appendChild(applyButton);
+      
+      jobCard.appendChild(jobHeader);
+      jobCard.appendChild(detailsSection);
+      
+      container.appendChild(jobCard);
+    });
+  });
+}
+
+function handleNavHover(item, index) {
+  if (state.isMobile) return;
+  // Blog 메뉴는 hover 카드 비활성화 요청으로 표시하지 않음.
+  // if (item === 'Blog') return;
+  if (item === 'Blog') return;
+  
+  clearTimeout(state.hideTimeout);
+  
+  const navCard = document.getElementById('nav-card');
+  const navCardContentEl = document.getElementById('nav-card-content');
+  const navCardImage = document.getElementById('nav-card-image');
+  const header = document.getElementById('navbar');
+  
+  if (!navCard || !navCardContentEl || !navCardImage || !header) return;
+  
+  const content = navCardContent[item];
+  if (!content) return;
+  
+  const headerRect = header.getBoundingClientRect();
+  const cardWidth = 480;
+  
+  // Get start button position
+  const startBtn = document.getElementById('desktop-start-btn');
+  const startBtnRect = startBtn ? startBtn.getBoundingClientRect() : null;
+  const startBtnRight = startBtnRect ? startBtnRect.right + window.scrollX : window.innerWidth;
+  
+  const navItem = document.querySelector(`[data-item="${item}"]`);
+  if (!navItem) return;
+  
+  const rect = navItem.getBoundingClientRect();
+  let left = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
+  
+  if (item === "Careers") {
+    // Career: 카드의 오른쪽 가장자리가 시작하기 버튼의 오른쪽 가장자리를 넘지 않도록
+    const calculatedLeft = rect.left + window.scrollX + rect.width / 2 - cardWidth / 2;
+    const cardRight = calculatedLeft + cardWidth;
+    if (cardRight > startBtnRight - 16) {
+      left = startBtnRight - cardWidth - 16;
+    } else {
+      left = calculatedLeft;
+    }
+  }
+  
+  left = Math.max(16, Math.min(left, window.innerWidth - cardWidth - 16));
+  
+  navCard.style.top = `${headerRect.bottom + 5}px`;
+  navCard.style.left = `${left}px`;
+  
+  state.activeCard = item;
+  updateNavCard();
+}
+
+function handleNavLeave() {
+  state.hideTimeout = setTimeout(() => {
+    state.activeCard = null;
+    updateNavCard();
+  }, 200);
+}
+
+function handleCardEnter() {
+  clearTimeout(state.hideTimeout);
+}
+
+function handleCardLeave() {
+  state.activeCard = null;
+  updateNavCard();
+}
+
+function updateNavCard() {
+  const navCard = document.getElementById('nav-card');
+  const navCardContentEl = document.getElementById('nav-card-content');
+  const navCardImage = document.getElementById('nav-card-image');
+  
+  if (!navCard || !navCardContentEl || !navCardImage) return;
+  
+  if (state.activeCard && navCardContent[state.activeCard]) {
+    const content = navCardContent[state.activeCard];
+    
+    navCardContentEl.innerHTML = `
+      <h3 class="font-bold text-lg mb-4">${content.title}</h3>
+      <ul class="space-y-2">
+        ${content.items.map(item => `
+          <li>
+            <a href="${item.href}" class="text-gray-700 hover:text-black transition-colors">${item.text}</a>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+    
+    navCardImage.innerHTML = `
+      <div class="w-full aspect-square relative rounded-xl overflow-hidden">
+        <img src="${content.image}" alt="${state.activeCard}" class="object-cover w-full h-full">
+      </div>
+    `;
+    
+    navCard.classList.add('show');
+  } else {
+    navCard.classList.remove('show');
+  }
+}
+
+// Product Carousel State
+const productCarouselState = {
+  currentSlide: 0,
+  totalSlides: 4
+};
+
+function initProductCarousel() {
+  const tablist = document.querySelector('.product-tablist');
+  const tabs = document.querySelectorAll('.product-tablist .product-tab');
+  const indicators = document.querySelectorAll('.product-indicator');
+  const slides = document.querySelectorAll('.product-slide');
+  const mobileCarouselImgs = document.querySelectorAll('.mobile-carousel-img');
+  const prevBtn = document.getElementById('product-carousel-prev');
+  const nextBtn = document.getElementById('product-carousel-next');
+  const productCard = document.querySelector('.product-card-large');
+  let productAutoInterval = null;
+  let hoverPause = false;
+  const PRODUCT_AUTO_MS = 2800;
+
+  function stopProductAutoSlide() {
+    if (productAutoInterval) {
+      clearInterval(productAutoInterval);
+      productAutoInterval = null;
+    }
+  }
+
+  function startProductAutoSlide() {
+    if (hoverPause) return;
+    stopProductAutoSlide();
+    productAutoInterval = setInterval(() => {
+      const next = (productCarouselState.currentSlide + 1) % productCarouselState.totalSlides;
+      goToSlide(next, { fromAuto: true });
+    }, PRODUCT_AUTO_MS);
+  }
+
+  function restartProductAutoSlide() {
+    stopProductAutoSlide();
+    startProductAutoSlide();
+  }
+  
+  function goToSlide(index, options = {}) {
+    const { fromAuto = false, fromHover = false } = options;
+    if (index < 0 || index >= productCarouselState.totalSlides) return;
+    if (index === productCarouselState.currentSlide && !fromAuto) return;
+    
+    productCarouselState.currentSlide = index;
+
+    if (tablist) {
+      tablist.classList.add('is-animating');
+      window.setTimeout(() => tablist.classList.remove('is-animating'), 560);
+    }
+
+    if (!fromAuto && !fromHover) {
+      restartProductAutoSlide();
+    }
+    
+    // Update tabs
+    tabs.forEach((tab, i) => {
+      const content = tab.querySelector('.product-tab-content');
+      if (i === index) {
+        tab.classList.add('product-tab-active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        if (content) {
+          content.classList.add('product-tab-content-visible');
+        }
+      } else {
+        tab.classList.remove('product-tab-active');
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+        if (content) {
+          content.classList.remove('product-tab-content-visible');
+        }
+      }
+    });
+    
+    // Update indicators
+    indicators.forEach((indicator, i) => {
+      if (i === index) {
+        indicator.classList.add('product-indicator-active');
+        indicator.setAttribute('aria-selected', 'true');
+      } else {
+        indicator.classList.remove('product-indicator-active');
+        indicator.setAttribute('aria-selected', 'false');
+      }
+    });
+    
+    // Update slides (desktop) — opacity crossfade only
+    slides.forEach((slide, i) => {
+      slide.removeAttribute('hidden');
+      if (i === index) {
+        slide.classList.add('product-slide-active');
+        slide.removeAttribute('hidden');
+        slide.setAttribute('aria-hidden', 'false');
+      } else {
+        slide.classList.remove('product-slide-active');
+        slide.setAttribute('aria-hidden', 'true');
+      }
+    });
+    
+    // Update mobile carousel images
+    mobileCarouselImgs.forEach((img, i) => {
+      if (i === index) {
+        img.classList.add('mobile-carousel-img-active');
+      } else {
+        img.classList.remove('mobile-carousel-img-active');
+      }
+    });
+    
+    // Update control buttons
+    if (prevBtn) {
+      prevBtn.style.display = index === 0 ? 'none' : 'flex';
+    }
+    if (nextBtn) {
+      nextBtn.style.display = index === productCarouselState.totalSlides - 1 ? 'none' : 'flex';
+    }
+  }
+  
+  // Hover + click handlers
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('mouseenter', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
+    });
+    tab.addEventListener('focus', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
+    });
+    tab.addEventListener('click', () => {
+      goToSlide(index);
+    });
+  });
+
+  if (tablist) {
+    tablist.addEventListener('mouseleave', () => {
+      hoverPause = false;
+      startProductAutoSlide();
+    });
+  }
+  
+  // Indicator click handlers
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      goToSlide(index);
+    });
+    indicator.addEventListener('mouseenter', () => {
+      hoverPause = true;
+      stopProductAutoSlide();
+      goToSlide(index, { fromHover: true });
+    });
+  });
+  
+  // Previous/Next button handlers
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      goToSlide(productCarouselState.currentSlide - 1);
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      goToSlide(productCarouselState.currentSlide + 1);
+    });
+  }
+  
+  // Initialize first slide
+  goToSlide(0, { fromAuto: true });
+  startProductAutoSlide();
+
+  if (productCard) {
+    productCard.addEventListener('mouseleave', () => {
+      hoverPause = false;
+      startProductAutoSlide();
+    });
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopProductAutoSlide();
+    else startProductAutoSlide();
+  });
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  /** @type {{ startAutoSlide: () => void, stopAutoSlide: () => void }[]} */
+  const promptCarouselControls = [];
+
+  window.updateHeader = updateHeader;
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+      state.mobileMenuOpen = !state.mobileMenuOpen;
+      updateMobileMenu();
+    });
+  }
+  
+  // Scroll handler
+  window.addEventListener('scroll', () => {
+    updateHeader();
+    
+    // Fade in section
+    if (!state.fadeTriggered) {
+      const fadeInSection = document.getElementById('fade-in-section');
+      if (fadeInSection) {
+        const rect = fadeInSection.getBoundingClientRect();
+        if (window.scrollY > rect.top - window.innerHeight + 100) {
+          state.fadeTriggered = true;
+          fadeInSection.classList.remove('opacity-0', 'translate-y-[30px]');
+          fadeInSection.classList.add('opacity-100', 'translate-y-0');
+        }
+      }
+    }
+  });
+  
+  // Resize handler
+  window.addEventListener('resize', () => {
+    const wasMobile = state.isMobile;
+    updateMobileState();
+    updateHeader();
+    promptCarouselControls.forEach(({ startAutoSlide, stopAutoSlide }) => {
+      if (state.isMobile && !wasMobile) {
+        startAutoSlide();
+      } else if (!state.isMobile && wasMobile) {
+        stopAutoSlide();
+      }
+    });
+  });
+  
+  // Video play button
+  const playVideoBtn = document.getElementById('play-video-btn');
+  const videoThumbnail = document.getElementById('video-thumbnail');
+  const videoPlayerContainer = document.getElementById('video-player-container');
+  const videoIframe = document.getElementById('video-iframe');
+  
+  if (playVideoBtn && videoThumbnail && videoPlayerContainer && videoIframe) {
+    playVideoBtn.addEventListener('click', () => {
+      state.videoPlaying = true;
+      videoThumbnail.style.display = 'none';
+      playVideoBtn.style.display = 'none';
+      videoPlayerContainer.style.display = 'block';
+      videoIframe.src = (window.LanguageProvider ? window.LanguageProvider.getVideo(window.LanguageProvider.getLang(), 'aboutUrl') : 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1') || 'https://www.youtube.com/embed/FUq5d7dqlVY?autoplay=1';
+    });
+  }
+  
+  // Nav hover handlers
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach((item, index) => {
+    const itemName = item.dataset.item;
+    if (itemName) {
+      item.addEventListener('mouseenter', () => handleNavHover(itemName, index));
+      item.addEventListener('mouseleave', handleNavLeave);
+    }
+  });
+  
+  const navCard = document.getElementById('nav-card');
+  if (navCard) {
+    navCard.addEventListener('mouseenter', handleCardEnter);
+    navCard.addEventListener('mouseleave', handleCardLeave);
+  }
+  
+  const initBlurFadeOnce = () => {
+    const targets = document.querySelectorAll('.blur-fade-once');
+    if (!targets.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(target => target.classList.add('blur-fade-once-visible'));
+      playHeroTitleWave(document.querySelector('.hero-title.hero-wave-active'));
+      return;
+    }
+
+    // Hero 섹션 요소들을 순차적으로 나타나게 하는 함수
+    const initHeroSequence = () => {
+      const heroTitle = document.querySelector('.hero-title');
+      if (!heroTitle) return;
+
+      const revealHeroTitle = () => {
+        if (!heroTitle.classList.contains('blur-fade-once-visible')) {
+          heroTitle.classList.add('blur-fade-once-visible');
+          playHeroTitleWave(heroTitle);
+        }
+      };
+
+      heroTitle.addEventListener('mouseenter', () => playHeroTitleWave(heroTitle));
+      
+      const heroSection = heroTitle.closest('section');
+      if (!heroSection) return;
+      
+      // Hero 섹션의 순서가 있는 요소들
+      const heroElements = [
+        heroTitle,
+        heroSection.querySelector('p.blur-fade-once[data-hero-order="2"]'),
+        heroSection.querySelector('button.blur-fade-once[data-hero-order="3"]')
+      ].filter(Boolean);
+      
+      const heroImage = document.getElementById('image-canvas');
+      
+      // 첫 번째 요소가 나타나면 다음 요소들을 순차적으로 트리거
+      const triggerNextElement = (index) => {
+        if (index >= heroElements.length) {
+          // 모든 텍스트 요소가 나타났으므로 이미지 트리거
+          if (heroImage && heroImage.classList.contains('hero-image-slide-up') && 
+              !heroImage.classList.contains('hero-image-slide-up-visible')) {
+            setTimeout(() => {
+              heroImage.classList.add('hero-image-slide-up-visible');
+            }, 150);
+          }
+          return;
+        }
+        
+        const currentElement = heroElements[index];
+        if (currentElement && !currentElement.classList.contains('blur-fade-once-visible')) {
+          currentElement.classList.add('blur-fade-once-visible');
+          
+          // 다음 요소를 0.5초 후에 트리거
+          setTimeout(() => {
+            triggerNextElement(index + 1);
+          }, 500);
+        }
+      };
+      
+      // 첫 번째 요소가 화면에 보이면 시작
+      const checkHeroStart = () => {
+        const rect = heroSection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible && heroElements.length > 0) {
+          // 첫 번째 요소가 아직 나타나지 않았다면 나타나게 함
+          if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
+            revealHeroTitle();
+            setTimeout(() => {
+              triggerNextElement(1);
+            }, 500);
+          }
+        }
+      };
+      
+      // 초기 체크
+      setTimeout(checkHeroStart, 100);
+      
+      // 첫 번째 요소를 관찰하여 시작
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target === heroElements[0]) {
+            if (!heroElements[0].classList.contains('blur-fade-once-visible')) {
+              revealHeroTitle();
+              setTimeout(() => {
+                triggerNextElement(1);
+              }, 500);
+            }
+            heroObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      if (heroElements[0]) {
+        heroObserver.observe(heroElements[0]);
+      }
+    };
+
+    // Hero 섹션이 아닌 일반 요소들을 위한 observer
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        // Hero 섹션의 순서가 있는 요소들은 제외
+        if (entry.target.hasAttribute('data-hero-order')) {
+          return;
+        }
+        
+        if (entry.isIntersecting) {
+          // 모바일에서 User Prompts는 1행 -> 2행 순서로 강제 분리 노출
+          if (window.innerWidth <= 900 && entry.target.classList.contains('user-prompts-row')) {
+            const rowOrder = Number(entry.target.dataset.promptRow || 1);
+            const firstRow = document.querySelector('.user-prompts-row[data-prompt-row="1"]');
+            const secondRow = document.querySelector('.user-prompts-row[data-prompt-row="2"]');
+
+            if (rowOrder === 1) {
+              entry.target.classList.add('blur-fade-once-visible');
+              if (secondRow && !secondRow.classList.contains('blur-fade-once-visible')) {
+                setTimeout(() => {
+                  secondRow.classList.add('blur-fade-once-visible');
+                }, 700);
+              }
+            } else {
+              // 1행이 아직 안 보였으면 2행은 대기
+              if (firstRow && !firstRow.classList.contains('blur-fade-once-visible')) {
+                return;
+              }
+              entry.target.classList.add('blur-fade-once-visible');
+            }
+          } else {
+            entry.target.classList.add('blur-fade-once-visible');
+          }
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // Hero 섹션이 아닌 요소들만 observer에 추가
+    targets.forEach(target => {
+      if (!target.hasAttribute('data-hero-order')) {
+        observer.observe(target);
+      }
+    });
+    
+    // Hero 섹션 초기화
+    initHeroSequence();
+  };
+
+  // Image canvas subtle perspective tilt on mouse move
+  function initImageCanvasTilt() {
+    const canvas = document.getElementById('image-canvas');
+    const wrap = document.getElementById('image-canvas-wrap');
+    if (!canvas || !wrap || window.innerWidth <= 900) return;
+
+    const maxTilt = 4;
+
+    wrap.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateY = ((x - centerX) / centerX) * maxTilt;
+      const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+      canvas.style.transform = `perspective(1200px) translateY(0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+      canvas.style.transform = 'perspective(1200px) translateY(0) rotateX(0deg) rotateY(0deg)';
+    });
+  }
+
+  // User prompt cards subtle perspective tilt on mouse move
+  function initUserPromptCardsTilt() {
+    if (window.innerWidth <= 900) return;
+
+    const cards = document.querySelectorAll('.user-prompt-card');
+    const maxTilt = 4;
+
+    cards.forEach((card) => {
+      if (card.classList.contains('user-prompt-bundle')) return;
+
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.25s ease-out, box-shadow 0.3s ease';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * maxTilt;
+        const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
+  // Product feature cards perspective tilt on mouse move
+  function initProductFeatureCardsTilt() {
+    if (window.innerWidth <= 900) return;
+
+    const cards = document.querySelectorAll('.product-feature-card');
+    const maxTilt = 4;
+
+    cards.forEach((card) => {
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.25s ease-out, box-shadow 0.35s ease';
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * maxTilt;
+        const rotateX = -((y - centerY) / centerY) * maxTilt;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
+  // City CTA banner: random background from resources/city/
+  function initCityCtaCard() {
+    const bg = document.getElementById('city-cta-bg');
+    if (!bg) return;
+    const images = [
+      'resources/city/nyc.png',
+      'resources/city/sanfr.png',
+      'resources/city/golden.png',
+      'resources/city/central.png'
+    ];
+    const pick = images[Math.floor(Math.random() * images.length)];
+    bg.style.backgroundImage = `url('${pick}')`;
+  }
+
+  // Logo Blur Grid
+  // - Default: 3x2 (6 logos), set A(1-6) <-> set B(7-12)
+  // - >=1300px: 1x4 (4 logos), 1-4 -> 5-8 -> 9-12
+  function initLogoBlurGrid() {
+    const grid = document.getElementById('logo-blur-grid');
+    if (!grid) return;
+
+    const base = 'resources/partnerlogos/';
+    const STAGGER_MS = 180;
+    const CYCLE_INTERVAL_MS = 4500;
+    const gridInner = grid.querySelector('.logo-blur-grid-inner');
+    if (!gridInner) return;
+
+    const logoSetDefaultA = [1, 2, 3, 4, 5, 6].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetDefaultB = [7, 8, 9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideA = [1, 2, 3, 4].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideB = [5, 6, 7, 8].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+    const logoSetWideC = [9, 10, 11, 12].map(n => ({ src: `${base}plogo${n}.png`, alt: `Partner ${n}` }));
+
+    let cells = [];
+    let useA = [];
+    let logoSets = [];
+    let cellCount = 0;
+    let currentSet = 0;
+    let cycleInterval = null;
+    let cycleTimeouts = [];
+    let isWideMode = null;
+
+    function clearCycleTimers() {
+      cycleTimeouts.forEach((id) => clearTimeout(id));
+      cycleTimeouts = [];
+      if (cycleInterval) {
+        clearInterval(cycleInterval);
+        cycleInterval = null;
+      }
+    }
+
+    function transitionCell(cellIndex, nextSet) {
+      const cell = cells[cellIndex];
+      if (!cell) return;
+      const imgs = cell.querySelectorAll('.logo-blur-img');
+      if (imgs.length < 2) return;
+      const imgA = imgs[0];
+      const imgB = imgs[1];
+      const outImg = useA[cellIndex] ? imgA : imgB;
+      const inImg = useA[cellIndex] ? imgB : imgA;
+      useA[cellIndex] = !useA[cellIndex];
+
+      const nextLogo = logoSets[nextSet][cellIndex];
+      if (!nextLogo) return;
+
+      inImg.src = nextLogo.src;
+      inImg.alt = nextLogo.alt;
+      inImg.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
+      inImg.classList.remove('blur-in');
+
+      outImg.classList.add('blur-out');
+
+      outImg.addEventListener('transitionend', function onOut() {
+        outImg.removeEventListener('transitionend', onOut);
+        outImg.style.opacity = '0';
+        outImg.classList.remove('blur-out');
+
+        inImg.classList.add('blur-in');
+        inImg.style.filter = '';
+        inImg.style.opacity = '';
+        inImg.style.pointerEvents = '';
+
+        inImg.addEventListener('transitionend', function onIn() {
+          inImg.removeEventListener('transitionend', onIn);
+          inImg.classList.remove('blur-in');
+        }, { once: true });
+      }, { once: true });
+    }
+
+    function runCycle() {
+      const nextSet = (currentSet + 1) % logoSets.length;
+      for (let i = 0; i < cellCount; i++) {
+        const timeoutId = setTimeout(() => transitionCell(i, nextSet), i * STAGGER_MS);
+        cycleTimeouts.push(timeoutId);
+      }
+      currentSet = nextSet;
+    }
+
+    function renderMode(wideMode) {
+      clearCycleTimers();
+      isWideMode = wideMode;
+      currentSet = 0;
+
+      logoSets = wideMode
+        ? [logoSetWideA, logoSetWideB, logoSetWideC]
+        : [logoSetDefaultA, logoSetDefaultB];
+      cellCount = logoSets[0].length;
+
+      gridInner.innerHTML = '';
+      for (let i = 0; i < cellCount; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'logo-blur-cell';
+
+        const imgA = document.createElement('img');
+        const imgB = document.createElement('img');
+        imgA.className = imgB.className = 'logo-blur-img';
+        imgA.alt = imgB.alt = logoSets[0][i].alt;
+        imgA.src = logoSets[0][i].src;
+        imgB.style.cssText = 'filter: grayscale(100%) blur(12px); opacity: 0; pointer-events: none;';
+        imgB.alt = logoSets[0][i].alt;
+
+        cell.appendChild(imgA);
+        cell.appendChild(imgB);
+        gridInner.appendChild(cell);
+      }
+
+      cells = Array.from(gridInner.querySelectorAll('.logo-blur-cell'));
+      useA = new Array(cellCount).fill(true);
+
+      runCycle();
+      cycleInterval = setInterval(() => {
+        cycleTimeouts = [];
+        runCycle();
+      }, CYCLE_INTERVAL_MS);
+    }
+
+    function updateModeIfNeeded() {
+      const nextWideMode = window.innerWidth >= 1300;
+      if (isWideMode === null || nextWideMode !== isWideMode) {
+        renderMode(nextWideMode);
+      }
+    }
+
+    updateModeIfNeeded();
+    window.addEventListener('resize', updateModeIfNeeded);
+  }
+
+  // Initialize i18n (images, blog hero, video, Instrument Serif)
+  if (window.LanguageProvider) window.LanguageProvider.applyAll();
+
+  // Re-render language-dependent sections when language changes
+  window.addEventListener('birzont-lang-change', () => {
+    const container = document.getElementById('blog-container');
+    if (container) {
+      if (document.querySelector('[data-i18n="blog.title"]')) renderBlogPage();
+      else renderBlog();
+    }
+
+    // Rebuild sections that read text from LanguageProvider at render-time.
+    if (document.getElementById('products-grid')) renderProducts();
+    if (document.getElementById('timeline-container')) renderTimeline();
+    if (document.getElementById('careers-container')) renderCareers();
+    if (document.getElementById('product-features-grid')) renderProductFeatures();
+    if (document.getElementById('team-members-grid')) renderTeamMembers();
+  });
+
+  // Initialize
+  createPixels();
+  renderProducts();
+  renderTimeline();
+  renderBlog();
+  renderCareers();
+  renderProductFeatures();
+  initDemoSocialCounts();
+  initRandomUserPromptBundle();
+  initUserPromptCards();
+  updateMobileState();
+  updateHeader();
+  initImageCanvasTilt();
+  initUserPromptCardsTilt();
+  initProductFeatureCardsTilt();
+  initLogoBlurGrid();
+  initProductCarousel();
+  initCityCtaCard();
+  initBlurFadeOnce();
+  
+  // Pixel blinking
+  setInterval(blinkRandomPixels, 1000);
+  
+  // Prompt carousel for mobile (각 .user-prompts-row마다 독립 캐러셀)
+  const promptRows = document.querySelectorAll('.user-prompts-row');
+
+  promptRows.forEach((row, rowIndex) => {
+    const promptGrid = row.querySelector('.user-prompts-grid');
+    const promptPrevBtn = row.querySelector('.prompt-carousel-btn-prev');
+    const promptNextBtn = row.querySelector('.prompt-carousel-btn-next');
+
+    if (!promptGrid) return;
+
+    let currentPromptIndex = 0;
+    const promptCards = promptGrid.querySelectorAll('.user-prompt-card');
+    const totalPromptCards = promptCards.length;
+    if (!totalPromptCards) return;
+
+    let autoSlideInterval = null;
+    let autoSlideStartTimeout = null;
+
+    function scrollToPromptCard(index) {
+      const cardWidth = promptCards[0].offsetWidth;
+      const gap = 16; // 1rem gap
+      const scrollPosition = index * (cardWidth + gap);
+      promptGrid.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+    }
+
+    function nextSlide() {
+      currentPromptIndex = currentPromptIndex + 1;
+      if (currentPromptIndex >= totalPromptCards) {
+        currentPromptIndex = 0;
+      }
+      scrollToPromptCard(currentPromptIndex);
+    }
+
+    function prevSlide() {
+      currentPromptIndex = currentPromptIndex - 1;
+      if (currentPromptIndex < 0) {
+        currentPromptIndex = totalPromptCards - 1;
+      }
+      scrollToPromptCard(currentPromptIndex);
+    }
+
+    function startAutoSlide() {
+      if (state.isMobile && !autoSlideInterval && !autoSlideStartTimeout) {
+        // 모바일에서 각 행의 슬라이드 타이밍을 어긋나게 시작
+        const startDelay = rowIndex === 0 ? 0 : 1800;
+        autoSlideStartTimeout = setTimeout(() => {
+          autoSlideStartTimeout = null;
+          if (!state.isMobile || autoSlideInterval) return;
+          autoSlideInterval = setInterval(nextSlide, 5000);
+        }, startDelay);
+      }
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideStartTimeout) {
+        clearTimeout(autoSlideStartTimeout);
+        autoSlideStartTimeout = null;
+      }
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+      }
+    }
+
+    function resetAutoSlide() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+
+    if (promptPrevBtn) {
+      promptPrevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetAutoSlide();
+      });
+    }
+
+    if (promptNextBtn) {
+      promptNextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetAutoSlide();
+      });
+    }
+
+    let scrollTimeout;
+    promptGrid.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const cardWidth = promptCards[0].offsetWidth;
+        const gap = 16;
+        const scrollLeft = promptGrid.scrollLeft;
+        const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+        if (newIndex !== currentPromptIndex) {
+          currentPromptIndex = newIndex;
+          resetAutoSlide();
+        }
+      }, 100);
+    });
+
+    promptCarouselControls.push({ startAutoSlide, stopAutoSlide });
+    startAutoSlide();
+  });
+  
+  // Canvas height update is no longer needed for the new centered layout
+  
+  // Team Members - wait a bit to ensure window.teamMembers is loaded
+  setTimeout(() => {
+    renderTeamMembers();
+    initTeamMemberModal();
+  }, 100);
+});
+
+// Render Team Members from JSON data
+function renderTeamMembers() {
+  const teamGrid = document.getElementById('team-members-grid');
+  
+  if (!teamGrid) {
+    console.warn('Team members grid not found - this page may not have a team section');
+    return;
+  }
+  
+  if (!window.teamMembers || !Array.isArray(window.teamMembers) || window.teamMembers.length === 0) {
+    console.warn('Team members data not found or empty');
+    return;
+  }
+  
+  console.log('Rendering team members:', window.teamMembers.length);
+
+  teamGrid.innerHTML = '';
+
+  window.teamMembers.forEach(member => {
+    const card = document.createElement('div');
+    card.className = 'team-member-card blur-fade-once cursor-pointer';
+    card.setAttribute('data-member', JSON.stringify(member));
+    
+    card.innerHTML = `
+      <div class="relative mb-6 md:mb-6 team-member-image-container">
+        <img 
+          src="${member.image}" 
+          alt="${member.name}" 
+          class="w-full aspect-square object-cover rounded-2xl"
+        >
+        <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="absolute top-3 right-3 md:top-3 md:right-3 bg-white rounded-lg p-2 md:p-2 shadow-lg hover:bg-gray-50 transition-colors team-linkedin-badge" onclick="event.stopPropagation();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-gray-700 team-linkedin-icon md:w-5 md:h-5">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      </div>
+      <h3 class="text-2xl font-bold text-black mb-2 md:mb-2 team-member-name">${member.name}</h3>
+      <p class="text-gray-600 text-lg team-member-role">${member.role}</p>
+      ${member.zodiac ? `<p class="text-gray-500 text-sm mt-1 team-member-zodiac">${member.zodiac}</p>` : ''}
+    `;
+    
+    teamGrid.appendChild(card);
+  });
+  
+  // Re-initialize blur fade for new cards
+  setTimeout(() => {
+    const newCards = teamGrid.querySelectorAll('.blur-fade-once');
+    newCards.forEach(card => {
+      if (!card.classList.contains('blur-fade-once-visible')) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('blur-fade-once-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        observer.observe(card);
+      }
+    });
+  }, 100);
+}
+
+// Team Member Modal Functions
+function initTeamMemberModal() {
+  const modal = document.getElementById('team-member-modal');
+  const closeBtn = document.getElementById('team-modal-close');
+  const memberCards = document.querySelectorAll('.team-member-card[data-member]');
+
+  if (!modal || !closeBtn) return;
+
+  // Open modal
+  memberCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const memberData = JSON.parse(card.getAttribute('data-member'));
+      openTeamModal(memberData);
+    });
+  });
+
+  // Close modal
+  closeBtn.addEventListener('click', closeTeamModal);
+  
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeTeamModal();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeTeamModal();
+    }
+  });
+}
+
+function openTeamModal(memberData) {
+  const modal = document.getElementById('team-member-modal');
+  const nameEl = document.getElementById('modal-member-name');
+  const roleEl = document.getElementById('modal-member-role');
+  const zodiacEl = document.getElementById('modal-member-zodiac');
+  const imageEl = document.getElementById('modal-member-image');
+  const descriptionEl = document.getElementById('modal-member-description');
+  const linkedinEl = document.getElementById('modal-member-linkedin');
+
+  if (!modal) return;
+
+  // Update modal content
+  if (nameEl) nameEl.textContent = memberData.name;
+  if (roleEl) roleEl.textContent = memberData.role;
+  if (zodiacEl) {
+    if (memberData.zodiac) {
+      zodiacEl.textContent = memberData.zodiac;
+      zodiacEl.classList.remove('hidden');
+    } else {
+      zodiacEl.textContent = '';
+      zodiacEl.classList.add('hidden');
+    }
+  }
+  if (imageEl) {
+    imageEl.src = memberData.image;
+    imageEl.alt = memberData.name;
+  }
+  if (descriptionEl) {
+    // <br> 태그를 줄바꿈으로 처리
+    descriptionEl.innerHTML = memberData.description.replace(/\<br\>/gi, '<br>');
+  }
+  if (linkedinEl) {
+    linkedinEl.href = memberData.linkedin || '#';
+    if (memberData.linkedin === '#') {
+      linkedinEl.style.pointerEvents = 'none';
+      linkedinEl.style.opacity = '0.5';
+    } else {
+      linkedinEl.style.pointerEvents = 'auto';
+      linkedinEl.style.opacity = '1';
+    }
+  }
+
+  // Show modal
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+
+  // Trigger animation
+  setTimeout(() => {
+    const modalContent = modal.querySelector('.team-modal-content');
+    if (modalContent) {
+      modalContent.style.opacity = '0';
+      modalContent.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        modalContent.style.opacity = '1';
+        modalContent.style.transform = 'scale(1)';
+      }, 10);
+    }
+  }, 10);
+}
+
+function closeTeamModal() {
+  const modal = document.getElementById('team-member-modal');
+  if (!modal) return;
+
+  const modalContent = modal.querySelector('.team-modal-content');
+  if (modalContent) {
+    modalContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    modalContent.style.opacity = '0';
+    modalContent.style.transform = 'scale(0.95)';
+  }
+
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }, 300);
+}
+

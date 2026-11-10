@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Birzont Technologies Inc.</title>
+  <meta name="description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 Notion, 폴더, 문서를 Cursor·Claude 등 에이전트에 연결하는 지식 레이어입니다.">
+  <link rel="canonical" href="https://birzont.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Birzont">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Birzont">
+  <meta property="og:description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 에이전트 지식 레이어입니다.">
+  <meta property="og:url" content="https://birzont.com/">
+  <meta property="og:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:secure_url" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="Birzont">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Birzont">
+  <meta name="twitter:description" content="팀의 지식을 AI 에이전트에 자동 동기화합니다. Birzont는 에이전트 지식 레이어입니다.">
+  <meta name="twitter:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="BirzontTransparenT.png">
+  <link rel="apple-touch-icon" href="BirzontTransparenT.png">
+
+  <!-- Tailwind CSS CDN   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+ -->
+  <script src="tailwind.css"></script>
+
+  <!-- Theme (before paint) -->
+  <script src="theme.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="font-['Inter',sans-serif] birzont-home">
+  <div id="app" class="min-h-screen overflow-x-hidden">
+    <!-- Main Hero Section -->
+    <section class="cursor-hero w-full pb-6 md:pb-8 relative">
+      <!-- Gradient Overlay -->
+      <div class="gradient-overlay absolute top-0 left-0 w-full h-3/5 pointer-events-none z-0"></div>
+
+      <!-- Background Forest Image -->
+      <div class="hero-bg-forest absolute inset-0 pointer-events-none" style="z-index: 1;"></div>
+
+      <div
+        class="flex flex-col items-center justify-center w-full px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-10">
+        <h1 class="text-center mb-6 hero-title blur-fade-once cursor-heading" data-hero-order="1"
+          style="font-size: clamp(2.6rem, 5.2vw, 4.6rem); line-height: 1.08;">
+          팀의 지식,<br>Birzont로 에이전트 안에
+        </h1>
+        <p class="text-center mb-8 max-w-2xl mx-auto blur-fade-once cursor-subheading" data-hero-order="2"
+          style="font-size: clamp(1.0625rem, 2.15vw, 1.25rem); line-height: 1.65;">
+          AI는 똑똑한데, 우리 팀 이야기는 아직 모릅니다.<br>
+          Notion·폴더만 연결하세요. Birzont가 30초 만에 에이전트에 맞춰 동기화합니다.
+        </p>
+        <div class="flex justify-center mb-14">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="cursor-btn-primary try-free-button inline-block text-center">
+            시작하기
+          </a>
+        </div>
+
+        <div class="w-full md:max-w-[93%] md:mx-auto" id="image-canvas-wrap" style="perspective: 1200px;">
+          <div id="image-canvas"
+            class="hero-image-slide-up hero-image-slide-up-visible w-full relative overflow-hidden transition-all duration-400"
+            style="aspect-ratio: 16/9; max-height: 85vh; min-height: 500px; background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/source/5e882325659471.5634b8c4f0383.gif'); background-size: cover; background-position: center; position: relative; transform-style: preserve-3d; transition: transform 0.25s ease-out;">
+            <img src="resources/products/mainscreen.png" alt="Birzont hero animation"
+              class="hero-foreground-gif hidden md:block">
+            <img src="resources/products/monile.png" alt="Birzont hero"
+              class="hero-foreground-gif hero-foreground-mobile block md:hidden">
+            <div id="pixels-ref" class="absolute inset-0 pointer-events-none mix-blend-screen z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo Blur Grid Section (3x2) -->
+    <div class="cursor-section w-full py-4 md:py-6 overflow-hidden -mt-4 md:-mt-6">
+      <div id="logo-blur-grid" class="logo-blur-grid px-4 md:px-8 max-w-5xl mx-auto">
+        <!-- 6 cells populated by initLogoBlurGrid -->
+        <div class="logo-blur-grid-inner grid grid-cols-3 grid-rows-2 gap-3 gap-x-4 md:gap-x-28 md:gap-y-4">
+          <div class="logo-blur-cell" data-cell="0"></div>
+          <div class="logo-blur-cell" data-cell="1"></div>
+          <div class="logo-blur-cell" data-cell="2"></div>
+          <div class="logo-blur-cell" data-cell="3"></div>
+          <div class="logo-blur-cell" data-cell="4"></div>
+          <div class="logo-blur-cell" data-cell="5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Introduction & Features Section -->
+    <div class="cursor-section-alt w-full pt-8 md:pt-12">
+      <section class="pt-12 md:pt-20 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto space-y-12"
+        aria-label="Birzont core features">
+        <div class="mt-2 md:mt-6">
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+            data-instrument-font>에이전트가 비즈니스를 아는 방법</h3>
+          <p class="text-lg md:text-xl text-center mb-0 blur-fade-once cursor-subheading" data-section-sub="explore">팀 문서를 연결하는 순간, 에이전트가 팀을 기억하기 시작합니다.</p>
+        </div>
+        <div
+          class="product-card-large bg-white rounded-2xl shadow overflow-hidden border border-gray-200 blur-fade-once">
+          <div class="flex flex-col md:flex-row gap-0 items-stretch agent-card-container">
+            <div
+              class="w-full flex-shrink-0 flex flex-col agent-card-left md:border-r md:border-gray-200">
+              <header class="agent-card-header mb-4 md:mb-6">
+                <div class="group">
+                  <h3 class="flex items-center gap-2 mb-4">
+                    <span class="text-base font-medium text-gray-600">에이전트 지식 레이어</span>
+                  </h3>
+                  <p class="text-2xl md:text-3xl font-bold text-black leading-tight">
+                    복사·붙여넣기는 그만. 팀 지식을 에이전트에 연결하세요.
+                  </p>
+                </div>
+              </header>
+
+              <div role="tablist" aria-label="Birzont key features" class="product-tablist">
+                <button type="button" role="tab" value="0" tabindex="0" aria-selected="true"
+                  class="product-tab product-tab-active">
+                  <p class="product-tab-summary">클릭 한 번, Notion부터 에이전트까지</p>
+                  <p class="product-tab-content product-tab-content-visible">흩어진 Notion·폴더·Confluence를 연결하면, 에이전트가 바로 팀 지식에 접근합니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="1" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">긴 문서도, 에이전트용 한 장 요약으로</p>
+                  <p class="product-tab-content">수백 페이지 문서를 에이전트가 읽기 좋은 .md 파일로 깔끔하게 정리합니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="2" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">Cursor·Claude, 각자 맞는 형식으로</p>
+                  <p class="product-tab-content">Cursor Rules, Claude.md처럼 에이전트마다 필요한 포맷으로 자동 변환합니다. 이미지도 문제없습니다.</p>
+                </button>
+                <hr class="divider border-gray-200 my-0" role="presentation">
+                <button type="button" role="tab" value="3" tabindex="0" aria-selected="false" class="product-tab">
+                  <p class="product-tab-summary">문서 바뀌면, 에이전트도 따라갑니다</p>
+                  <p class="product-tab-content">팀 문서가 업데이트되면 에이전트 폴더도 자동 반영. 항상 최신 맥락을 유지합니다.</p>
+                </button>
+              </div>
+
+              <div role="tablist" aria-label="Current slide indicator" class="flex gap-2 mt-1">
+                <button type="button" role="tab" value="0" tabindex="-1" aria-selected="true"
+                  class="product-indicator product-indicator-active" aria-label="Go to slide 1"></button>
+                <button type="button" role="tab" value="1" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 2"></button>
+                <button type="button" role="tab" value="2" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 3"></button>
+                <button type="button" role="tab" value="3" tabindex="-1" aria-selected="false" class="product-indicator"
+                  aria-label="Go to slide 4"></button>
+              </div>
+            </div>
+
+            <div class="w-full md:flex-1 relative agent-card-right">
+              <div id="product-carousel" class="absolute inset-0 overflow-hidden bg-gray-50">
+                <div id="product-carousel-slides" class="absolute inset-0" aria-live="polite">
+                  <div value="0" role="group" aria-hidden="false" class="product-slide product-slide-active">
+                    <img src="resources/products/agent.png" alt="Notion·폴더·문서 원클릭 연동"
+                      class="product-slide-img">
+                  </div>
+                  <div value="1" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/template.png" alt="팀 지식 요약·구조화" class="product-slide-img">
+                  </div>
+                  <div value="2" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/market.png" alt="에이전트 구조별 자동 변환" class="product-slide-img">
+                  </div>
+                  <div value="3" role="group" aria-hidden="true" class="product-slide" hidden>
+                    <img src="resources/products/custom.png" alt="변경 감지 자동 반영" class="product-slide-img">
+                  </div>
+                </div>
+
+                <div id="product-carousel-controls"
+                  class="absolute inset-0 flex items-center justify-between pointer-events-none px-4">
+                  <button type="button" id="product-carousel-prev"
+                    class="carousel-btn carousel-btn-prev pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Previous" style="display: none;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button type="button" id="product-carousel-next"
+                    class="carousel-btn carousel-btn-next pointer-events-auto bg-white/80 backdrop-blur shadow-md rounded-full p-2"
+                    aria-label="Next">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Product Features Section (독립 영역) -->
+    <div class="cursor-section-alt w-full pt-8 md:pt-12">
+      <section class="pt-10 md:pt-16 pb-6 md:pb-8 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto"
+        aria-label="Birzont key value">
+        <div class="mt-6 md:mt-10">
+          <h3
+            class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+            data-instrument-font>작동 방식</h3>
+          <p class="text-lg md:text-xl text-center mb-0 blur-fade-once cursor-subheading" data-section-sub="how">30초면 컨텍스트를 아는 에이전트. 기존 15~20분 → Birzont 30초.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full blur-fade-once mt-8 md:mt-12"
+          id="product-features-grid">
+          <!-- Product feature cards will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Product Language Section (주석 처리 - 당분간 미사용) -->
+    <!--
+    <div class="w-full bg-[#fafafa]">
+      <section class="pt-6 md:pt-8 pb-16 md:pb-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="product-language-grid">
+          <div class="language-demo blur-fade-once">
+            <div class="demo-surface">
+              <div class="demo-header">
+                <div>
+                  <h4 class="language-demo-title">스타트업 기본 회계 관리 프롬프트</h4>
+                  <p class="language-demo-info">@birzont · 2025. 11. 15. 오전 01:22 · 2 downloads</p>
+                </div>
+              </div>
+              <div class="demo-badge-row">
+                <div class="demo-badge">
+                  <span class="demo-badge-icon">
+                    <img src="https://fanlqfaphmayjxaavjrh.supabase.co/storage/v1/object/public/aimodels/4e4a548b-ac19-4947-864a-b00d10ebbfc9/953d844f-f577-42b3-8dbd-7edcacf3d518.png" alt="ChatGPT icon">
+                  </span>
+                  <span>ChatGPT</span>
+                </div>
+                <div class="demo-header-actions">
+                  <button type="button" class="demo-like" aria-label="Like">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span class="demo-like-count">0</span>
+                  </button>
+                  <button type="button" class="demo-share" aria-label="공유">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7m-5-4l-4-4m0 0L7 8m4-4v12"/></svg>
+                    <span class="demo-share-count">0</span>
+                  </button>
+                  <button type="button" class="demo-bookmark" aria-label="Bookmark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg>
+                    <span>Bookmark</span>
+                  </button>
+                </div>
+              </div>
+              <p class="language-demo-description">
+                이 프롬프트는 스타트업의 기본적인 회계 관리 체계를 구축하는 데 도움을 줍니다. 회사 정보를 입력하면 맞춤형 회계 관리 시스템을 제안받을 수 있으며, 장부 관리부터 세금 신고까지 체계적으로 안내받을 수 있습니다.
+                특히 초기 스타트업이 필수적으로 관리해야 할 재무 항목들을 명확히 파악할 수 있습니다.
+              </p>
+
+                <div class="demo-card">
+                  <div class="demo-card-toolbar">
+                    <span>Prompt</span>
+                    <div class="demo-toolbar-actions">
+                      <button type="button">Copy</button>
+                      <button type="button" class="primary">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="9 6 18 12 9 18 9 6"></polygon></svg>
+                        Run on ChatGPT
+                      </button>
+                    </div>
+                  </div>
+                <div class="demo-card-body">
+                  <p>당신은 스타트업 전문 회계 컨설턴트입니다. 다음 정보를 바탕으로 스타트업 회계 관리 체계를 구축해주세요:</p>
+                  <p>회사명: <input type="text" class="demo-inline-input" placeholder="Birzont" /></p>
+                  <p>설립일: <input type="date" class="demo-inline-input" /></p>
+                  <p>사업 형태(개인사업자/법인): <input type="text" class="demo-inline-input" placeholder="예: 법인" /></p>
+                  <p>월 평균 매출액: <input type="number" class="demo-inline-input" placeholder="예: 30,000,000" /></p>
+                  <p>주요 비용 항목: <input type="text" class="demo-inline-input" placeholder="예: 마케팅, 인건비" /></p>
+                  <p>다음 항목에 대해 체계적으로 안내해주세요:</p>
+                  <ol>
+                    <li>기본 회계 체계 구축 방법</li>
+                    <li>필수 장부 관리 항목</li>
+                    <li>월별 재무 보고서 작성 가이드</li>
+                    <li>세금 신고 일정 및 주의사항</li>
+                    <li>주요 재무 지표 모니터링 방법</li>
+                  </ol>
+                  <p class="language-demo-note">각 항목은 실제 실행 가능한 예시와 함께 구체적으로 설명해주세요.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="language-content blur-fade-once">
+            <h3 class="language-title">Real-time transcription</h3>
+            <p class="language-description">알렉사, 로이 및 팀과 함께 모든 대화를 1초 미만으로 기록합니다. 언어 장벽 없이 글로벌 미팅을 완벽하게 캡처하세요.</p>
+            <div class="language-stats">
+              <div class="language-stat">
+                <p class="language-stat-value">12+</p>
+                <p class="language-stat-label">Languages</p>
+                <p class="language-stat-desc">English, Chinese, Spanish 등 글로벌 언어를 자연스럽게 지원합니다.</p>
+              </div>
+              <div class="language-stat">
+                <p class="language-stat-value">300<span class="language-stat-suffix">ms</span></p>
+                <p class="language-stat-label">Response time</p>
+                <p class="language-stat-desc">업계에서 가장 빠른 라이브 전사 속도를 경험해보세요.</p>
+              </div>
+              <div class="language-stat">
+                <p class="language-stat-value">95%</p>
+                <p class="language-stat-label">Accuracy</p>
+                <p class="language-stat-desc">수많은 팀이 신뢰한 정확도. 맥락 이해형 모델이 모든 단어를 잡아냅니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    -->
+
+    <!-- Pricing Section -->
+    <template>
+      <div class="w-full bg-[#fafafa]">
+        <section class="py-16 md:py-20 w-[calc(95%-110px)] max-w-[1506px] mx-auto px-4 pricing-section">
+          <h2
+            class="text-[2.625rem] md:text-[3.125rem] font-bold text-center text-black mb-3 md:mb-4 font-instrument-heading"
+            data-instrument-font>Plans</h2>
+          <p class="text-lg md:text-xl text-gray-600 text-center mb-6 md:mb-8">Choose the plan that fits you</p>
+          <!--
+        <div class="flex justify-center mb-20 md:mb-24">
+          <a href="https://birzont.ai/pricing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">더 알아보기</a>
+        </div>
+        -->
+
+          <!-- Pricing Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16 max-w-6xl mx-auto pricing-cards-grid">
+            <!-- Free Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Free</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">Free</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">Try
+                core features for free.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>5 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Basic agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>1 agent conversation saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Instant prompt execution</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>All other basic features</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Pro Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Pro</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$9</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">All
+                advanced features for individual users.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>50 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Advanced agents</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Unlimited agent conversations</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>10 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Save agent-generated prompts</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Verified profile badge</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Team Plan -->
+            <div
+              class="flex flex-col bg-white border border-gray-300 p-5 md:p-6 min-h-[460px] transition-all duration-300 hover:-translate-y-2 pricing-card"
+              style="border-radius: 24px;">
+              <div class="mb-3">
+                <h3 class="text-xl font-semibold text-black pricing-card-title">Team</h3>
+              </div>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-bold text-black pricing-card-price">$29</span>
+                <span class="text-sm text-gray-500 pricing-card-period">/ month</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-600 pricing-card-description" style="min-height: 3rem;">
+                Optimized for team collaboration and management.</p>
+              <div class="mt-3">
+                <button
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-black text-white hover:bg-gray-800 px-4 py-2 w-full h-10 pricing-card-button"
+                  style="border-radius: 12px;">Get Started</button>
+              </div>
+              <ul class="mt-6 space-y-2 text-sm text-gray-700 pricing-card-features">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>250 Tokens per month</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team workspace</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Bundle template workflow creation</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Team-only prompts & bundle sharing</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>30 agent conversations saved</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Early access to new features</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Slack, Notion integration</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Ad-free</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Full profile features access</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Comparison Table (주석 처리 - 당분간 미사용) -->
+          <!--
+        <section class="mx-auto max-w-5xl mt-14 md:mt-16">
+          <h3 class="text-2xl md:text-3xl font-semibold tracking-tight text-center text-black mb-4 md:mb-6">요금제와 기능</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="border-b border-gray-200">
+                <tr class="text-left">
+                  <th class="px-4 py-4 font-semibold text-gray-700">기능</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Free</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Pro</th>
+                  <th class="px-4 py-4 font-semibold text-gray-700">Team</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">월 크레딧</td>
+                  <td class="px-4 py-3 text-gray-900">5 Tokens</td>
+                  <td class="px-4 py-3 text-gray-900">50 Tokens</td>
+                  <td class="px-4 py-3 text-gray-900">250 Tokens</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">에이전트 품질</td>
+                  <td class="px-4 py-3 text-gray-900">기본</td>
+                  <td class="px-4 py-3 text-gray-900">고급</td>
+                  <td class="px-4 py-3 text-gray-900">고급</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">저장된 에이전트 대화</td>
+                  <td class="px-4 py-3 text-gray-900">1</td>
+                  <td class="px-4 py-3 text-gray-900">5</td>
+                  <td class="px-4 py-3 text-gray-900">50</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">프롬프트 & 번들 공유</td>
+                  <td class="px-4 py-3 text-gray-900">공개</td>
+                  <td class="px-4 py-3 text-gray-900">비공개</td>
+                  <td class="px-4 py-3 text-gray-900">팀 전체</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">광고</td>
+                  <td class="px-4 py-3 text-gray-900">표시됨</td>
+                  <td class="px-4 py-3 text-gray-900">제거됨</td>
+                  <td class="px-4 py-3 text-gray-900">제거됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">인증 뱃지</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">팀 워크스페이스</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">연동 (Slack, Notion)</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">포함됨</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-gray-700">조기 액세스</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">—</td>
+                  <td class="px-4 py-3 text-gray-900">우선</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        -->
+        </section>
+      </div>
+    </template>
+
+    <!-- Built for any business (Floating chips) -->
+    <div class="cursor-section-elevated w-full py-14 md:py-18 biz-float-section">
+      <section class="max-w-[1506px] mx-auto px-4 md:px-0" aria-label="Built for any business">
+        <div class="biz-float-wrap blur-fade-once">
+          <h2 class="biz-float-title">
+            팀 문서는 여기저기,<br><span class="biz-float-title-script">에이전트는 하나로 <span class="biz-float-title-keep">기억합니다</span></span>
+          </h2>
+
+          <div class="biz-float-chips" aria-hidden="true">
+            <div class="biz-float-chip biz-chip-digital">
+              <span class="biz-float-chip-dot biz-dot-digital">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 10l8-6 8 6-8 6-8-6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M4 14l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Notion
+            </div>
+
+            <div class="biz-float-chip biz-chip-agencies">
+              <span class="biz-float-chip-dot biz-dot-agencies">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M22 21v-2a3 3 0 0 0-2-2.82" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                </svg>
+              </span>
+              Confluence
+            </div>
+
+            <div class="biz-float-chip biz-chip-ecommerce">
+              <span class="biz-float-chip-dot biz-dot-ecommerce">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M6 6h15l-1.5 9h-12L6 6Z" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                  <path d="M6 6 4 3H1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="9" cy="20" r="1" fill="currentColor" />
+                  <circle cx="18" cy="20" r="1" fill="currentColor" />
+                </svg>
+              </span>
+              Cursor
+            </div>
+
+            <div class="biz-float-chip biz-chip-saas">
+              <span class="biz-float-chip-dot biz-dot-saas">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M4 4h16v10H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M12 14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Claude
+            </div>
+
+            <div class="biz-float-chip biz-chip-mobile">
+              <span class="biz-float-chip-dot biz-dot-mobile">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <rect x="7" y="2" width="10" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path d="M11 18h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              로컬 폴더
+            </div>
+
+            <div class="biz-float-chip biz-chip-services">
+              <span class="biz-float-chip-dot biz-dot-services">
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path d="M12 2l1.5 5H19l-4 3 1.5 5-4.5-3-4.5 3L9 10 5 7h5.5L12 2Z" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linejoin="round" />
+                  <path d="M2 22h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              Markdown
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- City CTA banner (랜덤 city 배경 + 연한 검정 오버레이) — Home of Prompts 위 -->
+    <div class="cursor-section w-full">
+      <section
+        class="pt-12 md:pt-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-20 md:pb-24 blur-fade-once"
+        aria-label="Birzont intro banner">
+        <div id="city-cta-card"
+          class="city-cta-card relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+          <div id="city-cta-bg" class="city-cta-bg absolute inset-0 bg-cover bg-center" role="img" aria-hidden="true">
+          </div>
+          <div class="city-cta-overlay absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+          <div
+            class="city-cta-inner relative z-10 flex flex-col justify-center min-h-[340px] md:min-h-[440px] px-8 py-10 md:px-14 md:py-14 lg:px-16 lg:py-16 w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
+            <h2
+              class="city-cta-headline text-white text-[2.05rem] md:text-[2.65rem] lg:text-[3.2rem] leading-tight mb-5 md:mb-7 max-w-none">
+              30초면 <em class="city-cta-em">컨텍스트를 아는</em> 에이전트.
+            </h2>
+            <p class="city-cta-sub text-white/95 text-[1.06rem] md:text-[1.18rem] font-medium mb-4 md:mb-5">
+              연결 한 번이면, 에이전트가 팀을 기억합니다.
+            </p>
+            <p class="city-cta-body text-white/90 text-sm md:text-base leading-relaxed max-w-xl">
+              Birzont가 팀 문서를 에이전트에 맞게 정리하고 연결합니다.<br>
+              설명은 줄이고, 답변은 더 정확해집니다.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- User Prompts + Try for free (통합 영역) -->
+    <div class="cursor-prompts-section w-full relative overflow-hidden">
+      <section
+        class="pt-12 md:pt-16 pb-12 md:pb-16 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto relative z-20">
+        <h3
+          class="text-[2.625rem] md:text-[3.125rem] leading-tight mb-3 md:mb-4 text-center blur-fade-once cursor-heading"
+          data-instrument-font>팀 프롬프트 라이브러리</h3>
+        <p class="text-lg md:text-xl text-center mb-14 md:mb-16 blur-fade-once cursor-subheading" data-section-sub="prompts">팀이 공유하는 참조 지식과 프롬프트를 한곳에서 관리하세요</p>
+        <div class="user-prompts-container flex flex-col gap-5 md:gap-8">
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="1">
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/cursor-ai.png" alt="Cursor icon">
+                    </span>
+                    <span>Cursor</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">1</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Cursor Rules 자동 생성</h4>
+                <p class="user-prompt-description">팀 컨벤션과 코딩 가이드를 Cursor Rules로 변환해 에이전트에 즉시 주입합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/ios11/200/FFFFFF/claude-ai.png" alt="Claude icon">
+                    </span>
+                    <span>Claude</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">2</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Claude.md 팀 컨텍스트</h4>
+                <p class="user-prompt-description">프로젝트 배경, 아키텍처, 운영 규칙을 Claude.md 형식으로 구조화해 에이전트에 연결합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/deepseek.png"
+                        alt="DeepSeek icon">
+                    </span>
+                    <span>DeepSeek</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">0</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">Notion 문서 → 에이전트 동기화</h4>
+                <p class="user-prompt-description">Notion 페이지를 에이전트가 읽기 좋은 마크다운으로 변환하고 변경 사항을 자동 반영합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="user-prompts-row blur-fade-once" data-prompt-row="2">
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-prev md:hidden" aria-label="Previous">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="prompt-carousel-btn prompt-carousel-btn-next md:hidden" aria-label="Next">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <div class="user-prompts-grid user-prompts-grid-fade">
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon">
+                      <img src="https://img.icons8.com/color/512/chatgpt.png" alt="ChatGPT icon">
+                    </span>
+                    <span>ChatGPT</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">5</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">3</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">회의록 → 액션 아이템 추출</h4>
+                <p class="user-prompt-description">회의록에서 결정 사항과 액션 아이템을 추출해 팀 에이전트 참조 지식으로 저장합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon claude-icon">
+                      <img src="https://img.icons8.com/color/512/google-gemini.png" alt="Gemini icon">
+                    </span>
+                    <span>Gemini</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">4</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">2</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">브랜드 가이드 → 프롬프트 주입</h4>
+                <p class="user-prompt-description">브랜드 톤·비주얼 가이드를 에이전트 참조 지식으로 변환해 일관된 결과를 만듭니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="user-prompt-card">
+                <div class="user-prompt-header">
+                  <div class="user-prompt-ai-badge">
+                    <span class="user-prompt-ai-icon deepseek-icon">
+                      <img src="https://img.icons8.com/color/512/perplexity-ai.png" alt="Perplexity icon">
+                    </span>
+                    <span>Perplexity</span>
+                  </div>
+                  <div class="user-prompt-actions">
+                    <button type="button" class="user-prompt-like" aria-label="Like">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      <span class="user-prompt-like-count">3</span>
+                    </button>
+                    <button type="button" class="user-prompt-bookmark" aria-label="Bookmark">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                      </svg>
+                      <span class="user-prompt-bookmark-count">1</span>
+                    </button>
+                  </div>
+                </div>
+                <h4 class="user-prompt-title">온보딩 문서 자동 요약</h4>
+                <p class="user-prompt-description">신규 팀원용 온보딩 문서를 요약·구조화해 모든 에이전트가 같은 맥락을 공유하게 합니다.</p>
+                <div class="user-prompt-footer">
+                  <span class="user-prompt-author">@birzont</span>
+                  <div class="user-prompt-free">
+                    <span>Free</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 3h12a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-8 md:mt-10 blur-fade-once">
+          <a href="https://birzont.ai" target="_blank" rel="noopener noreferrer"
+            class="cursor-link font-medium text-base md:text-lg hover:underline inline-block">
+            프롬프트 탐색
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer will be injected by footer.js -->
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script src="languageprovider.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

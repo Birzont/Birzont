@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Team - Birzont Technologies Inc.</title>
+  <meta name="description" content="Meet the Birzont team and learn how we build AI with human benefit at its foundation.">
+  <link rel="canonical" href="https://birzont.com/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Birzont">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Team - Birzont Technologies Inc.">
+  <meta property="og:description" content="Meet the Birzont team and learn how we build AI with human benefit at its foundation.">
+  <meta property="og:url" content="https://birzont.com/about.html">
+  <meta property="og:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:secure_url" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="Birzont">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Team - Birzont Technologies Inc.">
+  <meta name="twitter:description" content="Meet the Birzont team and learn how we build AI with human benefit at its foundation.">
+  <meta name="twitter:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="BirzontTransparenT.png">
+  <link rel="apple-touch-icon" href="BirzontTransparenT.png">
+  
+  <!-- Tailwind CSS CDN   <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+ -->
+  <script src="tailwind.css"></script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+</head>
+<body class="font-['Inter',sans-serif]">
+  <div id="app" class="min-h-screen bg-black text-white overflow-x-hidden">
+    <!-- First Hero Section -->
+    <div class="w-full relative overflow-hidden" style="height: 100vh;">
+      <div class="absolute inset-0 first-hero-bg-fade" style="background-image: url('public/semonemoO.gif'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+      <div class="absolute inset-0 bg-black/30"></div>
+      <section class="relative z-10 flex items-center justify-center h-full">
+        <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center px-4 blur-fade-once flex flex-col gap-4 md:gap-6 font-instrument-heading" data-instrument-font>
+          <span>Where the Bridge ends, Bird flies.</span>
+          <span>Birzont can be the bridge.</span>
+        </h1>
+      </section>
+    </div>
+
+    <!-- Hero Message Section -->
+    <div id="about" class="w-full bg-white scroll-mt-20">
+      <section id="fade-in-section" class="text-center pt-20 pb-10 md:pt-[200px] md:pb-[80px] px-4 md:px-0 md:w-[calc(98%-80px)] max-w-[1600px] mx-auto">
+        <img alt="Birzont Logo" width="130" height="130" class="object-contain mb-8 mx-auto blur-fade-once" data-about-order="1" src="https://avatars.githubusercontent.com/u/144044857?s=200&v=4">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-black blur-fade-once" data-about-order="2">
+          Birzont. we build AI<br>
+          the bridge to the future.
+        </h1>
+        <p class="text-lg md:text-xl max-w-[1100px] mx-auto leading-[1.8] text-[#999] blur-fade-once" data-about-order="3">
+          While no one can foresee every outcome AI will have on society, we do know that designing powerful
+          technologies requires both bold steps forward and intentional pauses to consider the effects. That's why we
+          focus on building tools with human benefit at their foundation.
+        </p>
+      </section>
+    </div>
+
+    <!-- Video Section -->
+    <div id="video" class="w-full bg-white scroll-mt-20">
+      <div class="mt-0 py-0 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto pb-[60px]">
+        <div class="relative max-w-[900px] w-full mx-auto rounded-[20px] overflow-hidden shadow-2xl aspect-video blur-fade-once" data-about-order="4">
+          <img id="video-thumbnail" alt="video thumbnail" width="1920" height="1080" class="w-full block" src="https://www.worldatlas.com/upload/1d/79/58/shutterstock-2231455191.jpg">
+          <div id="video-player-container" style="display: none;" class="absolute inset-0 w-full h-full">
+            <iframe class="w-full h-full" src="" id="video-iframe" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <button id="play-video-btn" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-5 border-black text-black rounded-full w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-4xl font-bold flex items-center justify-center cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 md:w-6 md:h-6 lg:w-8 ml-1">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- What we do Section -->
+    <div id="what-we-do" class="w-full bg-white what-we-do-section scroll-mt-20">
+      <section class="py-16 md:py-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="w-full border-t border-gray-200 mb-12 md:mb-16"></div>
+        
+        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <div class="w-full md:w-1/2 flex flex-col justify-center">
+            <div class="text-xs md:text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">What we do</div>
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal text-black leading-tight mb-6">Inventing the infrastructure software for hyperscale AI</h2>
+            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+              With the growing interest in LLMs and generative AI, many people are struggling to build and utilize large-scale AI infrastructure with thousands or more accelerators. The most difficult challenges in AI technology are now a variety of infrastructure-level problems such as parallelization, disaggregation, cluster scalability, performance optimization, and failover. Founded in 2020, we are committed to accelerating the advancement of AI technology by solving these problems with innovative software technologies.
+            </p>
+          </div>
+          <div class="w-full md:w-1/2">
+            <img 
+              src="https://plus.unsplash.com/premium_photo-1673266633993-013acd448898?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8" 
+              alt="What we do" 
+              class="w-full h-auto rounded-2xl object-cover section-image"
+            >
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Our Vision Section -->
+    <div id="our-vision" class="w-full bg-white our-vision-section scroll-mt-20">
+      <section class="py-16 md:py-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <div class="w-full md:w-1/2 order-2 md:order-1">
+            <img 
+              src="https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmV3JTIweW9yayUyMGNpdHklMjB3YWxscGFwZXJ8ZW58MHx8MHx8fDA%3D" 
+              alt="Our Vision" 
+              class="w-full h-auto rounded-2xl object-cover section-image"
+            >
+          </div>
+          <div class="w-full md:w-1/2 order-1 md:order-2 flex flex-col justify-center">
+            <div class="text-xs md:text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">Our Vision</div>
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal text-black leading-tight mb-6">Breaking down infrastructure barriers to make AI more accessible</h2>
+            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+              The success of AI technology has been made possible by an open ecosystem, diverse participants, and the accumulation of collective experience. However, hyperscale AI models are now being developed and served by only a few companies with the capability to leverage large-scale infrastructure. Our mission is to remove the technical barriers to infrastructure and make future AI technology more accessible to a wide range of customers.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Team Section -->
+    <div id="team" class="w-full bg-white scroll-mt-20">
+      <section class="py-16 md:py-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="w-full border-t border-gray-200 mb-12 md:mb-16"></div>
+        
+        <div class="flex flex-col md:flex-row w-full mb-4 md:mb-16 team-title-container">
+          <div class="w-full md:w-1/2 mb-8 md:mb-0">
+            <h2 class="text-4xl font-bold text-black leading-tight">Meet Our Team</h2>
+          </div>
+        </div>
+
+        <div id="team-members-grid" class="grid grid-cols-3 md:grid-cols-3 min-[1510px]:grid-cols-4 gap-4 md:gap-8 justify-items-center">
+          <!-- Team members will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Feature Grid Section -->
+    <div id="products" class="w-full bg-white scroll-mt-20">
+      <section class="flex flex-col items-center py-16 md:py-20 px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div class="w-full border-t border-gray-200 mb-12 md:mb-16"></div>
+
+        <div class="flex flex-col items-center text-center w-full mb-16 md:mb-20 products-title-container">
+          <h2 class="text-4xl font-bold text-black leading-tight mb-6">
+            Our Products
+          </h2>
+          <p class="text-black text-lg md:text-xl leading-relaxed max-w-3xl">
+            Discover our innovative solutions designed to enhance your daily life and productivity. Each product is
+            crafted with attention to detail and user experience.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-6 w-full py-4" id="products-grid">
+          <!-- Products will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Timeline Section -->
+    <!--
+    <div class="w-full bg-white">
+      <section class="w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div id="timeline-container" class="w-full overflow-hidden py-16 bg-white">
+        </div>
+      </section>
+    </div>
+    -->
+
+    <!-- Blog Section -->
+    <div id="blog" class="w-full bg-white border-t border-gray-200 scroll-mt-20">
+      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div id="blog-container" class="w-full overflow-hidden py-16">
+          <!-- Blog posts will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Timeline Section -->
+    <div id="timeline" class="w-full bg-white scroll-mt-20">
+      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto py-24 md:py-32">
+        <h2 class="text-4xl md:text-5xl font-bold text-black mb-8 text-center">
+          Watch Birzont's story<br>
+          On artificial intelligence
+        </h2>
+        
+        <div id="timeline-container" class="w-full">
+          <!-- Timeline will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Careers Section -->
+    <div id="careers" class="w-full bg-white scroll-mt-20">
+      <section class="px-4 md:px-0 md:w-[calc(95%-110px)] max-w-[1506px] mx-auto">
+        <div id="careers-container" class="w-full overflow-hidden py-16">
+          <!-- Careers section will be inserted by JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer will be injected by footer.js -->
+
+  </div>
+
+  <!-- Team Member Modal -->
+  <div id="team-member-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div class="team-modal-content bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="relative">
+        <button id="team-modal-close" class="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-700">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="p-8 md:p-12">
+          <div class="flex flex-col md:flex-row gap-8 mb-8">
+            <div class="flex-shrink-0">
+              <img id="modal-member-image" src="" alt="" class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-2xl">
+            </div>
+            <div class="flex-1">
+              <h3 id="modal-member-name" class="text-3xl md:text-4xl font-bold text-black mb-2"></h3>
+              <p id="modal-member-role" class="text-xl text-gray-600 mb-1"></p>
+              <p id="modal-member-zodiac" class="text-base text-gray-500 mb-4 hidden"></p>
+              <a id="modal-member-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-gray-700 hover:text-black transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+          <div class="border-t border-gray-200 pt-8">
+            <h4 class="text-xl font-bold text-black mb-4">About</h4>
+            <p id="modal-member-description" class="text-gray-700 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="navbar.js"></script>
+  <script src="footer.js"></script>
+  <script src="languageprovider.js"></script>
+  <script src="team.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+

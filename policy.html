@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Birzont Legal</title>
+  <meta name="description" content="The prompt infrastructure that upscales your agent">
+  <link rel="canonical" href="https://birzont.com/policy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Birzont">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Birzont">
+  <meta property="og:description" content="The prompt infrastructure that upscales your agent">
+  <meta property="og:url" content="https://birzont.com/policy.html">
+  <meta property="og:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:secure_url" content="https://birzont.com/resources/BirzontInc.jpeg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="Birzont">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Birzont">
+  <meta name="twitter:description" content="The prompt infrastructure that upscales your agent">
+  <meta name="twitter:image" content="https://birzont.com/resources/BirzontInc.jpeg">
+
+  <link rel="icon" type="image/png" href="BirzontTransparenT.png">
+  <link rel="apple-touch-icon" href="BirzontTransparenT.png">
+
+  <script src="tailwind.css"></script>
+  <link rel="stylesheet" href="styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    .md-content h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+    .md-content h2 { font-size: 1.35rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    .md-content h3 { font-size: 1.1rem; font-weight: 600; margin-top: 1.2rem; margin-bottom: 0.6rem; }
+    .md-content p, .md-content li { margin-bottom: 0.6rem; line-height: 1.7; color: #1f2937; }
+    .md-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    .md-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    .md-content strong { font-weight: 700; color: #111827; }
+    .md-content a { color: #2563eb; text-decoration: underline; }
+    .tab-btn-active { background: #111827; color: #ffffff; }
+  </style>
+</head>
+<body class="font-['Inter',sans-serif] bg-white text-black">
+  <div id="app" class="min-h-screen overflow-x-hidden">
+    <script src="navbar.js"></script>
+
+    <main class="w-full pt-24 md:pt-32 pb-20 px-4 md:px-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-black mb-2">Birzont Legal</h1>
+          <p class="text-sm text-gray-500">
+            Source of truth: <code>policy/policy.md</code> and <code>policy/terms.md</code>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          <button id="tab-policy" class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium tab-btn-active" type="button">
+            Privacy Policy
+          </button>
+          <button id="tab-terms" class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium" type="button">
+            Terms of Service
+          </button>
+        </div>
+
+        <article id="md-root" class="md-content"></article>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const state = { policy: "", terms: "", current: "policy" };
+    const mdRoot = document.getElementById("md-root");
+    const policyBtn = document.getElementById("tab-policy");
+    const termsBtn = document.getElementById("tab-terms");
+
+    function setActiveTab(tab) {
+      state.current = tab;
+      if (tab === "policy") {
+        policyBtn.classList.add("tab-btn-active");
+        termsBtn.classList.remove("tab-btn-active");
+        mdRoot.innerHTML = marked.parse(state.policy || "");
+      } else {
+        termsBtn.classList.add("tab-btn-active");
+        policyBtn.classList.remove("tab-btn-active");
+        mdRoot.innerHTML = marked.parse(state.terms || "");
+      }
+    }
+
+    async function loadMarkdown() {
+      try {
+        const [policyResp, termsResp] = await Promise.all([
+          fetch("policy/policy.md"),
+          fetch("policy/terms.md")
+        ]);
+
+        if (!policyResp.ok || !termsResp.ok) {
+          throw new Error("Failed to load markdown sources.");
+        }
+
+        state.policy = await policyResp.text();
+        state.terms = await termsResp.text();
+        setActiveTab("policy");
+      } catch (error) {
+        mdRoot.innerHTML = `
+          <p style="color:#b91c1c;font-weight:600;">Failed to load legal markdown files.</p>
+          <p style="color:#374151;">Please verify that <code>policy/policy.md</code> and <code>policy/terms.md</code> exist and are publicly accessible.</p>
+        `;
+      }
+    }
+
+    policyBtn.addEventListener("click", () => setActiveTab("policy"));
+    termsBtn.addEventListener("click", () => setActiveTab("terms"));
+    loadMarkdown();
+  </script>
+</body>
+</html>
+
+
+
+
