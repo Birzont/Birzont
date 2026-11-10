@@ -30,7 +30,6 @@
         navCompanyTitle: 'Company',
         navProductTitle: 'Product Lineup',
         navBlogTitle: 'Blogs',
-        navSecretHobby: 'Secret Hobby',
         navAboutCompany: 'About Company',
         navWhatWeDo: 'What we do',
         navOurTeam: 'Our Team',
@@ -187,7 +186,6 @@
         navCompanyTitle: '회사 소개',
         navProductTitle: '제품 라인업',
         navBlogTitle: '블로그',
-        navSecretHobby: '은밀한 취미',
         navAboutCompany: '회사 소개',
         navWhatWeDo: '우리가 하는 일',
         navOurTeam: '우리 팀',
@@ -350,7 +348,6 @@
         navCompanyTitle: '会社',
         navProductTitle: '製品ラインナップ',
         navBlogTitle: 'ブログ',
-        navSecretHobby: '秘密の趣味',
         navAboutCompany: '会社概要',
         navWhatWeDo: '私たちの取り組み',
         navOurTeam: 'チーム紹介',
@@ -506,7 +503,6 @@
         navCompanyTitle: '公司',
         navProductTitle: '产品阵容',
         navBlogTitle: '博客',
-        navSecretHobby: '秘密爱好',
         navAboutCompany: '公司简介',
         navWhatWeDo: '我们的业务',
         navOurTeam: '团队介绍',
@@ -663,7 +659,6 @@
         navCompanyTitle: '公司',
         navProductTitle: '产品阵容',
         navBlogTitle: '博客',
-        navSecretHobby: '秘密爱好',
         navAboutCompany: '公司简介',
         navWhatWeDo: '我们的业务',
         navOurTeam: '团队介绍',
@@ -1103,14 +1098,12 @@
     if (desktopLinks[2]) desktopLinks[2].textContent = ui(lang, 'navCompanyTitle', 'Company');
     if (desktopLinks[3]) desktopLinks[3].textContent = ui(lang, 'navBlogTitle', 'Blog');
     if (desktopLinks[4]) desktopLinks[4].textContent = ui(lang, 'navCareers', 'Careers');
-    if (desktopLinks[5]) desktopLinks[5].textContent = ui(lang, 'navSecretHobby', '은밀한 취미');
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
     if (mobileLinks[0]) mobileLinks[0].textContent = ui(lang, 'navHome', 'Home');
     if (mobileLinks[1]) mobileLinks[1].textContent = ui(lang, 'navPricing', 'Pricing');
     if (mobileLinks[2]) mobileLinks[2].textContent = ui(lang, 'navCompanyTitle', 'Company');
     if (mobileLinks[3]) mobileLinks[3].textContent = ui(lang, 'navBlogTitle', 'Blog');
     if (mobileLinks[4]) mobileLinks[4].textContent = ui(lang, 'navCareers', 'Careers');
-    if (mobileLinks[5]) mobileLinks[5].textContent = ui(lang, 'navSecretHobby', '은밀한 취미');
     setText('#desktop-start-btn', ui(lang, 'navLogin', 'Log in'));
     const mobileLogin = document.querySelector('#mobile-menu a[href*="login"]');
     if (mobileLogin) mobileLogin.textContent = ui(lang, 'navLogin', 'Log in');
