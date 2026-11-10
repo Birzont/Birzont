@@ -880,18 +880,17 @@
     document.body && document.body.setAttribute('data-latin-lang', use ? 'true' : 'false');
     document.querySelectorAll('[data-instrument-font]').forEach((el) => {
       el.classList.toggle('font-instrument-heading', use);
+      el.classList.toggle('font-lora-heading', use);
     });
 
-    // Hard-enforce non-latin fallback on key headings.
-    const nonLatinTargets = document.querySelectorAll('.hero-title, .city-cta-headline, .biz-float-title, .biz-float-title-script, #product-features-grid .product-card-title');
-    nonLatinTargets.forEach((el) => {
+    // Latin languages use Lora for key headings; others fall back to Inter.
+    const headingTargets = document.querySelectorAll('.hero-title, .cursor-heading, .city-cta-headline, .biz-float-title, .biz-float-title-script, #product-features-grid .product-card-title');
+    headingTargets.forEach((el) => {
       if (use) {
-        // Explicitly set Instrument Serif for latin languages.
-        if (el.classList.contains('biz-float-title-script')) {
-          el.style.setProperty('font-family', "'Instrument Serif Italic', 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif", 'important');
+        el.style.setProperty('font-family', "'Lora', Georgia, 'Times New Roman', serif", 'important');
+        if (el.classList.contains('biz-float-title-script') || el.classList.contains('city-cta-em')) {
           el.style.setProperty('font-style', 'italic', 'important');
         } else {
-          el.style.setProperty('font-family', "'Instrument Serif', Georgia, 'Times New Roman', serif", 'important');
           el.style.setProperty('font-style', 'normal', 'important');
         }
       } else {
