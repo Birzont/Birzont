@@ -933,10 +933,30 @@
     });
 
     // Latin languages use Lora for key headings; others fall back to Inter.
-    const headingTargets = document.querySelectorAll('.hero-title, .cursor-heading, .city-cta-headline, .biz-float-title, .biz-float-title-script, #product-features-grid .product-card-title');
+    const headingTargets = document.querySelectorAll([
+      '.hero-title',
+      '.cursor-heading',
+      '.city-cta-headline',
+      '.biz-float-title',
+      '.biz-float-title-script',
+      '#product-features-grid .product-card-title',
+      '[data-instrument-font]',
+      '#fade-in-section h1',
+      '.team-title-container h2',
+      '.team-member-name',
+      '#modal-member-name',
+      '.products-title-container h2',
+      '.blog-header h2',
+      '#timeline h2',
+      '.careers-title',
+      'h1[data-i18n="blog.title"]',
+      'section.w-full.pt-\\[240px\\] h1',
+      'section.w-full.pt-\\[180px\\] h1'
+    ].join(', '));
     headingTargets.forEach((el) => {
       if (use) {
         el.style.setProperty('font-family', "'Lora', Georgia, 'Times New Roman', serif", 'important');
+        el.classList.add('font-lora-heading');
         if (el.classList.contains('biz-float-title-script') || el.classList.contains('city-cta-em')) {
           el.style.setProperty('font-style', 'italic', 'important');
         } else {
@@ -945,6 +965,7 @@
       } else {
         el.style.setProperty('font-family', "'Inter', sans-serif", 'important');
         el.style.setProperty('font-style', 'normal', 'important');
+        el.classList.remove('font-lora-heading');
       }
     });
   }

@@ -49,6 +49,19 @@ body {
   font-weight: 500;
 }
 
+html[data-latin-lang='true'] #fade-in-section h1,
+html[data-latin-lang='true'] .team-title-container h2,
+html[data-latin-lang='true'] .team-member-name,
+html[data-latin-lang='true'] #modal-member-name,
+html[data-latin-lang='true'] .products-title-container h2,
+html[data-latin-lang='true'] .blog-header h2,
+html[data-latin-lang='true'] #timeline h2,
+html[data-latin-lang='true'] .careers-title,
+html[data-latin-lang='true'] h1[data-i18n='blog.title'],
+html[data-latin-lang='true'] [data-instrument-font] {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+}
+
 .blur-fade-once {
   opacity: 0;
   transition: opacity 0.8s ease;
@@ -819,10 +832,10 @@ body[data-latin-lang="false"] #desktop-nav a {
 
 @media (min-width: 768px) {
   .agent-card-left {
-    padding: 2.75rem;
-    flex: 0 0 36%;
-    width: 36%;
-    max-width: 36%;
+    padding: 1.5rem 1.35rem 1.75rem 1.5rem;
+    flex: 0 0 37%;
+    width: 37%;
+    max-width: 37%;
   }
 }
 
@@ -892,7 +905,7 @@ body[data-latin-lang="false"] #desktop-nav a {
 /* Product Card Large */
 .product-card-large {
   transition: all 0.3s ease;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
   height: 580px;
 }
 
@@ -907,7 +920,7 @@ body[data-latin-lang="false"] #desktop-nav a {
 }
 
 .product-card-large:hover {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
   transform: translateY(-2px);
 }
 
@@ -2924,7 +2937,7 @@ html[data-theme='dark'] .birzont-home .logo-blur-cell .logo-blur-img {
   background: var(--cursor-bg-elevated);
   border: 1px solid var(--cursor-border);
   border-radius: var(--cursor-radius-xl);
-  box-shadow: var(--cursor-card-shadow);
+  box-shadow: none !important;
 }
 
 .birzont-home .product-card-large.rounded-2xl,
@@ -2934,12 +2947,89 @@ html[data-theme='dark'] .birzont-home .logo-blur-cell .logo-blur-img {
 }
 
 .birzont-home .product-card-large:hover {
-  box-shadow: var(--cursor-card-shadow);
+  box-shadow: none !important;
   transform: translateY(-2px);
 }
 
+.birzont-home .agent-card-left,
+.birzont-home .agent-card-right {
+  background: #ffffff;
+  border-right: none !important;
+  border-color: transparent !important;
+}
+
 .birzont-home .agent-card-left {
-  border-color: var(--cursor-border) !important;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .birzont-home .agent-card-left {
+    padding: 1.35rem 1.15rem 1.5rem 1.35rem;
+    flex: 0 0 36%;
+    width: 36%;
+    max-width: 36%;
+  }
+}
+
+.birzont-home .agent-card-header {
+  margin-bottom: 0.75rem !important;
+}
+
+.birzont-home .agent-card-header h3 {
+  margin-bottom: 0.65rem !important;
+}
+
+.birzont-home .agent-card-header .text-2xl,
+.birzont-home .agent-card-header p.text-2xl {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.25;
+}
+
+.birzont-home .product-tablist {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.birzont-home .agent-card-right {
+  overflow: hidden;
+}
+
+html[data-theme='dark'] .birzont-home .agent-card-left,
+html[data-theme='dark'] .birzont-home .agent-card-right,
+html[data-theme='dark'] .birzont-home #product-carousel {
+  background: var(--cursor-bg-elevated) !important;
+}
+
+.birzont-home #product-carousel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  width: auto !important;
+  height: auto !important;
+  border-radius: calc(var(--cursor-radius-xl) - 4px);
+  overflow: hidden;
+  background: #ffffff !important;
+}
+
+.birzont-home #product-carousel-slides,
+.birzont-home .product-slide {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.birzont-home .product-slide-img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  object-fit: cover;
+  object-position: center;
+  border-radius: calc(var(--cursor-radius-xl) - 4px);
+  display: block;
 }
 
 .birzont-home .product-tab-summary {
@@ -2983,8 +3073,7 @@ html[data-theme='dark'] .birzont-home .logo-blur-cell .logo-blur-img {
 }
 
 .birzont-home #product-carousel {
-  background: var(--cursor-bg-subtle);
-  border-radius: var(--cursor-radius-xl);
+  background: #ffffff !important;
 }
 
 .birzont-home .carousel-btn {

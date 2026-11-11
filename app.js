@@ -1567,7 +1567,8 @@ function renderBlog() {
   header.className = 'flex justify-between items-center mb-16 md:mb-16 blog-header';
   
   const title = document.createElement('h2');
-  title.className = 'text-4xl font-bold text-black';
+  title.className = 'text-4xl font-bold text-black font-instrument-heading';
+  title.setAttribute('data-instrument-font', '');
   title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'blog.title') : null) || 'Birzont\'s Diverse Stories';
   
   const moreLink = document.createElement('a');
@@ -1713,6 +1714,10 @@ function renderBlogPage() {
   });
   
   container.appendChild(grid);
+
+  if (window.LanguageProvider && typeof window.LanguageProvider.applyInstrumentFont === 'function') {
+    window.LanguageProvider.applyInstrumentFont();
+  }
 }
 
 function renderCareers() {
@@ -1732,7 +1737,8 @@ function renderCareers() {
   content.className = 'relative z-10 flex flex-col items-center justify-center min-h-[200px] careers-content';
   
   const title = document.createElement('h2');
-  title.className = 'text-4xl font-bold mb-6 text-white careers-title';
+  title.className = 'text-4xl font-bold mb-6 text-white careers-title font-instrument-heading';
+  title.setAttribute('data-instrument-font', '');
   title.textContent = (window.LanguageProvider ? window.LanguageProvider.t(window.LanguageProvider.getLang(), 'ui.careersTitle') : null) || 'Looking for where to join?';
   
   const text1 = document.createElement('p');
@@ -1761,6 +1767,10 @@ function renderCareers() {
   wrapper.appendChild(overlay);
   wrapper.appendChild(content);
   container.appendChild(wrapper);
+
+  if (window.LanguageProvider && typeof window.LanguageProvider.applyInstrumentFont === 'function') {
+    window.LanguageProvider.applyInstrumentFont();
+  }
 }
 
 const careerJobs = [
@@ -2918,7 +2928,7 @@ function renderTeamMembers() {
           </svg>
         </a>
       </div>
-      <h3 class="text-2xl font-bold text-black mb-2 md:mb-2 team-member-name">${member.name}</h3>
+      <h3 class="text-2xl font-bold text-black mb-2 md:mb-2 team-member-name" data-instrument-font>${member.name}</h3>
       <p class="text-gray-600 text-lg team-member-role">${member.role}</p>
       ${member.zodiac ? `<p class="text-gray-500 text-sm mt-1 team-member-zodiac">${member.zodiac}</p>` : ''}
     `;
@@ -2943,6 +2953,10 @@ function renderTeamMembers() {
       }
     });
   }, 100);
+
+  if (window.LanguageProvider && typeof window.LanguageProvider.applyInstrumentFont === 'function') {
+    window.LanguageProvider.applyInstrumentFont();
+  }
 }
 
 // Team Member Modal Functions
