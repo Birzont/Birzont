@@ -127,47 +127,149 @@ function getBlogPosts() {
     : [];
 }
 
-const navCardContent = {
-  Company: {
-    title: tr('ui.navCompanyTitle', 'Company'),
-    items: [
-      { text: tr('ui.navAboutCompany', 'About Company'), href: "about.html#about" },
-      { text: tr('ui.navWhatWeDo', 'What we do'), href: "about.html#what-we-do" },
-      { text: tr('ui.navOurTeam', 'Our Team'), href: "about.html#team" },
-      { text: tr('ui.navTimeline', 'Timeline'), href: "about.html#timeline" }
-    ],
-    image: "https://birzont.github.io/BirzontArchive/res/CompassPen.png"
-  },
-  Product: {
-    title: tr('ui.navProductTitle', 'Product Lineup'),
-    items: [
-      { text: "Prompist", href: "#" },
-      { text: "Bloxer", href: "#" },
-      { text: "Jibung", href: "#" }
-    ],
-    image: "https://birzont.github.io/BirzontArchive/res/GatLamp.png"
-  },
-  Blog: {
-    title: tr('ui.navBlogTitle', 'Blog Categories'),
-    items: [
-      { text: tr('ui.navNewsroom', 'Newsroom'), href: "#" },
-      { text: "AGI", href: "#" },
-      { text: tr('ui.navEverything', 'Everything'), href: "#" },
-      { text: "Research", href: "#" }
-    ],
-    image: "https://birzont.github.io/BirzontArchive/res/CoffeeBook.png"
-  },
-  // Career: {
-  //   title: "채용 정보",
-  //   items: [
-  //     { text: "Careers", href: "#" },
-  //     { text: "Talent pool", href: "#" }
-  //     // { text: "Culture Fits", href: "#" }
-  //   ],
-  //   image: "https://birzont.github.io/BirzontArchive/res/TreeBuilding.png"
-  // },
-  
-};
+function getNavCardContent() {
+  return {
+    Home: {
+      items: [
+        {
+          text: tr('ui.navHomeOverview', 'Overview'),
+          desc: tr('ui.navHomeOverviewDesc', 'See how Birzont syncs team knowledge to agents.'),
+          href: 'index.html',
+          image: 'resources/products/mainscreen.png'
+        },
+        {
+          text: tr('ui.navHomeFeatures', 'Features'),
+          desc: tr('ui.navHomeFeaturesDesc', 'Explore the core ways agents learn your business.'),
+          href: 'index.html#product-features-grid',
+          image: 'https://birzont.github.io/BirzontArchive/res/GatLamp.png'
+        },
+        {
+          text: tr('ui.navHomePrompts', 'Prompts'),
+          desc: tr('ui.navHomePromptsDesc', 'Browse shared prompts built for real workflows.'),
+          href: 'index.html#home-of-prompts',
+          image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+        },
+        {
+          text: tr('ui.navHomeStart', 'Get Started'),
+          desc: tr('ui.navHomeStartDesc', 'Open Birzont and connect Notion or a folder.'),
+          href: 'https://birzont.ai',
+          image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+        }
+      ],
+      image: 'resources/products/mainscreen.png'
+    },
+    Pricing: {
+      items: [
+        {
+          text: tr('ui.navPricingPlans', 'Plans'),
+          desc: tr('ui.navPricingPlansDesc', 'Compare Free, Pro, and Team in one place.'),
+          href: 'https://birzont.ai/pricing',
+          image: 'https://birzont.github.io/BirzontArchive/res/GatLamp.png'
+        },
+        {
+          text: 'Free',
+          desc: tr('ui.navPricingFreeDesc', 'Try core features with monthly tokens.'),
+          href: 'https://birzont.ai/pricing',
+          image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+        },
+        {
+          text: 'Pro',
+          desc: tr('ui.navPricingProDesc', 'Advanced agents for individual creators.'),
+          href: 'https://birzont.ai/pricing',
+          image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+        },
+        {
+          text: 'Team',
+          desc: tr('ui.navPricingTeamDesc', 'Shared workspace and collaboration tools.'),
+          href: 'https://birzont.ai/pricing',
+          image: 'https://birzont.github.io/BirzontArchive/res/TreeBuilding.png'
+        }
+      ],
+      image: 'https://birzont.github.io/BirzontArchive/res/GatLamp.png'
+    },
+    Company: {
+      items: [
+        {
+          text: tr('ui.navAboutCompany', 'About Company'),
+          desc: tr('ui.navAboutCompanyDesc', 'Who we are and why we build Birzont.'),
+          href: 'about.html#about',
+          image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+        },
+        {
+          text: tr('ui.navWhatWeDo', 'What we do'),
+          desc: tr('ui.navWhatWeDoDesc', 'Our approach to AI that serves real teams.'),
+          href: 'about.html#what-we-do',
+          image: 'https://birzont.github.io/BirzontArchive/res/GatLamp.png'
+        },
+        {
+          text: tr('ui.navOurTeam', 'Our Team'),
+          desc: tr('ui.navOurTeamDesc', 'Meet the people behind the product.'),
+          href: 'about.html#team',
+          image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+        },
+        {
+          text: tr('ui.navTimeline', 'Timeline'),
+          desc: tr('ui.navTimelineDesc', 'Milestones from prototype to today.'),
+          href: 'about.html#timeline',
+          image: 'https://birzont.github.io/BirzontArchive/res/TreeBuilding.png'
+        }
+      ],
+      image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+    },
+    Blog: {
+      items: [
+        {
+          text: tr('ui.navNewsroom', 'Newsroom'),
+          desc: tr('ui.navNewsroomDesc', 'Product updates and company announcements.'),
+          href: 'blog.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+        },
+        {
+          text: 'AGI',
+          desc: tr('ui.navAgiDesc', 'Notes on agents, models, and the road ahead.'),
+          href: 'blog.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/GatLamp.png'
+        },
+        {
+          text: tr('ui.navEverything', 'Everything'),
+          desc: tr('ui.navEverythingDesc', 'All posts across research and product.'),
+          href: 'blog.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+        },
+        {
+          text: 'Research',
+          desc: tr('ui.navResearchDesc', 'Deeper dives into knowledge sync and agents.'),
+          href: 'blog.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/TreeBuilding.png'
+        }
+      ],
+      image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+    },
+    Careers: {
+      items: [
+        {
+          text: tr('ui.navOpenRoles', 'Open roles'),
+          desc: tr('ui.navOpenRolesDesc', 'See positions open across the team.'),
+          href: 'career.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/TreeBuilding.png'
+        },
+        {
+          text: tr('ui.navTalentPool', 'Talent pool'),
+          desc: tr('ui.navTalentPoolDesc', 'Join the pool even if no role fits yet.'),
+          href: 'career.html',
+          image: 'https://birzont.github.io/BirzontArchive/res/CompassPen.png'
+        },
+        {
+          text: tr('ui.navCulture', 'Culture'),
+          desc: tr('ui.navCultureDesc', 'How we work, decide, and ship together.'),
+          href: 'about.html#about',
+          image: 'https://birzont.github.io/BirzontArchive/res/CoffeeBook.png'
+        }
+      ],
+      image: 'https://birzont.github.io/BirzontArchive/res/TreeBuilding.png'
+    }
+  };
+}
 
 // Utility functions
 function updateMobileState() {
@@ -185,22 +287,8 @@ function updateMobileState() {
   }
 }
 
-function playHeroTitleWave(heroTitle) {
-  const title = heroTitle || document.querySelector('.hero-title.hero-wave-active');
-  if (!title) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  title.classList.remove('hero-wave-playing');
-  void title.offsetWidth;
-  title.classList.add('hero-wave-playing');
-
-  const charCount = title.querySelectorAll('.hero-wave-char').length;
-  const durationMs = 2600 + Math.max(0, charCount - 1) * 70;
-
-  if (title._heroWaveTimeout) clearTimeout(title._heroWaveTimeout);
-  title._heroWaveTimeout = setTimeout(() => {
-    title.classList.remove('hero-wave-playing');
-  }, durationMs);
+function playHeroTitleWave() {
+  // Wave animation disabled
 }
 
 function updateHeader() {
@@ -1855,24 +1943,21 @@ function renderCareerListings() {
 
 function handleNavHover(item, index) {
   if (state.isMobile) return;
-  // Blog 메뉴는 hover 카드 비활성화 요청으로 표시하지 않음.
-  // if (item === 'Blog') return;
-  if (item === 'Blog') return;
-  
+
   clearTimeout(state.hideTimeout);
-  
+
   const navCard = document.getElementById('nav-card');
   const navCardContentEl = document.getElementById('nav-card-content');
   const navCardImage = document.getElementById('nav-card-image');
   const header = document.getElementById('navbar');
-  
+
   if (!navCard || !navCardContentEl || !navCardImage || !header) return;
-  
-  const content = navCardContent[item];
+
+  const content = getNavCardContent()[item];
   if (!content) return;
-  
+
   const headerRect = header.getBoundingClientRect();
-  const cardWidth = 480;
+  const cardWidth = 640;
   
   // Get start button position
   const startBtn = document.getElementById('desktop-start-btn');
@@ -1925,29 +2010,77 @@ function updateNavCard() {
   const navCard = document.getElementById('nav-card');
   const navCardContentEl = document.getElementById('nav-card-content');
   const navCardImage = document.getElementById('nav-card-image');
-  
+
   if (!navCard || !navCardContentEl || !navCardImage) return;
-  
-  if (state.activeCard && navCardContent[state.activeCard]) {
-    const content = navCardContent[state.activeCard];
-    
+
+  const catalog = getNavCardContent();
+  if (state.activeCard && catalog[state.activeCard]) {
+    const content = catalog[state.activeCard];
+    const defaultImage = content.image || (content.items[0] && content.items[0].image) || '';
+
     navCardContentEl.innerHTML = `
-      <h3 class="font-bold text-lg mb-4">${content.title}</h3>
-      <ul class="space-y-2">
-        ${content.items.map(item => `
-          <li>
-            <a href="${item.href}" class="text-gray-700 hover:text-black transition-colors">${item.text}</a>
-          </li>
-        `).join('')}
-      </ul>
-    `;
-    
-    navCardImage.innerHTML = `
-      <div class="w-full aspect-square relative rounded-xl overflow-hidden">
-        <img src="${content.image}" alt="${state.activeCard}" class="object-cover w-full h-full">
+      <div class="nav-mega-list-wrap">
+        <div class="nav-mega-indicator" aria-hidden="true"></div>
+        <ul class="nav-mega-list">
+          ${content.items.map((item, i) => `
+            <li>
+              <a href="${item.href}" class="nav-mega-link${i === 0 ? ' is-active' : ''}" data-image="${item.image || defaultImage}"${item.href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''}>
+                <span class="nav-mega-title">${item.text}</span>
+                <span class="nav-mega-desc">${item.desc || ''}</span>
+              </a>
+            </li>
+          `).join('')}
+        </ul>
       </div>
     `;
-    
+
+    navCardImage.innerHTML = `
+      <div class="nav-mega-media">
+        <img id="nav-card-preview" src="${defaultImage}" alt="${state.activeCard}" class="nav-mega-media-img">
+      </div>
+    `;
+
+    const preview = document.getElementById('nav-card-preview');
+    const wrap = navCardContentEl.querySelector('.nav-mega-list-wrap');
+    const indicator = navCardContentEl.querySelector('.nav-mega-indicator');
+    const links = navCardContentEl.querySelectorAll('.nav-mega-link');
+
+    const moveIndicatorTo = (link, { animate = true } = {}) => {
+      if (!wrap || !indicator || !link) return;
+      const wrapRect = wrap.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      const top = linkRect.top - wrapRect.top;
+      const height = linkRect.height;
+
+      if (!animate) {
+        indicator.style.transition = 'none';
+      } else {
+        indicator.style.transition = '';
+      }
+
+      indicator.style.height = `${height}px`;
+      indicator.style.transform = `translateY(${top}px)`;
+      indicator.classList.add('is-ready');
+
+      if (!animate) {
+        void indicator.offsetHeight;
+        indicator.style.transition = '';
+      }
+    };
+
+    links.forEach((link) => {
+      link.addEventListener('mouseenter', () => {
+        links.forEach((el) => el.classList.remove('is-active'));
+        link.classList.add('is-active');
+        moveIndicatorTo(link);
+        const nextImage = link.getAttribute('data-image');
+        if (preview && nextImage) preview.src = nextImage;
+      });
+    });
+
+    const firstLink = navCardContentEl.querySelector('.nav-mega-link.is-active') || links[0];
+    requestAnimationFrame(() => moveIndicatorTo(firstLink, { animate: false }));
+
     navCard.classList.add('show');
   } else {
     navCard.classList.remove('show');
@@ -2224,7 +2357,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!('IntersectionObserver' in window)) {
       targets.forEach(target => target.classList.add('blur-fade-once-visible'));
-      playHeroTitleWave(document.querySelector('.hero-title.hero-wave-active'));
       return;
     }
 
@@ -2236,12 +2368,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const revealHeroTitle = () => {
         if (!heroTitle.classList.contains('blur-fade-once-visible')) {
           heroTitle.classList.add('blur-fade-once-visible');
-          playHeroTitleWave(heroTitle);
         }
       };
 
-      heroTitle.addEventListener('mouseenter', () => playHeroTitleWave(heroTitle));
-      
       const heroSection = heroTitle.closest('section');
       if (!heroSection) return;
       

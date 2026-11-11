@@ -203,10 +203,10 @@
   `;
 
   const NAV_CARD_TEMPLATE = `
-    <div id="nav-card" class="fixed border border-gray-200 shadow-lg rounded-xl bg-white text-black w-[520px] p-0 z-[1000] overflow-hidden opacity-0 pointer-events-none">
-      <div class="flex w-full">
-        <div class="flex-1 p-8 pt-4 pl-6" id="nav-card-content"></div>
-        <div class="w-[280px] p-4 flex items-center" id="nav-card-image"></div>
+    <div id="nav-card" class="nav-mega-card fixed w-[640px] p-0 z-[1000] overflow-hidden opacity-0 pointer-events-none">
+      <div class="nav-mega-inner">
+        <div class="nav-mega-links" id="nav-card-content"></div>
+        <div class="nav-mega-visual" id="nav-card-image"></div>
       </div>
     </div>
   `;

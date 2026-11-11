@@ -31,14 +31,41 @@
         navProductTitle: 'Product Lineup',
         navBlogTitle: 'Blogs',
         navAboutCompany: 'About Company',
+        navAboutCompanyDesc: 'Who we are and why we build Birzont.',
         navWhatWeDo: 'What we do',
+        navWhatWeDoDesc: 'Our approach to AI that serves real teams.',
         navOurTeam: 'Our Team',
+        navOurTeamDesc: 'Meet the people behind the product.',
         navTimeline: 'Timeline',
+        navTimelineDesc: 'Milestones from prototype to today.',
         navNewsroom: 'Newsroom',
+        navNewsroomDesc: 'Product updates and company announcements.',
+        navAgiDesc: 'Notes on agents, models, and the road ahead.',
         navEverything: 'Everything',
+        navEverythingDesc: 'All posts across research and product.',
+        navResearchDesc: 'Deeper dives into knowledge sync and agents.',
         navHome: 'Home',
+        navHomeOverview: 'Overview',
+        navHomeOverviewDesc: 'See how Birzont syncs team knowledge to agents.',
+        navHomeFeatures: 'Features',
+        navHomeFeaturesDesc: 'Explore the core ways agents learn your business.',
+        navHomePrompts: 'Prompts',
+        navHomePromptsDesc: 'Browse shared prompts built for real workflows.',
+        navHomeStart: 'Get Started',
+        navHomeStartDesc: 'Open Birzont and connect Notion or a folder.',
         navPricing: 'Pricing',
+        navPricingPlans: 'Plans',
+        navPricingPlansDesc: 'Compare Free, Pro, and Team in one place.',
+        navPricingFreeDesc: 'Try core features with monthly tokens.',
+        navPricingProDesc: 'Advanced agents for individual creators.',
+        navPricingTeamDesc: 'Shared workspace and collaboration tools.',
         navCareers: 'Careers',
+        navOpenRoles: 'Open roles',
+        navOpenRolesDesc: 'See positions open across the team.',
+        navTalentPool: 'Talent pool',
+        navTalentPoolDesc: 'Join the pool even if no role fits yet.',
+        navCulture: 'Culture',
+        navCultureDesc: 'How we work, decide, and ship together.',
         navLogin: 'Log in',
         footerCompany: 'Company',
         footerProduct: 'Product',
@@ -187,14 +214,41 @@
         navProductTitle: '제품 라인업',
         navBlogTitle: '블로그',
         navAboutCompany: '회사 소개',
+        navAboutCompanyDesc: '우리가 누구인지, 왜 Birzont를 만드는지.',
         navWhatWeDo: '우리가 하는 일',
+        navWhatWeDoDesc: '실제 팀을 위한 AI를 만드는 방식.',
         navOurTeam: '우리 팀',
+        navOurTeamDesc: '제품을 만드는 사람들을 만나보세요.',
         navTimeline: '연혁',
+        navTimelineDesc: '프로토타입부터 지금까지의 이정표.',
         navNewsroom: '뉴스룸',
+        navNewsroomDesc: '제품 업데이트와 회사 소식.',
+        navAgiDesc: '에이전트, 모델, 그리고 앞으로의 길.',
         navEverything: '전체',
+        navEverythingDesc: '리서치와 제품 글을 모두 모아둔 곳.',
+        navResearchDesc: '지식 동기화와 에이전트에 대한 깊은 이야기.',
         navHome: '홈',
+        navHomeOverview: '개요',
+        navHomeOverviewDesc: '팀 지식이 에이전트에 동기화되는 방식을 확인하세요.',
+        navHomeFeatures: '기능',
+        navHomeFeaturesDesc: '에이전트가 비즈니스를 배우는 핵심 방법을 살펴보세요.',
+        navHomePrompts: '프롬프트',
+        navHomePromptsDesc: '실제 워크플로용 공유 프롬프트를 둘러보세요.',
+        navHomeStart: '시작하기',
+        navHomeStartDesc: 'Birzont를 열고 Notion이나 폴더를 연결하세요.',
         navPricing: '요금제',
+        navPricingPlans: '플랜',
+        navPricingPlansDesc: 'Free, Pro, Team을 한곳에서 비교하세요.',
+        navPricingFreeDesc: '월간 토큰으로 핵심 기능을 체험하세요.',
+        navPricingProDesc: '개인 크리에이터를 위한 고급 에이전트.',
+        navPricingTeamDesc: '공유 워크스페이스와 협업 도구.',
         navCareers: '채용',
+        navOpenRoles: '채용 공고',
+        navOpenRolesDesc: '열려 있는 포지션을 확인하세요.',
+        navTalentPool: '인재풀',
+        navTalentPoolDesc: '맞는 공고가 없어도 인재풀에 합류하세요.',
+        navCulture: '문화',
+        navCultureDesc: '우리가 일하고, 결정하고, 출시하는 방식.',
         navLogin: '로그인',
         footerCompany: '회사',
         footerProduct: '제품',
@@ -934,26 +988,11 @@
     if (el && typeof value === 'string') el.textContent = value;
   }
 
-  function buildHeroTitleWaveHTML(line1, line2) {
-    let waveIndex = 0;
-
-    const wrapLine = (text) => Array.from(text).map((char) => {
-      const index = waveIndex++;
-      if (char === ' ') {
-        return `<span class="hero-wave-char hero-wave-space" style="--wave-i:${index}">&nbsp;</span>`;
-      }
-      const escaped = char
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-      return `<span class="hero-wave-char" style="--wave-i:${index}">${escaped}</span>`;
-    }).join('');
-
-    const trimmed2 = (line2 || '').trim();
-    if (trimmed2) {
-      return `${wrapLine(line1)}<br class="hero-wave-break">${wrapLine(trimmed2)}`;
-    }
-    return wrapLine(line1);
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   function applyStaticPageText(lang) {
@@ -961,8 +1000,11 @@
     if (heroTitleEl) {
       const ht1 = ui(lang, 'heroTitle1', 'The home for better prompts');
       const ht2 = ui(lang, 'heroTitle2', 'that upscale your agents');
-      heroTitleEl.classList.add('hero-wave-active');
-      heroTitleEl.innerHTML = buildHeroTitleWaveHTML(ht1, ht2 && ht2.trim() ? ht2 : '');
+      heroTitleEl.classList.remove('hero-wave-active', 'hero-wave-playing');
+      const trimmed2 = (ht2 || '').trim();
+      heroTitleEl.innerHTML = trimmed2
+        ? `${escapeHtml(ht1)}<br>${escapeHtml(trimmed2)}`
+        : escapeHtml(ht1);
     }
     const heroSub = document.querySelector('p.blur-fade-once[data-hero-order="2"]');
     if (heroSub) heroSub.innerHTML = `${ui(lang, 'heroSubtitle1', 'Discover, share, and build AI prompts and agents.')}<br>${ui(lang, 'heroSubtitle2', 'A collaboration platform for prompt engineers and creators.')}`;
