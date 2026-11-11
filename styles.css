@@ -46,20 +46,90 @@ body {
 .try-free-title,
 .font-lora-heading {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
-  font-weight: 500;
+  font-weight: 400;
 }
 
-html[data-latin-lang='true'] #fade-in-section h1,
-html[data-latin-lang='true'] .team-title-container h2,
+/* Shared hero title scale (home + about/blog/career) */
+.hero-title,
+.page-hero-title {
+  font-size: clamp(2.3rem, 4.5vw, 4rem) !important;
+  line-height: 1.08 !important;
+}
+
+html[data-latin-lang='true'] .hero-title,
+html[data-latin-lang='true'] .page-hero-title,
+body[data-latin-lang='true'] .hero-title,
+body[data-latin-lang='true'] .page-hero-title {
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
+}
+
+html[data-latin-lang='false'] .hero-title,
+html[data-latin-lang='false'] .page-hero-title,
+body[data-latin-lang='false'] .hero-title,
+body[data-latin-lang='false'] .page-hero-title {
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Latin headings share the same Lora as the home hero title */
+html[data-latin-lang='true'] #fade-in-section h1[data-about-order='2'],
+html[data-latin-lang='true'] #team h2,
 html[data-latin-lang='true'] .team-member-name,
-html[data-latin-lang='true'] #modal-member-name,
-html[data-latin-lang='true'] .products-title-container h2,
-html[data-latin-lang='true'] .blog-header h2,
+html[data-latin-lang='true'] #products .products-title-container h2,
+html[data-latin-lang='true'] #blog .blog-header h2,
 html[data-latin-lang='true'] #timeline h2,
 html[data-latin-lang='true'] .careers-title,
-html[data-latin-lang='true'] h1[data-i18n='blog.title'],
-html[data-latin-lang='true'] [data-instrument-font] {
-  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+html[data-latin-lang='true'] [data-instrument-font],
+html[data-latin-lang='true'] .font-instrument-heading,
+html[data-latin-lang='true'] .font-lora-heading,
+body[data-latin-lang='true'] #fade-in-section h1[data-about-order='2'],
+body[data-latin-lang='true'] #team h2,
+body[data-latin-lang='true'] .team-member-name,
+body[data-latin-lang='true'] #products .products-title-container h2,
+body[data-latin-lang='true'] #blog .blog-header h2,
+body[data-latin-lang='true'] #timeline h2,
+body[data-latin-lang='true'] .careers-title,
+body[data-latin-lang='true'] [data-instrument-font],
+body[data-latin-lang='true'] .font-instrument-heading,
+body[data-latin-lang='true'] .font-lora-heading {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif !important;
+  font-weight: 400 !important;
+}
+
+html[data-latin-lang='true'] .hero-title,
+html[data-latin-lang='true'] .cursor-heading,
+html[data-latin-lang='true'] .city-cta-headline,
+html[data-latin-lang='true'] .biz-float-title,
+body[data-latin-lang='true'] .hero-title,
+body[data-latin-lang='true'] .cursor-heading,
+body[data-latin-lang='true'] .city-cta-headline,
+body[data-latin-lang='true'] .biz-float-title {
+  font-weight: 400 !important;
+}
+
+html[data-latin-lang='false'] #fade-in-section h1[data-about-order='2'],
+html[data-latin-lang='false'] #team h2,
+html[data-latin-lang='false'] .team-member-name,
+html[data-latin-lang='false'] #products .products-title-container h2,
+html[data-latin-lang='false'] #blog .blog-header h2,
+html[data-latin-lang='false'] #timeline h2,
+html[data-latin-lang='false'] .careers-title,
+html[data-latin-lang='false'] [data-instrument-font],
+html[data-latin-lang='false'] .font-instrument-heading,
+html[data-latin-lang='false'] .font-lora-heading,
+body[data-latin-lang='false'] #fade-in-section h1[data-about-order='2'],
+body[data-latin-lang='false'] #team h2,
+body[data-latin-lang='false'] .team-member-name,
+body[data-latin-lang='false'] #products .products-title-container h2,
+body[data-latin-lang='false'] #blog .blog-header h2,
+body[data-latin-lang='false'] #timeline h2,
+body[data-latin-lang='false'] .careers-title,
+body[data-latin-lang='false'] [data-instrument-font],
+body[data-latin-lang='false'] .font-instrument-heading,
+body[data-latin-lang='false'] .font-lora-heading {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal !important;
 }
 
 .blur-fade-once {
@@ -2824,8 +2894,6 @@ html[data-theme='dark'] .birzont-home .cursor-hero {
 .birzont-home .cursor-hero .hero-title {
   color: var(--cursor-text);
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
   max-width: 22em;
   margin-left: auto;
   margin-right: auto;
@@ -2834,8 +2902,6 @@ html[data-theme='dark'] .birzont-home .cursor-hero {
 html[data-latin-lang='true'] .birzont-home .cursor-hero .hero-title,
 body[data-latin-lang='true'] .birzont-home .cursor-hero .hero-title {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
-  font-weight: 500;
-  letter-spacing: -0.03em;
 }
 
 .birzont-home .cursor-hero p {
@@ -2905,7 +2971,7 @@ html[data-theme='dark'] .birzont-home .hero-foreground-gif {
 html[data-latin-lang='true'] .birzont-home .cursor-heading,
 body[data-latin-lang='true'] .birzont-home .cursor-heading {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.025em;
 }
 
@@ -3159,7 +3225,7 @@ html[data-theme='dark'] .birzont-home #product-carousel {
 html[data-latin-lang='true'] .birzont-home .biz-float-title,
 body[data-latin-lang='true'] .birzont-home .biz-float-title {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 html[data-latin-lang='true'] .birzont-home .biz-float-title-script,
