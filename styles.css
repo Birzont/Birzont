@@ -337,12 +337,12 @@ body[data-latin-lang='false'] .font-lora-heading {
   width: 100%;
   min-height: 260px;
   gap: 0.2rem;
-  padding: 0.35rem 0.35rem 0.35rem 0.2rem;
+  padding: 0.35rem 0.35rem 0.35rem 0.28rem;
 }
 
 .nav-mega-links {
   flex: 1 1 48%;
-  padding: 0.15rem 0.15rem 0.15rem 0.05rem;
+  padding: 0.15rem 0.15rem 0.15rem 0.12rem;
   display: flex;
   align-items: stretch;
 }
